@@ -1,253 +1,196 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:harmanapp/basicinfo_screen.dart';
+import 'package:flutter/gestures.dart';
 
-class Loginscreen extends StatefulWidget {
+class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
 
   @override
-  State<Loginscreen> createState() => _LoginscreenState();
-}
-
-class _LoginscreenState extends State<Loginscreen> {
-  bool _passwordVisible = true;
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.black,
-        width: double.infinity,
-        height: double.infinity,
+      backgroundColor: const Color(0xFF0F0F0F),
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12.0,
-            right: 12.0,
-            top: 100,
-            //bottom: 50,
-          ),
-          child: Form(
-            child: Column(
-              children: [
-                Text(
-                  'Sign in',
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40),
+
+              const Center(
+                child: Column(
+                  children: [
+                    Text(
+                      "Sign in",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      "Welcome back",
+                      style: TextStyle(color: Colors.white70, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              const Text(
+                "Email *",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+
+              TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Enter your email",
+                  hintStyle: const TextStyle(color: Colors.white38),
+                  filled: true,
+                  fillColor: const Color(0xFF1A1A1A),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
-                Text(
-                  'Welcome back',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: Colors.white70,
+              ),
+
+              const SizedBox(height: 20),
+
+              const Text(
+                "Password *",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+
+              TextField(
+                obscureText: true,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Enter your password",
+                  hintStyle: const TextStyle(color: Colors.white38),
+                  filled: true,
+                  fillColor: const Color(0xFF1A1A1A),
+                  suffixIcon: const Icon(
+                    Icons.visibility_off,
+                    color: Colors.white38,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
-                _buildEmailField("Email *"),
-                SizedBox(height: 10),
-                _buildPasswordField("Password *"),
-                SizedBox(height: 10),
-                _buildForgotField("Forgot password?"),
-                SizedBox(height: 10),
-                _divider("OR"),
-                SizedBox(height: 20),
-                _buildElevatedButtons(),
-                SizedBox(height: 20),
-                _buildTextSignup("Don`t have an account?", "Sign up"),
-              ],
-            ),
+              ),
+
+              const SizedBox(height: 10),
+              const Text(
+                "Forgot password?",
+                style: TextStyle(color: Colors.white54),
+              ),
+
+              const SizedBox(height: 25),
+
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Text(
+                    "Sign in",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              Row(
+                children: [
+                  Expanded(child: Container(height: 1, color: Colors.white24)),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text("OR", style: TextStyle(color: Colors.white60)),
+                  ),
+                  Expanded(child: Container(height: 1, color: Colors.white24)),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  _SocialIcon(icon: Icons.apple),
+                  _SocialIcon(icon: FontAwesomeIcons.google, size: 22),
+                  _SocialIcon(icon: FontAwesomeIcons.facebookF, size: 22),
+                  _SocialIcon(icon: FontAwesomeIcons.xTwitter, size: 22),
+                  _SocialIcon(icon: FontAwesomeIcons.twitch, size: 22),
+                ],
+              ),
+
+              const Spacer(),
+
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style: const TextStyle(color: Colors.white70),
+                    children: [
+                      TextSpan(
+                        text: "Sign up",
+                        style: const TextStyle(
+                          color: Colors.purpleAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const BasicInfoScreen(),
+                              ),
+                            );
+                          },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildEmailField(String label) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
-        ),
-        const SizedBox(height: 6),
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: "Enter your email",
-          ),
-          keyboardType: TextInputType.emailAddress,
-        ),
-      ],
-    );
-  }
+class _SocialIcon extends StatelessWidget {
+  final IconData icon;
+  final double size;
 
-  Widget _buildPasswordField(String label) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.poppins(fontSize: 16, color: Colors.white70),
-        ),
-        const SizedBox(height: 6),
-        TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: "Enter your password",
-            suffixIcon: Icon(
-              _passwordVisible ? Icons.visibility_off : Icons.visibility,
-            ),
-          ),
-          obscureText: true,
-        ),
-      ],
-    );
-  }
+  const _SocialIcon({required this.icon, this.size = 26});
 
-  _buildForgotField(String label) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Forgot password?',
-          style: GoogleFonts.poppins(fontSize: 14, color: Colors.white70),
-        ),
-        SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-            ),
-            onPressed: () {},
-            child: Text(
-              'Sign in',
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  _divider(String label) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(width: 160, child: Divider(color: Colors.grey[400])),
-            SizedBox(width: 5),
-            Text(
-              label,
-              style: GoogleFonts.poppins(fontSize: 15, color: Colors.grey[400]),
-            ),
-            SizedBox(width: 5),
-            SizedBox(width: 160, child: Divider(color: Colors.grey[400])),
-          ],
-        ),
-      ],
-    );
-  }
-
-  _buildElevatedButtons() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor: Colors.grey[850],
-              ),
-              onPressed: () {},
-              child: Icon(Icons.apple, color: Colors.white, size: 25),
-            ),
-            SizedBox(width: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor: Colors.grey[850],
-              ),
-              onPressed: () {},
-              child: Icon(Icons.one_x_mobiledata, color: Colors.blue, size: 25),
-            ),
-            SizedBox(width: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor: Colors.grey[850],
-              ),
-              onPressed: () {},
-              child: Icon(Icons.drive_eta, color: Colors.blue, size: 25),
-            ),
-            SizedBox(width: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor: Colors.grey[850],
-              ),
-              onPressed: () {},
-              child: Icon(Icons.message, color: Colors.blue, size: 25),
-            ),
-            SizedBox(width: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor: Colors.grey[850],
-              ),
-              onPressed: () {},
-              child: Icon(Icons.telegram, color: Colors.blue, size: 25),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  _buildTextSignup(String label, String buttonLbl) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: GoogleFonts.poppins(fontSize: 14, color: Colors.white70),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                buttonLbl,
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: Colors.pink[400],
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Icon(icon, size: size, color: Colors.white),
     );
   }
 }
