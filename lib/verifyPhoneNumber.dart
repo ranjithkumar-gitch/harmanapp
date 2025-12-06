@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/socialmedia_connect.dart';
-import 'package:harmanapp/verifyPhoneNumber.dart';
 
-class BasicInfoScreen extends StatefulWidget {
-  const BasicInfoScreen({super.key});
+class Verifyphonenumber extends StatefulWidget {
+  const Verifyphonenumber({super.key});
 
   @override
-  State<BasicInfoScreen> createState() => _BasicInfoScreenState();
+  State<Verifyphonenumber> createState() => _VerifyphonenumberState();
 }
 
-class _BasicInfoScreenState extends State<BasicInfoScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController displayNameController = TextEditingController();
-
-  String? selectedMonth;
-  String? selectedDay;
-  String? selectedYear;
+class _VerifyphonenumberState extends State<Verifyphonenumber> {
+  final TextEditingController phoneNumberController = TextEditingController();
   bool termsAccepted = false;
-
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -34,7 +24,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    "HM",
+                    'HM',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 26,
@@ -53,7 +43,6 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 25),
 
               Container(
@@ -67,20 +56,25 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.person, color: Colors.white),
-                    Icon(Icons.link, color: Colors.grey),
-                    Icon(Icons.phone, color: Colors.grey),
+                  children: [
+                    Icon(Icons.check_circle_outline, color: Colors.white),
+                    Expanded(child: Container(height: 2, color: Colors.white)),
+                    Icon(Icons.check_circle_outline, color: Colors.white),
+                    Expanded(child: Container(height: 2, color: Colors.white)),
+                    Icon(Icons.phone, color: Colors.white),
+                    Text("Phone number", style: TextStyle(color: Colors.white)),
+                    Expanded(
+                      child: Container(height: 1, color: Colors.white24),
+                    ),
                     Icon(Icons.qr_code_2, color: Colors.grey),
                   ],
                 ),
               ),
 
               const SizedBox(height: 30),
-
               const Center(
                 child: Text(
-                  "Basic Info",
+                  "Verify your phone number",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -91,68 +85,28 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
               const SizedBox(height: 4),
               const Center(
                 child: Text(
-                  "Enter your account details.",
+                  textAlign: TextAlign.center,
+                  "Your phone number lets us notify you of fan messages and new earnings promptly.",
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
 
               const SizedBox(height: 30),
 
-              const Text("Username *", style: TextStyle(color: Colors.white)),
-              const SizedBox(height: 6),
-              customInputField(usernameController, "Enter your username"),
-
-              const SizedBox(height: 20),
-
               const Text(
-                "Display Name *",
+                "Phone Number *",
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 6),
+
               customInputField(
-                displayNameController,
-                "Enter your display name",
-              ),
-
-              const SizedBox(height: 20),
-
-              const Text("Birthday *", style: TextStyle(color: Colors.white)),
-              const SizedBox(height: 10),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: dropdownBox(
-                      label: "Month",
-                      value: selectedMonth,
-                      items: List.generate(12, (i) => "${i + 1}"),
-                      onChanged: (v) => setState(() => selectedMonth = v),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: dropdownBox(
-                      label: "Day",
-                      value: selectedDay,
-                      items: List.generate(31, (i) => "${i + 1}"),
-                      onChanged: (v) => setState(() => selectedDay = v),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: dropdownBox(
-                      label: "Year",
-                      value: selectedYear,
-                      items: List.generate(100, (i) => "${2025 - i}"),
-                      onChanged: (v) => setState(() => selectedYear = v),
-                    ),
-                  ),
-                ],
+                phoneNumberController,
+                "Enter your phone number",
               ),
 
               const SizedBox(height: 6),
               const Text(
-                "Creators must be 18+. Date of birth can't be changed later.",
+                "OPt-in to receive SMS notifications from Harman app.",
                 style: TextStyle(color: Colors.white60, fontSize: 12),
               ),
 
@@ -171,7 +125,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     child: Text.rich(
                       TextSpan(
                         text:
-                            "By clicking this box, I agree to the harman app Creator ",
+                            "By clicking this box, I agree to the harman app notificatio ",
                         style: TextStyle(color: Colors.white),
                         children: [
                           TextSpan(
@@ -188,7 +142,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 ],
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 50),
 
               SizedBox(
                 width: double.infinity,
@@ -204,12 +158,12 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SocialmediaConnect(),
+                        builder: (context) => Verifyphonenumber(),
                       ),
                     );
                   },
                   child: const Text(
-                    "Confirm and Continue",
+                    "Send Verification Code",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 17,
@@ -227,7 +181,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     );
   }
 
-  Widget customInputField(TextEditingController controller, String hint) {
+  customInputField(TextEditingController controller, String hint) {
     return TextField(
       controller: controller,
       style: const TextStyle(color: Colors.white),
@@ -244,34 +198,6 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           horizontal: 16,
           vertical: 14,
         ),
-      ),
-    );
-  }
-
-  Widget dropdownBox({
-    required String label,
-    required String? value,
-    required List<String> items,
-    required Function(String?) onChanged,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1C1C1E),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: DropdownButton<String>(
-        value: value,
-        hint: Text(label, style: const TextStyle(color: Colors.white38)),
-        dropdownColor: Colors.black,
-        icon: const Icon(Icons.arrow_drop_down, color: Colors.white54),
-        underline: const SizedBox(),
-        isExpanded: true,
-        style: const TextStyle(color: Colors.white),
-        items: items
-            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-            .toList(),
-        onChanged: onChanged,
       ),
     );
   }

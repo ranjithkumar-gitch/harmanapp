@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:harmanapp/SignupScreen.dart';
 import 'package:harmanapp/basicinfo_screen.dart';
 import 'package:flutter/gestures.dart';
 
@@ -211,7 +212,7 @@ class Loginscreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const BasicInfoScreen(),
+                                builder: (context) => const Signupscreen(),
                               ),
                             );
                           },

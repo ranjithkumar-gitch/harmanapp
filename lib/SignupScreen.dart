@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/basicinfo_screen.dart';
+import 'package:harmanapp/verifyPhoneNumber.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -182,7 +184,14 @@ class _SignupscreenState extends State<Signupscreen> {
                 borderRadius: BorderRadius.circular(5.0),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BasicInfoScreen(),
+                ),
+              );
+            },
             child: Text(
               label,
               style: GoogleFonts.poppins(
