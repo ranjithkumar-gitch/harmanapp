@@ -129,17 +129,69 @@ class Loginscreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     _SocialIcon(icon: Icons.apple),
+              //     // _SocialIcon(icon: FontAwesomeIcons.google, size: 22),
+              //     SocialIcon(
+              //       child: Image.asset(
+              //         'assets/google1.png',
+              //         width: 30,
+              //         height: 30,
+              //       ),
+              //     ),
+              //     SocialIcon(
+              //       child: Image.asset(
+              //         'assets/facebook.png',
+              //         width: 30,
+              //         height: 30,
+              //       ),
+              //     ),
+
+              //     // _SocialIcon(icon: FontAwesomeIcons.facebookF, size: 22),
+              //     _SocialIcon(icon: FontAwesomeIcons.xTwitter, size: 22),
+              //     _SocialIcon(icon: FontAwesomeIcons.twitch, size: 22),
+              //   ],
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  _SocialIcon(icon: Icons.apple),
-                  _SocialIcon(icon: FontAwesomeIcons.google, size: 22),
-                  _SocialIcon(icon: FontAwesomeIcons.facebookF, size: 22),
-                  _SocialIcon(icon: FontAwesomeIcons.xTwitter, size: 22),
-                  _SocialIcon(icon: FontAwesomeIcons.twitch, size: 22),
+                children: [
+                  SocialIcon(child: Icon(Icons.apple, color: Colors.white)),
+
+                  SocialIcon(
+                    child: Image.asset(
+                      'assets/google1.png',
+                      width: 30,
+                      height: 30,
+                    ),
+                  ),
+
+                  SocialIcon(
+                    child: Image.asset(
+                      'assets/facebook.png',
+                      width: 26,
+                      height: 26,
+                    ),
+                  ),
+
+                  SocialIcon(
+                    child: Icon(
+                      FontAwesomeIcons.xTwitter,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
+
+                  SocialIcon(
+                    child: Icon(
+                      FontAwesomeIcons.twitch,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
                 ],
               ),
-
               const Spacer(),
 
               Center(
@@ -172,6 +224,27 @@ class Loginscreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SocialIcon extends StatelessWidget {
+  final Widget child;
+  final double size;
+
+  const SocialIcon({super.key, required this.child, this.size = 26});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size + 24,
+      height: size + 24,
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      alignment: Alignment.center,
+      child: child,
     );
   }
 }
