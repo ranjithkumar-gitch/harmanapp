@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/helper.dart';
 
 import 'package:harmanapp/models/user_post_model.dart';
+//import 'package:list_wheel_scroll_view_nls/list_wheel_scroll_view_nls.dart';
 
 class Subscribers extends StatefulWidget {
   const Subscribers({super.key});
@@ -15,9 +16,6 @@ class _SubscribersState extends State<Subscribers> {
   bool isDark = false;
   @override
   Widget build(BuildContext context) {
-    // final ThemeData themeData = ThemeData(
-    //   brightness: isDark ? Brightness.dark : Brightness.light,
-    // );
     return CupertinoTabView(
       builder: (context) => CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
@@ -26,6 +24,16 @@ class _SubscribersState extends State<Subscribers> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Text(
+                'SubScription',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(color: Colors.white12, height: 1),
@@ -37,7 +45,7 @@ class _SubscribersState extends State<Subscribers> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 300,
+                    width: 350,
                     child: SearchBar(
                       padding: const WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 16.0),
@@ -79,6 +87,9 @@ class _SubscribersState extends State<Subscribers> {
             ),
             Expanded(
               child: ListView(
+                scrollDirection: Axis.horizontal,
+                // itemExtent: 250,
+                //diameterRatio: 10,
                 children: [
                   SizedBox(
                     //height: 200,
@@ -122,6 +133,8 @@ class _SubscribersState extends State<Subscribers> {
             ),
             Expanded(
               child: ListView(
+                scrollDirection: Axis.horizontal,
+                //dragStartBehavior: DragScrollActivity(delegate, controller),
                 children: [
                   SizedBox(
                     //height: 200,
@@ -221,11 +234,14 @@ class DataSearch extends SearchDelegate<String> {
     //leading icon on the left of the app bar
     return IconButton(
       icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
+        icon: AnimatedIcons.view_list,
         progress: transitionAnimation,
       ),
       onPressed: () {
-        //close(context, null);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Subscribers()),
+        );
       },
     );
   }
