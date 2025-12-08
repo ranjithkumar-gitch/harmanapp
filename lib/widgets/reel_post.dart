@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 
@@ -41,13 +42,17 @@ class _ReelPostState extends State<ReelPost> {
             StoryPicture(user: widget.post, hideName: true, size: 60),
             Text(
               widget.post.name,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFF5D778),
+              ),
             ),
             const Spacer(),
             CupertinoButton(
               child: const Icon(
                 CupertinoIcons.ellipsis,
-                color: CupertinoColors.black,
+                color: Color(0xFFF5D778),
               ),
               onPressed: () {},
             ),
@@ -124,7 +129,7 @@ class _ReelPostState extends State<ReelPost> {
                       : CupertinoIcons.heart,
                   color: widget.post.post.liked
                       ? CupertinoColors.systemRed
-                      : CupertinoColors.black,
+                      : CupertinoColors.white,
                 ),
               ),
               CupertinoButton(
@@ -132,7 +137,7 @@ class _ReelPostState extends State<ReelPost> {
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.conversation_bubble,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
               CupertinoButton(
@@ -140,7 +145,7 @@ class _ReelPostState extends State<ReelPost> {
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.paperplane,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
               const Spacer(),
@@ -155,7 +160,7 @@ class _ReelPostState extends State<ReelPost> {
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
             ],
@@ -168,7 +173,10 @@ class _ReelPostState extends State<ReelPost> {
             children: [
               Text(
                 '${widget.post.post.likes} likes',
-                style: const TextStyle(fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
               ),
               RichText(
                 maxLines: 1,
@@ -179,7 +187,7 @@ class _ReelPostState extends State<ReelPost> {
                       text: widget.post.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.black,
+                        color: CupertinoColors.white,
                         fontSize: 16,
                       ),
                     ),
@@ -187,7 +195,7 @@ class _ReelPostState extends State<ReelPost> {
                     TextSpan(
                       text: widget.post.post.description ?? '',
                       style: const TextStyle(
-                        color: CupertinoColors.black,
+                        color: CupertinoColors.white,
                         fontSize: 16,
                       ),
                     ),
@@ -208,7 +216,7 @@ class _ReelPostState extends State<ReelPost> {
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
-                  color: CupertinoColors.black.withOpacity(.8),
+                  color: CupertinoColors.white.withOpacity(.8),
                   fontSize: 16,
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 
@@ -42,6 +43,7 @@ class _ImagePostState extends State<ImagePost> {
               widget.post.name,
               style: const TextStyle(
                 fontSize: 16,
+                color: Color(0xFFF5D778),
                 fontWeight: FontWeight.bold,
                 fontFamily: "Gilroy",
               ),
@@ -50,7 +52,7 @@ class _ImagePostState extends State<ImagePost> {
             CupertinoButton(
               child: const Icon(
                 CupertinoIcons.ellipsis,
-                color: CupertinoColors.black,
+                color: Color(0xFFF5D778),
               ),
               onPressed: () {},
             ),
@@ -66,7 +68,7 @@ class _ImagePostState extends State<ImagePost> {
                     (image) => Container(
                       height: 450,
                       decoration: BoxDecoration(
-                        color: CupertinoColors.quaternaryLabel,
+                        color: CupertinoColors.white,
                         image: DecorationImage(
                           image: AssetImage('assets/sources/images/$image'),
                           fit: BoxFit.cover,
@@ -95,7 +97,7 @@ class _ImagePostState extends State<ImagePost> {
                       : CupertinoIcons.heart,
                   color: widget.post.post.liked
                       ? CupertinoColors.systemRed
-                      : CupertinoColors.black,
+                      : CupertinoColors.white,
                 ),
               ),
               CupertinoButton(
@@ -103,7 +105,7 @@ class _ImagePostState extends State<ImagePost> {
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.conversation_bubble,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
               CupertinoButton(
@@ -111,7 +113,7 @@ class _ImagePostState extends State<ImagePost> {
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.paperplane,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
               const Spacer(),
@@ -129,7 +131,7 @@ class _ImagePostState extends State<ImagePost> {
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                 ),
               ),
             ],
@@ -143,6 +145,7 @@ class _ImagePostState extends State<ImagePost> {
               Text(
                 '${widget.post.post.likes} likes',
                 style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontFamily: "Gilroy",
                 ),
@@ -156,7 +159,7 @@ class _ImagePostState extends State<ImagePost> {
                       text: widget.post.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.black,
+                        color: CupertinoColors.white,
                         fontSize: 16,
                         fontFamily: "Gilroy",
                       ),
@@ -165,7 +168,7 @@ class _ImagePostState extends State<ImagePost> {
                     TextSpan(
                       text: widget.post.post.description ?? '',
                       style: const TextStyle(
-                        color: CupertinoColors.black,
+                        color: CupertinoColors.white,
                         fontSize: 16,
                       ),
                     ),
@@ -178,7 +181,7 @@ class _ImagePostState extends State<ImagePost> {
                   'View all ${widget.post.post.comments} comments',
                   style: TextStyle(
                     fontFamily: "Gilroy",
-                    color: CupertinoColors.black,
+                    color: CupertinoColors.white,
                     fontSize: 16,
                   ),
                 ),
@@ -188,7 +191,7 @@ class _ImagePostState extends State<ImagePost> {
                 widget.post.post.date!,
                 style: TextStyle(
                   fontFamily: "Gilroy",
-                  color: CupertinoColors.black,
+                  color: CupertinoColors.white,
                   fontSize: 14,
                 ),
               ),

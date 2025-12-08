@@ -60,7 +60,7 @@ class StoryPicture extends StatelessWidget {
               user.name,
 
               style: TextStyle(
-                color: CupertinoColors.black,
+                color: CupertinoColors.white,
                 fontSize: 12,
                 fontFamily: "Gilroy",
                 overflow: TextOverflow.ellipsis,
