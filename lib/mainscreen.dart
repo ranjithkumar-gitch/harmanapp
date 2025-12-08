@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/explore/explore_tab.dart';
 import 'package:harmanapp/homescreen.dart';
+import 'package:harmanapp/subscribers.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> bottomBarPages = [
     HomeScreen(),
     ExploreScreen(),
-    const Center(child: Text('Reels')),
+    Subscribers(),
     const Center(child: Text('Reels')),
     const Center(child: Text('Reels')),
   ];
