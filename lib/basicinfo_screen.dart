@@ -56,26 +56,25 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
 
               const SizedBox(height: 25),
 
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 18,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1C1C1E),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.person, color: Colors.white),
-                    Icon(Icons.link, color: Colors.grey),
-                    Icon(Icons.phone, color: Colors.grey),
-                    Icon(Icons.qr_code_2, color: Colors.grey),
-                  ],
-                ),
-              ),
-
+              // Container(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 18,
+              //     vertical: 12,
+              //   ),
+              //   decoration: BoxDecoration(
+              //     color: const Color(0xFF1C1C1E),
+              //     borderRadius: BorderRadius.circular(40),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: const [
+              //       Icon(Icons.person, color: Colors.white),
+              //       Icon(Icons.link, color: Colors.grey),
+              //       Icon(Icons.phone, color: Colors.grey),
+              //       Icon(Icons.qr_code_2, color: Colors.grey),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(height: 30),
 
               const Center(
