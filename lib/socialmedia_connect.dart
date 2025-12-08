@@ -298,6 +298,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:harmanapp/verifyPhoneNumber.dart';
 
 class SocialmediaConnect extends StatelessWidget {
   const SocialmediaConnect({super.key});
@@ -398,13 +399,23 @@ class SocialmediaConnect extends StatelessWidget {
               // ),
               const SizedBox(height: 30),
 
-              _socialRow(
-                context,
-                leftIcon: "assets/instagram.jpeg",
-                leftTitle: "Instagram",
-                leftInput: true,
-                rightIcon: "assets/tiktok.png",
-                rightTitle: "TikTok",
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Verifyphonenumber(),
+                    ),
+                  );
+                },
+                child: _socialRow(
+                  context,
+                  leftIcon: "assets/instagram.jpeg",
+                  leftTitle: "Instagram",
+                  leftInput: true,
+                  rightIcon: "assets/tiktok.png",
+                  rightTitle: "TikTok",
+                ),
               ),
 
               const SizedBox(height: 25),

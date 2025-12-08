@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/mainscreen.dart';
 
 class Verifyphonenumber extends StatefulWidget {
   const Verifyphonenumber({super.key});
@@ -157,9 +158,7 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => Verifyphonenumber(),
-                      ),
+                      MaterialPageRoute(builder: (context) => MainScreen()),
                     );
                   },
                   child: const Text(
