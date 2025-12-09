@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 
@@ -41,11 +42,18 @@ class _ImagePostState extends State<ImagePost> {
             StoryPicture(user: widget.post, hideName: true, size: 60),
             Text(
               widget.post.name,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Color(0xFFF5D778),
-                fontWeight: FontWeight.bold,
-                fontFamily: "Gilroy",
+              // style: const TextStyle(
+              //   fontSize: 16,
+              //   color: Color(0xFFF5D778),
+              //   fontWeight: FontWeight.bold,
+              //   fontFamily: "Gilroy",
+              // ),
+              style: GoogleFonts.greatVibes(
+                textStyle: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFF5D778),
+                ),
               ),
             ),
             const Spacer(),

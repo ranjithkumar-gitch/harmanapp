@@ -24,6 +24,7 @@ List<UserPostModel> posts = [
       likes: '6',
       date: 'December 03',
     ),
+    hasStory: true,
   ),
   UserPostModel(
     name: 'Priyanka C',
@@ -114,5 +115,6 @@ List<UserPostModel> posts = [
       comments: '122',
       date: '2 days ago',
     ),
+    hasStory: true,
   ),
 ];

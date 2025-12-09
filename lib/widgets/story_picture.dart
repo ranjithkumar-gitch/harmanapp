@@ -22,17 +22,18 @@ class StoryPicture extends StatelessWidget {
           Container(
             height: size - 10,
             width: size - 10,
-            decoration: user.hasStory
-                ? const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        CupertinoColors.activeOrange,
-                        CupertinoColors.systemPink,
-                      ],
-                    ),
-                  )
-                : null,
+            decoration:
+                // user.hasStory?
+                const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [
+                      CupertinoColors.systemOrange,
+                      CupertinoColors.systemRed,
+                    ],
+                  ),
+                ),
+            // : null,
             padding: const EdgeInsets.all(2),
             child: Container(
               decoration: const BoxDecoration(

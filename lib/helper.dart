@@ -17,7 +17,7 @@ class InstagramTopBar extends StatelessWidget
           textStyle: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Color(0xFFF5D778),
           ),
         ),
       ),
@@ -49,7 +49,7 @@ class InstagramTopBar extends StatelessWidget
             padding: EdgeInsets.zero,
             child: const Icon(
               CupertinoIcons.bell,
-              color: CupertinoColors.white,
+              color: Color(0xFFF5D778),
               size: 30,
             ),
             onPressed: () {},
