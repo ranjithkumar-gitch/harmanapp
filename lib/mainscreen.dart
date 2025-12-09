@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:harmanapp/SubscribersScreen.dart';
 import 'package:harmanapp/explore/explore_tab.dart';
 import 'package:harmanapp/homescreen.dart';
 import 'package:harmanapp/subscribers.dart';
@@ -31,10 +32,9 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> bottomBarPages = [
     HomeScreen(),
     ExploreScreen(),
-    Subscribers(),
-    const Center(
-      child: Text('Reels', style: TextStyle(color: Colors.white)),
-    ),
+    SubScribersscreen(),
+    CreatorsScreen(),
+
     const Center(child: Text('Reels')),
   ];
 

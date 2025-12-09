@@ -5,14 +5,14 @@ import 'package:harmanapp/helper.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 //import 'package:list_wheel_scroll_view_nls/list_wheel_scroll_view_nls.dart';
 
-class Subscribers extends StatefulWidget {
-  const Subscribers({super.key});
+class CreatorsScreen extends StatefulWidget {
+  const CreatorsScreen({super.key});
 
   @override
-  State<Subscribers> createState() => _SubscribersState();
+  State<CreatorsScreen> createState() => _CreatorsScreenState();
 }
 
-class _SubscribersState extends State<Subscribers> {
+class _CreatorsScreenState extends State<CreatorsScreen> {
   bool isDark = false;
   @override
   Widget build(BuildContext context) {
@@ -24,16 +24,16 @@ class _SubscribersState extends State<Subscribers> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                'SubScription',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Text(
+            //     'SubScription',
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(color: Colors.white12, height: 1),
@@ -240,7 +240,7 @@ class DataSearch extends SearchDelegate<String> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Subscribers()),
+          MaterialPageRoute(builder: (context) => CreatorsScreen()),
         );
       },
     );
