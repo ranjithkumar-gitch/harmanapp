@@ -68,14 +68,17 @@ class HomeScreen extends StatelessWidget {
     return CupertinoTabView(
       builder: (context) => CupertinoPageScaffold(
         backgroundColor: const Color(0xFF0F0F0F),
-        navigationBar: const CupertinoNavigationBar(
-          backgroundColor: Color(0xFF0F0F0F),
-          middle: Text(
-            "Home",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          border: Border(bottom: BorderSide(color: Colors.white12, width: 0.3)),
-        ),
+        navigationBar: const InstagramTopBar(),
+
+        // const CupertinoNavigationBar(
+        //   backgroundColor: Color(0xFF0F0F0F),
+
+        //   // middle: Text(
+        //   //   "Home",
+        //   //   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        //   // ),
+        //   border: Border(bottom: BorderSide(color: Colors.white12, width: 0.3)),
+        // ),
         child: SafeArea(
           child: ListView(
             padding: EdgeInsets.zero,

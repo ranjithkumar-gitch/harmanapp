@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InstagramTopBar extends StatelessWidget
@@ -8,7 +9,7 @@ class InstagramTopBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return CupertinoNavigationBar(
-      backgroundColor: CupertinoColors.white,
+      backgroundColor: CupertinoColors.black,
       border: Border.all(style: BorderStyle.none),
       leading: Text(
         'Harman App',
@@ -16,7 +17,7 @@ class InstagramTopBar extends StatelessWidget
           textStyle: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            // color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),
@@ -48,7 +49,7 @@ class InstagramTopBar extends StatelessWidget
             padding: EdgeInsets.zero,
             child: const Icon(
               CupertinoIcons.bell,
-              color: CupertinoColors.black,
+              color: CupertinoColors.white,
               size: 30,
             ),
             onPressed: () {},

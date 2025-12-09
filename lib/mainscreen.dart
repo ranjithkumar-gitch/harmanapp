@@ -32,7 +32,9 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     ExploreScreen(),
     Subscribers(),
-    const Center(child: Text('Reels')),
+    const Center(
+      child: Text('Reels', style: TextStyle(color: Colors.white)),
+    ),
     const Center(child: Text('Reels')),
   ];
 

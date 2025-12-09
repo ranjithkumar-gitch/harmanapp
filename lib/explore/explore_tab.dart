@@ -19,7 +19,7 @@ class ExploreScreen extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: CupertinoColors.white,
+        backgroundColor: CupertinoColors.black,
         appBar: InstagramTopBar(),
         body: Column(
           children: [
@@ -33,10 +33,22 @@ class ExploreScreen extends StatelessWidget {
               dividerColor: Colors.transparent,
 
               tabs: const [
-                Tab(icon: Icon(Icons.photo, size: 30)),
-                Tab(icon: Icon(Icons.video_library, size: 30)),
-                Tab(icon: Icon(Icons.live_tv, size: 30)),
-                Tab(icon: Icon(Icons.person, size: 30)),
+                Tab(
+                  icon: Icon(Icons.photo, size: 30, color: Color(0xFFFFFFFF)),
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.video_library,
+                    size: 30,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                ),
+                Tab(
+                  icon: Icon(Icons.live_tv, size: 30, color: Color(0xFFFFFFFF)),
+                ),
+                Tab(
+                  icon: Icon(Icons.person, size: 30, color: Color(0xFFFFFFFF)),
+                ),
               ],
             ),
 
