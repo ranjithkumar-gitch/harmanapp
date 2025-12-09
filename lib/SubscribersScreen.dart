@@ -19,14 +19,14 @@ import 'package:harmanapp/helper.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/Creatorsscreen.dart';
 
-class SubScribersscreen extends StatefulWidget {
-  const SubScribersscreen({super.key});
+class SubscribersScreen extends StatefulWidget {
+  const SubscribersScreen({super.key});
 
   @override
-  State<SubScribersscreen> createState() => _SubScribersscreenState();
+  State<SubscribersScreen> createState() => _SubscribersScreenState();
 }
 
-class _SubScribersscreenState extends State<SubScribersscreen> {
+class _SubscribersScreenState extends State<SubscribersScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabView(

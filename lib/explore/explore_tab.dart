@@ -717,8 +717,12 @@ class EmptyTab extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           const Text(
-            'AI Avatar features coming soon ✨',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            'AI Avatar feature coming soon ✨',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 8),
           const Text(

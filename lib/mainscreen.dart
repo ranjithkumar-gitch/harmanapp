@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> bottomBarPages = [
     HomeScreen(),
     ExploreScreen(),
-    SubScribersscreen(),
+    SubscribersScreen(),
     CreatorsScreen(),
 
     const Center(child: Text('Reels')),
