@@ -6,6 +6,7 @@ import 'package:harmanapp/SubscribersScreen.dart';
 import 'package:harmanapp/explore/explore_tab.dart';
 import 'package:harmanapp/homescreen.dart';
 import 'package:harmanapp/Creatorsscreen.dart';
+import 'package:harmanapp/marketplace_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -34,8 +35,7 @@ class _MainScreenState extends State<MainScreen> {
     ExploreScreen(),
     SubscribersScreen(),
     CreatorsScreen(),
-
-    const Center(child: Text('Reels')),
+    MarketplaceScreen(),
   ];
 
   @override
