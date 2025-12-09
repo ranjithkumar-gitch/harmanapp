@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/SubscribersScreen.dart';
 import 'package:harmanapp/explore/explore_tab.dart';
 import 'package:harmanapp/homescreen.dart';
-import 'package:harmanapp/subscribers.dart';
+import 'package:harmanapp/Creatorsscreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

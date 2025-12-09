@@ -1,6 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// class SubScribersscreen extends StatefulWidget {
+//   const SubScribersscreen({super.key});
+
+//   @override
+//   State<SubScribersscreen> createState() => _SubScribersscreenState();
+// }
+
+// class _SubScribersscreenState extends State<SubScribersscreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(body: Center(child: Text("SubScribersscreen")));
+//   }
+// }
+
+import 'package:harmanapp/helper.dart';
+import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/Creatorsscreen.dart';
+
 class SubScribersscreen extends StatefulWidget {
   const SubScribersscreen({super.key});
 
@@ -11,6 +29,307 @@ class SubScribersscreen extends StatefulWidget {
 class _SubScribersscreenState extends State<SubScribersscreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("SubScribersscreen")));
+    return CupertinoTabView(
+      builder: (_) => CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        navigationBar: const InstagramTopBar(),
+
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Divider(color: Colors.white12, height: 1),
+              ),
+
+              // 🔍 SEARCH BAR
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  width: 350,
+                  child: SearchBar(
+                    hintText: "Search subscribers...",
+                    padding: const WidgetStatePropertyAll<EdgeInsets>(
+                      EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
+                    leading: const Icon(Icons.search),
+                    onTap: () {
+                      showSearch(context: context, delegate: DataSearch(posts));
+                    },
+                    onChanged: (value) {
+                      showSearch(context: context, delegate: DataSearch(posts));
+                    },
+                  ),
+                ),
+              ),
+
+              // 🟡 GOLD GRID
+              // sectionTitle("Gold", const Color(0xffad9c00)),
+              subscriberGrid(
+                posts.where((p) => p.hasStory).toList(),
+                (u) => goldSubscriber_post(user: u, size: 110),
+              ),
+
+              const Divider(color: Colors.white12, height: 1),
+
+              // ⚪ SILVER GRID
+              // sectionTitle("Silver", CupertinoColors.systemGrey),
+              subscriberGrid(
+                posts.where((p) => p.hasStory).toList(),
+                (u) => silverSubscriber_post(user: u, size: 110),
+              ),
+
+              const Divider(color: Colors.white12, height: 1),
+
+              // 🟤 BRONZE GRID
+              // sectionTitle("Bronze", CupertinoColors.systemBrown),
+              subscriberGrid(
+                posts.where((p) => p.hasStory).toList(),
+                (u) => bronzeSubscriber_post(user: u, size: 110),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // SECTION TITLE
+  Widget sectionTitle(String label, Color color) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // GRID VIEW BUILDER (3 per row)
+  Widget subscriberGrid(
+    List<UserPostModel> list,
+    Widget Function(UserPostModel user) builder,
+  ) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      mainAxisSpacing: 5,
+      crossAxisSpacing: 20,
+      children: list.map((u) => builder(u)).toList(),
+    );
+  }
+}
+
+class goldSubscriber_post extends StatelessWidget {
+  const goldSubscriber_post({
+    Key? key,
+    required this.user,
+    this.hideName = false,
+    this.size = 80,
+  }) : super(key: key);
+  final UserPostModel user;
+  final bool hideName;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      child: Column(
+        children: [
+          Container(
+            height: size - 10,
+            width: size - 10,
+            decoration: user.hasStory
+                ? const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        CupertinoColors.systemYellow,
+                        CupertinoColors.systemYellow,
+                      ],
+                    ),
+                  )
+                : null,
+            padding: const EdgeInsets.all(2),
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: CupertinoColors.white,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CupertinoColors.white,
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/sources/profiles/${user.profileImage}',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (!hideName)
+            Text(
+              user.name,
+
+              style: TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 12,
+                fontFamily: "Gilroy",
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class silverSubscriber_post extends StatelessWidget {
+  const silverSubscriber_post({
+    Key? key,
+    required this.user,
+    this.hideName = false,
+    this.size = 80,
+  }) : super(key: key);
+  final UserPostModel user;
+  final bool hideName;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      child: Column(
+        children: [
+          Container(
+            height: size - 10,
+            width: size - 10,
+            decoration: user.hasStory
+                ? const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        CupertinoColors.systemGrey,
+                        CupertinoColors.systemGrey2,
+                      ],
+                    ),
+                  )
+                : null,
+            padding: const EdgeInsets.all(2),
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: CupertinoColors.white,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CupertinoColors.white,
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/sources/profiles/${user.profileImage}',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (!hideName)
+            Text(
+              user.name,
+
+              style: TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 12,
+                fontFamily: "Gilroy",
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+//Bronze subscriber list
+class bronzeSubscriber_post extends StatelessWidget {
+  const bronzeSubscriber_post({
+    Key? key,
+    required this.user,
+    this.hideName = false,
+    this.size = 80,
+  }) : super(key: key);
+  final UserPostModel user;
+  final bool hideName;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      child: Column(
+        children: [
+          Container(
+            height: size - 10,
+            width: size - 10,
+            decoration: user.hasStory
+                ? const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        CupertinoColors.systemBrown,
+                        CupertinoColors.systemBrown,
+                      ],
+                    ),
+                  )
+                : null,
+            padding: const EdgeInsets.all(2),
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: CupertinoColors.white,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CupertinoColors.white,
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/sources/profiles/${user.profileImage}',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (!hideName)
+            Text(
+              user.name,
+              style: TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 12,
+                fontFamily: "Gilroy",
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
