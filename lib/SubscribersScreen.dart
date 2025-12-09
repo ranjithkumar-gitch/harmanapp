@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/helper.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/Creatorsscreen.dart';
+import 'package:harmanapp/subScriberProfile.dart';
 
 class SubscribersScreen extends StatefulWidget {
   const SubscribersScreen({super.key});
@@ -139,58 +140,66 @@ class goldSubscriber_post extends StatelessWidget {
   final double size;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
-      child: Column(
-        children: [
-          Container(
-            height: size - 10,
-            width: size - 10,
-            decoration: user.hasStory
-                ? const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        CupertinoColors.systemYellow,
-                        CupertinoColors.systemYellow,
-                      ],
-                    ),
-                  )
-                : null,
-            padding: const EdgeInsets.all(2),
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: CupertinoColors.white,
-              ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Subscriberprofile()),
+        );
+      },
+      child: SizedBox(
+        width: size,
+        child: Column(
+          children: [
+            Container(
+              height: size - 10,
+              width: size - 10,
+              decoration: user.hasStory
+                  ? const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          CupertinoColors.systemYellow,
+                          CupertinoColors.systemYellow,
+                        ],
+                      ),
+                    )
+                  : null,
               padding: const EdgeInsets.all(2),
               child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: CupertinoColors.white,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/sources/profiles/${user.profileImage}',
+                ),
+                padding: const EdgeInsets.all(2),
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: CupertinoColors.white,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/sources/profiles/${user.profileImage}',
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                    fit: BoxFit.cover,
                   ),
                 ),
               ),
             ),
-          ),
-          if (!hideName)
-            Text(
-              user.name,
+            if (!hideName)
+              Text(
+                user.name,
 
-              style: TextStyle(
-                color: CupertinoColors.white,
-                fontSize: 12,
-                fontFamily: "Gilroy",
-                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 12,
+                  fontFamily: "Gilroy",
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
