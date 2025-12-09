@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/SignupScreen.dart';
 
 import 'package:flutter/gestures.dart';
+import 'package:harmanapp/animatedlogin.dart';
 import 'package:harmanapp/mainscreen.dart';
 
 class Loginscreen extends StatelessWidget {
@@ -170,7 +171,20 @@ class Loginscreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SocialIcon(child: Icon(Icons.apple, color: Colors.white)),
+                      GestureDetector(
+                        onTap: () {
+                          print("Apple login tapped");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginForm(),
+                            ),
+                          );
+                        },
+                        child: SocialIcon(
+                          child: Icon(Icons.apple, color: Colors.white),
+                        ),
+                      ),
                       SocialIcon(
                         child: Image.asset(
                           'assets/google1.png',
