@@ -388,7 +388,7 @@ class SubscribersListView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: SearchBar(
-            hintText: "Search subscribers...",
+            hintText: "Search Creators...",
             leading: const Icon(Icons.search),
             onTap: () {
               showSearch(context: context, delegate: DataSearch(posts));
@@ -422,10 +422,6 @@ class SubscribersListView extends StatelessWidget {
     );
   }
 }
-
-/// ------------------------------
-/// REUSABLE WIDGET HELPERS
-/// ------------------------------
 
 Widget sectionTitle(String title) {
   return Padding(
@@ -488,16 +484,50 @@ Widget subscriberCard(
 
           const SizedBox(width: 12),
 
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Text(
+          //       user.name,
+          //       style: const TextStyle(
+          //         color: CupertinoColors.white,
+          //         fontSize: 16,
+          //         fontFamily: "Gilroy",
+          //       ),
+          //     ),
+          //     const SizedBox(height: 3),
+          //     Text(
+          //       tier,
+          //       style: TextStyle(
+          //         color: color,
+          //         fontSize: 13,
+          //         fontWeight: FontWeight.w500,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                user.name,
-                style: const TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 16,
-                  fontFamily: "Gilroy",
-                ),
+              Row(
+                children: [
+                  Text(
+                    user.name,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 16,
+                      fontFamily: "Gilroy",
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    "• ${user.category}",
+                    style: const TextStyle(
+                      color: CupertinoColors.systemGrey2,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 3),
               Text(

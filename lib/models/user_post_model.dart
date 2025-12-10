@@ -3,11 +3,13 @@ import 'package:harmanapp/models/post_model.dart';
 class UserPostModel {
   String name;
   String profileImage;
+  String category;
   PostModel post;
   bool hasStory;
   UserPostModel({
     required this.name,
     required this.profileImage,
+    required this.category,
     required this.post,
     this.hasStory = false,
   });
@@ -17,6 +19,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Srikanth Natarajan',
     profileImage: 'foto-sushi.jpg',
+    category: 'athelete',
     post: PostModel(
       postType: Post.reel,
       video: '1.mp4',
@@ -29,6 +32,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Priyanka C',
     profileImage: 'aiony-haust.jpg',
+    category: 'athelete',
+
     post: PostModel(
       postType: Post.picture,
       images: ['1-1.jpg', '1-2.jpg'],
@@ -42,6 +47,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Sathya Nadella',
     profileImage: 'foto-sushi.jpg',
+    category: 'actor',
+
     post: PostModel(
       postType: Post.reel,
       video: '2.mp4',
@@ -56,6 +63,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Sathya Nadella',
     profileImage: 'foto-sushi.jpg',
+    category: 'athelete',
+
     post: PostModel(
       postType: Post.picture,
       images: ['2.jpg'],
@@ -68,6 +77,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Devi S Prasad',
     profileImage: 'lucas-sankey.jpg',
+    category: 'singer',
+
     post: PostModel(
       postType: Post.picture,
       images: ['3.jpg', '4.jpg'],
@@ -81,6 +92,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Srikanth N',
     profileImage: 'foto-sushi.jpg',
+    category: 'singer',
+
     post: PostModel(
       postType: Post.reel,
       video: '3.mp4',
@@ -93,6 +106,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Richa Mathews',
     profileImage: 'averie-woodard.jpg',
+    category: 'actor',
+
     post: PostModel(
       postType: Post.picture,
       images: ['5.jpg'],
@@ -106,6 +121,8 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Uday Ch',
     profileImage: 'michael-frattaroli.jpg',
+    category: 'athelete',
+
     post: PostModel(
       postType: Post.reel,
       video: '4.mp4',
