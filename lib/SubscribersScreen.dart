@@ -15,63 +15,58 @@ class SubscribersScreen extends StatefulWidget {
 class _SubscribersScreenState extends State<SubscribersScreen> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabView(
-      builder: (_) => CupertinoPageScaffold(
-        backgroundColor: CupertinoColors.black,
-        navigationBar: const InstagramTopBar(),
-
-        child: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: Divider(color: Colors.white12, height: 1),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SizedBox(
-                  width: 350,
-                  child: SearchBar(
-                    hintText: "Search subscribers...",
-                    padding: const WidgetStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.symmetric(horizontal: 16.0),
-                    ),
-                    leading: const Icon(Icons.search),
-                    onTap: () {
-                      // showSearch(context: context, delegate: DataSearch(posts));
-                    },
-                    onChanged: (value) {
-                      // showSearch(context: context, delegate: DataSearch(posts));
-                    },
-                  ),
-                ),
-              ),
-
-              subscriberList(
-                context,
-                posts.where((p) => p.hasStory).take(4).toList(),
-                tier: "Gold",
-                color: const Color(0xffd4af37),
-              ),
-
-              subscriberList(
-                context,
-                posts.where((p) => p.hasStory).take(4).toList(),
-                tier: "Silver",
-                color: CupertinoColors.systemGrey,
-              ),
-
-              subscriberList(
-                context,
-                posts.where((p) => p.hasStory).take(4).toList(),
-                tier: "Bronze",
-                color: CupertinoColors.systemBrown,
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: InstagramTopBar(),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(color: Colors.white12, height: 1),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              width: 350,
+              child: SearchBar(
+                hintText: "Search subscribers...",
+                padding: const WidgetStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0),
+                ),
+                leading: const Icon(Icons.search),
+                onTap: () {
+                  // showSearch(context: context, delegate: DataSearch(posts));
+                },
+                onChanged: (value) {
+                  // showSearch(context: context, delegate: DataSearch(posts));
+                },
+              ),
+            ),
+          ),
+
+          subscriberList(
+            context,
+            posts.where((p) => p.hasStory).take(4).toList(),
+            tier: "Gold",
+            color: const Color(0xffd4af37),
+          ),
+
+          subscriberList(
+            context,
+            posts.where((p) => p.hasStory).take(4).toList(),
+            tier: "Silver",
+            color: CupertinoColors.systemGrey,
+          ),
+
+          subscriberList(
+            context,
+            posts.where((p) => p.hasStory).take(4).toList(),
+            tier: "Bronze",
+            color: CupertinoColors.systemBrown,
+          ),
+        ],
       ),
     );
   }
