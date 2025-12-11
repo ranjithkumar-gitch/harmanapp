@@ -4,6 +4,8 @@ import 'package:harmanapp/LoginScreen.dart';
 import 'package:harmanapp/basicinfo_screen.dart';
 
 class Signupscreen extends StatefulWidget {
+  const Signupscreen({super.key});
+
   @override
   State<Signupscreen> createState() => _SignupscreenState();
 }

@@ -5,11 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class StoryPicture extends StatelessWidget {
   const StoryPicture({
-    Key? key,
+    super.key,
     required this.user,
     this.hideName = false,
     this.size = 80,
-  }) : super(key: key);
+  });
   final UserPostModel user;
   final bool hideName;
   final double size;

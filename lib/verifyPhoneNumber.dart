@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/otpcodescreen.dart';
 
 class Verifyphonenumber extends StatefulWidget {
+  const Verifyphonenumber({super.key});
+
   @override
   State<Verifyphonenumber> createState() => _VerifyphonenumberState();
 }

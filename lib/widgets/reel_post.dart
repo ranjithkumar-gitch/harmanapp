@@ -7,7 +7,7 @@ import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:video_player/video_player.dart';
 
 class ReelPost extends StatefulWidget {
-  const ReelPost({Key? key, required this.post}) : super(key: key);
+  const ReelPost({super.key, required this.post});
   final UserPostModel post;
   @override
   State<ReelPost> createState() => _ReelPostState(post);

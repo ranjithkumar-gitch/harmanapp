@@ -7,6 +7,8 @@ class OtpCodeScreen extends StatelessWidget {
   final TextEditingController _c3 = TextEditingController();
   final TextEditingController _c4 = TextEditingController();
 
+  OtpCodeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

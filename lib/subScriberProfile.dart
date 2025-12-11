@@ -651,7 +651,7 @@ class _SubscriberprofileState extends State<Subscriberprofile> {
 class _Stat extends StatelessWidget {
   final String value;
   final String label;
-  const _Stat(this.value, this.label, {super.key});
+  const _Stat(this.value, this.label);
 
   @override
   Widget build(BuildContext context) {
@@ -679,7 +679,7 @@ class _Stat extends StatelessWidget {
 class _Button extends StatelessWidget {
   final String text;
   final Color color;
-  const _Button({required this.text, required this.color, super.key});
+  const _Button({required this.text, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -821,7 +821,7 @@ class _ReelPlayerState extends State<ReelPlayer> {
 }
 
 class EmptyTab extends StatelessWidget {
-  const EmptyTab({Key? key}) : super(key: key);
+  const EmptyTab({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class InstagramTopBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
-  const InstagramTopBar({Key? key}) : super(key: key);
+  const InstagramTopBar({super.key});
 
   @override
   Widget build(BuildContext context) {

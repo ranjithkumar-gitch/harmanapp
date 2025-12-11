@@ -61,7 +61,7 @@ import 'package:harmanapp/widgets/story_picture.dart';
 // }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,6 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 12),
 
-            
               SizedBox(
                 height: 110,
                 child: SingleChildScrollView(
@@ -122,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 20),
                   child: ReelPost(post: post),
                 );
-              }).toList(),
+              }),
             ],
           ),
         ),

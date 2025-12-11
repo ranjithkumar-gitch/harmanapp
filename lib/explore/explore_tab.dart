@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ExploreScreen extends StatelessWidget {
-  const ExploreScreen({Key? key}) : super(key: key);
+  const ExploreScreen({super.key});
 
   static const accentGradient = LinearGradient(
     colors: [Color(0xFFDAA520), Colors.orange],
@@ -132,7 +132,7 @@ final sampleReels = [
 ];
 
 class ImagesTab extends StatelessWidget {
-  const ImagesTab({Key? key}) : super(key: key);
+  const ImagesTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +156,7 @@ class ImagesTab extends StatelessWidget {
 class _ImageCard extends StatelessWidget {
   final String imageUrl;
   final int index;
-  const _ImageCard({required this.imageUrl, required this.index, Key? key})
-    : super(key: key);
+  const _ImageCard({required this.imageUrl, required this.index, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +178,7 @@ class _ImageCard extends StatelessWidget {
 }
 
 class ReelsTab extends StatelessWidget {
-  const ReelsTab({Key? key}) : super(key: key);
+  const ReelsTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +204,7 @@ class ReelCard extends StatefulWidget {
   final String videoName;
   final int index;
 
-  const ReelCard({required this.videoName, required this.index, Key? key})
-    : super(key: key);
+  const ReelCard({required this.videoName, required this.index, super.key});
 
   @override
   State<ReelCard> createState() => _ReelCardState();
@@ -275,8 +273,7 @@ class _ReelCardState extends State<ReelCard> {
 class ReelsFullScreenPage extends StatefulWidget {
   final int startIndex;
 
-  const ReelsFullScreenPage({required this.startIndex, Key? key})
-    : super(key: key);
+  const ReelsFullScreenPage({required this.startIndex, super.key});
 
   @override
   State<ReelsFullScreenPage> createState() => _ReelsFullScreenPageState();
@@ -311,8 +308,7 @@ class _ReelsFullScreenPageState extends State<ReelsFullScreenPage> {
 class FullScreenReelPlayer extends StatefulWidget {
   final String videoName;
 
-  const FullScreenReelPlayer({required this.videoName, Key? key})
-    : super(key: key);
+  const FullScreenReelPlayer({required this.videoName, super.key});
 
   @override
   State<FullScreenReelPlayer> createState() => _FullScreenReelPlayerState();
@@ -482,7 +478,7 @@ final sampleLives = [
 ];
 
 class LiveTab extends StatelessWidget {
-  const LiveTab({Key? key}) : super(key: key);
+  const LiveTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -511,8 +507,8 @@ class _LiveCard extends StatelessWidget {
     required this.videoId,
     required this.viewers,
     required this.title,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -585,7 +581,7 @@ class _LiveCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      "${viewers} watching",
+                      "$viewers watching",
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ],
@@ -602,8 +598,7 @@ class _LiveCard extends StatelessWidget {
 class YouTubePlayerScreen extends StatefulWidget {
   final String videoId;
 
-  const YouTubePlayerScreen({required this.videoId, Key? key})
-    : super(key: key);
+  const YouTubePlayerScreen({required this.videoId, super.key});
 
   @override
   State<YouTubePlayerScreen> createState() => _YouTubePlayerScreenState();
@@ -688,7 +683,7 @@ class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
 }
 
 class EmptyTab extends StatelessWidget {
-  const EmptyTab({Key? key}) : super(key: key);
+  const EmptyTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -745,8 +740,8 @@ class GradientIcon extends StatelessWidget {
     required this.icon,
     required this.size,
     required this.gradient,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

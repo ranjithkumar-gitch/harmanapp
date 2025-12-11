@@ -6,7 +6,7 @@ import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 
 class ImagePost extends StatefulWidget {
-  const ImagePost({Key? key, required this.post}) : super(key: key);
+  const ImagePost({super.key, required this.post});
   final UserPostModel post;
   @override
   State<ImagePost> createState() => _ImagePostState();
@@ -71,20 +71,18 @@ class _ImagePostState extends State<ImagePost> {
           child: PageView(
             controller: _pageController,
             children: [
-              ...widget.post.post.images!
-                  .map(
-                    (image) => Container(
-                      height: 450,
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.white,
-                        image: DecorationImage(
-                          image: AssetImage('assets/sources/images/$image'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+              ...widget.post.post.images!.map(
+                (image) => Container(
+                  height: 450,
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.white,
+                    image: DecorationImage(
+                      image: AssetImage('assets/sources/images/$image'),
+                      fit: BoxFit.cover,
                     ),
-                  )
-                  .toList(),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

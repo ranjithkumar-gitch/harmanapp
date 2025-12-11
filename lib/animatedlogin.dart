@@ -5,7 +5,7 @@ import 'package:harmanapp/mainscreen.dart';
 import 'package:rive/rive.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key? key}) : super(key: key);
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -41,12 +41,12 @@ class _LoginFormState extends State<LoginForm> {
       if (stateMachineController != null) {
         artboard.addController(stateMachineController!);
 
-        stateMachineController!.inputs.forEach((e) {
+        for (var e in stateMachineController!.inputs) {
           debugPrint(e.runtimeType.toString());
           debugPrint("name${e.name}End");
-        });
+        }
 
-        stateMachineController!.inputs.forEach((element) {
+        for (var element in stateMachineController!.inputs) {
           if (element.name == "trigSuccess") {
             successTrigger = element as SMITrigger;
           } else if (element.name == "trigFail") {
@@ -58,7 +58,7 @@ class _LoginFormState extends State<LoginForm> {
           } else if (element.name == "numLook") {
             numLook = element as SMINumber;
           }
-        });
+        }
       }
 
       setState(() => _teddyArtboard = artboard);
