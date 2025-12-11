@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:harmanapp/SubscribersScreen.dart';
 import 'package:harmanapp/explore/explore_tab.dart';
@@ -53,7 +53,6 @@ class _MainScreenState extends State<MainScreen> {
       extendBody: false,
       bottomNavigationBar: (bottomBarPages.length <= maxCount)
           ? AnimatedNotchBottomBar(
-              /// Provide NotchBottomBarController
               notchBottomBarController: _controller,
               color: Colors.grey,
               showLabel: true,
@@ -73,7 +72,6 @@ class _MainScreenState extends State<MainScreen> {
                   ),
               notchColor: Color(0xFFDAA520),
 
-              /// restart app if you change removeMargins
               removeMargins: false,
               bottomBarWidth: 500,
               showShadow: false,
@@ -101,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
                 BottomBarItem(
                   inActiveItem: Icon(Icons.group_add, color: Colors.white),
                   activeItem: Icon(Icons.group_add, color: Colors.black),
-                  itemLabel: 'Global Creators',
+                  itemLabel: 'All Creators',
                 ),
                 BottomBarItem(
                   inActiveItem: Icon(Icons.storefront, color: Colors.white),
@@ -110,7 +108,6 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ],
               onTap: (index) {
-                // log('current selected index $index');
                 _pageController.jumpToPage(index);
               },
               kIconSize: 24.0,

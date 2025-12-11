@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:harmanapp/mainscreen.dart';
+
 import 'package:rive/rive.dart';
 
 class LoginForm extends StatefulWidget {
@@ -24,7 +24,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     animationURL =
         defaultTargetPlatform == TargetPlatform.android ||
@@ -88,11 +87,6 @@ class _LoginFormState extends State<LoginForm> {
     } else {
       failTrigger?.fire();
     }
-
-    //  Navigator.push(
-    //                       context,
-    //                       MaterialPageRoute(builder: (context) => MainScreen()),
-    //                     );
   }
 
   @override

@@ -473,11 +473,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                             color: selectedSize == index
                                 ? Color(0xFFF5D778)
                                 : Color.fromRGBO(244, 226, 167, 1),
-                            // border: Border.all(
-                            //   color: selectedSize == index
-                            //       ? Color(0xFFF5D778)
-                            //       : Color.fromARGB(255, 221, 201, 134),
-                            // ),
+
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(

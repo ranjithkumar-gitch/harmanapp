@@ -25,25 +25,6 @@ class InstagramTopBar extends StatelessWidget
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // CupertinoButton(
-          //   padding: EdgeInsets.zero,
-          //   child: const Icon(
-          //     CupertinoIcons.plus_app,
-          //     color: CupertinoColors.black,
-          //     size: 30,
-          //   ),
-          //   onPressed: () {},
-          // ),
-          // const SizedBox(width: 10),
-          // CupertinoButton(
-          //   padding: EdgeInsets.zero,
-          //   child: const Icon(
-          //     CupertinoIcons.heart,
-          //     color: CupertinoColors.black,
-          //     size: 30,
-          //   ),
-          //   onPressed: () {},
-          // ),
           const SizedBox(width: 10),
           CupertinoButton(
             padding: EdgeInsets.zero,
@@ -60,7 +41,6 @@ class InstagramTopBar extends StatelessWidget
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size(double.infinity, 50);
 
   @override

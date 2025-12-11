@@ -25,17 +25,6 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
           child: Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
         centerTitle: true,
-
-        // actions: [
-        //   Row(
-        //     children: [
-        //       Icon(Icons.public, color: Colors.white70),
-        //       const SizedBox(width: 4),
-        //       Text("English (US)", style: TextStyle(color: Colors.white70)),
-        //       SizedBox(width: 16),
-        //     ],
-        //   ),
-        // ],
       ),
 
       body: Padding(

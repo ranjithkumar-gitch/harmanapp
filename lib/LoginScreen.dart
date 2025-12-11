@@ -216,7 +216,7 @@ class Loginscreen extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 40), // Replaces Spacer()
+                  const SizedBox(height: 40),
 
                   Center(
                     child: RichText(
