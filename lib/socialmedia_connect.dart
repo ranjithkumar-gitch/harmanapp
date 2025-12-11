@@ -6,114 +6,115 @@ class SocialmediaConnect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F0F0F),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 15),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xFF0F0F0F),
+        body: Column(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 15),
+
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Icon(Icons.music_note_rounded, color: Colors.white),
+                          const SizedBox(width: 6),
+                          const Text(
+                            "HM",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 10),
-                      Icon(Icons.music_note_rounded, color: Colors.white),
-                      const SizedBox(width: 6),
-                      const Text(
-                        "HM",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: const [
+                          Icon(Icons.language, color: Colors.white70),
+                          SizedBox(width: 6),
+                          Text(
+                            "English (US)",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Row(
-                    children: const [
-                      Icon(Icons.language, color: Colors.white70),
-                      SizedBox(width: 6),
-                      Text(
-                        "English (US)",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                    ],
+
+                  const SizedBox(height: 30),
+
+                  const SizedBox(height: 25),
+                  const Text(
+                    "Connect Social Media Accounts",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+
+                  const SizedBox(height: 65),
+
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Verifyphonenumber(),
+                        ),
+                      );
+                    },
+                    child: _socialRow(
+                      context,
+                      leftIcon: "assets/instagram.jpeg",
+                      leftTitle: "Instagram",
+                      leftInput: true,
+                      rightIcon: "assets/tiktok.png",
+                      rightTitle: "TikTok",
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  _socialRow(
+                    context,
+                    leftIcon: "assets/youtube.png",
+                    leftTitle: "YouTube",
+                    rightIcon: "assets/twitch.png",
+                    rightTitle: "Twitch",
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  _socialRow(
+                    context,
+                    leftIcon: "assets/x.png",
+                    leftTitle: "X",
+                    rightIcon: null,
+                  ),
+
+                  const SizedBox(height: 30),
                 ],
               ),
-
-              const SizedBox(height: 30),
-
-              const SizedBox(height: 25),
-              const Text(
-                "Connect Social Media Accounts",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-
-              const SizedBox(height: 25),
-
-              const SizedBox(height: 30),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Verifyphonenumber(),
-                    ),
-                  );
-                },
-                child: _socialRow(
-                  context,
-                  leftIcon: "assets/instagram.jpeg",
-                  leftTitle: "Instagram",
-                  leftInput: true,
-                  rightIcon: "assets/tiktok.png",
-                  rightTitle: "TikTok",
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              _socialRow(
-                context,
-                leftIcon: "assets/youtube.png",
-                leftTitle: "YouTube",
-                rightIcon: "assets/twitch.png",
-                rightTitle: "Twitch",
-              ),
-
-              const SizedBox(height: 25),
-
-              _socialRow(
-                context,
-                leftIcon: "assets/x.png",
-                leftTitle: "X",
-                rightIcon: null,
-              ),
-
-              const SizedBox(height: 30),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

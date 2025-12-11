@@ -16,62 +16,57 @@ class _CreatorsScreenState extends State<CreatorsScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return CupertinoTabView(
-      builder: (context) => CupertinoPageScaffold(
-        backgroundColor: CupertinoColors.black,
-        navigationBar: const InstagramTopBar(),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: InstagramTopBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(color: Colors.white24),
 
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Divider(color: Colors.white24),
-
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Center(
-                    child: SizedBox(
-                      width: size.width * 0.85,
-                      child: SearchBar(
-                        hintText: "Search creators...",
-                        padding: const WidgetStatePropertyAll(
-                          EdgeInsets.symmetric(horizontal: 16),
-                        ),
-                        leading: const Icon(Icons.search),
-                        onTap: () => showSearch(
-                          context: context,
-                          delegate: DataSearch(posts),
-                        ),
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Center(
+                child: SizedBox(
+                  width: size.width * 0.85,
+                  child: SearchBar(
+                    hintText: "Search creators...",
+                    padding: const WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    leading: const Icon(Icons.search),
+                    onTap: () => showSearch(
+                      context: context,
+                      delegate: DataSearch(posts),
                     ),
                   ),
                 ),
-
-                _title("Gold", const Color(0xffd4b300)),
-                _creatorCarousel(
-                  posts.where((p) => p.hasStory).toList(),
-                  autoPlayInterval: 3,
-                ),
-
-                const Divider(color: Colors.white24),
-
-                _title("Silver", Colors.grey),
-                _creatorCarousel(
-                  posts.where((p) => p.hasStory).toList(),
-                  autoPlayInterval: 6,
-                ),
-
-                const Divider(color: Colors.white24),
-
-                _title("Bronze", CupertinoColors.systemBrown),
-                _creatorCarousel(
-                  posts.where((p) => p.hasStory).toList(),
-                  autoPlayInterval: 5,
-                ),
-              ],
+              ),
             ),
-          ),
+
+            _title("Gold", const Color(0xffd4b300)),
+            _creatorCarousel(
+              posts.where((p) => p.hasStory).toList(),
+              autoPlayInterval: 3,
+            ),
+
+            const Divider(color: Colors.white24),
+
+            _title("Silver", Colors.grey),
+            _creatorCarousel(
+              posts.where((p) => p.hasStory).toList(),
+              autoPlayInterval: 6,
+            ),
+
+            const Divider(color: Colors.white24),
+
+            _title("Bronze", CupertinoColors.systemBrown),
+            _creatorCarousel(
+              posts.where((p) => p.hasStory).toList(),
+              autoPlayInterval: 5,
+            ),
+          ],
         ),
       ),
     );

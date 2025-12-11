@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/helper.dart';
 import 'package:harmanapp/models/post_model.dart';
@@ -12,56 +11,51 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabView(
-      builder: (context) => CupertinoPageScaffold(
-        backgroundColor: const Color(0xFF0F0F0F),
-        navigationBar: const InstagramTopBar(),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: InstagramTopBar(),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const SizedBox(height: 12),
 
-        child: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const SizedBox(height: 12),
-
-              SizedBox(
-                height: 110,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Row(
-                    children: posts
-                        .where((post) => post.hasStory)
-                        .map(
-                          (user) => Padding(
-                            padding: const EdgeInsets.only(right: 14),
-                            child: StoryPicture(user: user),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+          SizedBox(
+            height: 110,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Row(
+                children: posts
+                    .where((post) => post.hasStory)
+                    .map(
+                      (user) => Padding(
+                        padding: const EdgeInsets.only(right: 14),
+                        child: StoryPicture(user: user),
+                      ),
+                    )
+                    .toList(),
               ),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: Divider(color: Colors.white12, height: 1),
-              ),
-
-              ...posts.map((post) {
-                if (post.post.postType == Post.picture) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: ImagePost(post: post),
-                  );
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: ReelPost(post: post),
-                );
-              }),
-            ],
+            ),
           ),
-        ),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(color: Colors.white12, height: 1),
+          ),
+
+          ...posts.map((post) {
+            if (post.post.postType == Post.picture) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ImagePost(post: post),
+              );
+            }
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: ReelPost(post: post),
+            );
+          }),
+        ],
       ),
     );
   }
