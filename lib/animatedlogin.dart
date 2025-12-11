@@ -182,7 +182,6 @@ class _LoginFormState extends State<LoginForm> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                //remember me checkbox
                                 Row(
                                   children: [
                                     Checkbox(
