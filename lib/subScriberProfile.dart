@@ -10,7 +10,8 @@ import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Subscriberprofile extends StatefulWidget {
-  const Subscriberprofile({super.key});
+  // const Subscriberprofile({super.key, required this.imageUrl});
+  const Subscriberprofile({Key? key}) : super(key: key);
 
   @override
   State<Subscriberprofile> createState() => _SubscriberprofileState();
@@ -131,7 +132,7 @@ class _SubscriberprofileState extends State<Subscriberprofile> {
                   Row(
                     children: [
                       Expanded(
-                        child: _Button(text: "Subscribe", color: Colors.blue),
+                        child: _Button(text: "UnSubscribe", color: Colors.blue),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
