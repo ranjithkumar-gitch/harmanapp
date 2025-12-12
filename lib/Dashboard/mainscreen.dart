@@ -2,11 +2,11 @@ import 'dart:math';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 
 import 'package:flutter/material.dart';
-import 'package:harmanapp/SubscribersScreen.dart';
-import 'package:harmanapp/explore/explore_tab.dart';
-import 'package:harmanapp/homescreen.dart';
-import 'package:harmanapp/Creatorsscreen.dart';
-import 'package:harmanapp/marketplace_screen.dart';
+import 'package:harmanapp/Dashboard/MyCreatorsScreen.dart';
+import 'package:harmanapp/Dashboard/ExploreScreen.dart';
+import 'package:harmanapp/Dashboard/homescreen.dart';
+import 'package:harmanapp/Dashboard/AllCreatorsscreen.dart';
+import 'package:harmanapp/Dashboard/marketplace_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -33,8 +33,8 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> bottomBarPages = [
     HomeScreen(),
     ExploreScreen(),
-    SubscribersScreen(),
-    CreatorsScreen(),
+    MyCreatorsScreen(),
+    AllCreatorsScreen(),
     MarketplaceScreen(),
   ];
 

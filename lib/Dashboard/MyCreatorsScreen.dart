@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/helper.dart';
+import 'package:harmanapp/AppBar/AppBar.dart';
+
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/subScriberProfile.dart';
+import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
 import 'package:lottie/lottie.dart';
 
-class SubscribersScreen extends StatefulWidget {
-  const SubscribersScreen({super.key});
+class MyCreatorsScreen extends StatefulWidget {
+  const MyCreatorsScreen({super.key});
 
   @override
-  State<SubscribersScreen> createState() => _SubscribersScreenState();
+  State<MyCreatorsScreen> createState() => _MyCreatorsScreenState();
 }
 
-class _SubscribersScreenState extends State<SubscribersScreen>
+class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isPlaying = false;
@@ -35,7 +36,7 @@ class _SubscribersScreenState extends State<SubscribersScreen>
         // Navigate to another page
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => Subscriberprofile()),
+          MaterialPageRoute(builder: (_) => Mycreatorprofile()),
         );
       }
     });
@@ -51,7 +52,7 @@ class _SubscribersScreenState extends State<SubscribersScreen>
     setState(() {
       isPlaying = true;
     });
-    _controller.forward(from: 0); // restart animation on button click
+    _controller.forward(from: 0);
   }
 
   @override

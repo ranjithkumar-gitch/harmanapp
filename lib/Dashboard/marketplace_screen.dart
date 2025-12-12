@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/cartManager.dart';
-import 'package:harmanapp/helper.dart';
-import 'package:harmanapp/mainscreen.dart';
+import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/Cart/CartManager.dart';
+
 import 'package:lottie/lottie.dart';
 
 class MarketplaceScreen extends StatefulWidget {
@@ -265,7 +265,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ProductViewPage(product: item),
+                      builder: (_) => ProductViewPage(
+                        product: item,
+                        onCartUpdated: () {
+                          setState(() {});
+                        },
+                      ),
                     ),
                   );
                 },
@@ -293,8 +298,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 
 class ProductViewPage extends StatefulWidget {
   final Map<String, dynamic> product;
+  final VoidCallback? onCartUpdated;
 
-  const ProductViewPage({super.key, required this.product});
+  const ProductViewPage({super.key, required this.product, this.onCartUpdated});
 
   @override
   State<ProductViewPage> createState() => _ProductViewPageState();
@@ -611,13 +617,12 @@ class _ProductViewPageState extends State<ProductViewPage> {
                               const SizedBox(height: 15),
 
                               ElevatedButton(
-                                onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                    builder: (context) => const MainScreen(),
-                                  ),
-                                ),
-                                // Navigator.pop(context),
+                                onPressed: () {
+                                  widget.onCartUpdated?.call();
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.black,
                                 ),

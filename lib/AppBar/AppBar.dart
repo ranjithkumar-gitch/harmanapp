@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/cartManager.dart';
-import 'package:harmanapp/cartpage.dart';
-
-import 'package:harmanapp/notifications.dart';
+import 'package:harmanapp/Cart/cartManager.dart';
+import 'package:harmanapp/Cart/Cartpage.dart';
+import 'package:harmanapp/Notifications/notifications.dart';
 
 class InstagramTopBar extends StatefulWidget
     implements ObstructingPreferredSizeWidget {

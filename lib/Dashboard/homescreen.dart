@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/helper.dart';
+import 'package:harmanapp/AppBar/AppBar.dart';
+
 import 'package:harmanapp/models/post_model.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/image_post.dart';

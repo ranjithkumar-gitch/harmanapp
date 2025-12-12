@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/helper.dart';
 
 class Purchasepage extends StatefulWidget {
   const Purchasepage({super.key});
@@ -13,7 +12,7 @@ class _PurchasepageState extends State<Purchasepage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: InstagramTopBar(),
+        appBar: AppBar(),
         body: Column(
           children: [
             SizedBox(height: 20),

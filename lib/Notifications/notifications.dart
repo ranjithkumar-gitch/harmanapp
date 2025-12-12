@@ -6,11 +6,10 @@ class InstaNotification {
   final String id;
   final String username;
   final String avatarUrl;
-  final String? postImageUrl; // for likes/comments
+  final String? postImageUrl;
   final NotificationType type;
-  final String timeAgo; // e.g. "2h"
-  final bool
-  isFollowingBack; // whether the user already follows back (for follow notifications)
+  final String timeAgo;
+  final bool isFollowingBack;
 
   InstaNotification({
     required this.id,
@@ -250,9 +249,6 @@ class _NotificationTile extends StatelessWidget {
   }
 }
 
-// --- Helpful small responsiveness utilities ---
-
-/// Small helper that uses MediaQuery to scale text sizes (optional)
 double scaledFontSize(BuildContext context, double base) {
   final scale = MediaQuery.of(context).textScaleFactor;
   return base * scale;

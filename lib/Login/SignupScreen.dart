@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/LoginScreen.dart';
-import 'package:harmanapp/basicinfo_screen.dart';
+import 'package:harmanapp/Login/LoginScreen.dart';
+import 'package:harmanapp/Login/basicinfo_screen.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});

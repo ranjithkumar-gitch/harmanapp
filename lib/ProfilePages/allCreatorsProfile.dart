@@ -1,25 +1,23 @@
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:harmanapp/explore/explore_tab.dart';
-import 'package:harmanapp/helper.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'dart:typed_data';
+import 'package:harmanapp/Dashboard/ExploreScreen.dart';
+import 'package:harmanapp/ProfilePages/purchase.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-class Subscriberprofile extends StatefulWidget {
-  // const Subscriberprofile({super.key, required this.imageUrl});
-  const Subscriberprofile({Key? key}) : super(key: key);
+class AllCreatorsProfile extends StatefulWidget {
+  const AllCreatorsProfile({Key? key}) : super(key: key);
 
   @override
-  State<Subscriberprofile> createState() => _SubscriberprofileState();
+  State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
 }
 
 enum SampleItem { itemOne }
 
-class _SubscriberprofileState extends State<Subscriberprofile> {
+class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   SampleItem? selectedItem;
 
   @override
@@ -31,7 +29,7 @@ class _SubscriberprofileState extends State<Subscriberprofile> {
       length: 4,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: InstagramTopBar(),
+        appBar: AppBar(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -132,13 +130,8 @@ class _SubscriberprofileState extends State<Subscriberprofile> {
                   Row(
                     children: [
                       Expanded(
-                        child: _Button(text: "UnSubscribe", color: Colors.blue),
+                        child: _Button(text: "Subscribe", color: Colors.blue),
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: _Button(text: "Upgrade", color: Colors.grey),
-                      ),
-                      const SizedBox(width: 8),
                     ],
                   ),
 
@@ -147,24 +140,32 @@ class _SubscriberprofileState extends State<Subscriberprofile> {
               ),
             ),
 
-            const TabBar(
-              indicatorColor: Color(0xFFDAA520),
-              indicatorWeight: 4,
-              labelColor: Color(0xFFDAA520),
-              unselectedLabelColor: Colors.white54,
-              tabs: [
-                Tab(icon: Icon(Icons.apps, size: 28)),
-                Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                Tab(icon: Icon(Icons.live_tv, size: 28)),
-                Tab(icon: Icon(Icons.person, size: 28)),
+            Column(
+              children: [
+                const TabBar(
+                  indicatorColor: Color(0xFFDAA520),
+                  indicatorWeight: 4,
+                  labelColor: Color(0xFFDAA520),
+                  unselectedLabelColor: Colors.white54,
+                  tabs: [
+                    Tab(icon: Icon(Icons.apps, size: 28)),
+                    Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
+                    Tab(icon: Icon(Icons.live_tv, size: 28)),
+                    Tab(icon: Icon(Icons.person, size: 28)),
+                  ],
+                ),
               ],
             ),
 
             const SizedBox(height: 10),
 
-            const Expanded(
-              child: TabBarView(
-                children: [ImagesTab(), ReelsTab(), ImagesTab(), EmptyTab()],
+            Expanded(
+              child: Stack(
+                children: [
+                  TabBarView(
+                    children: [FreshTab(), FreshTab(), FreshTab(), FreshTab()],
+                  ),
+                ],
               ),
             ),
           ],
@@ -217,7 +218,12 @@ class _Button extends StatelessWidget {
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Purchasepage()),
+          );
+        },
         child: Text(text),
       ),
     );
@@ -388,6 +394,49 @@ class EmptyTab extends StatelessWidget {
             'We are working to bring more creative tools for creators.',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FreshTab extends StatelessWidget {
+  const FreshTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 160,
+            height: 160,
+            decoration: BoxDecoration(
+              gradient: ExploreScreen.accentGradient,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 18,
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.shopping_bag,
+              size: 72,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Subscribe to get Full Content ✨',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

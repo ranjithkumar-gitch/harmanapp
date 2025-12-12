@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/cartManager.dart';
-import 'package:harmanapp/mainscreen.dart';
+import 'package:harmanapp/Cart/CartManager.dart';
+
+import 'package:harmanapp/Dashboard/mainscreen.dart';
 import 'package:lottie/lottie.dart';
 
 class CartPage extends StatefulWidget {

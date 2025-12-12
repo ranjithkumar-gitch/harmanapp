@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/socialmedia_connect.dart';
+import 'package:harmanapp/Login/socialmedia_connect.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   const BasicInfoScreen({super.key});

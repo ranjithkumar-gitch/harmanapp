@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/LoginScreen.dart';
+import 'package:harmanapp/Login/LoginScreen.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

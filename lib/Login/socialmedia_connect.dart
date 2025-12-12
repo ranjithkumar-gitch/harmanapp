@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/verifyPhoneNumber.dart';
+import 'package:harmanapp/Login/verifyPhoneNumber.dart';
 
 class SocialmediaConnect extends StatelessWidget {
   const SocialmediaConnect({super.key});

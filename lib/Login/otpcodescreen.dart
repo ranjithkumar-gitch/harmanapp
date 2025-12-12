@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/mainscreen.dart';
+import 'package:harmanapp/Dashboard/mainscreen.dart';
 
 class OtpCodeScreen extends StatelessWidget {
   final TextEditingController _c1 = TextEditingController();

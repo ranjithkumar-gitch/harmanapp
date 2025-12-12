@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/SignupScreen.dart';
+import 'package:harmanapp/Login/SignupScreen.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:harmanapp/animatedlogin.dart';
-import 'package:harmanapp/mainscreen.dart';
+import 'package:harmanapp/Dashboard/mainscreen.dart';
 
 class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
