@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/cartManager.dart';
 import 'package:harmanapp/helper.dart';
+import 'package:harmanapp/mainscreen.dart';
+import 'package:lottie/lottie.dart';
 
 class MarketplaceScreen extends StatefulWidget {
   const MarketplaceScreen({super.key});
@@ -570,7 +573,69 @@ class _ProductViewPageState extends State<ProductViewPage> {
 
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  CartManager.addToCart(widget.product, quantity);
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return Dialog(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 180,
+                                height: 180,
+                                child: Lottie.asset(
+                                  "assets/congratulations.json",
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                "Item added to cart!",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                              const SizedBox(height: 15),
+
+                              ElevatedButton(
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (context) => const MainScreen(),
+                                  ),
+                                ),
+                                // Navigator.pop(context),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                ),
+                                child: Text(
+                                  "OK",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
@@ -579,7 +644,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 child: Text(
-                  "Proceed to Checkout",
+                  "Add to cart",
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

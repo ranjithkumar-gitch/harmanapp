@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/LoginScreen.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _SplashscreenState extends State<Splashscreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Center(
         child: ScaleTransition(
           scale: _scaleAnimation,
@@ -66,12 +67,19 @@ class _SplashscreenState extends State<Splashscreen>
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'HM',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
+              Text(
+                'Harman App',
+                // style: TextStyle(
+                //   fontSize: 32,
+                //   fontWeight: FontWeight.bold,
+                //   letterSpacing: 2,
+                // ),
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
