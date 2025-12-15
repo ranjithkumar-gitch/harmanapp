@@ -20,7 +20,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Handmade Yoga Mat",
       "creator": "YogiShruti",
-      "price": "\$39",
+      "price": "\$39.99",
       "type": "default",
       "description":
           "A premium eco-friendly yoga mat crafted from natural materials designed for maximum comfort and grip. Perfect for daily yoga practice, meditation, stretching, and home workouts. Sweat-resistant and durable for long-term use.",
@@ -31,7 +31,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Lymio Hoodie",
       "creator": "Lavish Store",
-      "price": "\$59",
+      "price": "\$59.99",
       "type": "fashion",
       "description":
           "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
@@ -45,7 +45,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Ultra Pure Creatine",
       "creator": "TrainWithArjun",
-      "price": "\$20",
+      "price": "\$20.99",
       "type": "default",
       "description":
           "A fast-absorbing creatine supplement that enhances ATP energy production, giving you more power during high-intensity workouts. Supports muscle growth, strength gains, and improved workout capacity.",
@@ -56,7 +56,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Copper Water Bottle",
       "creator": "EarthyFeelsCo",
-      "price": "\$30",
+      "price": "\$30.99",
       "type": "default",
       'description':
           'A handcrafted 100% pure copper bottle with natural Ayurvedic health benefits. Helps purify water, boosts immunity, and improves digestion. Beautifully designed for home, yoga sessions, office, or travel.',
@@ -67,7 +67,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Herbal Green Tea Pack",
       "creator": "WellnessByKaira",
-      "price": "\$18",
+      "price": "\$18.99",
       "type": "default",
       'description':
           'A soothing blend of premium handpicked green tea leaves packed with antioxidants. Helps boost metabolism, reduce stress, and promote a healthy lifestyle. Perfect for morning refreshment or evening relaxation.',
@@ -78,7 +78,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Lymio Hoodie",
       "creator": "Lavish Store",
-      "price": "\$59",
+      "price": "\$59.99",
       "type": "fashion",
       "description":
           "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
@@ -92,7 +92,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Ultra Pure Creatine",
       "creator": "TrainWithArjun",
-      "price": "\$20",
+      "price": "\$20.99",
       "type": "default",
       "description":
           "A fast-absorbing creatine supplement that enhances ATP energy production, giving you more power during high-intensity workouts. Supports muscle growth, strength gains, and improved workout capacity.",
@@ -103,7 +103,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     {
       "name": "Copper Water Bottle",
       "creator": "EarthyFeelsCo",
-      "price": "\$30",
+      "price": "\$30.99",
       "type": "default",
       'description':
           'A handcrafted 100% pure copper bottle with natural Ayurvedic health benefits. Helps purify water, boosts immunity, and improves digestion. Beautifully designed for home, yoga sessions, office, or travel.',
@@ -135,8 +135,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 onChanged: (value) => setState(() => searchText = value),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search, color: Colors.black54),
-                  hintText: "Search products or creators...",
-                  hintStyle: const TextStyle(color: Colors.black54),
+                  hintText: "Search here...",
+                  hintStyle: const TextStyle(color: Colors.black),
                   border: InputBorder.none,
                 ),
               ),
