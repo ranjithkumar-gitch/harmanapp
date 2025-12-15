@@ -50,6 +50,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
             _creatorCarousel(
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 3,
+              tiername: "Gold",
             ),
 
             const Divider(color: Colors.white24),
@@ -58,6 +59,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
             _creatorCarousel(
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 6,
+              tiername: "Silver",
             ),
 
             const Divider(color: Colors.white24),
@@ -66,6 +68,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
             _creatorCarousel(
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 5,
+              tiername: "Bronze",
             ),
             SizedBox(height: 20),
           ],
@@ -94,6 +97,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
   Widget _creatorCarousel(
     List<UserPostModel> list, {
     required int autoPlayInterval,
+    required String tiername,
   }) {
     return SizedBox(
       height: 140,
@@ -105,7 +109,9 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => AllCreatorsProfile()),
+                    CupertinoPageRoute(
+                      builder: (_) => AllCreatorsProfile(tiername: tiername),
+                    ),
                   );
                 },
                 child: Column(

@@ -10,7 +10,8 @@ import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AllCreatorsProfile extends StatefulWidget {
-  const AllCreatorsProfile({Key? key}) : super(key: key);
+  String tiername;
+  AllCreatorsProfile({Key? key, required this.tiername}) : super(key: key);
 
   @override
   State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
@@ -131,7 +132,11 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                   Row(
                     children: [
                       Expanded(
-                        child: _Button(text: "Subscribe", color: Colors.blue),
+                        child: _Button(
+                          text: "Subscribe",
+                          color: Colors.blue,
+                          tiername: widget.tiername,
+                        ),
                       ),
                     ],
                   ),
@@ -207,7 +212,12 @@ class _Stat extends StatelessWidget {
 class _Button extends StatelessWidget {
   final String text;
   final Color color;
-  const _Button({required this.text, required this.color});
+  final String tiername;
+  const _Button({
+    required this.text,
+    required this.color,
+    required this.tiername,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -220,9 +230,15 @@ class _Button extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Purchasepage()),
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return PurchaseDialog(
+                tierName: "$tiername Tier",
+                price: '\$9.99/month',
+              );
+            },
           );
         },
         child: Text(text),
