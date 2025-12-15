@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/cartManager.dart';
+import 'package:harmanapp/Cart/CartManager.dart';
+
 import 'package:harmanapp/Cart/Cartpage.dart';
 import 'package:harmanapp/Notifications/notifications.dart';
 
@@ -68,26 +69,53 @@ class _InstagramTopBarState extends State<InstagramTopBar> {
                   size: 30,
                 ),
 
-                if (CartManager.cartItems.isNotEmpty)
-                  Positioned(
-                    right: -5,
-                    top: -5,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        CartManager.cartItems.length.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                // if (CartManager.cartItems.isNotEmpty)
+
+                //   Positioned(
+                //     right: -5,
+                //     top: -5,
+                //     child: Container(
+                //       padding: const EdgeInsets.all(4),
+                //       decoration: const BoxDecoration(
+                //         color: Colors.red,
+                //         shape: BoxShape.circle,
+                //       ),
+                //       child: Text(
+                //         CartManager.cartItems.length.toString(),
+                //         style: const TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 12,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                ValueListenableBuilder<int>(
+                  valueListenable: CartManager.cartCount,
+                  builder: (context, count, _) {
+                    if (count == 0) return const SizedBox();
+
+                    return Positioned(
+                      right: -5,
+                      top: -5,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          count.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
+                ),
               ],
             ),
             onPressed: () async {
@@ -98,7 +126,7 @@ class _InstagramTopBarState extends State<InstagramTopBar> {
               );
 
               // refresh badge on return
-              setState(() {});
+              // setState(() {});
             },
           ),
 

@@ -6,12 +6,14 @@ import 'package:harmanapp/AppBar/AppBar.dart';
 
 import 'package:harmanapp/Dashboard/ExploreScreen.dart';
 
+import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
+
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Mycreatorprofile extends StatefulWidget {
-  const Mycreatorprofile({Key? key}) : super(key: key);
+  const Mycreatorprofile({super.key});
 
   @override
   State<Mycreatorprofile> createState() => _MycreatorprofileState();
@@ -28,146 +30,158 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     final user = posts.firstWhere((p) => p.name == 'Srikanth Natarajan');
 
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: InstagramTopBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 10,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back),
-                        color: Colors.white,
+        appBar: const InstagramTopBar(),
+
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 10,
                       ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.arrow_back),
+                                color: Colors.white,
+                              ),
 
-                      Expanded(
-                        child: Text(
-                          user.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                    ],
-                  ),
+                              Expanded(
+                                child: Text(
+                                  user.name,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
 
-                  const SizedBox(height: 15),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: profileSize,
-                        width: profileSize,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              CupertinoColors.systemYellow,
-                              CupertinoColors.systemYellow,
+                              const SizedBox(width: 15),
                             ],
                           ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          padding: const EdgeInsets.all(2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/sources/profiles/${user.profileImage}',
+
+                          const SizedBox(height: 15),
+
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: profileSize,
+                                width: profileSize,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      CupertinoColors.systemYellow,
+                                      CupertinoColors.systemYellow,
+                                    ],
+                                  ),
                                 ),
-                                fit: BoxFit.cover,
+                                padding: const EdgeInsets.all(2),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  padding: const EdgeInsets.all(2),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'assets/sources/profiles/${user.profileImage}',
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+
+                              const SizedBox(width: 20),
+
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    _Stat("689", "posts"),
+                                    _Stat("28.1M", "followers"),
+                                    _Stat("1", "following"),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+
+                          const SizedBox(height: 20),
+
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _Button(
+                                  text: "UnSubscribe",
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _Button(
+                                  text: "Upgrade",
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 20),
+                        ],
                       ),
+                    ),
 
-                      const SizedBox(width: 20),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                _Stat("689", "posts"),
-                                _Stat("28.1M", "followers"),
-                                _Stat("1", "following"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _Button(text: "UnSubscribe", color: Colors.blue),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: _Button(text: "Upgrade", color: Colors.grey),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-                ],
+                    const TabBar(
+                      indicatorColor: Color(0xFFDAA520),
+                      indicatorWeight: 4,
+                      labelColor: Color(0xFFDAA520),
+                      unselectedLabelColor: Colors.white54,
+                      tabs: [
+                        Tab(icon: Icon(Icons.apps, size: 28)),
+                        Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
+                        Tab(icon: Icon(Icons.live_tv, size: 28)),
+                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
+                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ];
+          },
 
-            const TabBar(
-              indicatorColor: Color(0xFFDAA520),
-              indicatorWeight: 4,
-              labelColor: Color(0xFFDAA520),
-              unselectedLabelColor: Colors.white54,
-              tabs: [
-                Tab(icon: Icon(Icons.apps, size: 28)),
-                Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                Tab(icon: Icon(Icons.live_tv, size: 28)),
-                Tab(icon: Icon(Icons.person, size: 28)),
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            const Expanded(
-              child: TabBarView(
-                children: [ImagesTab(), ReelsTab(), ImagesTab(), EmptyTab()],
-              ),
-            ),
-          ],
+          body: const TabBarView(
+            children: [
+              ImagesTab(),
+              ReelsTab(),
+              ImagesTab(),
+              EmptyTab(),
+              Mycreatorsmarketplace(),
+            ],
+          ),
         ),
       ),
     );
@@ -388,6 +402,49 @@ class EmptyTab extends StatelessWidget {
             'We are working to bring more creative tools for creators.',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FreshTab extends StatelessWidget {
+  const FreshTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 160,
+            height: 160,
+            decoration: BoxDecoration(
+              gradient: ExploreScreen.accentGradient,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 18,
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.shopping_bag,
+              size: 72,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Subscribe to get Full Content ✨',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

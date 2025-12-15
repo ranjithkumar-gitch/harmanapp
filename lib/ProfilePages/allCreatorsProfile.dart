@@ -28,7 +28,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
     final user = posts.firstWhere((p) => p.name == 'Srikanth Natarajan');
 
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
         appBar: InstagramTopBar(),
@@ -158,6 +158,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                     Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
                     Tab(icon: Icon(Icons.live_tv, size: 28)),
                     Tab(icon: Icon(Icons.person, size: 28)),
+                    Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
                   ],
                 ),
               ],
@@ -169,7 +170,13 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
               child: Stack(
                 children: [
                   TabBarView(
-                    children: [FreshTab(), FreshTab(), FreshTab(), FreshTab()],
+                    children: [
+                      FreshTab(),
+                      FreshTab(),
+                      FreshTab(),
+                      FreshTab(),
+                      FreshTab(),
+                    ],
                   ),
                 ],
               ),
