@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:harmanapp/AppBar/AppBar.dart';
 
 import 'package:harmanapp/Dashboard/ExploreScreen.dart';
 
@@ -30,7 +31,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
       length: 4,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: AppBar(),
+        appBar: InstagramTopBar(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
