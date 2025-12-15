@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:harmanapp/Login/SignupScreen.dart';
 
 import 'package:flutter/gestures.dart';
-import 'package:harmanapp/animatedlogin.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
 
-class Loginscreen extends StatelessWidget {
+class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
 
+  @override
+  State<Loginscreen> createState() => _LoginscreenState();
+}
+
+class _LoginscreenState extends State<Loginscreen> {
+  double fontsize = 18;
+  bool first = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,9 +131,15 @@ class Loginscreen extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        // setState(() {
+                        //   fontsize = first ? 18 : 10;
+                        //   first = !first;
+                        // });
+
+                        Get.to(
+                          () => MainScreen(),
+                          transition: Transition.zoom,
+                          duration: const Duration(seconds: 1),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -136,10 +149,11 @@ class Loginscreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Sign in",
                         style: TextStyle(
-                          fontSize: 18,
+                          color: Colors.black,
+                          fontSize: fontsize,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -174,12 +188,6 @@ class Loginscreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           print("Apple login tapped");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginForm(),
-                            ),
-                          );
                         },
                         child: SocialIcon(
                           child: Icon(Icons.apple, color: Colors.white),

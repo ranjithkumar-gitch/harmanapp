@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 
 import 'package:harmanapp/Cart/Cartpage.dart';
+import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/Notifications/notifications.dart';
 
 class InstagramTopBar extends StatefulWidget
@@ -44,20 +46,30 @@ class _InstagramTopBarState extends State<InstagramTopBar> {
           CupertinoButton(
             padding: EdgeInsets.zero,
             child: const Icon(
-              CupertinoIcons.bell,
+              CupertinoIcons.power,
               color: Color(0xFFF5D778),
               size: 30,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => NotificationsPage()),
-              );
+              Get.offAll(() => Loginscreen());
             },
           ),
 
-          const SizedBox(width: 10),
-
+          // CupertinoButton(
+          //   padding: EdgeInsets.zero,
+          //   child: const Icon(
+          //     CupertinoIcons.bell,
+          //     color: Color(0xFFF5D778),
+          //     size: 30,
+          //   ),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => NotificationsPage()),
+          //     );
+          //   },
+          // ),
+          // const SizedBox(width: 10),
           CupertinoButton(
             padding: EdgeInsets.zero,
             child: Stack(

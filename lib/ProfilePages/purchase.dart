@@ -117,10 +117,17 @@ class _PurchaseDialogState extends State<PurchaseDialog>
                     ),
                   ),
                   child: Text(
-                    widget.price ?? '\$9.99',
+                    widget.tierName == "Gold Tier"
+                        ? '\$ 29.99/Month'
+                        : widget.tierName == "Silver Tier"
+                        ? '\$ 19.99/Month'
+                        : widget.tierName == "Bronze Tier"
+                        ? '\$ 9.99/Month'
+                        : '\$ 9.99/Month',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
+                      fontSize: 24,
+                      fontFamily: 'poppins',
                       fontWeight: FontWeight.bold,
                     ),
                   ),

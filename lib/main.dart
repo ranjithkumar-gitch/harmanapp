@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:harmanapp/splashScreen/splashscreen.dart';
 
 void main() {
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Splashscreen());
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Splashscreen(),
+    );
   }
 }
