@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
 
@@ -11,7 +12,7 @@ class Signupscreen extends StatefulWidget {
 }
 
 class _SignupscreenState extends State<Signupscreen> {
-  String selectedRole = "fan";
+  String selectedRole = "Stargazer";
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +58,25 @@ class _SignupscreenState extends State<Signupscreen> {
 
               const SizedBox(height: 40),
 
-              const Center(
+              Center(
                 child: Text(
-                  "Sign up",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                  'Harman App',
+                  style: GoogleFonts.greatVibes(
+                    textStyle: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF5D778),
+                    ),
                   ),
                 ),
+                // Text(
+                //   "Sign up",
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 28,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ),
 
               const SizedBox(height: 10),
@@ -81,21 +92,21 @@ class _SignupscreenState extends State<Signupscreen> {
               const SizedBox(height: 40),
 
               _optionCard(
-                title: "I am a Fan",
-                subtitle: "Connect with your favorite creators",
+                title: "I am a Stargazer",
+                subtitle: "Connect with your favorite Stars",
                 icon: Icons.person,
-                isSelected: selectedRole == "fan",
-                onTap: () => setState(() => selectedRole = "fan"),
+                isSelected: selectedRole == "Stargazer",
+                onTap: () => setState(() => selectedRole = "Stargazer"),
               ),
 
               const SizedBox(height: 15),
 
               _optionCard(
-                title: "I am a Creator",
-                subtitle: "Share your content and build your community",
+                title: "I am a Star",
+                subtitle: "Live a life and leave a legacy",
                 icon: Icons.emoji_emotions,
-                isSelected: selectedRole == "creator",
-                onTap: () => setState(() => selectedRole = "creator"),
+                isSelected: selectedRole == "Star",
+                onTap: () => setState(() => selectedRole = "Star"),
               ),
 
               const Spacer(),
@@ -104,11 +115,12 @@ class _SignupscreenState extends State<Signupscreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFFFFF),
-                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Color(0xFFF5D778), //Colors.black,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Color(0xFFF5D778), width: 2),
                     ),
                   ),
                   onPressed: () {
@@ -177,7 +189,7 @@ class _SignupscreenState extends State<Signupscreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? Color(0xFFFFFFFF) : Colors.transparent,
+            color: isSelected ? Color(0xFFF5D778) : Color(0xFFFFFFFF),
             width: isSelected ? 2 : 1,
           ),
           color: Colors.white.withOpacity(isSelected ? 0.07 : 0.03),
@@ -186,7 +198,7 @@ class _SignupscreenState extends State<Signupscreen> {
           children: [
             CircleAvatar(
               backgroundColor: isSelected
-                  ? Color(0xFF1A1A1A)
+                  ? Color(0xFFF5D778) //Color(0xFF1A1A1A)
                   : Colors.white.withOpacity(0.2),
               child: Icon(icon, color: Colors.white),
             ),
@@ -197,8 +209,8 @@ class _SignupscreenState extends State<Signupscreen> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Color(isSelected ? 0xFFF5D778 : 0xFFFFFFFF),
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -213,7 +225,7 @@ class _SignupscreenState extends State<Signupscreen> {
             ),
             Icon(
               isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: isSelected ? Color(0xFFFFFFFF) : Colors.white54,
+              color: isSelected ? Color(0xFFF5D778) : Colors.white54,
             ),
           ],
         ),

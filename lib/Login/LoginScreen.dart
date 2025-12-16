@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:harmanapp/Login/SignupScreen.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
 
@@ -35,19 +35,29 @@ class _LoginscreenState extends State<Loginscreen> {
                 children: [
                   const SizedBox(height: 40),
 
-                  const Center(
+                  Center(
                     child: Column(
                       children: [
                         Text(
-                          "Sign in",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
+                          'Harman App',
+                          style: GoogleFonts.greatVibes(
+                            textStyle: const TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFF5D778),
+                            ),
                           ),
                         ),
-                        SizedBox(height: 6),
-                        Text(
+                        // Text(
+                        //   "Sign in",
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 32,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        const SizedBox(height: 6),
+                        const Text(
                           "Welcome back",
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
@@ -69,11 +79,15 @@ class _LoginscreenState extends State<Loginscreen> {
                       hintText: "Enter your email",
                       hintStyle: const TextStyle(color: Colors.white38),
                       filled: true,
-                      fillColor: const Color(0xFF1A1A1A),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
+                      fillColor: const Color(0xFF1A1A1A), //Color(0xFFFFFFFF),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Color(0xFFFFFFFF),
+                          color: Color(0xFFF5D778),
                           width: 2,
                         ),
                       ),
@@ -100,10 +114,14 @@ class _LoginscreenState extends State<Loginscreen> {
                       hintStyle: const TextStyle(color: Colors.white38),
                       filled: true,
                       fillColor: const Color(0xFF1A1A1A),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white),
+                      ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Color(0xFFFFFFFF),
+                          color: Color(0xFFF5D778),
                           width: 2,
                         ),
                       ),
@@ -143,16 +161,20 @@ class _LoginscreenState extends State<Loginscreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFFFFFF),
-                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.black,
+
+                        ///Color(0xFFFFFFFF),
+                        foregroundColor: Color(0xFFF5D778), //Colors.black,
+                        // surfaceTintColor: Color(0xFFF5D778),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
+                          side: BorderSide(color: Color(0xFFF5D778), width: 2),
                         ),
                       ),
                       child: Text(
                         "Sign in",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Color(0xFFF5D778),
                           fontSize: fontsize,
                           fontWeight: FontWeight.bold,
                         ),
@@ -185,6 +207,13 @@ class _LoginscreenState extends State<Loginscreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      SocialIcon(
+                        child: Image.asset(
+                          'assets/google1.png',
+                          width: 30,
+                          height: 30,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           print("Apple login tapped");
@@ -193,13 +222,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           child: Icon(Icons.apple, color: Colors.white),
                         ),
                       ),
-                      SocialIcon(
-                        child: Image.asset(
-                          'assets/google1.png',
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
+
                       SocialIcon(
                         child: Image.asset(
                           'assets/facebook.png',

@@ -70,10 +70,11 @@ class OtpCodeScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Color(0xFFF5D778),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
+                    side: BorderSide(color: Color(0xFFF5D778), width: 2),
                   ),
                 ),
                 child: Text(
@@ -104,7 +105,18 @@ class OtpCodeScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 28, color: Colors.white),
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(counterText: "", border: InputBorder.none),
+        decoration: InputDecoration(
+          counterText: "",
+          border: InputBorder.none,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: Colors.white, width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide(color: Color(0xFFF5D778), width: 2),
+          ),
+        ),
       ),
     );
   }

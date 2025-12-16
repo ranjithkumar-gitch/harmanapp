@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/socialmedia_connect.dart';
 
 class BasicInfoScreen extends StatefulWidget {
@@ -53,15 +54,25 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
 
               const SizedBox(height: 55),
 
-              const Center(
+              Center(
                 child: Text(
-                  "Basic Info",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                  'Harman App',
+                  style: GoogleFonts.greatVibes(
+                    textStyle: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF5D778),
+                    ),
                   ),
                 ),
+                // Text(
+                //   "Basic Info",
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 28,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
               ),
               const SizedBox(height: 4),
               const Center(
@@ -102,6 +113,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       value: selectedMonth,
                       items: List.generate(12, (i) => "${i + 1}"),
                       onChanged: (v) => setState(() => selectedMonth = v),
+                      isSelected: selectedMonth != null,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -111,6 +123,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       value: selectedDay,
                       items: List.generate(31, (i) => "${i + 1}"),
                       onChanged: (v) => setState(() => selectedDay = v),
+                      isSelected: selectedDay != null,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -120,6 +133,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       value: selectedYear,
                       items: List.generate(100, (i) => "${2025 - i}"),
                       onChanged: (v) => setState(() => selectedYear = v),
+                      isSelected: selectedYear != null,
                     ),
                   ),
                 ],
@@ -138,7 +152,9 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 children: [
                   Checkbox(
                     value: termsAccepted,
-                    activeColor: Colors.white,
+                    // hoverColor: Color(0xFFF5D778),
+                    // focusColor: Color(0xFFF5D778),
+                    activeColor: Color(0xFFF5D778), //Colors.white,
                     checkColor: Colors.black,
                     onChanged: (v) => setState(() => termsAccepted = v!),
                   ),
@@ -169,10 +185,11 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Color(0xFFF5D778), width: 2),
                     ),
                   ),
                   onPressed: () {
@@ -186,7 +203,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   child: const Text(
                     "Confirm and Continue",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Color(0xFFF5D778),
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -213,7 +230,15 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         hintStyle: const TextStyle(color: Colors.white38),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(color: Colors.white, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Color(0xFFF5D778), width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -228,12 +253,17 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     required String? value,
     required List<String> items,
     required Function(String?) onChanged,
+    required bool isSelected,
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: const Color(0xFF1C1C1E),
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: isSelected ? Color(0xFFF5D778) : Colors.white,
+          width: isSelected ? 2 : 2,
+        ),
       ),
       child: DropdownButton<String>(
         value: value,

@@ -54,23 +54,44 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             const SizedBox(height: 8),
-
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              height: 55,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Enter Your Phone Number",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+            TextField(
+              keyboardType: TextInputType.phone,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xFF1A1A1A),
+                hintText: "Enter Your Phone Number",
+                hintStyle: TextStyle(color: Colors.white54),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.white, width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Color(0xFFF5D778), width: 2),
                 ),
               ),
             ),
 
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: const Color(0xFF1A1A1A),
+            //     borderRadius: BorderRadius.circular(12),
+            //   ),
+            //   padding: const EdgeInsets.symmetric(horizontal: 12),
+            //   height: 55,
+            //   child: Align(
+            //     alignment: Alignment.centerLeft,
+            //     child: Text(
+            //       "Enter Your Phone Number",
+            //       style: TextStyle(color: Colors.white, fontSize: 18),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 10),
 
             const SizedBox(height: 20),
@@ -88,10 +109,11 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Color(0xFFF5D778),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
+                    side: BorderSide(color: Color(0xFFF5D778), width: 2),
                   ),
                 ),
                 child: Text(
