@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:harmanapp/Login/otpcodescreen.dart';
 
 class Verifyphonenumber extends StatefulWidget {
@@ -28,7 +29,7 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
       ),
 
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -55,7 +56,11 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
             ),
             const SizedBox(height: 8),
             TextField(
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 filled: true,

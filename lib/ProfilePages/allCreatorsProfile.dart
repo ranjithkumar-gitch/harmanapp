@@ -1,17 +1,23 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 
-import 'package:harmanapp/models/user_post_model.dart';
-import 'dart:typed_data';
 import 'package:harmanapp/Dashboard/ExploreScreen.dart';
-import 'package:harmanapp/ProfilePages/purchase.dart';
+import 'package:harmanapp/Login/LoginScreen.dart';
+
+import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
+
+import 'package:harmanapp/models/user_post_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AllCreatorsProfile extends StatefulWidget {
-  String tiername;
-  AllCreatorsProfile({Key? key, required this.tiername}) : super(key: key);
+  const AllCreatorsProfile({super.key, required String tiername});
+
+  // String get strName => strName;
 
   @override
   State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
@@ -20,198 +26,355 @@ class AllCreatorsProfile extends StatefulWidget {
 enum SampleItem { itemOne }
 
 class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
+  //var profileName = "";
   SampleItem? selectedItem;
+  // void initState() {
+  //   super.initState();
+  //   profileName = widget.strName;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      posts.shuffle();
+    });
     const profileSize = 80.0;
-    final user = posts.firstWhere((p) => p.name == 'Srikanth Natarajan');
+    // var size = MediaQuery.of(context).size;
+    final user = posts.firstWhere((p) => p.name == "Priyanka C");
 
     return DefaultTabController(
       length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: InstagramTopBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 10,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back),
-                        color: Colors.white,
-                      ),
+        appBar: const InstagramTopBar(),
 
-                      Expanded(
-                        child: Text(
-                          user.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                    ],
-                  ),
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CoverImage('assets/sources/profiles/${user.profileImage}'),
 
-                  const SizedBox(height: 15),
+                    ProfileImage(
+                      'assets/sources/profiles/${user.profileImage}',
+                      user.name,
+                    ),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: profileSize,
-                        width: profileSize,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              CupertinoColors.systemYellow,
-                              CupertinoColors.systemYellow,
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          padding: const EdgeInsets.all(2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/sources/profiles/${user.profileImage}',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 20),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                _Stat("689", "posts"),
-                                _Stat("28.1M", "followers"),
-                                _Stat("1", "following"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _Button(
-                          text: "Subscribe",
-                          color: Colors.blue,
-                          tiername: widget.tiername,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-
-            Column(
-              children: [
-                const TabBar(
-                  indicatorColor: Color(0xFFDAA520),
-                  indicatorWeight: 4,
-                  labelColor: Color(0xFFDAA520),
-                  unselectedLabelColor: Colors.white54,
-                  tabs: [
-                    Tab(icon: Icon(Icons.apps, size: 28)),
-                    Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                    Tab(icon: Icon(Icons.live_tv, size: 28)),
-                    Tab(icon: Icon(Icons.person, size: 28)),
-                    Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                    //       const SizedBox(height: 20),
+                    //     ],
+                    //   ),
+                    // ),
+                    const TabBar(
+                      indicatorColor: Color(0xFFDAA520),
+                      indicatorWeight: 4,
+                      labelColor: Color(0xFFDAA520),
+                      unselectedLabelColor: Colors.white54,
+                      tabs: [
+                        Tab(icon: Icon(Icons.apps, size: 28)),
+                        Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
+                        Tab(icon: Icon(Icons.live_tv, size: 28)),
+                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
+                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            Expanded(
-              child: Stack(
-                children: [
-                  TabBarView(
-                    children: [
-                      FreshTab(),
-                      FreshTab(),
-                      FreshTab(),
-                      FreshTab(),
-                      FreshTab(),
-                    ],
-                  ),
-                ],
               ),
-            ),
-          ],
+            ];
+          },
+
+          body: const TabBarView(
+            children: [
+              ImagesTab(),
+              ReelsTab(),
+              ImagesTab(),
+              EmptyTab(),
+              Mycreatorsmarketplace(),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class _Stat extends StatelessWidget {
-  final String value;
-  final String label;
-  const _Stat(this.value, this.label);
+  Widget CoverImage(String imagePath) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 200,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(imagePath), // AssetImage(imagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.black54,
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 0.0,
+                        top: 2.0,
+                        bottom: 2.0,
+                      ),
+                      child: const Icon(Icons.arrow_back_ios),
+                    ),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+  Widget ProfileImage(String imagePath, String name) {
+    return Container(
+      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 42,
+                  backgroundImage: AssetImage(imagePath),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(height: 30),
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '@ ${name}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+          SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text("Subscribe"),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.white30),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text("Message"),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.white30),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text("Follow"),
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+          SizedBox(height: 10),
+          Text(
+            'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
+            style: const TextStyle(color: Colors.white, fontSize: 13),
+          ),
+          SizedBox(height: 10),
+
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Row(
+                children: [
+                  Text(
+                    '14',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    'Post',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 5),
+              const Text(
+                'o',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 3,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(width: 5),
+              const Row(
+                children: [
+                  Text(
+                    '12',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    'Media',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(width: 5),
+              const Text(
+                'O',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 3,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(width: 5),
+              const Row(
+                children: [
+                  Text(
+                    '20',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    'Likes',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ],
+              ),
+              const Row(
+                children: [
+                  SizedBox(width: 8),
+                  Text('|', style: TextStyle(color: Colors.grey, fontSize: 20)),
+                ],
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Image.asset('assets/google1.png', width: 25, height: 25),
+
+                    GestureDetector(
+                      onTap: () {
+                        print("Apple login tapped");
+                      },
+
+                      child: Icon(Icons.apple, color: Colors.white),
+                    ),
+
+                    Image.asset('assets/facebook.png', width: 20, height: 20),
+
+                    Icon(
+                      FontAwesomeIcons.xTwitter,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+
+                    Icon(
+                      FontAwesomeIcons.twitch,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -219,12 +382,7 @@ class _Stat extends StatelessWidget {
 class _Button extends StatelessWidget {
   final String text;
   final Color color;
-  final String tiername;
-  const _Button({
-    required this.text,
-    required this.color,
-    required this.tiername,
-  });
+  const _Button({required this.text, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -236,18 +394,7 @@ class _Button extends StatelessWidget {
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return PurchaseDialog(
-                tierName: "$tiername Tier",
-                price: '\$9.99/month',
-              );
-            },
-          );
-        },
+        onPressed: () {},
         child: Text(text),
       ),
     );

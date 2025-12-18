@@ -24,40 +24,46 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 22,
+                        vertical: 10,
+                      ),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Icon(Icons.music_note_rounded, color: Colors.white),
-                        const SizedBox(width: 6),
-                        const Text(
-                          "HM",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                          const SizedBox(width: 10),
+                          Icon(Icons.music_note_rounded, color: Colors.white),
+                          const SizedBox(width: 6),
+                          const Text(
+                            "HM",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: const [
-                        Icon(Icons.language, color: Colors.white70),
-                        SizedBox(width: 6),
-                        Text(
-                          "English (US)",
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: const [
+                    //     Icon(Icons.language, color: Colors.white70),
+                    //     SizedBox(width: 6),
+                    //     Text(
+                    //       "English (US)",
+                    //       style: TextStyle(color: Colors.white70),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
 

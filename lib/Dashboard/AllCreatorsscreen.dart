@@ -32,7 +32,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                 child: SizedBox(
                   width: size.width * 0.85,
                   child: SearchBar(
-                    hintText: "Search Creators...",
+                    hintText: "Search Stars...",
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.symmetric(horizontal: 16),
                     ),

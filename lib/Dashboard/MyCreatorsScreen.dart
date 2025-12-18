@@ -18,6 +18,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
   late AnimationController _controller;
   bool isPlaying = false;
   String imageUrl = "";
+  String strName = "";
 
   @override
   void initState() {
@@ -36,7 +37,8 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
         // Navigate to another page
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => Mycreatorprofile()),
+
+          MaterialPageRoute(builder: (_) => Mycreatorprofile(usrName: strName)),
         );
       }
     });
@@ -94,7 +96,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   child: SizedBox(
                     width: 350,
                     child: SearchBar(
-                      hintText: "Search Creators...",
+                      hintText: "Search Stars...",
                       padding: const WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 16.0),
                       ),
@@ -156,6 +158,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
             setState(() {
               isPlaying = true;
               imageUrl = 'assets/sources/profiles/${user.profileImage}';
+              strName = user.name;
             });
             _playAnimation();
           },

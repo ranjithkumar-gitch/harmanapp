@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
 
 class OtpCodeScreen extends StatelessWidget {
@@ -102,9 +103,13 @@ class OtpCodeScreen extends StatelessWidget {
       child: TextField(
         controller: controller,
         maxLength: 1,
-        textAlign: TextAlign.center,
+        //textAlign: TextAlign.center,
         style: TextStyle(fontSize: 28, color: Colors.white),
         keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         decoration: InputDecoration(
           counterText: "",
           border: InputBorder.none,

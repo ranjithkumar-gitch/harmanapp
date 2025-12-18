@@ -43,16 +43,16 @@ class _SignupscreenState extends State<Signupscreen> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: const [
-                      Icon(Icons.language, color: Colors.white70),
-                      SizedBox(width: 6),
-                      Text(
-                        "English (US)",
-                        style: TextStyle(color: Colors.white70, fontSize: 15),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: const [
+                  //     Icon(Icons.language, color: Colors.white70),
+                  //     SizedBox(width: 6),
+                  //     Text(
+                  //       "English (US)",
+                  //       style: TextStyle(color: Colors.white70, fontSize: 15),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
 
@@ -103,7 +103,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
               _optionCard(
                 title: "I am a Star",
-                subtitle: "Live a life and leave a legacy",
+                subtitle: "Live a life & leave a legacy",
                 icon: Icons.emoji_emotions,
                 isSelected: selectedRole == "Star",
                 onTap: () => setState(() => selectedRole = "Star"),

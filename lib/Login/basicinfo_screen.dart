@@ -39,16 +39,16 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: const [
-                      Icon(Icons.language, color: Colors.white70),
-                      SizedBox(width: 6),
-                      Text(
-                        "English (US)",
-                        style: TextStyle(color: Colors.white70),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: const [
+                  //     Icon(Icons.language, color: Colors.white70),
+                  //     SizedBox(width: 6),
+                  //     Text(
+                  //       "English (US)",
+                  //       style: TextStyle(color: Colors.white70),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
 
