@@ -640,46 +640,82 @@ class EmptyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              gradient: ExploreScreen.accentGradient,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 18,
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.construction,
-              size: 72,
-              color: Colors.white,
+    return Stack(
+      children: [
+        /// Main content (center)
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Container(
+              //   width: 160,
+              //   height: 160,
+              //   decoration: BoxDecoration(
+              //     gradient: ExploreScreen.accentGradient,
+              //     borderRadius: BorderRadius.circular(20),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.black.withOpacity(0.08),
+              //         blurRadius: 18,
+              //       ),
+              //     ],
+              //   ),
+              //   child: const Icon(
+              //     Icons.construction,
+              //     size: 72,
+              //     color: Colors.white,
+              //   ),
+              // ),
+              const SizedBox(height: 20),
+
+              // const Text(
+              //   'AI Avatar feature coming soon ✨',
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.w600,
+              //     color: Colors.white,
+              //   ),
+              // ),
+              const SizedBox(height: 8),
+
+              // const Text(
+              //   'We are working to bring more creative tools for creators.',
+              //   textAlign: TextAlign.center,
+              //   style: TextStyle(color: Colors.white70),
+              // ),
+            ],
+          ),
+        ),
+
+        /// Mic button at bottom
+        Positioned(
+          bottom: 30,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: ExploreScreen.accentGradient,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 12,
+                  ),
+                ],
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.mic, color: Colors.white, size: 32),
+                onPressed: () {
+                  // TODO: mic action
+                },
+              ),
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'AI Avatar feature coming soon ✨',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'We are working to bring more creative tools for creators.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

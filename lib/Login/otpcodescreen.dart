@@ -69,13 +69,37 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
             const SizedBox(height: 40),
 
             /// OTP BOXES
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     _otpBox(_c1, _f1, _f2),
+            //     _otpBox(_c2, _f2, _f3),
+            //     _otpBox(_c3, _f3, _f4),
+            //     _otpBox(_c4, _f4, null),
+            //   ],
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _otpBox(_c1, _f1, _f2),
-                _otpBox(_c2, _f2, _f3),
-                _otpBox(_c3, _f3, _f4),
-                _otpBox(_c4, _f4, null),
+                otpBox(
+                  context: context,
+                  controller: _c1,
+                  currentFocus: _f1,
+                  nextFocus: _f2,
+                ),
+                otpBox(
+                  context: context,
+                  controller: _c2,
+                  currentFocus: _f2,
+                  nextFocus: _f3,
+                ),
+                otpBox(
+                  context: context,
+                  controller: _c3,
+                  currentFocus: _f3,
+                  nextFocus: _f4,
+                ),
+                otpBox(context: context, controller: _c4, currentFocus: _f4),
               ],
             ),
 
@@ -118,54 +142,112 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
     );
   }
 
-  Widget _otpBox(
-    TextEditingController controller,
-    FocusNode currentFocus,
+  // Widget _otpBox(
+  //   TextEditingController controller,
+  //   FocusNode currentFocus,
+  //   FocusNode? nextFocus,
+  // ) {
+  //   return RawKeyboardListener(
+  //     focusNode: FocusNode(),
+  //     onKey: (event) {
+  //       if (event is RawKeyDownEvent &&
+  //           event.logicalKey == LogicalKeyboardKey.backspace &&
+  //           controller.text.isEmpty) {
+  //         FocusScope.of(context).previousFocus();
+  //       }
+  //     },
+  //     child: Container(
+  //       width: 60,
+  //       height: 60,
+  //       decoration: BoxDecoration(
+  //         color: const Color(0xFF1A1A1A),
+  //         borderRadius: BorderRadius.circular(14),
+  //       ),
+  //       child: TextField(
+  //         controller: controller,
+  //         focusNode: currentFocus,
+  //         maxLength: 1,
+  //         textAlign: TextAlign.center,
+  //         style: const TextStyle(fontSize: 24, color: Colors.white),
+  //         keyboardType: TextInputType.number,
+  //         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  //         onChanged: (value) {
+  //           if (value.isNotEmpty && nextFocus != null) {
+  //             FocusScope.of(context).requestFocus(nextFocus);
+  //           }
+  //         },
+  //         decoration: InputDecoration(
+  //           counterText: "",
+  //           contentPadding: EdgeInsets.zero,
+  //           border: InputBorder.none,
+  //           enabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(14),
+  //             borderSide: const BorderSide(color: Colors.white, width: 1),
+  //           ),
+  //           focusedBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(14),
+  //             borderSide: const BorderSide(color: Color(0xFFF5D778), width: 2),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+  Widget otpBox({
+    required BuildContext context,
+    required TextEditingController controller,
+    required FocusNode currentFocus,
     FocusNode? nextFocus,
-  ) {
-    return RawKeyboardListener(
-      focusNode: FocusNode(),
-      onKey: (event) {
-        if (event is RawKeyDownEvent &&
-            event.logicalKey == LogicalKeyboardKey.backspace &&
-            controller.text.isEmpty) {
-          FocusScope.of(context).previousFocus();
-        }
-      },
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: TextField(
-          controller: controller,
-          focusNode: currentFocus,
-          maxLength: 1,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 24, color: Colors.white),
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (value) {
-            if (value.isNotEmpty && nextFocus != null) {
-              FocusScope.of(context).requestFocus(nextFocus);
-            }
-          },
-          decoration: InputDecoration(
-            counterText: "",
-            contentPadding: EdgeInsets.zero,
-            border: InputBorder.none,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Colors.white, width: 1),
+  }) {
+    return SizedBox(
+      width: 60,
+      height: 60,
+      child: ValueListenableBuilder<TextEditingValue>(
+        valueListenable: controller,
+        builder: (context, value, _) {
+          final bool hasValue = value.text.isNotEmpty;
+
+          return TextField(
+            controller: controller,
+            focusNode: currentFocus,
+            maxLength: 1,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 24, color: Colors.white),
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
+            onChanged: (val) {
+              if (val.isNotEmpty && nextFocus != null) {
+                FocusScope.of(context).requestFocus(nextFocus);
+              }
+            },
+
+            decoration: InputDecoration(
+              counterText: "",
+              contentPadding: EdgeInsets.zero,
+              filled: true,
+              fillColor: const Color(0xFF1A1A1A),
+
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(
+                  color: hasValue
+                      ? const Color(0xFFF5D778) // ✅ GOLD after input
+                      : Colors.white,
+                  width: 1.5,
+                ),
+              ),
+
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: Color(0xFFF5D778),
+                  width: 2,
+                ),
+              ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFF5D778), width: 2),
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
