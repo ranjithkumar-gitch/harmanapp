@@ -1,3 +1,5 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 
@@ -14,27 +16,53 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: InstagramTopBar(),
+      appBar: CustomAppBar(),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
           const SizedBox(height: 12),
 
+          // SizedBox(
+          //   height: 110,
+          //   child: SingleChildScrollView(
+          //     scrollDirection: Axis.horizontal,
+          //     padding: const EdgeInsets.symmetric(horizontal: 14),
+          //     child: Row(
+          //       children: posts
+          //           .where((post) => post.hasStory)
+          //           .map(
+          //             (user) => Padding(
+          //               padding: const EdgeInsets.only(right: 14),
+          //               child: StoryPicture(user: user),
+          //             ),
+          //           )
+          //           .toList(),
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: 110,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: Row(
-                children: posts
+            child: CarouselSlider.builder(
+              itemCount: posts.where((post) => post.hasStory).length,
+              itemBuilder: (context, index, realIndex) {
+                final usersWithStory = posts
                     .where((post) => post.hasStory)
-                    .map(
-                      (user) => Padding(
-                        padding: const EdgeInsets.only(right: 14),
-                        child: StoryPicture(user: user),
-                      ),
-                    )
-                    .toList(),
+                    .toList();
+
+                return Padding(
+                  padding: const EdgeInsets.only(right: 14),
+                  child: StoryPicture(user: usersWithStory[index]),
+                );
+              },
+              options: CarouselOptions(
+                height: 360,
+                autoPlay: false,
+                autoPlayInterval: Duration(seconds: 3),
+                enlargeCenterPage: true,
+                aspectRatio: 16 / 9,
+                viewportFraction: 0.2,
+                animateToClosest: true,
+                enableInfiniteScroll: true,
               ),
             ),
           ),

@@ -117,7 +117,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CupertinoColors.black,
-      appBar: InstagramTopBar(),
+      appBar: CustomAppBar(),
 
       body: Column(
         children: [

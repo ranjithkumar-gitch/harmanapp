@@ -61,7 +61,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: InstagramTopBar(),
+      appBar: CustomAppBar(),
       body: isPlaying
           ? Stack(
               children: [

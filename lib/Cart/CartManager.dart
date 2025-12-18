@@ -10,13 +10,11 @@ import 'package:flutter/material.dart';
 class CartManager {
   static List<Map<String, dynamic>> cartItems = [];
 
-  // notifier for badge count
   static ValueNotifier<int> cartCount = ValueNotifier<int>(0);
 
   static void addToCart(Map<String, dynamic> product, int quantity) {
     cartItems.add({"product": product, "quantity": quantity});
 
-    // notify listeners
     cartCount.value = cartItems.length;
   }
 

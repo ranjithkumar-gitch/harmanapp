@@ -21,7 +21,7 @@ class ExploreScreen extends StatelessWidget {
       length: 4,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: InstagramTopBar(),
+        appBar: CustomAppBar(),
         body: Column(
           children: [
             const SizedBox(height: 8),
@@ -157,7 +157,7 @@ class ImagesTab extends StatelessWidget {
 class _ImageCard extends StatelessWidget {
   final String imageUrl;
   final int index;
-  const _ImageCard({required this.imageUrl, required this.index, super.key});
+  const _ImageCard({required this.imageUrl, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -508,7 +508,6 @@ class _LiveCard extends StatelessWidget {
     required this.videoId,
     required this.viewers,
     required this.title,
-    super.key,
   });
 
   @override

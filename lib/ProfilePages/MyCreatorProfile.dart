@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-import 'package:harmanapp/Dashboard/ExploreScreen.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
 
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
@@ -46,7 +46,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
       length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: const InstagramTopBar(),
+        appBar: const CustomAppBar(),
 
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {

@@ -5,6 +5,8 @@ class UserPostModel {
   String profileImage;
   String category;
   PostModel post;
+  double? rating; // 4.0, 4.5, 5.0
+  String? badge;
   bool hasStory;
   UserPostModel({
     required this.name,
@@ -12,6 +14,9 @@ class UserPostModel {
     required this.category,
     required this.post,
     this.hasStory = false,
+
+    this.rating,
+    this.badge,
   });
 }
 

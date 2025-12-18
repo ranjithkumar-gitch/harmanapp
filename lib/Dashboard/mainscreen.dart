@@ -3,7 +3,7 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 
 import 'package:flutter/material.dart';
 import 'package:harmanapp/Dashboard/MyCreatorsScreen.dart';
-import 'package:harmanapp/Dashboard/ExploreScreen.dart';
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/Dashboard/homescreen.dart';
 import 'package:harmanapp/Dashboard/AllCreatorsscreen.dart';
 import 'package:harmanapp/Dashboard/marketplace_screen.dart';

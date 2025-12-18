@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ImagePost extends StatefulWidget {
   const ImagePost({super.key, required this.post});
@@ -15,6 +16,9 @@ class ImagePost extends StatefulWidget {
 class _ImagePostState extends State<ImagePost> {
   late PageController _pageController;
   int _currentImage = 0;
+  double _rating = 0.0;
+  bool _showRatingBar = false;
+  Color _ratingColor = CupertinoColors.white;
   @override
   void initState() {
     _pageController = PageController(initialPage: 0)
@@ -39,7 +43,10 @@ class _ImagePostState extends State<ImagePost> {
       children: [
         Row(
           children: [
-            StoryPicture(user: widget.post, hideName: true, size: 60),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: StoryPicture(user: widget.post, hideName: true, size: 60),
+            ),
             Text(
               widget.post.name,
               // style: const TextStyle(
@@ -57,12 +64,93 @@ class _ImagePostState extends State<ImagePost> {
               ),
             ),
             const Spacer(),
-            CupertinoButton(
-              child: const Icon(
-                CupertinoIcons.ellipsis,
-                color: Color(0xFFF5D778),
-              ),
-              onPressed: () {},
+
+            Builder(
+              builder: (context) {
+                return CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: const Icon(
+                    CupertinoIcons.ellipsis,
+                    color: Color(0xFFF5D778),
+                  ),
+                  onPressed: () async {
+                    final RenderBox button =
+                        context.findRenderObject() as RenderBox;
+                    final RenderBox overlay =
+                        Overlay.of(context).context.findRenderObject()
+                            as RenderBox;
+
+                    final RelativeRect position = RelativeRect.fromRect(
+                      Rect.fromPoints(
+                        button.localToGlobal(Offset.zero, ancestor: overlay),
+                        button.localToGlobal(
+                          button.size.bottomRight(Offset.zero),
+                          ancestor: overlay,
+                        ),
+                      ),
+                      Offset.zero & overlay.size,
+                    );
+
+                    final value = await showMenu(
+                      color: Colors.black,
+                      context: context,
+                      position: position,
+                      items: const [
+                        const PopupMenuItem(
+                          value: 'Restrict',
+                          child: Text(
+                            'Restrict',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'Report',
+                          child: Text(
+                            'Report',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'Block',
+                          child: Text(
+                            'Block',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'Cancel',
+                          child: Text(
+                            'Cancel',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+
+                    if (value == 'edit') {
+                      // handle edit
+                    } else if (value == 'delete') {
+                      // handle delete
+                    }
+                  },
+                );
+              },
             ),
           ],
         ),
@@ -90,27 +178,41 @@ class _ImagePostState extends State<ImagePost> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
             children: [
+              // CupertinoButton(
+              //   onPressed: () {
+              //     setState(() {
+              //       widget.post.post.liked = !widget.post.post.liked;
+              //     });
+              //   },
+              //   padding: EdgeInsets.zero,
+              //   child: Icon(
+              //     widget.post.post.liked
+              //         ? CupertinoIcons.star_fill
+              //         : CupertinoIcons.star,
+              //     color: widget.post.post.liked
+              //         ? CupertinoColors.systemOrange
+              //         : CupertinoColors.white,
+              //   ),
+              // ),
               CupertinoButton(
+                padding: EdgeInsets.zero,
                 onPressed: () {
                   setState(() {
-                    widget.post.post.liked = !widget.post.post.liked;
+                    _showRatingBar = !_showRatingBar;
                   });
                 },
-                padding: EdgeInsets.zero,
                 child: Icon(
-                  widget.post.post.liked
-                      ? CupertinoIcons.heart_fill
-                      : CupertinoIcons.heart,
-                  color: widget.post.post.liked
-                      ? CupertinoColors.systemRed
-                      : CupertinoColors.white,
+                  CupertinoIcons.star_fill,
+                  color: _ratingColor,
+                  size: 24,
                 ),
               ),
+
               CupertinoButton(
                 onPressed: () {},
                 padding: EdgeInsets.zero,
                 child: const Icon(
-                  CupertinoIcons.conversation_bubble,
+                  CupertinoIcons.text_bubble,
                   color: CupertinoColors.white,
                 ),
               ),
@@ -118,7 +220,7 @@ class _ImagePostState extends State<ImagePost> {
                 onPressed: () {},
                 padding: EdgeInsets.zero,
                 child: const Icon(
-                  CupertinoIcons.paperplane,
+                  CupertinoIcons.arrowshape_turn_up_right,
                   color: CupertinoColors.white,
                 ),
               ),
@@ -143,6 +245,46 @@ class _ImagePostState extends State<ImagePost> {
             ],
           ),
         ),
+        if (_showRatingBar)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RatingBar.builder(
+                  initialRating: _rating,
+                  minRating: 1,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 28,
+                  unratedColor: Colors.grey,
+                  itemBuilder: (context, _) =>
+                      const Icon(Icons.star, color: Colors.amber),
+                  onRatingUpdate: (rating) {
+                    _rating = rating;
+                  },
+                ),
+                const SizedBox(height: 6),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: const Text(
+                      "OK",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _ratingColor = _getRatingColor(_rating);
+                        _showRatingBar = false;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
@@ -206,5 +348,62 @@ class _ImagePostState extends State<ImagePost> {
         ),
       ],
     );
+  }
+
+  // void _openRatingSheet() {
+  //   double tempRating = _rating;
+
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: Colors.black,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  //     ),
+  //     builder: (context) {
+  //       return Padding(
+  //         padding: const EdgeInsets.all(20),
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             RatingBar.builder(
+  //               initialRating: tempRating,
+  //               minRating: 1,
+  //               allowHalfRating: true,
+  //               itemCount: 5,
+  //               itemSize: 34,
+  //               unratedColor: Colors.grey,
+  //               itemBuilder: (context, _) =>
+  //                   const Icon(Icons.star, color: Colors.amber),
+  //               onRatingUpdate: (rating) {
+  //                 tempRating = rating;
+  //               },
+  //             ),
+  //             const SizedBox(height: 20),
+  //             CupertinoButton.filled(
+  //               child: const Text("OK"),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _rating = tempRating;
+  //                   _ratingColor = _getRatingColor(_rating);
+  //                 });
+  //                 Navigator.pop(context);
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Color _getRatingColor(double rating) {
+    if (rating == 5.0) {
+      return const Color(0xFFFFD700); // Gold
+    } else if (rating >= 4.5) {
+      return const Color(0xFFC0C0C0); // Silver
+    } else if (rating >= 4.0) {
+      return const Color(0xFFCD7F32); // Bronze
+    }
+    return CupertinoColors.white;
   }
 }

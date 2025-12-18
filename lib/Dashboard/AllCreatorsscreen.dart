@@ -21,7 +21,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: InstagramTopBar(),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
