@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
+import 'package:harmanapp/MyAccount/my_account.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -42,12 +46,26 @@ class CustomAppBar extends StatelessWidget
       ),
 
       actions: [
+        // IconButton(
+        //   icon: const Icon(
+        //     Icons.notifications_outlined,
+        //     color: Color(0xFFF5D778),
+        //   ),
+        //   onPressed: () {},
+        // ),
         IconButton(
           icon: const Icon(
-            Icons.notifications_outlined,
+            Icons.account_circle_outlined,
             color: Color(0xFFF5D778),
+            size: 30,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.to(
+              () => MyAccount(),
+              transition: Transition.rightToLeft,
+              duration: const Duration(seconds: 1),
+            );
+          },
         ),
         CupertinoButton(
           padding: EdgeInsets.zero,
