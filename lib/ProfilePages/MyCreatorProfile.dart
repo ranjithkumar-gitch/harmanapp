@@ -228,23 +228,23 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
             ],
           ),
           SizedBox(height: 12),
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  onPressed: () {},
-                  child: const Text("UnSubscribe"),
                 ),
+                onPressed: () {},
+                child: const Text("UnSubscribe"),
               ),
+
               const SizedBox(width: 8),
+
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -258,7 +258,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   child: const Text("Message"),
                 ),
               ),
+
               const SizedBox(width: 8),
+
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(

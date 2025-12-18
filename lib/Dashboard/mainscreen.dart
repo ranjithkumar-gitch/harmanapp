@@ -94,12 +94,12 @@ class _MainScreenState extends State<MainScreen> {
                 BottomBarItem(
                   inActiveItem: Icon(Icons.group, color: Colors.white),
                   activeItem: Icon(Icons.group, color: Colors.black),
-                  itemLabel: 'My Creators',
+                  itemLabel: 'My Stars',
                 ),
                 BottomBarItem(
                   inActiveItem: Icon(Icons.group_add, color: Colors.white),
                   activeItem: Icon(Icons.group_add, color: Colors.black),
-                  itemLabel: 'All Creators',
+                  itemLabel: 'Global Stars',
                 ),
                 BottomBarItem(
                   inActiveItem: Icon(Icons.storefront, color: Colors.white),
