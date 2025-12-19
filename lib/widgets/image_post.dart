@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lottie/lottie.dart';
 
 class ImagePost extends StatefulWidget {
   const ImagePost({super.key, required this.post});
@@ -19,6 +20,9 @@ class _ImagePostState extends State<ImagePost> {
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
+  double _starScale = 1.0;
+
+  bool _useLottieStar = false;
   @override
   void initState() {
     _pageController = PageController(initialPage: 0)
@@ -178,22 +182,6 @@ class _ImagePostState extends State<ImagePost> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
             children: [
-              // CupertinoButton(
-              //   onPressed: () {
-              //     setState(() {
-              //       widget.post.post.liked = !widget.post.post.liked;
-              //     });
-              //   },
-              //   padding: EdgeInsets.zero,
-              //   child: Icon(
-              //     widget.post.post.liked
-              //         ? CupertinoIcons.star_fill
-              //         : CupertinoIcons.star,
-              //     color: widget.post.post.liked
-              //         ? CupertinoColors.systemOrange
-              //         : CupertinoColors.white,
-              //   ),
-              // ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -201,10 +189,27 @@ class _ImagePostState extends State<ImagePost> {
                     _showRatingBar = !_showRatingBar;
                   });
                 },
-                child: Icon(
-                  CupertinoIcons.star_fill,
-                  color: _ratingColor,
-                  size: 24,
+                child: AnimatedScale(
+                  scale: _starScale,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.elasticOut,
+                  child: _useLottieStar
+                      ? Lottie.asset(
+                          'assets/Star.json',
+                          width: 40,
+                          height: 40,
+                          repeat: false,
+                          delegates: LottieDelegates(
+                            values: [
+                              ValueDelegate.color(['**'], value: _ratingColor),
+                            ],
+                          ),
+                        )
+                      : const Icon(
+                          CupertinoIcons.star_fill,
+                          color: CupertinoColors.white,
+                          size: 18,
+                        ),
                 ),
               ),
 
@@ -248,40 +253,73 @@ class _ImagePostState extends State<ImagePost> {
         if (_showRatingBar)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RatingBar.builder(
-                  initialRating: _rating,
-                  minRating: 1,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 28,
-                  unratedColor: Colors.grey,
-                  itemBuilder: (context, _) =>
-                      const Icon(Icons.star, color: Colors.amber),
-                  onRatingUpdate: (rating) {
-                    _rating = rating;
-                  },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.amber, // gold color
+                  width: 1,
                 ),
-                const SizedBox(height: 6),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: const Text(
-                      "OK",
-                      style: TextStyle(color: Colors.white),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RatingBar.builder(
+                      initialRating: _rating,
+                      minRating: 1,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 28,
+                      unratedColor: Colors.grey,
+                      itemBuilder: (context, _) =>
+                          const Icon(Icons.star, color: Colors.amber),
+                      onRatingUpdate: (rating) {
+                        _rating = rating;
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _ratingColor = _getRatingColor(_rating);
-                        _showRatingBar = false;
-                      });
-                    },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Text(
+                        "OK",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      // onPressed: () {
+                      //   setState(() {
+                      //     _ratingColor = _getRatingColor(_rating);
+                      //     _showRatingBar = false;
+                      //   });
+                      // },
+                      onPressed: () {
+                        setState(() {
+                          _ratingColor = _getRatingColor(_rating);
+                          _showRatingBar = false;
+                          _useLottieStar = true;
+
+                          // bounce start
+                          _starScale = 1.4;
+                        });
+
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          if (!mounted) return;
+                          setState(() {
+                            _starScale = 1.0;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -349,52 +387,6 @@ class _ImagePostState extends State<ImagePost> {
       ],
     );
   }
-
-  // void _openRatingSheet() {
-  //   double tempRating = _rating;
-
-  //   showModalBottomSheet(
-  //     context: context,
-  //     backgroundColor: Colors.black,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-  //     ),
-  //     builder: (context) {
-  //       return Padding(
-  //         padding: const EdgeInsets.all(20),
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             RatingBar.builder(
-  //               initialRating: tempRating,
-  //               minRating: 1,
-  //               allowHalfRating: true,
-  //               itemCount: 5,
-  //               itemSize: 34,
-  //               unratedColor: Colors.grey,
-  //               itemBuilder: (context, _) =>
-  //                   const Icon(Icons.star, color: Colors.amber),
-  //               onRatingUpdate: (rating) {
-  //                 tempRating = rating;
-  //               },
-  //             ),
-  //             const SizedBox(height: 20),
-  //             CupertinoButton.filled(
-  //               child: const Text("OK"),
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _rating = tempRating;
-  //                   _ratingColor = _getRatingColor(_rating);
-  //                 });
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   Color _getRatingColor(double rating) {
     if (rating == 5.0) {

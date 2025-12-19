@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -21,6 +22,11 @@ class _ReelPostState extends State<ReelPost> {
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
   _ReelPostState(this.post);
+  double _starScale = 1.0;
+  late final AnimationController _lottieController;
+
+  bool _useLottieStar = false;
+
   @override
   void initState() {
     try {
@@ -34,7 +40,14 @@ class _ReelPostState extends State<ReelPost> {
     } catch (error) {
       print(error);
     }
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _lottieController.dispose();
+    super.dispose();
   }
 
   @override
@@ -209,37 +222,6 @@ class _ReelPostState extends State<ReelPost> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
             children: [
-              // CupertinoButton(
-              //   padding: EdgeInsets.zero,
-              //   onPressed: () {
-              //     showCupertinoModalPopup(
-              //       context: context,
-              //       builder: (_) => Center(
-              //         child: RatingCard(
-              //           onRatingSelected: (rating) {
-              //             final level = getRatingLevel(rating);
-
-              //             setState(() {
-              //               widget.post.post.liked = true;
-              //               widget.post.rating = rating;
-              //               widget.post.badge = level;
-              //             });
-
-              //             print("Rating: $rating → $level");
-              //           },
-              //         ),
-              //       ),
-              //     );
-              //   },
-              //   child: Icon(
-              //     widget.post.post.liked
-              //         ? CupertinoIcons.star_fill
-              //         : CupertinoIcons.star,
-              //     color: widget.post.post.liked
-              //         ? CupertinoColors.systemOrange
-              //         : CupertinoColors.white,
-              //   ),
-              // ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
@@ -247,10 +229,28 @@ class _ReelPostState extends State<ReelPost> {
                     _showRatingBar = !_showRatingBar;
                   });
                 },
-                child: Icon(
-                  CupertinoIcons.star_fill,
-                  color: _ratingColor,
-                  size: 24,
+                child: AnimatedScale(
+                  scale: _starScale,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.elasticOut,
+                  child: _useLottieStar
+                      ? Lottie.asset(
+                          'assets/Star.json',
+
+                          width: 40,
+                          height: 40,
+                          repeat: false,
+                          delegates: LottieDelegates(
+                            values: [
+                              ValueDelegate.color(['**'], value: _ratingColor),
+                            ],
+                          ),
+                        )
+                      : const Icon(
+                          CupertinoIcons.star_fill,
+                          color: CupertinoColors.white,
+                          size: 18,
+                        ),
                 ),
               ),
 
@@ -291,40 +291,67 @@ class _ReelPostState extends State<ReelPost> {
         if (_showRatingBar)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RatingBar.builder(
-                  initialRating: _rating,
-                  minRating: 1,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 28,
-                  unratedColor: Colors.grey,
-                  itemBuilder: (context, _) =>
-                      const Icon(Icons.star, color: Colors.amber),
-                  onRatingUpdate: (rating) {
-                    _rating = rating;
-                  },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.amber, // gold color
+                  width: 1,
                 ),
-                const SizedBox(height: 6),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: const Text(
-                      "OK",
-                      style: TextStyle(color: Colors.white),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RatingBar.builder(
+                      initialRating: _rating,
+                      minRating: 1,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 28,
+                      unratedColor: Colors.grey,
+                      itemBuilder: (context, _) =>
+                          const Icon(Icons.star, color: Colors.amber),
+                      onRatingUpdate: (rating) {
+                        _rating = rating;
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _ratingColor = _getRatingColor(_rating);
-                        _showRatingBar = false;
-                      });
-                    },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Text(
+                        "OK",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      onPressed: () {
+                        setState(() {
+                          _ratingColor = _getRatingColor(_rating);
+                          _showRatingBar = false;
+                          _useLottieStar = true;
+
+                          _starScale = 1.4;
+                        });
+
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          if (!mounted) return;
+                          setState(() {
+                            _starScale = 1.0;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         Padding(
