@@ -26,6 +26,8 @@ class Mycreatorprofile extends StatefulWidget {
 enum SampleItem { itemOne }
 
 class _MycreatorprofileState extends State<Mycreatorprofile> {
+  bool isFollowing = false;
+
   //var profileName = "";
   SampleItem? selectedItem;
   // void initState() {
@@ -231,51 +233,86 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
 
           Row(
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text("UnSubscribe"),
-              ),
-
-              const SizedBox(width: 8),
-
               Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white30),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      "Subscribe",
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text("Message"),
                 ),
               ),
-
-              const SizedBox(width: 8),
-
+              const SizedBox(width: 6),
               Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white30),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  height: 40,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      side: const BorderSide(color: Colors.white30),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      "Message",
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  onPressed: () {},
-                  child: const Text("Follow"),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: SizedBox(
+                  height: 40,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      backgroundColor: isFollowing
+                          ? Colors.blue
+                          : Colors.transparent,
+                      side: BorderSide(
+                        color: isFollowing ? Colors.blue : Colors.white30,
+                      ),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() => isFollowing = !isFollowing);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (isFollowing) const Icon(Icons.done_all, size: 16),
+                        if (isFollowing) const SizedBox(width: 4),
+                        Text(
+                          isFollowing ? "Following" : "Follow",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
+
           SizedBox(height: 10),
           Text(
             'Digital Artist | Content Creator | Photographer | Travel Enthusiast',

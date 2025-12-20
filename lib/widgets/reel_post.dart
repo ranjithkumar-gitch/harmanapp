@@ -360,7 +360,7 @@ class _ReelPostState extends State<ReelPost> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${widget.post.post.likes} likes',
+                '${widget.post.post.likes} Stars',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,

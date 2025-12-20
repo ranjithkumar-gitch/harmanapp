@@ -329,7 +329,7 @@ class _ImagePostState extends State<ImagePost> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${widget.post.post.likes} likes',
+                '${widget.post.post.likes} Stars',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,

@@ -1,55 +1,29 @@
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
-
-//import 'package:harmanapp/ProfilePages/allCreatorsProfile.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
 
   @override
   State<MyAccount> createState() => _MyAccountState();
-
-  //List<Widget> operator [](Container other) {}
 }
 
 enum Menu { preview, share, remove }
 
 class _MyAccountState extends State<MyAccount> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: SafeArea(
         child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: const Color(0xFF0F0F0F),
-          endDrawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: const <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.blue),
-                  child: Text(
-                    'Right-to-Left Drawer Header',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                ),
-                ListTile(
-                  title: Text('Item 1'),
-                  // Add navigation logic here
-                ),
-                ListTile(
-                  title: Text('Item 2'),
-                  // Add navigation logic here
-                ),
-              ],
-            ),
-          ),
+          endDrawer: _endDrawer(),
           body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
@@ -150,12 +124,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
 
                       onPressed: () {
-                        Get.to(
-                          () => //EndDrawerButton(onPressed: () {}),
-                              User_Sidemenu(),
-                          transition: Transition.rightToLeft,
-                          duration: const Duration(seconds: 1),
-                        );
+                        _scaffoldKey.currentState?.openEndDrawer();
                       },
 
                       icon: Padding(
@@ -300,10 +269,8 @@ class _MyAccountState extends State<MyAccount> {
             ],
           ),
 
-          //SizedBox(height: 5),
           SizedBox(height: 10),
           Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Row(
                 children: [
@@ -315,6 +282,7 @@ class _MyAccountState extends State<MyAccount> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Post',
                     style: TextStyle(
@@ -345,6 +313,8 @@ class _MyAccountState extends State<MyAccount> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
+
                   Text(
                     'Media',
                     style: TextStyle(
@@ -375,6 +345,7 @@ class _MyAccountState extends State<MyAccount> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(
@@ -432,6 +403,7 @@ class _MyAccountState extends State<MyAccount> {
     return Column(
       children: <Widget>[
         PopupMenuButton<Menu>(
+          color: Colors.black,
           popUpAnimationStyle: AnimationStyle(
             curve: Easing.emphasizedDecelerate,
             duration: Duration(seconds: 3),
@@ -439,116 +411,91 @@ class _MyAccountState extends State<MyAccount> {
           icon: const Icon(Icons.more_vert, color: Colors.white),
           onSelected: (Menu item) {},
           itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
-            const PopupMenuItem<Menu>(
+            PopupMenuItem<Menu>(
               value: Menu.preview,
               child: ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Edit Profile'),
+                leading: Icon(Icons.edit, color: Colors.white),
+                title: Text(
+                  'Edit Profile',
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
               ),
             ),
-            const PopupMenuItem<Menu>(
+            PopupMenuItem<Menu>(
               value: Menu.share,
               child: ListTile(
-                leading: Icon(Icons.share_outlined),
-                title: Text('Share Profile'),
+                leading: Icon(Icons.share_outlined, color: Colors.white),
+                title: Text(
+                  'Share Profile',
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
               ),
             ),
-            // const PopupMenuItem<Menu>(
-            //   value: Menu.getLink,
-            //   child: ListTile(
-            //     leading: Icon(Icons.link_outlined),
-            //     title: Text('Get link'),
-            //   ),
-            // ),
+
             const PopupMenuDivider(),
-            const PopupMenuItem<Menu>(
+            PopupMenuItem<Menu>(
               value: Menu.remove,
               child: ListTile(
-                leading: Icon(Icons.delete_outline),
-                title: Text('Delete'),
+                leading: Icon(Icons.delete_outline, color: Colors.white),
+                title: Text(
+                  'Delete account',
+                  style: GoogleFonts.poppins(color: Colors.white),
+                ),
               ),
             ),
-            // const PopupMenuItem<Menu>(
-            //   value: Menu.download,
-            //   child: ListTile(
-            //     leading: Icon(Icons.download_outlined),
-            //     title: Text('Download'),
-            //   ),
-            // ),
           ],
         ),
       ],
     );
   }
 
-  Widget EndDrawer() {
+  Widget _endDrawer() {
     return Drawer(
+      backgroundColor: Colors.black,
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const <Widget>[
+        children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Text(
-              'Right-to-Left Drawer Header',
-              style: TextStyle(color: Colors.white, fontSize: 24),
-            ),
-          ),
-          ListTile(
-            title: Text('Item 1'),
-            // Add navigation logic here
-          ),
-          ListTile(
-            title: Text('Item 2'),
-            // Add navigation logic here
-          ),
-        ],
-      ),
-    );
-    // ),
-    // body: const Center(
-    //   child: Text('Swipe from the right edge or tap the icon to open the menu.'),
-    // ),
-  }
-}
-
-class User_Sidemenu extends StatelessWidget {
-  const User_Sidemenu({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('RTL Hamburger Menu'),
-        // The default hamburger icon will now appear on the right side
-        // because of the Directionality widget and the use of endDrawer.
-      ),
-      // Use the endDrawer property to place the drawer on the right side
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+            decoration: const BoxDecoration(color: Colors.black),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Right-to-Left Drawer Header',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                'Harman App',
+                style: GoogleFonts.greatVibes(
+                  textStyle: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFF5D778),
+                  ),
+                ),
               ),
             ),
-            ListTile(
-              title: Text('Item 1'),
-              // Add navigation logic here
+          ),
+          ListTile(
+            title: Text(
+              'Settings',
+              style: GoogleFonts.poppins(color: Colors.white),
             ),
-            ListTile(
-              title: Text('Item 2'),
-              // Add navigation logic here
+          ),
+          ListTile(
+            title: Text(
+              'Privacy & Policy',
+              style: GoogleFonts.poppins(color: Colors.white),
             ),
-          ],
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'Swipe from the right edge or tap the icon to open the menu.',
-        ),
+          ),
+          ListTile(
+            title: Text(
+              'Terms & Conditions',
+              style: GoogleFonts.poppins(color: Colors.white),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              'Logout',
+              style: GoogleFonts.poppins(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }
