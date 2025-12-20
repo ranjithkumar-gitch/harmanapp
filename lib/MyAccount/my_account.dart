@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
-import 'package:harmanapp/widgets/user_sidemenu.dart';
+
 //import 'package:harmanapp/ProfilePages/allCreatorsProfile.dart';
 
 class MyAccount extends StatefulWidget {

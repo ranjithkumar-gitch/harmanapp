@@ -358,7 +358,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     ),
                   ),
                   Text(
-                    'Likes',
+                    'Stars',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,

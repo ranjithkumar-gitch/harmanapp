@@ -326,7 +326,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                     ),
                   ),
                   Text(
-                    'Likes',
+                    'Stars',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
