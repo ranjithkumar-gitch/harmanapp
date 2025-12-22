@@ -149,7 +149,7 @@ class _SignupscreenState extends State<Signupscreen> {
                       TextSpan(
                         text: "Sign in",
                         style: TextStyle(
-                          color: Color(0xFFFFFFFF),
+                          color: Color(0xFFF5D778),
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()

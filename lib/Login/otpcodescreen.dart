@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
 
 class OtpCodeScreen extends StatefulWidget {
@@ -68,16 +69,6 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
             ),
             const SizedBox(height: 40),
 
-            /// OTP BOXES
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     _otpBox(_c1, _f1, _f2),
-            //     _otpBox(_c2, _f2, _f3),
-            //     _otpBox(_c3, _f3, _f4),
-            //     _otpBox(_c4, _f4, null),
-            //   ],
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -104,7 +95,20 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
             ),
 
             const Spacer(),
+            Center(
+              child: Text(
+                'Harman App',
+                style: GoogleFonts.greatVibes(
+                  textStyle: const TextStyle(
+                    fontSize: 52,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFF5D778),
+                  ),
+                ),
+              ),
+            ),
 
+            const Spacer(),
             SizedBox(
               width: double.infinity,
               height: 55,

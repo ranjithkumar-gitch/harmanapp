@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
-import 'package:harmanapp/MyAccount/my_account.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -33,7 +29,6 @@ class CustomAppBar extends StatelessWidget
         statusBarIconBrightness: Brightness.light,
       ),
 
-      /// App title
       title: Text(
         'Harman App',
         style: GoogleFonts.greatVibes(
@@ -46,26 +41,22 @@ class CustomAppBar extends StatelessWidget
       ),
 
       actions: [
-        // IconButton(
-        //   icon: const Icon(
-        //     Icons.notifications_outlined,
-        //     color: Color(0xFFF5D778),
-        //   ),
-        //   onPressed: () {},
-        // ),
-        IconButton(
-          icon: const Icon(
-            Icons.account_circle_outlined,
-            color: Color(0xFFF5D778),
-            size: 30,
+        Container(
+          width: 35.0,
+          height: 35.0,
+
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xFFF5D778)),
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          onPressed: () {
-            Get.to(
-              () => MyAccount(),
-              transition: Transition.rightToLeft,
-              duration: const Duration(seconds: 1),
-            );
-          },
+          child: Center(
+            child: Icon(
+              Icons.person_2_outlined,
+              color: Color(0xFFF5D778),
+              size: 24.0,
+            ),
+          ),
         ),
         CupertinoButton(
           padding: EdgeInsets.zero,
@@ -113,74 +104,6 @@ class CustomAppBar extends StatelessWidget
             );
           },
         ),
-        // Stack(
-        //   clipBehavior: Clip.none,
-        //   children: [
-        //     IconButton(
-        //       icon: const Icon(
-        //         Icons.shopping_cart_outlined,
-        //         color: Color(0xFFF5D778),
-        //       ),
-        //       onPressed: () async {
-        //         await Navigator.push(
-        //           context,
-        //           MaterialPageRoute(builder: (_) => const CartPage()),
-        //         );
-        //       },
-        //     ),
-
-        //     ValueListenableBuilder<int>(
-        //       valueListenable: CartManager.cartCount,
-        //       builder: (context, count, _) {
-        //         if (count == 0) return const SizedBox.shrink();
-        //         return Stack(
-        //           clipBehavior: Clip.none,
-        //           children: [
-        //             IconButton(
-        //               icon: const Icon(
-        //                 Icons.shopping_cart_outlined,
-        //                 color: Color(0xFFF5D778),
-        //               ),
-        //               onPressed: () async {
-        //                 await Navigator.push(
-        //                   context,
-        //                   MaterialPageRoute(builder: (_) => const CartPage()),
-        //                 );
-        //               },
-        //             ),
-
-        //             if (count > 0)
-        //               Positioned(
-        //                 right: 4,
-        //                 top: 4,
-        //                 child: Container(
-        //                   padding: const EdgeInsets.all(4),
-        //                   decoration: const BoxDecoration(
-        //                     color: Colors.red,
-        //                     shape: BoxShape.circle,
-        //                   ),
-        //                   constraints: const BoxConstraints(
-        //                     minWidth: 18,
-        //                     minHeight: 18,
-        //                   ),
-        //                   child: Center(
-        //                     child: Text(
-        //                       count > 99 ? '99+' : count.toString(),
-        //                       style: const TextStyle(
-        //                         color: Colors.white,
-        //                         fontSize: 11,
-        //                         fontWeight: FontWeight.bold,
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ),
-        //               ),
-        //           ],
-        //         );
-        //       },
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }
