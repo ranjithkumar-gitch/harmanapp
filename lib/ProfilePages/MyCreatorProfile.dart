@@ -901,42 +901,11 @@ class LegacyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              gradient: ExploreScreen.accentGradient,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 18,
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.construction,
-              size: 72,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          const Text(
-            'Legacy feature coming soon ✨',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-        ],
-      ),
+    return Image.asset(
+      "assets/sources/profiles/timeline.jpeg",
+      // width: 200,
+      // height: 400,
+      fit: BoxFit.fitHeight,
     );
   }
 }
