@@ -15,7 +15,8 @@ class ReelPost extends StatefulWidget {
   State<ReelPost> createState() => _ReelPostState(post);
 }
 
-class _ReelPostState extends State<ReelPost> {
+class _ReelPostState extends State<ReelPost>
+    with SingleTickerProviderStateMixin {
   late VideoPlayerController _playerController;
   late UserPostModel post;
   double _rating = 0.0;
@@ -23,9 +24,9 @@ class _ReelPostState extends State<ReelPost> {
   Color _ratingColor = CupertinoColors.white;
   _ReelPostState(this.post);
   double _starScale = 1.0;
-  late final AnimationController _lottieController;
-
   bool _useLottieStar = false;
+  late final AnimationController _lottieController;
+  bool isPlaying = false;
 
   @override
   void initState() {
@@ -41,6 +42,20 @@ class _ReelPostState extends State<ReelPost> {
       print(error);
     }
 
+    _lottieController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5), // play for 5 seconds
+    );
+
+    // Listen for completion
+    _lottieController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
+    });
+
     super.initState();
   }
 
@@ -48,6 +63,13 @@ class _ReelPostState extends State<ReelPost> {
   void dispose() {
     _lottieController.dispose();
     super.dispose();
+  }
+
+  void _playAnimation() {
+    setState(() {
+      isPlaying = true;
+    });
+    _lottieController.forward(from: 0);
   }
 
   @override
@@ -63,11 +85,7 @@ class _ReelPostState extends State<ReelPost> {
             ),
             Text(
               widget.post.name,
-              // style: const TextStyle(
-              //   fontSize: 16,
-              //   fontWeight: FontWeight.bold,
-              //   color: Color(0xFFF5D778),
-              // ),
+
               style: GoogleFonts.greatVibes(
                 textStyle: const TextStyle(
                   fontSize: 24,
@@ -108,45 +126,45 @@ class _ReelPostState extends State<ReelPost> {
                       color: Colors.black,
                       context: context,
                       position: position,
-                      items: const [
-                        const PopupMenuItem(
+                      items: [
+                        PopupMenuItem(
                           value: 'Restrict',
                           child: Text(
                             'Restrict',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Report',
                           child: Text(
                             'Report',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Block',
                           child: Text(
                             'Block',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Cancel',
                           child: Text(
                             'Cancel',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
@@ -236,10 +254,15 @@ class _ReelPostState extends State<ReelPost> {
                   child: _useLottieStar
                       ? Lottie.asset(
                           'assets/Star.json',
-
                           width: 40,
                           height: 40,
                           repeat: false,
+                          controller: _lottieController,
+                          onLoaded: (composition) {
+                            _lottieController.duration = const Duration(
+                              seconds: 5,
+                            );
+                          },
                           delegates: LottieDelegates(
                             values: [
                               ValueDelegate.color(['**'], value: _ratingColor),
@@ -313,7 +336,7 @@ class _ReelPostState extends State<ReelPost> {
                         padding: const EdgeInsets.all(8.0),
                         child: RatingBar.builder(
                           initialRating: _rating,
-                          minRating: 1,
+                          minRating: 0,
                           allowHalfRating: true,
                           itemCount: 5,
                           itemSize: 28,
@@ -322,6 +345,9 @@ class _ReelPostState extends State<ReelPost> {
                               const Icon(Icons.star, color: Colors.amber),
                           onRatingUpdate: (rating) {
                             _rating = rating;
+                            setState(() {
+                              _rating = rating;
+                            });
                           },
                         ),
                       ),
@@ -329,9 +355,10 @@ class _ReelPostState extends State<ReelPost> {
                         alignment: Alignment.centerRight,
                         child: CupertinoButton(
                           padding: EdgeInsets.zero,
-                          child: const Text(
-                            "OK",
-                            style: TextStyle(color: Colors.white),
+                          child: Icon(
+                            size: 24,
+                            Icons.check_circle_outline,
+                            color: _rating == 0.0 ? Colors.grey : Colors.amber,
                           ),
 
                           onPressed: () {
@@ -339,7 +366,7 @@ class _ReelPostState extends State<ReelPost> {
                               _ratingColor = _getRatingColor(_rating);
                               _showRatingBar = false;
                               _useLottieStar = true;
-
+                              _playAnimation();
                               _starScale = 1.4;
                             });
 

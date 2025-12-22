@@ -14,13 +14,16 @@ class ImagePost extends StatefulWidget {
   State<ImagePost> createState() => _ImagePostState();
 }
 
-class _ImagePostState extends State<ImagePost> {
+class _ImagePostState extends State<ImagePost>
+    with SingleTickerProviderStateMixin {
   late PageController _pageController;
   int _currentImage = 0;
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
   double _starScale = 1.0;
+  late final AnimationController _lottieController;
+  bool isPlaying = false;
 
   bool _useLottieStar = false;
   @override
@@ -31,13 +34,34 @@ class _ImagePostState extends State<ImagePost> {
           _currentImage = _pageController.page?.toInt() ?? 0;
         });
       });
+    _lottieController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5), // play for 5 seconds
+    );
+
+    // Listen for completion
+    _lottieController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _lottieController.dispose();
     super.dispose();
+  }
+
+  void _playAnimation() {
+    setState(() {
+      isPlaying = true;
+    });
+    _lottieController.forward(from: 0);
   }
 
   @override
@@ -199,6 +223,14 @@ class _ImagePostState extends State<ImagePost> {
                           width: 40,
                           height: 40,
                           repeat: false,
+                          controller: _lottieController,
+                          onLoaded: (composition) {
+                            // Set controller duration to match Lottie file or override
+                            _lottieController.duration = const Duration(
+                              seconds: 5,
+                            );
+                            // _controller.setSpeed(2.0);
+                          },
                           delegates: LottieDelegates(
                             values: [
                               ValueDelegate.color(['**'], value: _ratingColor),
@@ -275,7 +307,7 @@ class _ImagePostState extends State<ImagePost> {
                         padding: const EdgeInsets.all(8.0),
                         child: RatingBar.builder(
                           initialRating: _rating,
-                          minRating: 1,
+                          minRating: 0,
                           allowHalfRating: true,
                           itemCount: 5,
                           itemSize: 28,
@@ -283,17 +315,20 @@ class _ImagePostState extends State<ImagePost> {
                           itemBuilder: (context, _) =>
                               const Icon(Icons.star, color: Colors.amber),
                           onRatingUpdate: (rating) {
-                            _rating = rating;
+                            setState(() {
+                              _rating = rating;
+                            });
                           },
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: const Text(
-                            "OK",
-                            style: TextStyle(color: Colors.white),
+                          padding: EdgeInsets.all(5),
+                          child: Icon(
+                            size: 24,
+                            Icons.check_circle_outline,
+                            color: _rating == 0.0 ? Colors.grey : Colors.amber,
                           ),
                           // onPressed: () {
                           //   setState(() {
@@ -306,8 +341,7 @@ class _ImagePostState extends State<ImagePost> {
                               _ratingColor = _getRatingColor(_rating);
                               _showRatingBar = false;
                               _useLottieStar = true;
-
-                              // bounce start
+                              _playAnimation();
                               _starScale = 1.4;
                             });
 
