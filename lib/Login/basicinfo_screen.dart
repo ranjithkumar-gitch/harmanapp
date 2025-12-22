@@ -168,7 +168,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                           TextSpan(
                             text: "Terms of Service",
                             style: TextStyle(
-                              color: Colors.blueAccent,
+                              color: Color(0xFFF5D778),
                               decoration: TextDecoration.underline,
                             ),
                           ),
