@@ -550,29 +550,42 @@ class _LoginscreenState extends State<Loginscreen> {
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       SocialIcon(
-                        child: Icon(
-                          FontAwesomeIcons.google,
-                          color: Colors.white,
+                        child: Image.asset(
+                          'assets/google1.png',
+                          width: 30,
+                          height: 30,
                         ),
                       ),
-                      SocialIcon(
-                        child: Icon(
-                          FontAwesomeIcons.apple,
-                          color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          print("Apple login tapped");
+                        },
+                        child: SocialIcon(
+                          child: Icon(Icons.apple, color: Colors.white),
                         ),
                       ),
+
                       SocialIcon(
-                        child: Icon(
-                          FontAwesomeIcons.facebook,
-                          color: Colors.white,
+                        child: Image.asset(
+                          'assets/facebook.png',
+                          width: 26,
+                          height: 26,
                         ),
                       ),
                       SocialIcon(
                         child: Icon(
                           FontAwesomeIcons.xTwitter,
                           color: Colors.white,
+                          size: 26,
+                        ),
+                      ),
+                      SocialIcon(
+                        child: Icon(
+                          FontAwesomeIcons.twitch,
+                          color: Colors.white,
+                          size: 26,
                         ),
                       ),
                     ],
