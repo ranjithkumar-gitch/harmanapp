@@ -268,56 +268,65 @@ class _ImagePostState extends State<ImagePost> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: RatingBar.builder(
-                      initialRating: _rating,
-                      minRating: 1,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 28,
-                      unratedColor: Colors.grey,
-                      itemBuilder: (context, _) =>
-                          const Icon(Icons.star, color: Colors.amber),
-                      onRatingUpdate: (rating) {
-                        _rating = rating;
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: const Text(
-                        "OK",
-                        style: TextStyle(color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RatingBar.builder(
+                          initialRating: _rating,
+                          minRating: 1,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 28,
+                          unratedColor: Colors.grey,
+                          itemBuilder: (context, _) =>
+                              const Icon(Icons.star, color: Colors.amber),
+                          onRatingUpdate: (rating) {
+                            _rating = rating;
+                          },
+                        ),
                       ),
-                      // onPressed: () {
-                      //   setState(() {
-                      //     _ratingColor = _getRatingColor(_rating);
-                      //     _showRatingBar = false;
-                      //   });
-                      // },
-                      onPressed: () {
-                        setState(() {
-                          _ratingColor = _getRatingColor(_rating);
-                          _showRatingBar = false;
-                          _useLottieStar = true;
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          // onPressed: () {
+                          //   setState(() {
+                          //     _ratingColor = _getRatingColor(_rating);
+                          //     _showRatingBar = false;
+                          //   });
+                          // },
+                          onPressed: () {
+                            setState(() {
+                              _ratingColor = _getRatingColor(_rating);
+                              _showRatingBar = false;
+                              _useLottieStar = true;
 
-                          // bounce start
-                          _starScale = 1.4;
-                        });
+                              // bounce start
+                              _starScale = 1.4;
+                            });
 
-                        Future.delayed(const Duration(milliseconds: 300), () {
-                          if (!mounted) return;
-                          setState(() {
-                            _starScale = 1.0;
-                          });
-                        });
-                      },
-                    ),
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () {
+                                if (!mounted) return;
+                                setState(() {
+                                  _starScale = 1.0;
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
+
+                  //const SizedBox(height: 6),
                 ],
               ),
             ),
