@@ -71,10 +71,11 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       unselectedLabelColor: Colors.white54,
                       tabs: [
                         Tab(icon: Icon(Icons.apps, size: 28)),
-                        Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
+                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
                         Tab(icon: Icon(Icons.live_tv, size: 28)),
                         Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
                         Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
                       ],
                     ),
                   ],
@@ -86,10 +87,12 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
           body: const TabBarView(
             children: [
               ImagesTab(),
-              ReelsTab(),
-              ImagesTab(),
+              // ReelsTab(),
+              // ImagesTab(),
+              LiveTab(),
               EmptyTab(),
               Mycreatorsmarketplace(),
+              LegacyTab(),
             ],
           ),
         ),
@@ -247,7 +250,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     ),
                     onPressed: () {},
                     child: const Text(
-                      "Subscribe",
+                      "Unsubscribe",
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -528,23 +531,165 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
 //   }
 // }
 
-class _Button extends StatelessWidget {
-  final String text;
-  final Color color;
-  const _Button({required this.text, required this.color});
+// class _Button extends StatelessWidget {
+//   final String text;
+//   final Color color;
+//   const _Button({required this.text, required this.color});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 38,
+//       child: ElevatedButton(
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: color,
+//           foregroundColor: Colors.white,
+//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//         ),
+//         onPressed: () {},
+//         child: Text(text),
+//       ),
+//     );
+//   }
+// }
+
+final sampleLives = [
+  {
+    "videoId": "Y21kE_LHaOY",
+    "title": "Mindfulness Meditation (1 hour)",
+    "viewers": 40000,
+  },
+  {
+    "videoId": "BnYZ6ghpFck",
+    "title": "3 Hour Deep Sleep Meditation",
+    "viewers": 55000,
+  },
+  {"videoId": "O-6f5wQXSu8", "title": "Yoga for Relaxation", "viewers": 12300},
+  {
+    "videoId": "Xc4D2uIdWc0",
+    "title": "LoFi HipHop Live Stream",
+    "viewers": 89000,
+  },
+
+  {
+    "videoId": "aWmJ5DgyWPI",
+    "title": "Nature Relaxation Film 4K",
+    "viewers": 31000,
+  },
+];
+
+class LiveTab extends StatelessWidget {
+  const LiveTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 38,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      itemCount: sampleLives.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, i) {
+        final live = sampleLives[i];
+        return _LiveCard(
+          videoId: live['videoId'] as String,
+          title: live['title'] as String,
+          viewers: live['viewers'] as int,
+        );
+      },
+    );
+  }
+}
+
+class _LiveCard extends StatelessWidget {
+  final String videoId;
+  final int viewers;
+  final String title;
+
+  const _LiveCard({
+    required this.videoId,
+    required this.viewers,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String ytThumb = "https://img.youtube.com/vi/$videoId/hqdefault.jpg";
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => YouTubePlayerScreen(videoId: videoId),
+          ),
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Stack(
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                ytThumb,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            ),
+
+            // LIVE Badge
+            Positioned(
+              top: 12,
+              right: 12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.wifi_tethering, size: 14, color: Colors.white),
+                    SizedBox(width: 6),
+                    Text(
+                      'LIVE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Positioned(
+              left: 12,
+              bottom: 12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(.45),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.remove_red_eye,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "$viewers watching",
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        onPressed: () {},
-        child: Text(text),
       ),
     );
   }
@@ -684,42 +829,36 @@ class EmptyTab extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Container(
-              //   width: 160,
-              //   height: 160,
-              //   decoration: BoxDecoration(
-              //     gradient: ExploreScreen.accentGradient,
-              //     borderRadius: BorderRadius.circular(20),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Colors.black.withOpacity(0.08),
-              //         blurRadius: 18,
-              //       ),
-              //     ],
-              //   ),
-              //   child: const Icon(
-              //     Icons.construction,
-              //     size: 72,
-              //     color: Colors.white,
-              //   ),
-              // ),
+              Container(
+                width: 145,
+                height: 145,
+                decoration: BoxDecoration(
+                  gradient: ExploreScreen.accentGradient,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 18,
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.construction,
+                  size: 65,
+                  color: Colors.white,
+                ),
+              ),
               const SizedBox(height: 20),
 
-              // const Text(
-              //   'AI Avatar feature coming soon ✨',
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //     fontWeight: FontWeight.w600,
-              //     color: Colors.white,
-              //   ),
-              // ),
+              const Text(
+                'AI Avatar feature coming soon ✨',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
               const SizedBox(height: 8),
-
-              // const Text(
-              //   'We are working to bring more creative tools for creators.',
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(color: Colors.white70),
-              // ),
             ],
           ),
         ),
@@ -753,6 +892,51 @@ class EmptyTab extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class LegacyTab extends StatelessWidget {
+  const LegacyTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 160,
+            height: 160,
+            decoration: BoxDecoration(
+              gradient: ExploreScreen.accentGradient,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 18,
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.construction,
+              size: 72,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          const Text(
+            'Legacy feature coming soon ✨',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
     );
   }
 }
