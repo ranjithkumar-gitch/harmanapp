@@ -427,7 +427,7 @@ class _ReelPostState extends State<ReelPost> {
       return const Color(0xFFFFD700); // Gold
     } else if (rating >= 4.5) {
       return const Color(0xFFC0C0C0); // Silver
-    } else if (rating >= 4.0) {
+    } else if (rating >= 0.0) {
       return const Color(0xFFCD7F32); // Bronze
     }
     return CupertinoColors.white;
