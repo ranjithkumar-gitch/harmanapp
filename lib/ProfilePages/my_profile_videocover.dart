@@ -1,91 +1,85 @@
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/Dashboard/explore_screen.dart';
-
-import 'package:harmanapp/Login/LoginScreen.dart';
-
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
-
-import 'package:harmanapp/models/user_post_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-class Mycreatorprofile extends StatefulWidget {
-  const Mycreatorprofile({super.key, required String usrName});
+class Mycreator_videocover extends StatefulWidget {
+  final String usrName;
 
-  // String get strName => strName;
+  const Mycreator_videocover({super.key, required this.usrName});
 
   @override
-  State<Mycreatorprofile> createState() => _MycreatorprofileState();
+  State<Mycreator_videocover> createState() => _Mycreator_videocoverState();
 }
 
-enum SampleItem { itemOne }
-
-class _MycreatorprofileState extends State<Mycreatorprofile> {
+class _Mycreator_videocoverState extends State<Mycreator_videocover> {
+  late VideoPlayerController _videoController;
+  bool isVideoReady = false;
   bool isFollowing = false;
 
-  SampleItem? selectedItem;
+  @override
+  void initState() {
+    super.initState();
+
+    _videoController =
+        VideoPlayerController.asset('assets/sources/videos/7.mp4')
+          ..initialize().then((_) {
+            setState(() => isVideoReady = true);
+            _videoController
+              ..setLooping(true)
+              ..play();
+          });
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      posts.shuffle();
-    });
-    const profileSize = 80.0;
-
-    final user = posts.firstWhere(
-      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
-    );
-
     return DefaultTabController(
       length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
-        appBar: const CustomAppBar(),
-
         body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CoverImage('assets/sources/profiles/${user.profileImage}'),
+          headerSliverBuilder: (_, __) => [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _videoCover(),
+                  ProfileImage(
+                    'assets/sources/profiles/deco-dev.png',
+                    widget.usrName,
+                  ),
 
-                    ProfileImage(
-                      'assets/sources/profiles/${user.profileImage}',
-                      user.name,
-                    ),
-
-                    const TabBar(
-                      indicatorColor: Color(0xFFDAA520),
-                      indicatorWeight: 4,
-                      labelColor: Color(0xFFDAA520),
-                      unselectedLabelColor: Colors.white54,
-                      tabs: [
-                        Tab(icon: Icon(Icons.apps, size: 28)),
-                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                        Tab(icon: Icon(Icons.live_tv, size: 28)),
-                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
-                      ],
-                    ),
-                  ],
-                ),
+                  const TabBar(
+                    indicatorColor: Color(0xFFDAA520),
+                    indicatorWeight: 4,
+                    labelColor: Color(0xFFDAA520),
+                    unselectedLabelColor: Colors.white54,
+                    tabs: [
+                      Tab(icon: Icon(Icons.apps)),
+                      Tab(icon: Icon(Icons.live_tv)),
+                      Tab(icon: Icon(Icons.person_outline)),
+                      Tab(icon: Icon(Icons.shopping_bag_outlined)),
+                      Tab(icon: Icon(Icons.emoji_events_outlined)),
+                    ],
+                  ),
+                ],
               ),
-            ];
-          },
-
+            ),
+          ],
           body: const TabBarView(
             children: [
               ImagesTab(),
-              // ReelsTab(),
-              // ImagesTab(),
+
               LiveTab(),
               EmptyTab(),
               Mycreatorsmarketplace(),
@@ -97,50 +91,93 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     );
   }
 
-  Widget CoverImage(String imagePath) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+  /// 🎬 VIDEO COVER
+  Widget _videoCover() {
+    return SizedBox(
+      height: 220,
+      width: double.infinity,
+      child: Stack(
         children: [
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath), // AssetImage(imagePath),
+          if (isVideoReady && _videoController.value.isInitialized)
+            Positioned.fill(
+              child: FittedBox(
                 fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _videoController.value.size.width,
+                  height: _videoController.value.size.height,
+                  child: VideoPlayer(_videoController),
+                ),
               ),
+            )
+          else
+            Container(color: Colors.black),
+
+          Positioned(
+            top: 40,
+            left: 12,
+            child: IconButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black54),
+              ),
+              onPressed: () => Navigator.pop(context),
+              icon: Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 0.0,
+                  top: 2.0,
+                  bottom: 2.0,
+                ),
+                child: const Icon(Icons.arrow_back_ios),
+              ),
+              color: Colors.white,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    icon: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 0.0,
-                        top: 2.0,
-                        bottom: 2.0,
-                      ),
-                      child: const Icon(Icons.arrow_back_ios),
-                    ),
-                    color: Colors.white,
-                  ),
-                ],
-              ),
+          ),
+
+          Positioned(
+            bottom: 12,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _controlButton(Icons.replay_10, () {
+                  final pos = _videoController.value.position;
+                  _videoController.seekTo(pos - const Duration(seconds: 10));
+                }),
+                _controlButton(
+                  _videoController.value.isPlaying
+                      ? Icons.pause
+                      : Icons.play_arrow,
+                  () {
+                    setState(() {
+                      _videoController.value.isPlaying
+                          ? _videoController.pause()
+                          : _videoController.play();
+                    });
+                  },
+                ),
+                _controlButton(Icons.forward_10, () {
+                  final pos = _videoController.value.position;
+                  _videoController.seekTo(pos + const Duration(seconds: 10));
+                }),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _controlButton(IconData icon, VoidCallback onTap) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: GestureDetector(
+        onTap: onTap,
+        child: CircleAvatar(
+          radius: 22,
+          backgroundColor: Colors.black54,
+          child: Icon(icon, color: Colors.white),
+        ),
       ),
     );
   }
@@ -475,6 +512,8 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     );
   }
 }
+
+/* -------------------- TABS -------------------- */
 
 final sampleLives = [
   {

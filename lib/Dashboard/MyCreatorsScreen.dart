@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/ProfilePages/my_profile_videocover.dart';
 
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
@@ -19,6 +20,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
   bool isPlaying = false;
   String imageUrl = "";
   String strName = "";
+  int tappedIndex = -1;
 
   @override
   void initState() {
@@ -35,11 +37,28 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           isPlaying = false;
         });
         // Navigate to another page
-        Navigator.push(
-          context,
+        // Navigator.push(
+        //   context,
 
-          MaterialPageRoute(builder: (_) => Mycreatorprofile(usrName: strName)),
-        );
+        //   MaterialPageRoute(
+        //     builder: (_) => Mycreator_videocover(usrName: strName),
+        //   ),
+        // );
+        if (tappedIndex == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => Mycreatorprofile(usrName: strName),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => Mycreator_videocover(usrName: strName),
+            ),
+          );
+        }
       }
     });
   }
@@ -67,12 +86,10 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
               children: [
                 Center(
                   child: Lottie.asset(
-                    'assets/dots.json', // your Lottie file path
+                    'assets/dots.json',
                     controller: _controller,
                     onLoaded: (composition) {
-                      // Set controller duration to match Lottie file or override
                       _controller.duration = const Duration(seconds: 5);
-                      // _controller.setSpeed(2.0);
                     },
                   ),
                 ),
@@ -108,12 +125,8 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                         EdgeInsets.symmetric(horizontal: 16.0),
                       ),
                       leading: const Icon(Icons.search),
-                      onTap: () {
-                        // showSearch(context: context, delegate: DataSearch(posts));
-                      },
-                      onChanged: (value) {
-                        // showSearch(context: context, delegate: DataSearch(posts));
-                      },
+                      onTap: () {},
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
@@ -143,15 +156,6 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     );
   }
 
-  // Widget subscriberCard(
-  //   BuildContext context,
-  //   UserPostModel user,
-  //   Color color,
-  //   String tier,
-  // ) {
-  //   return ;
-  // }
-
   Widget subscriberList(
     BuildContext context,
     List<UserPostModel> list, {
@@ -159,13 +163,16 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     required Color color,
   }) {
     return Column(
-      children: list.map((user) {
+      children: list.asMap().entries.map((entry) {
+        final index = entry.key;
+        final user = entry.value;
         return GestureDetector(
           onTap: () {
             setState(() {
               isPlaying = true;
               imageUrl = 'assets/sources/profiles/${user.profileImage}';
               strName = user.name;
+              tappedIndex = index;
             });
             _playAnimation();
           },
@@ -193,14 +200,6 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   ),
                 ),
 
-                // ClipOval(
-                //   child: Image.asset(
-                //     "assets/sources/profiles/${user.profileImage}",
-                //     height: 50,
-                //     width: 50,
-                //     fit: BoxFit.cover,
-                //   ),
-                // ),
                 const SizedBox(width: 12),
 
                 Column(
@@ -233,14 +232,6 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                       size: 20,
                       fontWeight: FontWeight.w500,
                     ),
-                    // Text(
-                    //   tier,
-                    //   style: TextStyle(
-                    //     color: color,
-                    //     fontSize: 13,
-                    //     fontWeight: FontWeight.w500,
-                    //   ),
-                    // ),
                   ],
                 ),
 
