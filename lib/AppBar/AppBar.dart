@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
+import 'package:harmanapp/MyAccount/my_account.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -40,20 +41,28 @@ class CustomAppBar extends StatelessWidget
       ),
 
       actions: [
-        Container(
-          width: 35.0,
-          height: 35.0,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(builder: (context) => const MyAccount()),
+            );
+          },
+          child: Container(
+            width: 35.0,
+            height: 35.0,
 
-          decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFF5D778)),
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Center(
-            child: Icon(
-              Icons.person_2_outlined,
-              color: Color(0xFFF5D778),
-              size: 24.0,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFFF5D778)),
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.person_2_outlined,
+                color: Color(0xFFF5D778),
+                size: 24.0,
+              ),
             ),
           ),
         ),
