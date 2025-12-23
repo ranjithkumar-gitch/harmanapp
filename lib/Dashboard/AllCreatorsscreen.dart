@@ -30,8 +30,15 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: SizedBox(
-                  width: size.width * 0.85,
+                  width: size.width * 1.85,
                   child: SearchBar(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
                     hintText: "Search Stars...",
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.symmetric(horizontal: 16),

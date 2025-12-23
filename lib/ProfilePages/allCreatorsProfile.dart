@@ -148,6 +148,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   }
 
   Widget ProfileImage(String imagePath, String name) {
+    var borderRadius = 12;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -156,14 +157,44 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundImage: AssetImage(imagePath),
+              Container(
+                height: 90,
+                width: 90,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius + 2),
+                  // gradient: const LinearGradient(
+                  //   // colors: [
+                  //   //   CupertinoColors.systemOrange,
+                  //   //   CupertinoColors.systemRed,
+                  //   // ],
+                  // ),
+                ),
+                padding: const EdgeInsets.all(2),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(2),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10 - 2),
+                      image: DecorationImage(
+                        image: AssetImage(imagePath),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
               ),
+              // CircleAvatar(
+              //   radius: 45,
+              //   backgroundColor: Colors.white,
+              //   child: CircleAvatar(
+              //     radius: 42,
+              //     backgroundImage: AssetImage(imagePath),
+              //   ),
+              // ),
               const SizedBox(width: 8),
               Row(
                 children: [
@@ -380,6 +411,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Post',
                     style: TextStyle(
@@ -410,6 +442,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Media',
                     style: TextStyle(
@@ -441,6 +474,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(

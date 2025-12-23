@@ -96,6 +96,13 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   child: SizedBox(
                     width: 350,
                     child: SearchBar(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
                       hintText: "Search Stars...",
                       padding: const WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 16.0),
@@ -172,15 +179,28 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
             ),
             child: Row(
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    "assets/sources/profiles/${user.profileImage}",
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/sources/profiles/${user.profileImage}",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
 
+                // ClipOval(
+                //   child: Image.asset(
+                //     "assets/sources/profiles/${user.profileImage}",
+                //     height: 50,
+                //     width: 50,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 const SizedBox(width: 12),
 
                 Column(
@@ -207,14 +227,20 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                       ],
                     ),
                     const SizedBox(height: 3),
-                    Text(
-                      tier,
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Icon(
+                      Icons.star,
+                      color: color,
+                      size: 20,
+                      fontWeight: FontWeight.w500,
                     ),
+                    // Text(
+                    //   tier,
+                    //   style: TextStyle(
+                    //     color: color,
+                    //     fontSize: 13,
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                   ],
                 ),
 

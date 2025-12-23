@@ -42,7 +42,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     });
     const profileSize = 80.0;
     // var size = MediaQuery.of(context).size;
-    final user = posts.firstWhere((p) => p.name == "Srikanth Natarajan");
+    final user = posts.firstWhere(
+      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+    );
 
     return DefaultTabController(
       length: 5,
@@ -191,14 +193,85 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 42,
-                  backgroundImage: AssetImage(imagePath),
-                ),
+              Row(
+                children: [
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const LinearGradient(
+                        colors: [CupertinoColors.white, CupertinoColors.white],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(imagePath),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (name == "Srikanth Natarajan")
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36),
+                        gradient: const LinearGradient(
+                          colors: [
+                            CupertinoColors.white,
+                            CupertinoColors.white,
+                          ],
+                        ),
+                      ),
+                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
+
+                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Icon(
+                        Icons.star,
+                        color: Color(0xFFDAA520),
+                        size: 30,
+                      ),
+                    ),
+                  if (name == "Devi S Prasad")
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36),
+                        gradient: const LinearGradient(
+                          colors: [
+                            CupertinoColors.white,
+                            CupertinoColors.white,
+                          ],
+                        ),
+                      ),
+                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
+
+                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Icon(
+                        Icons.star,
+                        color: CupertinoColors.systemGrey,
+                        size: 30,
+                      ),
+                    ),
+                ],
               ),
+
+              // CircleAvatar(
+              //   radius: 45,
+              //   backgroundColor: Colors.white,
+              //   child: CircleAvatar(
+              //     radius: 42,
+              //     backgroundImage: AssetImage(imagePath),
+              //   ),
+              // ),
               const SizedBox(width: 8),
               Row(
                 children: [

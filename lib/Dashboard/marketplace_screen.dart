@@ -129,7 +129,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               height: 45,
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: TextField(
                 onChanged: (value) => setState(() => searchText = value),
