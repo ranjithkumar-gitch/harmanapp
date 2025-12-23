@@ -87,17 +87,18 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
   Widget _title(String text, Color color) {
     return Padding(
       padding: EdgeInsets.all(8),
-      child: Text(
-        text,
+      child: Icon(Icons.star, color: color),
+      // child: Text(
+      //   text,
 
-        style: GoogleFonts.greatVibes(
-          textStyle: TextStyle(
-            color: color,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-      ),
+      //   style: GoogleFonts.greatVibes(
+      //     textStyle: TextStyle(
+      //       color: color,
+      //       fontWeight: FontWeight.bold,
+      //       fontSize: 20,
+      //     ),
+      //   ),
+      // ),
     );
   }
 

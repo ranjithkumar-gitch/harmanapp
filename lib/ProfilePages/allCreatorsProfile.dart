@@ -157,35 +157,53 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
         children: [
           Row(
             children: [
-              Container(
-                height: 90,
-                width: 90,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius + 2),
-                  // gradient: const LinearGradient(
-                  //   // colors: [
-                  //   //   CupertinoColors.systemOrange,
-                  //   //   CupertinoColors.systemRed,
-                  //   // ],
-                  // ),
-                ),
-                padding: const EdgeInsets.all(2),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  padding: const EdgeInsets.all(2),
-                  child: Container(
+              Row(
+                children: [
+                  Container(
+                    height: 90,
+                    width: 90,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10 - 2),
-                      image: DecorationImage(
-                        image: AssetImage(imagePath),
-                        fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(borderRadius + 2),
+                      // gradient: const LinearGradient(
+                      //   // colors: [
+                      //   //   CupertinoColors.systemOrange,
+                      //   //   CupertinoColors.systemRed,
+                      //   // ],
+                      // ),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white,
+                      ),
+                      padding: const EdgeInsets.all(2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10 - 2),
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(36),
+                      gradient: const LinearGradient(
+                        colors: [CupertinoColors.white, CupertinoColors.white],
+                      ),
+                    ),
+                    transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
+
+                    //padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
+                  ),
+                ],
               ),
               // CircleAvatar(
               //   radius: 45,

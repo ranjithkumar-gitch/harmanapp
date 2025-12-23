@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/Dashboard/homescreen.dart';
+import 'package:harmanapp/Dashboard/timeline_homescreen.dart';
+import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
+import 'package:harmanapp/models/post_model.dart';
+import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/timeline_images.dart';
+import 'package:harmanapp/widgets/timeline_reels.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -344,30 +351,127 @@ class _MyAccountState extends State<MyAccount> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text(
-                'Settings',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.telegram_sharp, color: Colors.white, size: 20),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TimelineHomescreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Timeline Reels',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Icon(Icons.privacy_tip, color: Colors.white, size: 20),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TimelineHomescreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Privacy & Policy',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.privacy_tip_outlined,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TimelineHomescreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Terms & Conditions',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.logout, color: Colors.white, size: 20),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Loginscreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Logout',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            ListTile(
-              title: Text(
-                'Privacy & Policy',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Terms & Conditions',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Logout',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
+
+            // ListTile(
+            //   title: Text(
+            //     'Privacy & Policy',
+            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+            //   ),
+            // ),
+            // ListTile(
+            //   title: Text(
+            //     'Terms & Conditions',
+            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+            //   ),
+            // ),
+            // ListTile(
+            //   title: Text(
+            //     'Logout',
+            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+            //   ),
+            // ),
           ],
         ),
       ),
