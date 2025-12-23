@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
@@ -63,10 +62,25 @@ class CustomAppBar extends StatelessWidget
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              const Icon(
-                CupertinoIcons.cart,
-                color: Color(0xFFF5D778),
-                size: 30,
+              // const Icon(
+              //   CupertinoIcons.bag,
+              //   color: Color(0xFFF5D778),
+              //   size: 30,
+              // ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFF5D778)),
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Icon(
+                    Icons.shopping_bag_outlined,
+                    size: 28,
+                    color: Color(0xFFF5D778),
+                  ),
+                ),
               ),
 
               ValueListenableBuilder<int>(
