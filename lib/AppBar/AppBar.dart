@@ -66,16 +66,12 @@ class CustomAppBar extends StatelessWidget
             ),
           ),
         ),
+        SizedBox(width: 5),
         CupertinoButton(
           padding: EdgeInsets.zero,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              // const Icon(
-              //   CupertinoIcons.bag,
-              //   color: Color(0xFFF5D778),
-              //   size: 30,
-              // ),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Color(0xFFF5D778)),
@@ -86,7 +82,7 @@ class CustomAppBar extends StatelessWidget
                   padding: const EdgeInsets.all(3.0),
                   child: Icon(
                     Icons.shopping_bag_outlined,
-                    size: 28,
+                    size: 24,
                     color: Color(0xFFF5D778),
                   ),
                 ),
