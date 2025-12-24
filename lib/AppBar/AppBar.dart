@@ -49,19 +49,17 @@ class CustomAppBar extends StatelessWidget
             );
           },
           child: Container(
-            width: 35.0,
-            height: 35.0,
-
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xFFF5D778)),
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
               child: Icon(
                 Icons.person_2_outlined,
+                size: 24,
                 color: Color(0xFFF5D778),
-                size: 24.0,
               ),
             ),
           ),
