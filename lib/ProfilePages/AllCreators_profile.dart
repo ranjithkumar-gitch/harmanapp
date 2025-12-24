@@ -213,12 +213,12 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                 child: Container(
                   height: 30,
                   width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(36),
-                    gradient: const LinearGradient(
-                      colors: [CupertinoColors.white, CupertinoColors.white],
-                    ),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(36),
+                  //   gradient: const LinearGradient(
+                  //     colors: [CupertinoColors.white, CupertinoColors.white],
+                  //   ),
+                  // ),
                   child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
                 ),
 
@@ -283,7 +283,9 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                           ? Color(0xFFF5D778)
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing ? Color(0xFFF5D778) : Colors.white30,
+                        color: isFollowing
+                            ? Color(0xFFF5D778)
+                            : Color(0xFFF5D778),
                       ),
                       foregroundColor: isFollowing
                           ? Colors.black
