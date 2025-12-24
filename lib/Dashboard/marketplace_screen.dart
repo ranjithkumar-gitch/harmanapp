@@ -121,29 +121,43 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 
       body: Column(
         children: [
-          const SizedBox(height: 10),
-
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: TextField(
-                onChanged: (value) => setState(() => searchText = value),
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search, color: Colors.black54),
-                  hintText: "Search here...",
-                  hintStyle: const TextStyle(color: Colors.black),
-                  border: InputBorder.none,
+            padding: const EdgeInsets.all(12.0),
+            child: SizedBox(
+              child: SearchBar(
+                backgroundColor: WidgetStatePropertyAll(Colors.black),
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Color(0xFFF5D778)),
+                  ),
                 ),
+
+                hintText: "Search Here...",
+                hintStyle: WidgetStatePropertyAll(
+                  TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                textStyle: WidgetStatePropertyAll(
+                  TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                padding: const WidgetStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0),
+                ),
+                trailing: [const Icon(Icons.search, color: Color(0xFFF5D778))],
+
+                onTap: () {},
+                onChanged: (value) {},
               ),
             ),
           ),
-
-          const SizedBox(height: 10),
 
           Expanded(
             child: GridView.builder(

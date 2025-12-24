@@ -26,33 +26,46 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: SizedBox(
-                  width: size.width * 1.85,
-                  child: SearchBar(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.all(
-                          Radius.circular(10),
-                        ),
-                      ),
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                child: SearchBar(
+                  backgroundColor: WidgetStatePropertyAll(Colors.black),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Color(0xFFF5D778)),
                     ),
-                    hintText: "Search Stars...",
-                    padding: const WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 16),
-                    ),
-                    leading: const Icon(Icons.search),
-                    // onTap: () => showSearch(
-                    //   context: context,
-                    //   delegate: DataSearch(posts),
-                    // ),
                   ),
+
+                  hintText: "Search Stars...",
+                  hintStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  textStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  padding: const WidgetStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
+                  trailing: [
+                    const Icon(Icons.search, color: Color(0xFFF5D778)),
+                  ],
+
+                  onTap: () {},
+                  onChanged: (value) {},
                 ),
               ),
             ),
 
-            _title("Gold", const Color(0xffd4b300)),
+            _title("Gold", const Color(0xFFF5D778)),
             _creatorCarousel(
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 3,

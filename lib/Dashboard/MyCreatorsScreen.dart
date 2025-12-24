@@ -104,20 +104,37 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: SizedBox(
-                    width: 350,
                     child: SearchBar(
+                      backgroundColor: WidgetStatePropertyAll(Colors.black),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.all(
-                            Radius.circular(10),
-                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: Color(0xFFF5D778)),
                         ),
                       ),
+
                       hintText: "Search Stars...",
+                      hintStyle: WidgetStatePropertyAll(
+                        TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      textStyle: WidgetStatePropertyAll(
+                        TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       padding: const WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 16.0),
                       ),
-                      leading: const Icon(Icons.search),
+                      trailing: [
+                        const Icon(Icons.search, color: Color(0xFFF5D778)),
+                      ],
+
                       onTap: () {},
                       onChanged: (value) {},
                     ),
@@ -128,7 +145,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   context,
                   posts.where((p) => p.hasStory).take(4).toList(),
                   tier: "Gold",
-                  color: const Color(0xffd4af37),
+                  color: const Color(0xFFF5D778),
                 ),
 
                 subscriberList(
