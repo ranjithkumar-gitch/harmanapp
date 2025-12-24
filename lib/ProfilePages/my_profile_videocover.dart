@@ -309,6 +309,12 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   backgroundColor: MaterialStateProperty.all(Colors.black54),
                 ),
                 onPressed: () => Navigator.pop(context),
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 0.0,
+                  top: 2.0,
+                  bottom: 2.0,
+                ),
                 icon: const Icon(Icons.arrow_back_ios),
                 color: Colors.white,
               ),
