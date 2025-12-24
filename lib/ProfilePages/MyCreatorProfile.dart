@@ -388,7 +388,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                           ? Color(0xFFF5D778)
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing ? Color(0xFFF5D778) : Colors.white30,
+                        color: isFollowing
+                            ? Color(0xFFF5D778)
+                            : Color(0xFFF5D778),
                       ),
                       foregroundColor: isFollowing
                           ? Colors.black
