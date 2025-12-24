@@ -92,18 +92,37 @@ class CustomAppBar extends StatelessWidget
                   if (count == 0) return const SizedBox();
 
                   return Positioned(
-                    right: -5,
-                    top: -5,
+                    right: -10,
+                    top: -10,
+                    // child: Container(
+                    //   padding: const EdgeInsets.all(4),
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.red,
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    //   child: Text(
+                    //     count.toString(),
+                    //     style: const TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 12,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    // ),
                     child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.black, // background
                         shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Color(0xFFF5D778), // gold border
+                          width: 2,
+                        ),
                       ),
                       child: Text(
                         count.toString(),
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFFF5D778), // gold number
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -121,6 +140,7 @@ class CustomAppBar extends StatelessWidget
             );
           },
         ),
+        SizedBox(width: 6),
       ],
     );
   }

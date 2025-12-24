@@ -21,6 +21,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
   late VideoPlayerController _videoController;
   bool isVideoReady = false;
   bool isFollowing = false;
+  bool _isMuted = true;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
             setState(() => isVideoReady = true);
             _videoController
               ..setLooping(true)
+              ..setVolume(0.0)
               ..play();
           });
   }
@@ -69,9 +71,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     tabs: [
                       Tab(icon: Icon(Icons.apps)),
                       Tab(icon: Icon(Icons.live_tv)),
+                      Tab(icon: Icon(Icons.emoji_events_outlined)),
+
                       Tab(icon: Icon(Icons.person_outline)),
                       Tab(icon: Icon(Icons.shopping_bag_outlined)),
-                      Tab(icon: Icon(Icons.emoji_events_outlined)),
                     ],
                   ),
                 ],
@@ -83,9 +86,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               ImagesTab(),
 
               LiveTab(),
+              LegacyTab(),
+
               EmptyTab(),
               Mycreatorsmarketplace(),
-              LegacyTab(),
             ],
           ),
         ),
@@ -94,12 +98,193 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
   }
 
   /// 🎬 VIDEO COVER
+  // Widget _videoCover() {
+  //   return SizedBox(
+  //     height: 220,
+  //     width: double.infinity,
+  //     child: Stack(
+  //       children: [
+  //         if (isVideoReady && _videoController.value.isInitialized)
+  //           Positioned.fill(
+  //             child: FittedBox(
+  //               fit: BoxFit.cover,
+  //               child: SizedBox(
+  //                 width: _videoController.value.size.width,
+  //                 height: _videoController.value.size.height,
+  //                 child: VideoPlayer(_videoController),
+  //               ),
+  //             ),
+  //           )
+  //         else
+  //           Container(color: Colors.black),
+
+  //         Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Positioned(
+  //             top: 40,
+  //             left: 12,
+  //             child: IconButton(
+  //               style: ButtonStyle(
+  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
+  //               ),
+  //               onPressed: () => Navigator.pop(context),
+  //               icon: Padding(
+  //                 padding: const EdgeInsets.only(
+  //                   left: 8.0,
+  //                   right: 0.0,
+  //                   top: 2.0,
+  //                   bottom: 2.0,
+  //                 ),
+  //                 child: const Icon(Icons.arrow_back_ios),
+  //               ),
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //         ),
+
+  //         Positioned(
+  //           bottom: 12,
+  //           left: 0,
+  //           right: 0,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               _controlButton(Icons.replay_10, () {
+  //                 final pos = _videoController.value.position;
+  //                 _videoController.seekTo(pos - const Duration(seconds: 10));
+  //               }),
+  //               _controlButton(
+  //                 _videoController.value.isPlaying
+  //                     ? Icons.pause
+  //                     : Icons.play_arrow,
+  //                 () {
+  //                   setState(() {
+  //                     _videoController.value.isPlaying
+  //                         ? _videoController.pause()
+  //                         : _videoController.play();
+  //                   });
+  //                 },
+  //               ),
+  //               _controlButton(Icons.forward_10, () {
+  //                 final pos = _videoController.value.position;
+  //                 _videoController.seekTo(pos + const Duration(seconds: 10));
+  //               }),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  // Widget _videoCover() {
+  //   return SizedBox(
+  //     height: 220,
+  //     width: double.infinity,
+  //     child: Stack(
+  //       children: [
+  //         if (isVideoReady && _videoController.value.isInitialized)
+  //           Positioned.fill(
+  //             child: FittedBox(
+  //               fit: BoxFit.cover,
+  //               child: SizedBox(
+  //                 width: _videoController.value.size.width,
+  //                 height: _videoController.value.size.height,
+  //                 child: VideoPlayer(_videoController),
+  //               ),
+  //             ),
+  //           )
+  //         else
+  //           Container(color: Colors.black),
+
+  //         Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Positioned(
+  //             top: 40,
+  //             left: 12,
+  //             child: IconButton(
+  //               style: ButtonStyle(
+  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
+  //               ),
+  //               onPressed: () => Navigator.pop(context),
+  //               icon: Padding(
+  //                 padding: const EdgeInsets.only(
+  //                   left: 8.0,
+  //                   right: 0.0,
+  //                   top: 2.0,
+  //                   bottom: 2.0,
+  //                 ),
+  //                 child: const Icon(Icons.arrow_back_ios),
+  //               ),
+  //               color: Colors.white,
+  //             ),
+  //           ),
+  //         ),
+
+  //         /// 🔊 Mute / Unmute Button (Top Right)
+  //         Positioned(
+  //           top: 0,
+  //           right: 0,
+  //           child: SafeArea(
+  //             child: IconButton(
+  //               style: ButtonStyle(
+  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
+  //               ),
+  //               icon: Icon(
+  //                 _isMuted ? Icons.volume_off : Icons.volume_up,
+  //                 color: Colors.white,
+  //               ),
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _isMuted = !_isMuted;
+  //                   _videoController.setVolume(_isMuted ? 0.0 : 1.0);
+  //                 });
+  //               },
+  //             ),
+  //           ),
+  //         ),
+
+  //         /// ▶️ Playback Controls (Bottom Center)
+  //         Positioned(
+  //           bottom: 12,
+  //           left: 0,
+  //           right: 0,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               _controlButton(Icons.replay_10, () {
+  //                 final pos = _videoController.value.position;
+  //                 _videoController.seekTo(pos - const Duration(seconds: 10));
+  //               }),
+  //               _controlButton(
+  //                 _videoController.value.isPlaying
+  //                     ? Icons.pause
+  //                     : Icons.play_arrow,
+  //                 () {
+  //                   setState(() {
+  //                     _videoController.value.isPlaying
+  //                         ? _videoController.pause()
+  //                         : _videoController.play();
+  //                   });
+  //                 },
+  //               ),
+  //               _controlButton(Icons.forward_10, () {
+  //                 final pos = _videoController.value.position;
+  //                 _videoController.seekTo(pos + const Duration(seconds: 10));
+  //               }),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _videoCover() {
     return SizedBox(
       height: 220,
       width: double.infinity,
       child: Stack(
         children: [
+          /// 🎬 Video
           if (isVideoReady && _videoController.value.isInitialized)
             Positioned.fill(
               child: FittedBox(
@@ -114,58 +299,72 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
           else
             Container(color: Colors.black),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Positioned(
-              top: 40,
-              left: 12,
+          /// 🔙 Back Button (Top Left)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SafeArea(
               child: IconButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black54),
                 ),
                 onPressed: () => Navigator.pop(context),
-                icon: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    right: 0.0,
-                    top: 2.0,
-                    bottom: 2.0,
-                  ),
-                  child: const Icon(Icons.arrow_back_ios),
-                ),
+                icon: const Icon(Icons.arrow_back_ios),
                 color: Colors.white,
               ),
             ),
           ),
 
+          /// 🔊 Mute Button (Top Right)
           Positioned(
-            bottom: 12,
-            left: 0,
+            top: 0,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _controlButton(Icons.replay_10, () {
-                  final pos = _videoController.value.position;
-                  _videoController.seekTo(pos - const Duration(seconds: 10));
-                }),
-                _controlButton(
-                  _videoController.value.isPlaying
-                      ? Icons.pause
-                      : Icons.play_arrow,
-                  () {
-                    setState(() {
+            child: SafeArea(
+              child: Column(
+                children: [
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.black54,
+                      ),
+                    ),
+                    icon: Icon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMuted = !_isMuted;
+                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  /// ▶️ Play / Pause (Below Mute)
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.black54,
+                      ),
+                    ),
+                    icon: Icon(
                       _videoController.value.isPlaying
-                          ? _videoController.pause()
-                          : _videoController.play();
-                    });
-                  },
-                ),
-                _controlButton(Icons.forward_10, () {
-                  final pos = _videoController.value.position;
-                  _videoController.seekTo(pos + const Duration(seconds: 10));
-                }),
-              ],
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _videoController.value.isPlaying
+                            ? _videoController.pause()
+                            : _videoController.play();
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -173,19 +372,19 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
     );
   }
 
-  Widget _controlButton(IconData icon, VoidCallback onTap) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: GestureDetector(
-        onTap: onTap,
-        child: CircleAvatar(
-          radius: 22,
-          backgroundColor: Colors.black54,
-          child: Icon(icon, color: Colors.white),
-        ),
-      ),
-    );
-  }
+  // Widget _controlButton(IconData icon, VoidCallback onTap) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 8),
+  //     child: GestureDetector(
+  //       onTap: onTap,
+  //       child: CircleAvatar(
+  //         radius: 22,
+  //         backgroundColor: Colors.black54,
+  //         child: Icon(icon, color: Colors.white),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget ProfileImage(String imagePath, String name) {
     return Container(
@@ -271,8 +470,8 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFFF5D778),
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -292,7 +491,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      side: const BorderSide(color: Colors.white30),
+                      side: const BorderSide(color: Color(0xFFF5D778)),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -314,12 +513,14 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
-                          ? Colors.blue
+                          ? Color(0xFFF5D778)
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing ? Colors.blue : Colors.white30,
+                        color: isFollowing ? Color(0xFFF5D778) : Colors.white30,
                       ),
-                      foregroundColor: Colors.white,
+                      foregroundColor: isFollowing
+                          ? Colors.black
+                          : Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

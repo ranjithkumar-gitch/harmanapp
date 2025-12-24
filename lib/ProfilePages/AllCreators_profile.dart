@@ -64,9 +64,10 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                         Tab(icon: Icon(Icons.apps, size: 28)),
                         // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
                         Tab(icon: Icon(Icons.live_tv, size: 28)),
+                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
+
                         Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
                         Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
                       ],
                     ),
                   ],
@@ -81,9 +82,10 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
               // ReelsTab(),
               // ImagesTab(),
               LiveTab(),
+              LegacyTab(),
+
               EmptyTab(),
               Mycreatorsmarketplace(),
-              LegacyTab(),
             ],
           ),
         ),
@@ -235,8 +237,8 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFFF5D778),
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -256,7 +258,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      side: const BorderSide(color: Colors.white30),
+                      side: const BorderSide(color: Color(0xFFF5D778)),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -278,12 +280,14 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
-                          ? Colors.blue
+                          ? Color(0xFFF5D778)
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing ? Colors.blue : Colors.white30,
+                        color: isFollowing ? Color(0xFFF5D778) : Colors.white30,
                       ),
-                      foregroundColor: Colors.white,
+                      foregroundColor: isFollowing
+                          ? Colors.black
+                          : Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
