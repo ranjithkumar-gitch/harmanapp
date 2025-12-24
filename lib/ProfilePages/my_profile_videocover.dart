@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -47,6 +48,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
       length: 5,
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
+        appBar: CustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
             SliverToBoxAdapter(
@@ -112,24 +114,27 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
           else
             Container(color: Colors.black),
 
-          Positioned(
-            top: 40,
-            left: 12,
-            child: IconButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.black54),
-              ),
-              onPressed: () => Navigator.pop(context),
-              icon: Padding(
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                  right: 0.0,
-                  top: 2.0,
-                  bottom: 2.0,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Positioned(
+              top: 40,
+              left: 12,
+              child: IconButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black54),
                 ),
-                child: const Icon(Icons.arrow_back_ios),
+                onPressed: () => Navigator.pop(context),
+                icon: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    right: 0.0,
+                    top: 2.0,
+                    bottom: 2.0,
+                  ),
+                  child: const Icon(Icons.arrow_back_ios),
+                ),
+                color: Colors.white,
               ),
-              color: Colors.white,
             ),
           ),
 
