@@ -1,16 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Dashboard/homescreen.dart';
-import 'package:harmanapp/Dashboard/timeline_homescreen.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
-import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
-import 'package:harmanapp/models/post_model.dart';
-import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/timeline_images.dart';
-import 'package:harmanapp/widgets/timeline_reels.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -55,67 +46,88 @@ class _MyAccountState extends State<MyAccount> {
               ),
             ),
 
-            Text(
-              'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
-              style: const TextStyle(color: Colors.white, fontSize: 13),
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.email, color: Colors.white, size: 15),
-                    Text(
-                      'peeter_hain@gmail.com',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      'o',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 4,
-                        fontWeight: FontWeight.w900,
+            Container(
+              margin: EdgeInsets.only(left: 8, right: 8),
+              child: Column(
+                children: [
+                  Text(
+                    'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
+                    style: const TextStyle(color: Colors.white, fontSize: 13),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.email, color: Colors.white, size: 15),
+                          Text(
+                            'peeter_hain@gmail.com',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            'o',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 4,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Icon(
+                            Icons.calendar_month,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          Text(
+                            '14/05/1989',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: 5),
-                    Icon(Icons.calendar_month, color: Colors.white, size: 15),
-                    Text('14/05/1989', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.location_on, color: Colors.white, size: 15),
-                    Text(
-                      'Circular Quay,',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    SizedBox(width: 2),
-                    Text('Australia', style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 12),
-            _optionCard(
-              icon: Icons.card_membership_outlined,
-              title: 'Memberships',
-              subtitle: 'Checkout all my membership list',
-              isSelected: selectedCard == "Memberships",
-              onTap: () => setState(() => selectedCard = "Memberships"),
-            ),
-            SizedBox(height: 12),
-            _optionCard(
-              icon: Icons.checklist_sharp,
-              title: 'Orders',
-              subtitle: 'Checkout all my orders',
-              isSelected: selectedCard == "Orders",
-              onTap: () => setState(() => selectedCard = "Orders"),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          Text(
+                            'Circular Quay,',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            'Australia',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  _optionCard(
+                    icon: Icons.card_membership_outlined,
+                    title: 'Memberships',
+                    subtitle: 'Checkout all my membership list',
+                    isSelected: selectedCard == "Memberships",
+                    onTap: () => setState(() => selectedCard = "Memberships"),
+                  ),
+                  SizedBox(height: 12),
+                  _optionCard(
+                    icon: Icons.checklist_sharp,
+                    title: 'Orders',
+                    subtitle: 'Checkout all my orders',
+                    isSelected: selectedCard == "Orders",
+                    onTap: () => setState(() => selectedCard = "Orders"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -339,139 +351,52 @@ class _MyAccountState extends State<MyAccount> {
               decoration: const BoxDecoration(color: Colors.black),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Harman App',
-                  style: GoogleFonts.greatVibes(
-                    textStyle: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF5D778),
+                child: Center(
+                  child: Text(
+                    'Harman App',
+                    style: GoogleFonts.greatVibes(
+                      textStyle: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFF5D778),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.telegram_sharp, color: Colors.white, size: 20),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TimelineHomescreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Timeline Reels',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(height: 6),
-                  Row(
-                    children: [
-                      Icon(Icons.privacy_tip, color: Colors.white, size: 20),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TimelineHomescreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Privacy & Policy',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.privacy_tip_outlined,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TimelineHomescreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Terms & Conditions',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.logout, color: Colors.white, size: 20),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Loginscreen(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Logout',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+            ListTile(
+              title: Text(
+                'Settings',
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
               ),
             ),
-
-            // ListTile(
-            //   title: Text(
-            //     'Privacy & Policy',
-            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-            //   ),
-            // ),
-            // ListTile(
-            //   title: Text(
-            //     'Terms & Conditions',
-            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-            //   ),
-            // ),
-            // ListTile(
-            //   title: Text(
-            //     'Logout',
-            //     style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-            //   ),
-            // ),
+            ListTile(
+              title: Text(
+                'Privacy & Policy',
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                'Terms & Conditions',
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Loginscreen()),
+                );
+              },
+              child: ListTile(
+                title: Text(
+                  'Logout',
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
+                ),
+              ),
+            ),
           ],
         ),
       ),

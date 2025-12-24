@@ -5,19 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-
-import 'package:harmanapp/Login/LoginScreen.dart';
-
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
-
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Mycreatorprofile extends StatefulWidget {
   const Mycreatorprofile({super.key, required String usrName});
-
-  // String get strName => strName;
 
   @override
   State<Mycreatorprofile> createState() => _MycreatorprofileState();
@@ -152,7 +146,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Stack(
             children: [
               Row(
                 children: [
@@ -162,92 +156,48 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [CupertinoColors.white, CupertinoColors.white],
+                        colors: [Color(0xffd4af37), Colors.white],
                       ),
                     ),
-                    padding: const EdgeInsets.all(2),
                     child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: AssetImage(imagePath),
-                          fit: BoxFit.cover,
+                      padding: const EdgeInsets.all(2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  if (name == "Srikanth Natarajan")
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36),
-                        gradient: const LinearGradient(
-                          colors: [
-                            CupertinoColors.white,
-                            CupertinoColors.white,
-                          ],
-                        ),
-                      ),
-                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Icon(
-                        Icons.star,
-                        color: Color(0xFFDAA520),
-                        size: 30,
-                      ),
-                    ),
-                  if (name == "Devi S Prasad")
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36),
-                        gradient: const LinearGradient(
-                          colors: [
-                            CupertinoColors.white,
-                            CupertinoColors.white,
-                          ],
-                        ),
-                      ),
-                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-                      child: Icon(
-                        Icons.star,
-                        color: CupertinoColors.systemGrey,
-                        size: 30,
-                      ),
-                    ),
-                ],
-              ),
-
-              const SizedBox(width: 8),
-              Row(
-                children: [
+                  const SizedBox(width: 20),
                   Row(
                     children: [
-                      Column(
+                      Row(
                         children: [
-                          SizedBox(height: 30),
-                          Text(
-                            name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '@ ${name}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Column(
+                            children: [
+                              SizedBox(height: 30),
+                              Text(
+                                name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '@ ${name}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -255,8 +205,131 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   ),
                 ],
               ),
+              Positioned(
+                bottom: 5,
+                left: 85,
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(36),
+                    gradient: const LinearGradient(
+                      colors: [CupertinoColors.white, CupertinoColors.white],
+                    ),
+                  ),
+                  child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
+                ),
+
+                // Image.asset("assets/screenshots/gold.png", scale: 12),
+              ),
             ],
           ),
+          // Row(
+          //   children: [
+          //     Row(
+          //       children: [
+          //         Container(
+          //           height: 100,
+          //           width: 100,
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(10),
+          //             gradient: const LinearGradient(
+          //               colors: [Color(0xffd4af37), Colors.white],
+          //             ),
+          //           ),
+
+          //           child: Container(
+          //             padding: const EdgeInsets.all(2),
+          //             child: Container(
+          //               decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 image: DecorationImage(
+          //                   image: AssetImage(imagePath),
+          //                   fit: BoxFit.cover,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         if (name == "Srikanth Natarajan")
+          //           Container(
+          //             height: 30,
+          //             width: 30,
+          //             decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(36),
+          //               gradient: const LinearGradient(
+          //                 colors: [
+          //                   CupertinoColors.white,
+          //                   CupertinoColors.white,
+          //                 ],
+          //               ),
+          //             ),
+          //             transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
+
+          //             //padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          //             child: Icon(
+          //               Icons.star,
+          //               color: Color(0xFFDAA520),
+          //               size: 30,
+          //             ),
+          //           ),
+          //         if (name == "Devi S Prasad")
+          //           Container(
+          //             height: 30,
+          //             width: 30,
+          //             decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(36),
+          //               gradient: const LinearGradient(
+          //                 colors: [
+          //                   CupertinoColors.white,
+          //                   CupertinoColors.white,
+          //                 ],
+          //               ),
+          //             ),
+          //             transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
+
+          //             child: Icon(
+          //               Icons.star,
+          //               color: CupertinoColors.systemGrey,
+          //               size: 30,
+          //             ),
+          //           ),
+          //       ],
+          //     ),
+
+          //     const SizedBox(width: 8),
+          //     Row(
+          //       children: [
+          //         Row(
+          //           children: [
+          //             Column(
+          //               children: [
+          //                 SizedBox(height: 30),
+          //                 Text(
+          //                   name,
+          //                   style: const TextStyle(
+          //                     color: Colors.white,
+          //                     fontSize: 13,
+          //                     fontWeight: FontWeight.bold,
+          //                   ),
+          //                 ),
+          //                 Text(
+          //                   '@ ${name}',
+          //                   style: const TextStyle(
+          //                     color: Colors.white,
+          //                     fontSize: 12,
+          //                     fontStyle: FontStyle.italic,
+          //                     fontWeight: FontWeight.normal,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
           SizedBox(height: 12),
 
           Row(

@@ -55,7 +55,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                 children: [
                   _videoCover(),
                   ProfileImage(
-                    'assets/sources/profiles/deco-dev.png',
+                    'assets/sources/profiles/aiony-haust.jpg',
                     widget.usrName,
                   ),
 
@@ -189,7 +189,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Stack(
             children: [
               Row(
                 children: [
@@ -199,98 +199,60 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [CupertinoColors.white, CupertinoColors.white],
+                        colors: [Color(0xffd4af37), Colors.white],
                       ),
                     ),
-                    padding: const EdgeInsets.all(2),
+
                     child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: AssetImage(imagePath),
-                          fit: BoxFit.cover,
+                      padding: const EdgeInsets.all(2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  if (name == "Srikanth Natarajan")
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36),
-                        gradient: const LinearGradient(
-                          colors: [
-                            CupertinoColors.white,
-                            CupertinoColors.white,
-                          ],
-                        ),
-                      ),
-                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-                      //padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Icon(
-                        Icons.star,
-                        color: Color(0xFFDAA520),
-                        size: 30,
-                      ),
-                    ),
-                  if (name == "Devi S Prasad")
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(36),
-                        gradient: const LinearGradient(
-                          colors: [
-                            CupertinoColors.white,
-                            CupertinoColors.white,
-                          ],
-                        ),
-                      ),
-                      transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-                      child: Icon(
-                        Icons.star,
-                        color: CupertinoColors.systemGrey,
-                        size: 30,
-                      ),
-                    ),
-                ],
-              ),
-
-              const SizedBox(width: 8),
-              Row(
-                children: [
+                  const SizedBox(width: 15),
                   Row(
                     children: [
-                      Column(
+                      Row(
                         children: [
-                          SizedBox(height: 30),
-                          Text(
-                            name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '@ ${name}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Column(
+                            children: [
+                              SizedBox(height: 30),
+                              Text(
+                                name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '@ ${name}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ],
                   ),
                 ],
+              ),
+              Positioned(
+                bottom: 0,
+                left: 80,
+                child: Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),

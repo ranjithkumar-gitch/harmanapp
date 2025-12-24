@@ -36,14 +36,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
         setState(() {
           isPlaying = false;
         });
-        // Navigate to another page
-        // Navigator.push(
-        //   context,
 
-        //   MaterialPageRoute(
-        //     builder: (_) => Mycreator_videocover(usrName: strName),
-        //   ),
-        // );
         if (tappedIndex == 0) {
           Navigator.push(
             context,

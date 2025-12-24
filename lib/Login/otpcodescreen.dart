@@ -100,7 +100,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
                 'Harman App',
                 style: GoogleFonts.greatVibes(
                   textStyle: const TextStyle(
-                    fontSize: 52,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFF5D778),
                   ),

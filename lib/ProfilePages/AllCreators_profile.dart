@@ -5,19 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-
-import 'package:harmanapp/Login/LoginScreen.dart';
-
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
-
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AllCreatorsProfile extends StatefulWidget {
-  const AllCreatorsProfile({super.key, required String tiername});
-
-  // String get strName => strName;
+  const AllCreatorsProfile({super.key});
 
   @override
   State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
@@ -26,21 +20,20 @@ class AllCreatorsProfile extends StatefulWidget {
 enum SampleItem { itemOne }
 
 class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
-  //var profileName = "";
-  SampleItem? selectedItem;
-  // void initState() {
-  //   super.initState();
-  //   profileName = widget.strName;
-  // }
   bool isFollowing = false;
+
+  SampleItem? selectedItem;
+
   @override
   Widget build(BuildContext context) {
     setState(() {
       posts.shuffle();
     });
     const profileSize = 80.0;
-    // var size = MediaQuery.of(context).size;
-    final user = posts.firstWhere((p) => p.name == "Priyanka C");
+
+    final user = posts.firstWhere(
+      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+    );
 
     return DefaultTabController(
       length: 5,
@@ -62,10 +55,6 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       user.name,
                     ),
 
-                    //       const SizedBox(height: 20),
-                    //     ],
-                    //   ),
-                    // ),
                     const TabBar(
                       indicatorColor: Color(0xFFDAA520),
                       indicatorWeight: 4,
@@ -73,10 +62,11 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       unselectedLabelColor: Colors.white54,
                       tabs: [
                         Tab(icon: Icon(Icons.apps, size: 28)),
-                        Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
+                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
                         Tab(icon: Icon(Icons.live_tv, size: 28)),
                         Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
                         Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
                       ],
                     ),
                   ],
@@ -88,10 +78,12 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
           body: const TabBarView(
             children: [
               ImagesTab(),
-              ReelsTab(),
-              ImagesTab(),
+              // ReelsTab(),
+              // ImagesTab(),
+              LiveTab(),
               EmptyTab(),
               Mycreatorsmarketplace(),
+              LegacyTab(),
             ],
           ),
         ),
@@ -148,39 +140,30 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   }
 
   Widget ProfileImage(String imagePath, String name) {
-    var borderRadius = 12;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Stack(
             children: [
               Row(
                 children: [
                   Container(
-                    height: 90,
-                    width: 90,
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(borderRadius + 2),
-                      // gradient: const LinearGradient(
-                      //   // colors: [
-                      //   //   CupertinoColors.systemOrange,
-                      //   //   CupertinoColors.systemRed,
-                      //   // ],
-                      // ),
-                    ),
-                    padding: const EdgeInsets.all(2),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xffd4af37), Colors.white],
                       ),
+                    ),
+                    child: Container(
                       padding: const EdgeInsets.all(2),
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10 - 2),
+                          borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                             image: AssetImage(imagePath),
                             fit: BoxFit.cover,
@@ -189,54 +172,32 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(36),
-                      gradient: const LinearGradient(
-                        colors: [CupertinoColors.white, CupertinoColors.white],
-                      ),
-                    ),
-                    transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-                    //padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
-                  ),
-                ],
-              ),
-              // CircleAvatar(
-              //   radius: 45,
-              //   backgroundColor: Colors.white,
-              //   child: CircleAvatar(
-              //     radius: 42,
-              //     backgroundImage: AssetImage(imagePath),
-              //   ),
-              // ),
-              const SizedBox(width: 8),
-              Row(
-                children: [
+                  const SizedBox(width: 20),
                   Row(
                     children: [
-                      Column(
+                      Row(
                         children: [
-                          SizedBox(height: 30),
-                          Text(
-                            name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '@ ${name}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Column(
+                            children: [
+                              SizedBox(height: 30),
+                              Text(
+                                name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '@ ${name}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -244,90 +205,28 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                   ),
                 ],
               ),
+              Positioned(
+                bottom: 5,
+                left: 85,
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(36),
+                    gradient: const LinearGradient(
+                      colors: [CupertinoColors.white, CupertinoColors.white],
+                    ),
+                  ),
+                  child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
+                ),
+
+                // Image.asset("assets/screenshots/gold.png", scale: 12),
+              ),
             ],
           ),
+
           SizedBox(height: 12),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Expanded(
-          //       child: ElevatedButton(
-          //         style: ElevatedButton.styleFrom(
-          //           backgroundColor: Colors.blue,
-          //           foregroundColor: Colors.white,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8),
-          //           ),
-          //         ),
-          //         onPressed: () {},
-          //         child: const Text("Subscribe"),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 5),
-          //     Expanded(
-          //       child: OutlinedButton(
-          //         style: OutlinedButton.styleFrom(
-          //           side: const BorderSide(color: Colors.white30),
-          //           foregroundColor: Colors.white,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8),
-          //           ),
-          //         ),
-          //         onPressed: () {},
-          //         child: const Text("Message"),
-          //       ),
-          //     ),
-          //     const SizedBox(width: 5),
-          //     // Expanded(
-          //     //   child: OutlinedButton(
-          //     //     style: OutlinedButton.styleFrom(
-          //     //       side: const BorderSide(color: Colors.white30),
-          //     //       foregroundColor: Colors.white,
-          //     //       shape: RoundedRectangleBorder(
-          //     //         borderRadius: BorderRadius.circular(8),
-          //     //       ),
-          //     //     ),
-          //     //     onPressed: () {},
-          //     //     child: const Text("Follow"),
-          //     //   ),
-          //     // ),
-          //     Expanded(
-          //       child: OutlinedButton(
-          //         style: OutlinedButton.styleFrom(
-          //           backgroundColor: isFollowing
-          //               ? Colors.blue
-          //               : Colors.transparent,
-          //           side: BorderSide(
-          //             color: isFollowing ? Colors.blue : Colors.white30,
-          //           ),
-          //           foregroundColor: Colors.white,
-          //           shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8),
-          //           ),
-          //         ),
-          //         onPressed: () {
-          //           setState(() {
-          //             isFollowing = !isFollowing;
-          //           });
-          //         },
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             if (isFollowing) ...[
-          //               const Icon(
-          //                 Icons.done_all,
-          //                 size: 18,
-          //                 color: Colors.white,
-          //               ),
-          //               const SizedBox(width: 6),
-          //             ],
-          //             Text(isFollowing ? "Following" : "Follow"),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
+
           Row(
             children: [
               Expanded(
@@ -409,6 +308,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
               ),
             ],
           ),
+
           SizedBox(height: 10),
           Text(
             'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
@@ -429,7 +329,6 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 5),
                   Text(
                     'Post',
                     style: TextStyle(
@@ -460,7 +359,6 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 5),
                   Text(
                     'Media',
                     style: TextStyle(
@@ -492,7 +390,6 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(
@@ -547,23 +444,143 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   }
 }
 
-class _Button extends StatelessWidget {
-  final String text;
-  final Color color;
-  const _Button({required this.text, required this.color});
+final sampleLives = [
+  {
+    "videoId": "Y21kE_LHaOY",
+    "title": "Mindfulness Meditation (1 hour)",
+    "viewers": 40000,
+  },
+  {
+    "videoId": "BnYZ6ghpFck",
+    "title": "3 Hour Deep Sleep Meditation",
+    "viewers": 55000,
+  },
+  {"videoId": "O-6f5wQXSu8", "title": "Yoga for Relaxation", "viewers": 12300},
+  {
+    "videoId": "Xc4D2uIdWc0",
+    "title": "LoFi HipHop Live Stream",
+    "viewers": 89000,
+  },
+
+  {
+    "videoId": "aWmJ5DgyWPI",
+    "title": "Nature Relaxation Film 4K",
+    "viewers": 31000,
+  },
+];
+
+class LiveTab extends StatelessWidget {
+  const LiveTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 38,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      itemCount: sampleLives.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, i) {
+        final live = sampleLives[i];
+        return _LiveCard(
+          videoId: live['videoId'] as String,
+          title: live['title'] as String,
+          viewers: live['viewers'] as int,
+        );
+      },
+    );
+  }
+}
+
+class _LiveCard extends StatelessWidget {
+  final String videoId;
+  final int viewers;
+  final String title;
+
+  const _LiveCard({
+    required this.videoId,
+    required this.viewers,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String ytThumb = "https://img.youtube.com/vi/$videoId/hqdefault.jpg";
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => YouTubePlayerScreen(videoId: videoId),
+          ),
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Stack(
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                ytThumb,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            ),
+
+            // LIVE Badge
+            Positioned(
+              top: 12,
+              right: 12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.wifi_tethering, size: 14, color: Colors.white),
+                    SizedBox(width: 6),
+                    Text(
+                      'LIVE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Positioned(
+              left: 12,
+              bottom: 12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(.45),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.remove_red_eye,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "$viewers watching",
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        onPressed: () {},
-        child: Text(text),
       ),
     );
   }
@@ -696,46 +713,90 @@ class EmptyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              gradient: ExploreScreen.accentGradient,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 18,
+    return Stack(
+      children: [
+        /// Main content (center)
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 145,
+                height: 145,
+                decoration: BoxDecoration(
+                  gradient: ExploreScreen.accentGradient,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 18,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: const Icon(
-              Icons.construction,
-              size: 72,
-              color: Colors.white,
+                child: const Icon(
+                  Icons.construction,
+                  size: 65,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              const Text(
+                'AI Avatar feature coming soon ✨',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+
+        /// Mic button at bottom
+        Positioned(
+          bottom: 30,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: ExploreScreen.accentGradient,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 12,
+                  ),
+                ],
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.mic, color: Colors.white, size: 32),
+                onPressed: () {
+                  // TODO: mic action
+                },
+              ),
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'AI Avatar feature coming soon ✨',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'We are working to bring more creative tools for creators.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+}
+
+class LegacyTab extends StatelessWidget {
+  const LegacyTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/sources/profiles/timeline.jpeg",
+      // width: 200,
+      // height: 400,
+      fit: BoxFit.fitHeight,
     );
   }
 }

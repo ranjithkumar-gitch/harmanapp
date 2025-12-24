@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/otpcodescreen.dart';
 
 class Verifyphonenumber extends StatefulWidget {
@@ -82,26 +83,21 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
               ),
             ),
 
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: const Color(0xFF1A1A1A),
-            //     borderRadius: BorderRadius.circular(12),
-            //   ),
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   height: 55,
-            //   child: Align(
-            //     alignment: Alignment.centerLeft,
-            //     child: Text(
-            //       "Enter Your Phone Number",
-            //       style: TextStyle(color: Colors.white, fontSize: 18),
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(height: 10),
+            const Spacer(),
+            Center(
+              child: Text(
+                'Harman App',
+                style: GoogleFonts.greatVibes(
+                  textStyle: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFF5D778),
+                  ),
+                ),
+              ),
+            ),
 
-            const SizedBox(height: 20),
-
-            Spacer(),
+            const Spacer(),
 
             SizedBox(
               width: double.infinity,

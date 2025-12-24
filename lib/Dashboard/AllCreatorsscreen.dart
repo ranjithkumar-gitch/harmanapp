@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/ProfilePages/allCreatorsProfile.dart';
+import 'package:harmanapp/ProfilePages/AllCreators_profile.dart';
 
 import 'package:harmanapp/models/user_post_model.dart';
 
@@ -115,11 +114,15 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
             builder: (context) {
               return GestureDetector(
                 onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   CupertinoPageRoute(
+                  //     builder: (_) => MycreatorprofileDummy(usrName: ""),
+                  //   ),
+                  // );
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                      builder: (_) => AllCreatorsProfile(tiername: tiername),
-                    ),
+                    CupertinoPageRoute(builder: (_) => AllCreatorsProfile()),
                   );
                 },
                 child: Column(
