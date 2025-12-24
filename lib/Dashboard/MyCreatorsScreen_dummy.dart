@@ -1,26 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/ProfilePages/my_profile_videocover.dart';
 
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
+import 'package:harmanapp/ProfilePages/MyCreatorProfile_dummy.dart';
 import 'package:lottie/lottie.dart';
 
-class MyCreatorsScreen extends StatefulWidget {
-  const MyCreatorsScreen({super.key});
+class MyCreatorsScreenDummy extends StatefulWidget {
+  const MyCreatorsScreenDummy({super.key});
 
   @override
-  State<MyCreatorsScreen> createState() => _MyCreatorsScreenState();
+  State<MyCreatorsScreenDummy> createState() => _MyCreatorsScreenDummyState();
 }
 
-class _MyCreatorsScreenState extends State<MyCreatorsScreen>
+class _MyCreatorsScreenDummyState extends State<MyCreatorsScreenDummy>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isPlaying = false;
   String imageUrl = "";
   String strName = "";
-  int tappedIndex = -1;
 
   @override
   void initState() {
@@ -37,28 +35,13 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           isPlaying = false;
         });
         // Navigate to another page
-        // Navigator.push(
-        //   context,
+        Navigator.push(
+          context,
 
-        //   MaterialPageRoute(
-        //     builder: (_) => Mycreator_videocover(usrName: strName),
-        //   ),
-        // );
-        if (tappedIndex == 0) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => Mycreatorprofile(usrName: strName),
-            ),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => Mycreator_videocover(usrName: strName),
-            ),
-          );
-        }
+          MaterialPageRoute(
+            builder: (_) => MycreatorprofileDummy(usrName: strName),
+          ),
+        );
       }
     });
   }
@@ -86,10 +69,12 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
               children: [
                 Center(
                   child: Lottie.asset(
-                    'assets/dots.json',
+                    'assets/dots.json', // your Lottie file path
                     controller: _controller,
                     onLoaded: (composition) {
+                      // Set controller duration to match Lottie file or override
                       _controller.duration = const Duration(seconds: 5);
+                      // _controller.setSpeed(2.0);
                     },
                   ),
                 ),
@@ -111,22 +96,26 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: SizedBox(
-                    width: 350,
+                    // width: 350,
                     child: SearchBar(
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.all(
-                            Radius.circular(10),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                       ),
+
                       hintText: "Search Stars...",
+
                       padding: const WidgetStatePropertyAll<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 16.0),
                       ),
                       leading: const Icon(Icons.search),
-                      onTap: () {},
-                      onChanged: (value) {},
+                      onTap: () {
+                        // showSearch(context: context, delegate: DataSearch(posts));
+                      },
+                      onChanged: (value) {
+                        // showSearch(context: context, delegate: DataSearch(posts));
+                      },
                     ),
                   ),
                 ),
@@ -156,6 +145,15 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     );
   }
 
+  // Widget subscriberCard(
+  //   BuildContext context,
+  //   UserPostModel user,
+  //   Color color,
+  //   String tier,
+  // ) {
+  //   return ;
+  // }
+
   Widget subscriberList(
     BuildContext context,
     List<UserPostModel> list, {
@@ -163,16 +161,13 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     required Color color,
   }) {
     return Column(
-      children: list.asMap().entries.map((entry) {
-        final index = entry.key;
-        final user = entry.value;
+      children: list.map((user) {
         return GestureDetector(
           onTap: () {
             setState(() {
               isPlaying = true;
               imageUrl = 'assets/sources/profiles/${user.profileImage}';
               strName = user.name;
-              tappedIndex = index;
             });
             _playAnimation();
           },
@@ -191,11 +186,21 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   width: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "assets/sources/profiles/${user.profileImage}",
+                    gradient: LinearGradient(colors: [color, Colors.white]),
+                  ),
+
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/sources/profiles/${user.profileImage}",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -226,12 +231,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                       ],
                     ),
                     const SizedBox(height: 3),
-                    Icon(
-                      Icons.star,
-                      color: color,
-                      size: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    Icon(Icons.star_border_outlined, color: color),
                   ],
                 ),
 
