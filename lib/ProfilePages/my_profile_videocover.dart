@@ -36,6 +36,11 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               ..setVolume(0.0)
               ..play();
           });
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -97,187 +102,6 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
     );
   }
 
-  /// 🎬 VIDEO COVER
-  // Widget _videoCover() {
-  //   return SizedBox(
-  //     height: 220,
-  //     width: double.infinity,
-  //     child: Stack(
-  //       children: [
-  //         if (isVideoReady && _videoController.value.isInitialized)
-  //           Positioned.fill(
-  //             child: FittedBox(
-  //               fit: BoxFit.cover,
-  //               child: SizedBox(
-  //                 width: _videoController.value.size.width,
-  //                 height: _videoController.value.size.height,
-  //                 child: VideoPlayer(_videoController),
-  //               ),
-  //             ),
-  //           )
-  //         else
-  //           Container(color: Colors.black),
-
-  //         Padding(
-  //           padding: const EdgeInsets.all(8.0),
-  //           child: Positioned(
-  //             top: 40,
-  //             left: 12,
-  //             child: IconButton(
-  //               style: ButtonStyle(
-  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
-  //               ),
-  //               onPressed: () => Navigator.pop(context),
-  //               icon: Padding(
-  //                 padding: const EdgeInsets.only(
-  //                   left: 8.0,
-  //                   right: 0.0,
-  //                   top: 2.0,
-  //                   bottom: 2.0,
-  //                 ),
-  //                 child: const Icon(Icons.arrow_back_ios),
-  //               ),
-  //               color: Colors.white,
-  //             ),
-  //           ),
-  //         ),
-
-  //         Positioned(
-  //           bottom: 12,
-  //           left: 0,
-  //           right: 0,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: [
-  //               _controlButton(Icons.replay_10, () {
-  //                 final pos = _videoController.value.position;
-  //                 _videoController.seekTo(pos - const Duration(seconds: 10));
-  //               }),
-  //               _controlButton(
-  //                 _videoController.value.isPlaying
-  //                     ? Icons.pause
-  //                     : Icons.play_arrow,
-  //                 () {
-  //                   setState(() {
-  //                     _videoController.value.isPlaying
-  //                         ? _videoController.pause()
-  //                         : _videoController.play();
-  //                   });
-  //                 },
-  //               ),
-  //               _controlButton(Icons.forward_10, () {
-  //                 final pos = _videoController.value.position;
-  //                 _videoController.seekTo(pos + const Duration(seconds: 10));
-  //               }),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-  // Widget _videoCover() {
-  //   return SizedBox(
-  //     height: 220,
-  //     width: double.infinity,
-  //     child: Stack(
-  //       children: [
-  //         if (isVideoReady && _videoController.value.isInitialized)
-  //           Positioned.fill(
-  //             child: FittedBox(
-  //               fit: BoxFit.cover,
-  //               child: SizedBox(
-  //                 width: _videoController.value.size.width,
-  //                 height: _videoController.value.size.height,
-  //                 child: VideoPlayer(_videoController),
-  //               ),
-  //             ),
-  //           )
-  //         else
-  //           Container(color: Colors.black),
-
-  //         Padding(
-  //           padding: const EdgeInsets.all(8.0),
-  //           child: Positioned(
-  //             top: 40,
-  //             left: 12,
-  //             child: IconButton(
-  //               style: ButtonStyle(
-  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
-  //               ),
-  //               onPressed: () => Navigator.pop(context),
-  //               icon: Padding(
-  //                 padding: const EdgeInsets.only(
-  //                   left: 8.0,
-  //                   right: 0.0,
-  //                   top: 2.0,
-  //                   bottom: 2.0,
-  //                 ),
-  //                 child: const Icon(Icons.arrow_back_ios),
-  //               ),
-  //               color: Colors.white,
-  //             ),
-  //           ),
-  //         ),
-
-  //         /// 🔊 Mute / Unmute Button (Top Right)
-  //         Positioned(
-  //           top: 0,
-  //           right: 0,
-  //           child: SafeArea(
-  //             child: IconButton(
-  //               style: ButtonStyle(
-  //                 backgroundColor: MaterialStateProperty.all(Colors.black54),
-  //               ),
-  //               icon: Icon(
-  //                 _isMuted ? Icons.volume_off : Icons.volume_up,
-  //                 color: Colors.white,
-  //               ),
-  //               onPressed: () {
-  //                 setState(() {
-  //                   _isMuted = !_isMuted;
-  //                   _videoController.setVolume(_isMuted ? 0.0 : 1.0);
-  //                 });
-  //               },
-  //             ),
-  //           ),
-  //         ),
-
-  //         /// ▶️ Playback Controls (Bottom Center)
-  //         Positioned(
-  //           bottom: 12,
-  //           left: 0,
-  //           right: 0,
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: [
-  //               _controlButton(Icons.replay_10, () {
-  //                 final pos = _videoController.value.position;
-  //                 _videoController.seekTo(pos - const Duration(seconds: 10));
-  //               }),
-  //               _controlButton(
-  //                 _videoController.value.isPlaying
-  //                     ? Icons.pause
-  //                     : Icons.play_arrow,
-  //                 () {
-  //                   setState(() {
-  //                     _videoController.value.isPlaying
-  //                         ? _videoController.pause()
-  //                         : _videoController.play();
-  //                   });
-  //                 },
-  //               ),
-  //               _controlButton(Icons.forward_10, () {
-  //                 final pos = _videoController.value.position;
-  //                 _videoController.seekTo(pos + const Duration(seconds: 10));
-  //               }),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
   Widget _videoCover() {
     return SizedBox(
       height: 220,
@@ -377,20 +201,6 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
       ),
     );
   }
-
-  // Widget _controlButton(IconData icon, VoidCallback onTap) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 8),
-  //     child: GestureDetector(
-  //       onTap: onTap,
-  //       child: CircleAvatar(
-  //         radius: 22,
-  //         backgroundColor: Colors.black54,
-  //         child: Icon(icon, color: Colors.white),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget ProfileImage(String imagePath, String name) {
     return Container(
