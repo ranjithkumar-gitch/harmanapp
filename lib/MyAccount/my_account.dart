@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
+import 'package:harmanapp/MyAccount/my_memberships.dart';
+import 'package:harmanapp/MyAccount/my_orders.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -14,6 +16,7 @@ enum Menu { preview, share, remove }
 
 class _MyAccountState extends State<MyAccount> {
   String selectedCard = "";
+
   @override
   void initState() {
     selectedCard = "";
@@ -111,20 +114,51 @@ class _MyAccountState extends State<MyAccount> {
                     ],
                   ),
                   SizedBox(height: 12),
+                  // _optionCard(
+                  //   icon: Icons.card_membership_outlined,
+                  //   title: 'Memberships',
+                  //   subtitle: 'Checkout all my membership list',
+                  //   isSelected: selectedCard == "Memberships",
+                  //   onTap: () => setState(() => selectedCard = "Memberships"),
+                  // ),
+                  // SizedBox(height: 12),
+                  // _optionCard(
+                  //   icon: Icons.checklist_sharp,
+                  //   title: 'Orders',
+                  //   subtitle: 'Checkout all my orders',
+                  //   isSelected: selectedCard == "Orders",
+                  //   onTap: () => setState(() => selectedCard = "Orders"),
+                  // ),
                   _optionCard(
                     icon: Icons.card_membership_outlined,
                     title: 'Memberships',
                     subtitle: 'Checkout all my membership list',
                     isSelected: selectedCard == "Memberships",
                     onTap: () => setState(() => selectedCard = "Memberships"),
+                    onButtonPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MembershipScreen(),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(height: 12),
+
+                  const SizedBox(height: 12),
+
                   _optionCard(
                     icon: Icons.checklist_sharp,
                     title: 'Orders',
                     subtitle: 'Checkout all my orders',
                     isSelected: selectedCard == "Orders",
                     onTap: () => setState(() => selectedCard = "Orders"),
+                    onButtonPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MyOrders()),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -409,28 +443,49 @@ class _MyAccountState extends State<MyAccount> {
     required IconData icon,
     required bool isSelected,
     required VoidCallback onTap,
+    required VoidCallback onButtonPressed,
   }) {
+    const gold = Color(0xFFF5D778);
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? Color(0xFFF5D778) : Color(0xFFFFFFFF),
+            color: isSelected ? gold : Colors.white,
             width: isSelected ? 2 : 1,
           ),
-          color: Colors.white.withOpacity(isSelected ? 0.07 : 0.03),
+          color: Colors.black.withOpacity(isSelected ? 0.4 : 0.25),
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: isSelected
-                  ? Color(0xFFF5D778) //Color(0xFF1A1A1A)
-                  : Colors.white.withOpacity(0.2),
-              child: Icon(icon, color: Colors.white),
+            /// 🔵 Circle avatar with dynamic border & icon color
+            Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? gold : Colors.white,
+                  width: 1.5,
+                ),
+              ),
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.black,
+                child: Icon(
+                  icon,
+                  size: 22,
+                  color: isSelected ? gold : Colors.white,
+                ),
+              ),
             ),
+
             const SizedBox(width: 15),
+
+            /// 📝 Text section
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,7 +493,7 @@ class _MyAccountState extends State<MyAccount> {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Color(isSelected ? 0xFFF5D778 : 0xFFFFFFFF),
+                      color: isSelected ? gold : Colors.white,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -451,10 +506,20 @@ class _MyAccountState extends State<MyAccount> {
                 ],
               ),
             ),
-            Icon(
-              isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: isSelected ? Color(0xFFF5D778) : Colors.white54,
-            ),
+
+            /// 👉 Show button ONLY when selected
+            if (isSelected)
+              OutlinedButton(
+                onPressed: onButtonPressed,
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: gold),
+                  foregroundColor: gold,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text("Open", style: TextStyle(fontSize: 13)),
+              ),
           ],
         ),
       ),

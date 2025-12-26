@@ -6,6 +6,7 @@ import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ImagePost extends StatefulWidget {
   const ImagePost({super.key, required this.post});
@@ -24,6 +25,9 @@ class _ImagePostState extends State<ImagePost>
   double _starScale = 1.0;
   late final AnimationController _lottieController;
   bool isPlaying = false;
+  bool _showCommentBox = false;
+  final TextEditingController _commentController = TextEditingController();
+  bool showComments = false;
 
   bool _useLottieStar = false;
   @override
@@ -36,10 +40,9 @@ class _ImagePostState extends State<ImagePost>
       });
     _lottieController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5), // play for 5 seconds
+      duration: const Duration(seconds: 5),
     );
 
-    // Listen for completion
     _lottieController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
@@ -77,12 +80,7 @@ class _ImagePostState extends State<ImagePost>
             ),
             Text(
               widget.post.name,
-              // style: const TextStyle(
-              //   fontSize: 16,
-              //   color: Color(0xFFF5D778),
-              //   fontWeight: FontWeight.bold,
-              //   fontFamily: "Gilroy",
-              // ),
+
               style: GoogleFonts.greatVibes(
                 textStyle: const TextStyle(
                   fontSize: 24,
@@ -246,15 +244,28 @@ class _ImagePostState extends State<ImagePost>
               ),
 
               CupertinoButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _showCommentBox = !_showCommentBox;
+                    _showRatingBar = false;
+                  });
+                },
                 padding: EdgeInsets.zero,
-                child: const Icon(
+                child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: CupertinoColors.white,
+                  color: _showCommentBox
+                      ? const Color(0xFFD4AF37)
+                      : CupertinoColors.white,
                 ),
               ),
+
               CupertinoButton(
-                onPressed: () {},
+                onPressed: () {
+                  Share.share(
+                    'Check out this post!',
+                    subject: 'Shared from app',
+                  );
+                },
                 padding: EdgeInsets.zero,
                 child: const Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
@@ -276,7 +287,7 @@ class _ImagePostState extends State<ImagePost>
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: CupertinoColors.white,
+                  color: Color(0xFFD4AF37),
                 ),
               ),
             ],
@@ -288,7 +299,7 @@ class _ImagePostState extends State<ImagePost>
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.amber, // gold color
+                  color: Color(0xFFD4AF37), // gold color
                   width: 1,
                 ),
                 borderRadius: const BorderRadius.only(
@@ -330,12 +341,7 @@ class _ImagePostState extends State<ImagePost>
                             Icons.check_circle_outline,
                             color: _rating == 0.0 ? Colors.grey : Colors.amber,
                           ),
-                          // onPressed: () {
-                          //   setState(() {
-                          //     _ratingColor = _getRatingColor(_rating);
-                          //     _showRatingBar = false;
-                          //   });
-                          // },
+
                           onPressed: () {
                             setState(() {
                               _ratingColor = _getRatingColor(_rating);
@@ -361,6 +367,67 @@ class _ImagePostState extends State<ImagePost>
                   ),
 
                   //const SizedBox(height: 6),
+                ],
+              ),
+            ),
+          ),
+        if (_showCommentBox)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFD4AF37), width: 1),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// 📝 Comment field
+                  TextField(
+                    controller: _commentController,
+                    maxLines: 2,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Write a comment...",
+                      hintStyle: const TextStyle(color: Colors.white54),
+                      filled: true,
+                      fillColor: Colors.black,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  /// 📤 Post button
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Icon(
+                        CupertinoIcons.paperplane_fill,
+                        color: Color(0xFFD4AF37),
+                      ),
+                      onPressed: () {
+                        final comment = _commentController.text.trim();
+                        if (comment.isNotEmpty) {
+                          // TODO: submit comment logic
+                          _commentController.clear();
+                          setState(() {
+                            _showCommentBox = false;
+                          });
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -406,14 +473,30 @@ class _ImagePostState extends State<ImagePost>
               ),
               if (widget.post.post.comments != null) ...[
                 const SizedBox(height: 5),
-                Text(
-                  'View all ${widget.post.post.comments} comments',
-                  style: TextStyle(
-                    fontFamily: "Gilroy",
-                    color: CupertinoColors.white,
-                    fontSize: 16,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showComments = !showComments;
+                    });
+                  },
+                  child: Text(
+                    'View all ${widget.post.post.comments} comments',
+                    style: TextStyle(
+                      fontFamily: "Gilroy",
+                      color: Color(0xFFFFD700),
+                      fontSize: 16,
+                    ),
                   ),
                 ),
+                if (showComments) ...[
+                  const SizedBox(height: 6),
+
+                  _comment("john_doe", "This looks amazing 🔥"),
+                  _comment("alex_99", "Pure elegance ✨"),
+                  _comment("maria_k", "Luxury vibes only 💫"),
+                  _comment("rohit.dev", "Nice shot 📸"),
+                  _comment("sophia_l", "Absolutely stunning ❤️"),
+                ],
               ],
               const SizedBox(height: 5),
               Text(
@@ -440,5 +523,34 @@ class _ImagePostState extends State<ImagePost>
       return const Color(0xFFCD7F32); // Bronze
     }
     return CupertinoColors.white;
+  }
+
+  Widget _comment(String username, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: "$username ",
+              style: const TextStyle(
+                fontFamily: "Gilroy",
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFFFD700),
+                fontSize: 14,
+              ),
+            ),
+            TextSpan(
+              text: text,
+              style: const TextStyle(
+                fontFamily: "Gilroy",
+                color: CupertinoColors.white,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -58,101 +58,124 @@ class _CartPageState extends State<CartPage> {
                 final product = cartItem["product"];
                 final quantity = cartItem["quantity"];
 
-                return Card(
-                  color: Colors.white,
+                return Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
                   ),
-                  child: ListTile(
-                    leading: Image.network(
-                      product["image"][0],
-                      width: 55,
-                      height: 55,
-                      fit: BoxFit.cover,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: const Color(0xFFD4AF37),
+                      width: 1.5,
                     ),
-
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          product["name"],
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              // CartManager.cartItems.removeAt(index);
-                              CartManager.removeFromCart(index);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.delete_outline,
-                            color: Colors.red,
-                            size: 26,
-                          ),
-                        ),
-                      ],
+                  ),
+                  child: Card(
+                    color: Colors.black,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
                     ),
+                    child: ListTile(
+                      leading: Image.network(
+                        product["image"][0],
+                        width: 55,
+                        height: 55,
+                        fit: BoxFit.cover,
+                      ),
 
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(10),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            product["name"],
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (cartItem["quantity"] > 1) {
-                                      cartItem["quantity"]--;
-                                    } else {
-                                      // CartManager.cartItems.removeAt(index);
-                                      CartManager.removeFromCart(index);
-                                    }
-                                  });
-                                },
-                                icon: const Icon(Icons.remove),
-                              ),
-                              Text(
-                                quantity.toString(),
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                // CartManager.cartItems.removeAt(index);
+                                CartManager.removeFromCart(index);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.delete_outline,
+                              color: Color(0xFFD4AF37),
+                              size: 26,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Color(0xFFD4AF37)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (cartItem["quantity"] > 1) {
+                                        cartItem["quantity"]--;
+                                      } else {
+                                        // CartManager.cartItems.removeAt(index);
+                                        CartManager.removeFromCart(index);
+                                      }
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove,
+                                    color: Color(0xFFD4AF37),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  quantity.toString(),
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: Color(0xFFD4AF37),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
 
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    cartItem["quantity"]++;
-                                  });
-                                },
-                                icon: const Icon(Icons.add),
-                              ),
-                            ],
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      cartItem["quantity"]++;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.add,
+                                    color: Color(0xFFD4AF37),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
 
-                        const SizedBox(width: 10),
+                          const SizedBox(width: 10),
 
-                        Text(
-                          product["price"],
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                          Text(
+                            product["price"],
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              color: Colors.white,
+
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -164,15 +187,19 @@ class _CartPageState extends State<CartPage> {
           : Container(
               height: 80,
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 5,
-                    spreadRadius: 2,
-                  ),
-                ],
+              // decoration: const BoxDecoration(
+              //   color: Colors.black,
+              //   boxShadow: [
+              //     BoxShadow(
+              //       color: Colors.black12,
+              //       blurRadius: 5,
+              //       spreadRadius: 2,
+              //     ),
+              //   ],
+              // ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
               ),
 
               child: Row(
@@ -182,26 +209,53 @@ class _CartPageState extends State<CartPage> {
                     "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
                     style: GoogleFonts.poppins(
                       fontSize: 18,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
 
-                  ElevatedButton(
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     showPaymentMethods(context);
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: Colors.white,
+                  //     padding: const EdgeInsets.symmetric(
+                  //       vertical: 10,
+                  //       horizontal: 20,
+                  //     ),
+                  //   ),
+                  //   child: Text(
+                  //     "Buy Now",
+                  //     style: GoogleFonts.poppins(
+                  //       fontSize: 14,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // ),
+                  OutlinedButton(
                     onPressed: () {
                       showPaymentMethods(context);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                    style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 20,
+                      ),
+                      side: const BorderSide(
+                        color: Color(0xFFD4AF37), // gold outline
+                        width: 1.5,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: Text(
                       "Buy Now",
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFD4AF37), // text matches border
                       ),
                     ),
                   ),
@@ -213,9 +267,10 @@ class _CartPageState extends State<CartPage> {
 
   void showPaymentMethods(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       context: context,
       shape: const RoundedRectangleBorder(
+        side: BorderSide(color: Color(0xFFD4AF37), width: 1),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
 
@@ -229,6 +284,8 @@ class _CartPageState extends State<CartPage> {
                 "Select Payment Method",
                 style: GoogleFonts.poppins(
                   fontSize: 18,
+                  color: Colors.white,
+
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -259,19 +316,24 @@ class _CartPageState extends State<CartPage> {
 
       child: Container(
         padding: const EdgeInsets.all(14),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(12),
+        //   color: Colors.grey.shade200,
+        // ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.shade200,
+          border: Border.all(color: const Color(0xFFD4AF37), width: 1),
         ),
 
         child: Row(
           children: [
-            Icon(icon, color: Colors.black),
+            Icon(icon, color: Colors.white),
             const SizedBox(width: 15),
             Text(
               text,
               style: GoogleFonts.poppins(
                 fontSize: 15,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -370,15 +432,37 @@ class _CartPageState extends State<CartPage> {
                   "Thank you for your purchase.",
                   style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
                 ),
-                ElevatedButton.icon(
+
+                SizedBox(height: 20),
+                OutlinedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const MainScreen()),
                     );
                   },
-                  icon: const Icon(Icons.home),
-                  label: const Text("Back to Home"),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
+                    ),
+                    side: const BorderSide(
+                      color: Color(0xFFD4AF37),
+                      width: 1.5,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+
+                  child: Text(
+                    "Back to Home",
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFD4AF37),
+                    ),
+                  ),
                 ),
               ],
             ),

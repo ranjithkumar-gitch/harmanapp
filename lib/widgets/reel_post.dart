@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -27,6 +27,10 @@ class _ReelPostState extends State<ReelPost>
   bool _useLottieStar = false;
   late final AnimationController _lottieController;
   bool isPlaying = false;
+  bool _showCommentBox = false;
+  bool _isSharing = false;
+
+  final TextEditingController _commentController = TextEditingController();
 
   @override
   void initState() {
@@ -278,21 +282,59 @@ class _ReelPostState extends State<ReelPost>
               ),
 
               CupertinoButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _showCommentBox = !_showCommentBox;
+                    _showRatingBar = false;
+                  });
+                },
                 padding: EdgeInsets.zero,
-                child: const Icon(
+                child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: CupertinoColors.white,
+                  color: _showCommentBox
+                      ? const Color(0xFFD4AF37)
+                      : CupertinoColors.white,
                 ),
               ),
+              // CupertinoButton(
+              //   onPressed: () {
+              //     Share.share(
+              //       'Check out this post!',
+              //       subject: 'Shared from app',
+              //     );
+              //   },
+              //   padding: EdgeInsets.zero,
+              //   child: const Icon(
+              //     CupertinoIcons.arrowshape_turn_up_right,
+              //     color: CupertinoColors.white,
+              //   ),
+              // ),
               CupertinoButton(
-                onPressed: () {},
                 padding: EdgeInsets.zero,
-                child: const Icon(
+                onPressed: () async {
+                  setState(() {
+                    _isSharing = true;
+                  });
+
+                  await Share.share(
+                    'Check out this post!',
+                    subject: 'Shared from app',
+                  );
+
+                  if (!mounted) return;
+
+                  setState(() {
+                    _isSharing = false;
+                  });
+                },
+                child: Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
-                  color: CupertinoColors.white,
+                  color: _isSharing
+                      ? const Color(0xFFD4AF37)
+                      : CupertinoColors.white,
                 ),
               ),
+
               const Spacer(),
               CupertinoButton(
                 onPressed: () {
@@ -305,7 +347,7 @@ class _ReelPostState extends State<ReelPost>
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: CupertinoColors.white,
+                  color: Color(0xFFD4AF37),
                 ),
               ),
             ],
@@ -316,10 +358,7 @@ class _ReelPostState extends State<ReelPost>
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.amber, // gold color
-                  width: 1,
-                ),
+                border: Border.all(color: Colors.amber, width: 1),
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -386,6 +425,66 @@ class _ReelPostState extends State<ReelPost>
                   ),
 
                   //const SizedBox(height: 6),
+                ],
+              ),
+            ),
+          ),
+        if (_showCommentBox)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFD4AF37), width: 1),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// 📝 Comment field
+                  TextField(
+                    controller: _commentController,
+                    maxLines: 2,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: "Write a comment...",
+                      hintStyle: const TextStyle(color: Colors.white54),
+                      filled: true,
+                      fillColor: Colors.black,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  /// 📤 Post button
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Icon(
+                        CupertinoIcons.paperplane_fill,
+                        color: Color(0xFFD4AF37),
+                      ),
+                      onPressed: () {
+                        final comment = _commentController.text.trim();
+                        if (comment.isNotEmpty) {
+                          _commentController.clear();
+                          setState(() {
+                            _showCommentBox = false;
+                          });
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
