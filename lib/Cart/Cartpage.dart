@@ -86,7 +86,8 @@ class _CartPageState extends State<CartPage> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              CartManager.cartItems.removeAt(index);
+                              // CartManager.cartItems.removeAt(index);
+                              CartManager.removeFromCart(index);
                             });
                           },
                           icon: Icon(
@@ -115,7 +116,8 @@ class _CartPageState extends State<CartPage> {
                                     if (cartItem["quantity"] > 1) {
                                       cartItem["quantity"]--;
                                     } else {
-                                      CartManager.cartItems.removeAt(index);
+                                      // CartManager.cartItems.removeAt(index);
+                                      CartManager.removeFromCart(index);
                                     }
                                   });
                                 },
@@ -279,7 +281,71 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
+  // void paymentSuccessScreen() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (_) => Scaffold(
+  //         backgroundColor: Colors.black,
+  //         body: Center(
+  //           child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Lottie.asset("assets/success.json"),
+
+  //               const SizedBox(height: 15),
+
+  //               Text(
+  //                 "Payment Successful!",
+  //                 style: GoogleFonts.poppins(
+  //                   fontSize: 22,
+  //                   fontWeight: FontWeight.w600,
+  //                   color: Colors.white,
+  //                 ),
+  //               ),
+
+  //               const SizedBox(height: 10),
+
+  //               Text(
+  //                 "Thank you for your purchase.",
+  //                 style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
+  //               ),
+  //               ElevatedButton.icon(
+  //                 onPressed: () {
+  //                   Navigator.push(
+  //                     context,
+  //                     MaterialPageRoute<void>(
+  //                       builder: (context) => const MainScreen(),
+  //                     ),
+  //                   );
+  //                 },
+  //                 style: ElevatedButton.styleFrom(
+  //                   side: BorderSide(color: Colors.orange),
+  //                   elevation: 3,
+  //                   shadowColor: Colors.orange,
+  //                 ),
+  //                 icon: Icon(Icons.home, color: Colors.black),
+  //                 label: Text(
+  //                   "Back to Home",
+  //                   style: TextStyle(color: Colors.black),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+
+  //   // CartManager.cartItems.clear();
+  //     CartManager.clearCart();
+  //   setState(() {});
+  // }
   void paymentSuccessScreen() {
+    // ✅ Clear cart FIRST
+    CartManager.clearCart();
+
+    // ✅ Then navigate
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -290,9 +356,7 @@ class _CartPageState extends State<CartPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Lottie.asset("assets/success.json"),
-
                 const SizedBox(height: 15),
-
                 Text(
                   "Payment Successful!",
                   style: GoogleFonts.poppins(
@@ -301,9 +365,7 @@ class _CartPageState extends State<CartPage> {
                     color: Colors.white,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 Text(
                   "Thank you for your purchase.",
                   style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
@@ -312,21 +374,11 @@ class _CartPageState extends State<CartPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute<void>(
-                        builder: (context) => const MainScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => const MainScreen()),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
-                    side: BorderSide(color: Colors.orange),
-                    elevation: 3,
-                    shadowColor: Colors.orange,
-                  ),
-                  icon: Icon(Icons.home, color: Colors.black),
-                  label: Text(
-                    "Back to Home",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  icon: const Icon(Icons.home),
+                  label: const Text("Back to Home"),
                 ),
               ],
             ),
@@ -334,8 +386,5 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
-
-    CartManager.cartItems.clear();
-    setState(() {});
   }
 }
