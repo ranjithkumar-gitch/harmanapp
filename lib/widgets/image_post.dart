@@ -679,7 +679,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               //     controller: scrollController,
               //     itemCount: 5,
               //     itemBuilder: (_, index) {
-              //       return _InstagramCommentItem(
+              //       return _CommentItem(
               //         image: "assets/sources/profiles/aiony-haust.jpg",
               //         name: "john_doe",
               //         date: "2d",
@@ -695,7 +695,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   itemBuilder: (_, index) {
                     final comment = comments[index];
 
-                    return _InstagramCommentItem(
+                    return _CommentItem(
                       image: comment.image,
                       name: comment.username,
                       date: comment.time,
@@ -766,13 +766,13 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
   }
 }
 
-class _InstagramCommentItem extends StatelessWidget {
+class _CommentItem extends StatelessWidget {
   final String image;
   final String name;
   final String date;
   final String comment;
 
-  const _InstagramCommentItem({
+  const _CommentItem({
     required this.image,
     required this.name,
     required this.date,
