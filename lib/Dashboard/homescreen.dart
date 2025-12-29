@@ -22,24 +22,6 @@ class HomeScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 12),
 
-          // SizedBox(
-          //   height: 110,
-          //   child: SingleChildScrollView(
-          //     scrollDirection: Axis.horizontal,
-          //     padding: const EdgeInsets.symmetric(horizontal: 14),
-          //     child: Row(
-          //       children: posts
-          //           .where((post) => post.hasStory)
-          //           .map(
-          //             (user) => Padding(
-          //               padding: const EdgeInsets.only(right: 14),
-          //               child: StoryPicture(user: user),
-          //             ),
-          //           )
-          //           .toList(),
-          //     ),
-          //   ),
-          // ),
           SizedBox(
             height: 110,
             child: CarouselSlider.builder(

@@ -55,19 +55,48 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       user.name,
                     ),
 
-                    const TabBar(
+                    TabBar(
                       indicatorColor: Color(0xFFDAA520),
                       indicatorWeight: 4,
                       labelColor: Color(0xFFDAA520),
                       unselectedLabelColor: Colors.white54,
                       tabs: [
-                        Tab(icon: Icon(Icons.apps, size: 28)),
-                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                        Tab(icon: Icon(Icons.live_tv, size: 28)),
-                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
+                        Tab(
+                          icon: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset("assets/reels.png"),
+                          ),
+                        ),
+                        Tab(
+                          icon: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset("assets/livestream.png"),
+                          ),
+                        ),
+                        Tab(
+                          icon: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset("assets/star_legacy.png"),
+                          ),
+                        ),
 
-                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
+                        Tab(
+                          icon: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset("assets/gold_ai.png"),
+                          ),
+                        ),
+                        Tab(
+                          icon: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Image.asset("assets/gold_cart.png"),
+                          ),
+                        ),
                       ],
                     ),
                   ],

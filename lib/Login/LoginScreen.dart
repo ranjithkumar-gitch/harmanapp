@@ -191,6 +191,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       onPressed: () {
                         Get.to(
                           () => MainScreen(),
+                          // () => MainScreen(),
                           transition: Transition.zoom,
                           duration: const Duration(seconds: 1),
                         );
