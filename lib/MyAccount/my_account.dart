@@ -466,7 +466,8 @@ class _MyAccountState extends State<MyAccount> {
             Container(
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: isSelected ? gold : Colors.white,
                   width: 1.5,

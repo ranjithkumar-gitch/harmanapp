@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/CartManager.dart';
-import 'package:lottie/lottie.dart';
 
 class ViewProduct extends StatefulWidget {
   const ViewProduct({super.key});
@@ -15,7 +13,7 @@ class _ViewProductState extends State<ViewProduct> {
   int quantity = 1;
   int selectedColor = 0;
   int selectedSize = 0;
-
+  static const gold = Color(0xFFF5D778);
   final colors = [
     Colors.black,
     Colors.grey,
@@ -42,8 +40,19 @@ class _ViewProductState extends State<ViewProduct> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        centerTitle: true,
       ),
-
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          border: Border(top: BorderSide(color: Colors.white12)),
+        ),
+        child: SafeArea(
+          top: false,
+          child: SizedBox(height: 50, child: actionButton("Buy it again")),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -108,60 +117,60 @@ class _ViewProductState extends State<ViewProduct> {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "Sizes",
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Text(
+              //     "Sizes",
+              //     style: GoogleFonts.poppins(
+              //       fontSize: 16,
+              //       color: Colors.white,
+              //       fontWeight: FontWeight.w600,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 10),
 
-              Container(
-                height: 35,
-                padding: const EdgeInsets.only(left: 16),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: sizes.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => setState(() => selectedSize = index),
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: selectedSize == index
-                              ? Color(0xFFF5D778)
-                              : Color.fromRGBO(244, 226, 167, 1),
+              // Container(
+              //   height: 35,
+              //   padding: const EdgeInsets.only(left: 16),
+              //   child: ListView.builder(
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: sizes.length,
+              //     itemBuilder: (context, index) {
+              //       return GestureDetector(
+              //         onTap: () => setState(() => selectedSize = index),
+              //         child: Container(
+              //           margin: const EdgeInsets.only(right: 12),
+              //           padding: const EdgeInsets.symmetric(
+              //             horizontal: 15,
+              //             vertical: 8,
+              //           ),
+              //           decoration: BoxDecoration(
+              //             color: selectedSize == index
+              //                 ? Color(0xFFF5D778)
+              //                 : Color.fromRGBO(244, 226, 167, 1),
 
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          sizes[index],
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: selectedSize == index
-                                ? FontWeight.w500
-                                : FontWeight.w400,
-                            color: selectedSize == index
-                                ? Colors.black
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+              //             borderRadius: BorderRadius.circular(10),
+              //           ),
+              //           child: Text(
+              //             sizes[index],
+              //             style: GoogleFonts.poppins(
+              //               fontSize: 14,
+              //               fontWeight: selectedSize == index
+              //                   ? FontWeight.w500
+              //                   : FontWeight.w400,
+              //               color: selectedSize == index
+              //                   ? Colors.black
+              //                   : Colors.black,
+              //             ),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               const SizedBox(height: 10),
 
               Divider(color: CupertinoColors.opaqueSeparator),
@@ -192,12 +201,27 @@ class _ViewProductState extends State<ViewProduct> {
                 ),
               ),
 
-              // Divider(color: CupertinoColors.opaqueSeparator),
+              Divider(color: CupertinoColors.opaqueSeparator),
               const SizedBox(height: 10),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget actionButton(String text) {
+    return OutlinedButton(
+      onPressed: () {
+        Navigator.pop(context); // or navigate to order details
+      },
+      style: OutlinedButton.styleFrom(
+        foregroundColor: gold,
+        side: BorderSide(color: gold),
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      ),
+      child: Text(text),
     );
   }
 }

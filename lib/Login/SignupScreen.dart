@@ -83,7 +83,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
               const Center(
                 child: Text(
-                  "Choose how you want to be part of the HM community.",
+                  'How would you like to be part of the "legacy"',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white60, fontSize: 14),
                 ),
@@ -93,7 +93,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
               _optionCard(
                 title: "I am a Stargazer",
-                subtitle: "Connect with your favorite Stars",
+                subtitle: "Light the journey of your star",
                 icon: Icons.person,
                 isSelected: selectedRole == "Stargazer",
                 onTap: () => setState(() => selectedRole = "Stargazer"),

@@ -30,26 +30,14 @@ class ExploreScreen extends StatelessWidget {
               indicatorColor: Color(0xFFDAA520),
               indicatorWeight: 4,
               labelColor: Color(0xFFDAA520),
-              unselectedLabelColor: Colors.black54,
+              unselectedLabelColor: Colors.grey,
               dividerColor: Colors.transparent,
 
               tabs: const [
-                Tab(
-                  icon: Icon(Icons.photo, size: 30, color: Color(0xFFFFFFFF)),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.video_library,
-                    size: 30,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                ),
-                Tab(
-                  icon: Icon(Icons.live_tv, size: 30, color: Color(0xFFFFFFFF)),
-                ),
-                Tab(
-                  icon: Icon(Icons.person, size: 30, color: Color(0xFFFFFFFF)),
-                ),
+                Tab(icon: Icon(Icons.photo, size: 30)),
+                Tab(icon: Icon(Icons.video_library, size: 30)),
+                Tab(icon: Icon(Icons.live_tv, size: 30)),
+                Tab(icon: Icon(Icons.person, size: 30)),
               ],
             ),
 
@@ -424,11 +412,10 @@ class _FullScreenReelPlayerState extends State<FullScreenReelPlayer> {
 
                     const SizedBox(height: 20),
 
-                    // ▶️ / ⏸ PLAY BUTTON WITH TRANSPARENT BACKGROUND
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.black45, // premium transparent bg
+                        color: Colors.black45,
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
@@ -629,29 +616,6 @@ class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return _videoplay();
-    // Scaffold(
-    //   backgroundColor: Colors.white,
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.black,
-    //     elevation: 0,
-    //     title: Text(
-    //       'Preview Youtube Video',
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //     leading: IconButton(
-    //       onPressed: () {
-    //         Navigator.pop(context);
-    //       },
-    //       icon: const Icon(Icons.arrow_back, color: Colors.white, size: 30),
-    //     ),
-    //   ),
-    //   body: SafeArea(
-    //     child: Container(
-    //       margin: const EdgeInsets.only(right: 10, left: 10),
-    //       child: Center(child: _videoplay()),
-    //     ),
-    //   ),
-    // );
   }
 
   Widget _videoplay() {
@@ -752,40 +716,3 @@ class GradientIcon extends StatelessWidget {
     );
   }
 }
-// class ReelCard extends StatelessWidget {
-//   final String thumbUrl;
-//   final int index;
-
-//   const ReelCard({required this.thumbUrl, required this.index, Key? key})
-//     : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final height = (index % 7 == 0)
-//         ? 300.0
-//         : (index % 3 == 0)
-//         ? 180.0
-//         : 150.0;
-
-//     return ClipRRect(
-//       borderRadius: BorderRadius.circular(6),
-//       child: Stack(
-//         alignment: Alignment.center,
-//         children: [
-//           Container(
-//             height: height,
-//             width: double.infinity,
-//             child: Image.network(thumbUrl, fit: BoxFit.cover),
-//           ),
-
-//           Image.network(
-//             "https://cdn-icons-png.flaticon.com/512/0/375.png",
-//             width: 28,
-//             height: 28,
-//             color: Colors.white,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

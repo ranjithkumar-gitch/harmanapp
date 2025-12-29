@@ -2,6 +2,8 @@ import 'package:harmanapp/models/post_model.dart';
 
 class UserPostModel {
   String name;
+  String sname;
+
   String profileImage;
   String category;
   PostModel post;
@@ -10,6 +12,8 @@ class UserPostModel {
   bool hasStory;
   UserPostModel({
     required this.name,
+    required this.sname,
+
     required this.profileImage,
     required this.category,
     required this.post,
@@ -23,6 +27,7 @@ class UserPostModel {
 List<UserPostModel> posts = [
   UserPostModel(
     name: 'Srikanth Natarajan',
+    sname: '@srikanthNatarajan',
     profileImage: 'foto-sushi.jpg',
     category: 'athelete',
     post: PostModel(
@@ -36,6 +41,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Priyanka C',
+    sname: '@Priyanka C',
+
     profileImage: 'aiony-haust.jpg',
     category: 'athelete',
 
@@ -51,6 +58,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Sathya Nadella',
+    sname: '@Sathya Nadella',
+
     profileImage: 'foto-sushi.jpg',
     category: 'actor',
 
@@ -67,6 +76,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Sathya Nadella',
+    sname: '@Sathya Nadella',
+
     profileImage: 'foto-sushi.jpg',
     category: 'athelete',
 
@@ -81,6 +92,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Devi S Prasad',
+    sname: '@Devi S Prasad',
+
     profileImage: 'lucas-sankey.jpg',
     category: 'singer',
 
@@ -96,6 +109,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Srikanth N',
+    sname: '@Srikanth N',
+
     profileImage: 'foto-sushi.jpg',
     category: 'singer',
 
@@ -110,6 +125,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Richa Mathews',
+    sname: '@Richa Mathews',
+
     profileImage: 'averie-woodard.jpg',
     category: 'actor',
 
@@ -125,6 +142,8 @@ List<UserPostModel> posts = [
   ),
   UserPostModel(
     name: 'Uday Ch',
+    sname: '@Uday Ch',
+
     profileImage: 'michael-frattaroli.jpg',
     category: 'athelete',
 

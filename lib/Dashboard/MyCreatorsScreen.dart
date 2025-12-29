@@ -196,18 +196,38 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
             ),
             child: Row(
               children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "assets/sources/profiles/${user.profileImage}",
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/sources/profiles/${user.profileImage}",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      fit: BoxFit.cover,
                     ),
-                  ),
+
+                    // ⭐ Tier Badge
+                    Positioned(
+                      bottom: -8,
+                      right: -8,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: color, width: 1),
+                        ),
+                        child: Icon(Icons.star, color: color, size: 14),
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(width: 12),
@@ -236,12 +256,18 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                       ],
                     ),
                     const SizedBox(height: 3),
-                    Icon(
-                      Icons.star,
-                      color: color,
-                      size: 20,
-                      fontWeight: FontWeight.w500,
+                    Text(
+                      'Digital Artist | Photographer | Travel Enthusiast',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
+                    // Icon(
+                    //   Icons.star,
+                    //   color: color,
+                    //   size: 20,
+                    //   fontWeight: FontWeight.w500,
+                    // ),
                   ],
                 ),
 

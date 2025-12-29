@@ -78,16 +78,31 @@ class _ImagePostState extends State<ImagePost>
               padding: const EdgeInsets.all(8.0),
               child: StoryPicture(user: widget.post, hideName: true, size: 60),
             ),
-            Text(
-              widget.post.name,
+            Column(
+              children: [
+                Text(
+                  widget.post.name,
 
-              style: GoogleFonts.greatVibes(
-                textStyle: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFF5D778),
+                  style: GoogleFonts.greatVibes(
+                    textStyle: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF5D778),
+                    ),
+                  ),
                 ),
-              ),
+                Text(
+                  widget.post.sname,
+
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      color: Color(0xFFF5D778),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const Spacer(),
 
@@ -475,10 +490,14 @@ class _ImagePostState extends State<ImagePost>
                 const SizedBox(height: 5),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      showComments = !showComments;
-                    });
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => CommentBottomSheet(post: widget.post),
+                    );
                   },
+
                   child: Text(
                     'View all ${widget.post.post.comments} comments',
                     style: TextStyle(
@@ -550,6 +569,272 @@ class _ImagePostState extends State<ImagePost>
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+final List<CommentModel> comments = [
+  CommentModel(
+    username: "john_doe",
+    image: "assets/sources/profiles/aiony-haust.jpg",
+    message: "This looks amazing 🔥🔥",
+    time: "2d",
+  ),
+  CommentModel(
+    username: "alex_99",
+    image: "assets/sources/profiles/deco-dev.png",
+    message: "Pure elegance ✨",
+    time: "1d",
+  ),
+  CommentModel(
+    username: "maria_k",
+    image: "assets/sources/profiles/aiony-haust.jpg",
+    message: "Luxury vibes only 💫",
+    time: "5h",
+  ),
+  CommentModel(
+    username: "rohit.dev",
+    image: "assets/sources/profiles/azamat-zhanisov-.jpg",
+    message: "Nice shot 📸",
+    time: "3h",
+  ),
+  CommentModel(
+    username: "sophia_l",
+    image: "assets/sources/profiles/foto-sushi.jpg",
+    message: "Absolutely stunning ❤️",
+    time: "1h",
+  ),
+];
+
+class CommentModel {
+  final String username;
+  final String image;
+  final String message;
+  final String time;
+
+  CommentModel({
+    required this.username,
+    required this.image,
+    required this.message,
+    required this.time,
+  });
+}
+
+class CommentBottomSheet extends StatefulWidget {
+  final UserPostModel post;
+  const CommentBottomSheet({super.key, required this.post});
+
+  @override
+  State<CommentBottomSheet> createState() => _CommentBottomSheetState();
+}
+
+class _CommentBottomSheetState extends State<CommentBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.4,
+      maxChildSize: 0.95,
+      builder: (context, scrollController) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+          ),
+          child: Column(
+            children: [
+              /// drag handle
+              const SizedBox(height: 8),
+              Container(
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              /// title
+              const Text(
+                "Comments",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              const Divider(color: Colors.white12),
+
+              /// comments list
+              // Expanded(
+              //   child: ListView.builder(
+              //     controller: scrollController,
+              //     itemCount: 5,
+              //     itemBuilder: (_, index) {
+              //       return _InstagramCommentItem(
+              //         image: "assets/sources/profiles/aiony-haust.jpg",
+              //         name: "john_doe",
+              //         date: "2d",
+              //         comment: "This looks amazing 🔥🔥",
+              //       );
+              //     },
+              //   ),
+              // ),
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: comments.length,
+                  itemBuilder: (_, index) {
+                    final comment = comments[index];
+
+                    return _InstagramCommentItem(
+                      image: comment.image,
+                      name: comment.username,
+                      date: comment.time,
+                      comment: comment.message,
+                    );
+                  },
+                ),
+              ),
+
+              /// input field
+              _commentInput(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _commentInput() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: Colors.white12)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 36,
+            width: 36,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: AssetImage("assets/sources/profiles/averie-woodard.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
+                hintText: "Add a comment...",
+                hintStyle: TextStyle(color: Colors.white54),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: const Text(
+              "Post",
+              style: TextStyle(color: Color(0xFFD4AF37)),
+            ),
+            onPressed: () {
+              if (_controller.text.trim().isNotEmpty) {
+                _controller.clear();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InstagramCommentItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String date;
+  final String comment;
+
+  const _InstagramCommentItem({
+    required this.image,
+    required this.name,
+    required this.date,
+    required this.comment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// avatar
+          Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 12),
+
+          /// text
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        color: Colors.white54,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  comment,
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

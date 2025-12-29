@@ -14,12 +14,13 @@ class MembershipScreen extends StatelessWidget {
         title: const Text(
           "My Memberships",
           style: TextStyle(
-            color: Color(0xFFF5D778),
+            color: Colors.white,
             fontFamily: "Gilroy",
             fontWeight: FontWeight.bold,
           ),
         ),
-        iconTheme: const IconThemeData(color: Color(0xFFF5D778)),
+        iconTheme: const IconThemeData(color: Colors.white),
+        centerTitle: true,
       ),
       body: ListView(
         children: [

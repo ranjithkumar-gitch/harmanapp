@@ -219,7 +219,15 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                   //     colors: [CupertinoColors.white, CupertinoColors.white],
                   //   ),
                   // ),
-                  child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xFFF5D778), width: 1),
+                    ),
+                    child: Icon(Icons.star, color: Color(0xFFF5D778), size: 20),
+                  ),
                 ),
 
                 // Image.asset("assets/screenshots/gold.png", scale: 12),
@@ -304,7 +312,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                         if (isFollowing) const Icon(Icons.done_all, size: 16),
                         if (isFollowing) const SizedBox(width: 4),
                         Text(
-                          isFollowing ? "Following" : "Follow",
+                          isFollowing ? "Stargazing" : "Stargaze",
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -335,8 +343,9 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Post',
+                    'Stills',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -350,7 +359,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                 'o',
                 style: TextStyle(
                   color: Colors.blue,
-                  fontSize: 3,
+                  fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -365,8 +374,9 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Media',
+                    'Bits',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -381,7 +391,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                 'O',
                 style: TextStyle(
                   color: Colors.blue,
-                  fontSize: 3,
+                  fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -396,6 +406,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(

@@ -248,7 +248,23 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   //     colors: [CupertinoColors.white, CupertinoColors.white],
                   //   ),
                   // ),
-                  child: Icon(Icons.star, color: Color(0xFFDAA520), size: 30),
+                  child: Positioned(
+                    bottom: -10,
+                    right: -10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Color(0xFFF5D778), width: 1),
+                      ),
+                      child: Icon(
+                        Icons.star,
+                        color: Color(0xFFF5D778),
+                        size: 20,
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Image.asset("assets/screenshots/gold.png", scale: 12),
@@ -438,7 +454,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                         if (isFollowing) const Icon(Icons.done_all, size: 16),
                         if (isFollowing) const SizedBox(width: 4),
                         Text(
-                          isFollowing ? "Following" : "Follow",
+                          isFollowing ? "Stargazing" : "Stargaze",
 
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -470,8 +486,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Post',
+                    'Stills',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -500,8 +517,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Media',
+                    'Bits',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,

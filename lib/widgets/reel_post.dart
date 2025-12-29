@@ -87,16 +87,31 @@ class _ReelPostState extends State<ReelPost>
               padding: const EdgeInsets.all(8.0),
               child: StoryPicture(user: widget.post, hideName: true, size: 60),
             ),
-            Text(
-              widget.post.name,
+            Column(
+              children: [
+                Text(
+                  widget.post.name,
 
-              style: GoogleFonts.greatVibes(
-                textStyle: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFF5D778),
+                  style: GoogleFonts.greatVibes(
+                    textStyle: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF5D778),
+                    ),
+                  ),
                 ),
-              ),
+                Text(
+                  widget.post.sname.toString(),
+
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      color: Color(0xFFF5D778),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const Spacer(),
 

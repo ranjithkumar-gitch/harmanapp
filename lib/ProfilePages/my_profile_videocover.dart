@@ -353,7 +353,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                         if (isFollowing) const Icon(Icons.done_all, size: 16),
                         if (isFollowing) const SizedBox(width: 4),
                         Text(
-                          isFollowing ? "Following" : "Follow",
+                          isFollowing ? "Stargazing" : "Stargaze",
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -384,8 +384,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
+
                   Text(
-                    'Post',
+                    'Stills',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -414,8 +416,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Media',
+                    'Bits',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
