@@ -161,6 +161,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                   tier: "Bronze",
                   color: CupertinoColors.systemBrown,
                 ),
+                Container(color: Colors.transparent, height: 100),
               ],
             ),
     );
