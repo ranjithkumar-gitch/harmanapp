@@ -53,6 +53,7 @@ class ExploreScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Container(height: 80),
           ],
         ),
       ),

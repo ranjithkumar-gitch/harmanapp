@@ -358,7 +358,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
               const Text(
                 'o',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Color(0xFFF5D778),
                   fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),
@@ -390,7 +390,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
               const Text(
                 'O',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Color(0xFFF5D778),
                   fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),

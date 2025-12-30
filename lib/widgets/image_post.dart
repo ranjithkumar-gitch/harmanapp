@@ -79,6 +79,9 @@ class _ImagePostState extends State<ImagePost>
               child: StoryPicture(user: widget.post, hideName: true, size: 60),
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Text(
                   widget.post.name,
@@ -94,12 +97,17 @@ class _ImagePostState extends State<ImagePost>
                 Text(
                   widget.post.sname,
 
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      color: Color(0xFFF5D778),
-                    ),
+                  // style: GoogleFonts.poppins(
+                  //   textStyle: const TextStyle(
+                  //     fontSize: 12,
+                  //     fontWeight: FontWeight.w300,
+                  //     color: Color(0xFFF5D778),
+                  //   ),
+                  // ),
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -750,10 +758,14 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
 
           CupertinoButton(
             padding: EdgeInsets.zero,
-            child: const Text(
-              "Post",
-              style: TextStyle(color: Color(0xFFD4AF37)),
+            child: const Icon(
+              CupertinoIcons.paperplane_fill,
+              color: Color(0xFFD4AF37),
             ),
+            // child: const Text(
+            //   "Post",
+            //   style: TextStyle(color: Color(0xFFD4AF37)),
+            // ),
             onPressed: () {
               if (_controller.text.trim().isNotEmpty) {
                 _controller.clear();
@@ -810,10 +822,10 @@ class _CommentItem extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 18,
                         color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(width: 8),

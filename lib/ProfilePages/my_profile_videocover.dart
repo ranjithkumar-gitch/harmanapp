@@ -400,7 +400,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               const Text(
                 'o',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Color(0xFFF5D778),
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -432,7 +432,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               const Text(
                 'O',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Color(0xFFF5D778),
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -448,6 +448,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(

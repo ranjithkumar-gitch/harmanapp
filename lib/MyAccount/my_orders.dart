@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/MyAccount/my_product_view.dart';
 import 'package:harmanapp/MyAccount/viewproduct.dart';
 
 class MyOrders extends StatefulWidget {
@@ -11,23 +12,32 @@ class MyOrders extends StatefulWidget {
 class _MyOrdersState extends State<MyOrders> {
   int selectedIndex = -1;
   static const gold = Color(0xFFF5D778);
+  int tappedIndex = -1;
 
   final orders = [
     {
-      "orderDate": "20 December 2025",
-      "total": "₹340.80",
-      "status": "Delivered 24 December",
+      "orderDate": "29 December 2025",
+      "total": "\$340.80",
+      "status": "Delivered",
       "products": [
-        {"image": "assets/shirt.jpg", "name": "Gold Membership Hoodie"},
-        {"image": "assets/shirt.jpg", "name": "Exclusive Creator Mug"},
+        {"image": "assets/shirt.jpg", "name": "Gold Membership T-shirt"},
+        {"image": "assets/jersey5.avif", "name": "Exclusive Creator Jersey"},
       ],
     },
     {
-      "orderDate": "18 December 2025",
-      "total": "₹199.00",
+      "orderDate": "20 December 2025",
+      "total": "\$199.00",
       "status": "Shipping",
       "products": [
-        {"image": "assets/shirt.jpg", "name": "Signed Poster"},
+        {"image": "assets/jersey10.jpg", "name": "Signed Poster"},
+      ],
+    },
+    {
+      "orderDate": "19 December 2025",
+      "total": "\$167.00",
+      "status": "Cancelled",
+      "products": [
+        {"image": "assets/jersey5.avif", "name": "Signed Poster"},
       ],
     },
   ];
@@ -74,12 +84,12 @@ class _MyOrdersState extends State<MyOrders> {
           return amazonOrderCard(
             order: orders[index],
             isSelected: isSelected,
-            onViewPressed: () {
-              setState(() {
-                // Toggle the selected index
-                selectedIndex = isSelected ? -1 : index;
-              });
-            },
+            index: index,
+            // onViewPressed: () {
+            //   setState(() {
+            //     selectedIndex = isSelected ? -1 : index;
+            //   });
+            // },
           );
         },
       ),
@@ -89,7 +99,8 @@ class _MyOrdersState extends State<MyOrders> {
   Widget amazonOrderCard({
     required Map<String, dynamic> order,
     required bool isSelected,
-    required VoidCallback onViewPressed,
+    // required VoidCallback onViewPressed,
+    required int index,
   }) {
     final products = order["products"] as List;
     const radius = 12.0;
@@ -101,48 +112,64 @@ class _MyOrdersState extends State<MyOrders> {
         border: Border.all(color: gold, width: 1.5),
       ),
       child: ClipRRect(
-        // ⭐ THIS FIXES CORNERS
         borderRadius: BorderRadius.circular(radius),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// HEADER
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(8),
               color: Colors.black,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /// LEFT
                   Expanded(
                     flex: 3,
-                    child: headerItem("ORDER PLACED", order["orderDate"]),
+                    child: Center(
+                      child: headerItem("ORDER PLACED", order["orderDate"]),
+                    ),
                   ),
-
-                  /// CENTER
                   Expanded(
                     flex: 2,
-                    child: headerItem("ITEMS", products.length.toString()),
+                    child: Center(
+                      child: headerItem("ITEMS", products.length.toString()),
+                    ),
                   ),
-
-                  /// RIGHT (BUTTON)
                   Expanded(
                     flex: 3,
-                    child: actionButton(
-                      "View Order",
-                      isSelected,
-                      onPressed: onViewPressed,
+                    child: Center(
+                      // child: actionButton(
+                      //   "View Order",
+                      //   isSelected,
+                      //   onPressed: onViewPressed,
+                      // ),
+                      child: actionButton(
+                        "View Order",
+                        onPressed: () {
+                          if (index == 0) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ViewProduct(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const MyProductView(), // <-- your second page
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
 
-            Divider(
-              color: gold,
-              thickness: 1,
-              // indent: 5,
-              // endIndent: 5,
-            ),
+            Divider(color: gold, thickness: 1),
             Container(
               color: Colors.black,
               padding: const EdgeInsets.all(16),
@@ -154,12 +181,34 @@ class _MyOrdersState extends State<MyOrders> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          order["status"],
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        // Text(
+                        //   order["status"],
+                        //   style: const TextStyle(
+                        //     fontSize: 18,
+                        //     color: Colors.white,
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        Container(
+                          padding: const EdgeInsets.all(
+                            8,
+                          ), // optional, makes border look nicer
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: gold, // border color
+                              width: 1, // border width
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ), // optional rounded corners
+                          ),
+                          child: Text(
+                            order["status"],
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: gold,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -197,7 +246,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       Text(
                                         "Qty: 1",
                                         style: const TextStyle(
-                                          color: Colors.white70,
+                                          color: Colors.white,
                                           fontSize: 12,
                                         ),
                                       ),
@@ -265,27 +314,44 @@ class _MyOrdersState extends State<MyOrders> {
     );
   }
 
-  Widget actionButton(
-    String text,
-    bool isSelected, {
-    required VoidCallback onPressed,
-  }) {
-    return Container(
+  // Widget actionButton(
+  //   String text,
+  //   bool isSelected, {
+  //   required VoidCallback onPressed,
+  // }) {
+  //   return Container(
+  //     width: double.infinity,
+  //     // margin: const EdgeInsets.only(bottom: 10),
+  //     child: OutlinedButton(
+  //       onPressed: () {
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute<void>(builder: (context) => const ViewProduct()),
+  //         );
+  //       },
+  //       style: OutlinedButton.styleFrom(
+  //         foregroundColor: gold,
+  //         side: BorderSide(color: gold),
+  //         padding: const EdgeInsets.symmetric(vertical: 10),
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //       ),
+  //       child: Text(text),
+  //     ),
+  //   );
+  // }
+  Widget actionButton(String text, {required VoidCallback onPressed}) {
+    return SizedBox(
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 10),
       child: OutlinedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(builder: (context) => const ViewProduct()),
-          );
-        },
+        onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: gold,
           side: BorderSide(color: gold),
-          padding: const EdgeInsets.symmetric(vertical: 14),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         child: Text(text),

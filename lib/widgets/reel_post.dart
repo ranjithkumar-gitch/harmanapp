@@ -88,6 +88,8 @@ class _ReelPostState extends State<ReelPost>
               child: StoryPicture(user: widget.post, hideName: true, size: 60),
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.post.name,
@@ -103,12 +105,10 @@ class _ReelPostState extends State<ReelPost>
                 Text(
                   widget.post.sname.toString(),
 
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      color: Color(0xFFF5D778),
-                    ),
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ],

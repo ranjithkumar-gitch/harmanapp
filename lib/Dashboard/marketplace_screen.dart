@@ -186,6 +186,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               },
             ),
           ),
+          Container(height: 80),
         ],
       ),
     );
