@@ -824,7 +824,8 @@ class _CommentItem extends StatelessWidget {
                       name,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
-                        fontSize: 18,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
