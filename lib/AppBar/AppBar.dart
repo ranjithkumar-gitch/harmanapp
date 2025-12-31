@@ -35,7 +35,7 @@ class CustomAppBar extends StatelessWidget
           textStyle: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Color(0xFFF5D778),
+            color: Color.fromARGB(255, 245, 183, 67),
           ),
         ),
       ),
@@ -59,7 +59,7 @@ class CustomAppBar extends StatelessWidget
               child: Icon(
                 Icons.person_2_outlined,
                 size: 24,
-                color: Color(0xFFF5D778),
+                color: Color.fromARGB(255, 245, 183, 67),
               ),
             ),
           ),
@@ -81,7 +81,7 @@ class CustomAppBar extends StatelessWidget
                   child: Icon(
                     Icons.shopping_bag_outlined,
                     size: 24,
-                    color: Color(0xFFF5D778),
+                    color: Color.fromARGB(255, 245, 183, 67),
                   ),
                 ),
               ),
@@ -115,14 +115,24 @@ class CustomAppBar extends StatelessWidget
                         color: Colors.black, // background
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Color(0xFFF5D778), // gold border
+                          color: Color.fromARGB(
+                            255,
+                            245,
+                            183,
+                            67,
+                          ), // gold border
                           width: 2,
                         ),
                       ),
                       child: Text(
                         count.toString(),
                         style: const TextStyle(
-                          color: Color(0xFFF5D778), // gold number
+                          color: Color.fromARGB(
+                            255,
+                            245,
+                            183,
+                            67,
+                          ), // gold number
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
