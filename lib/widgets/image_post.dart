@@ -108,6 +108,7 @@ class _ImagePostState extends State<ImagePost>
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
                     color: Colors.white,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -442,7 +443,6 @@ class _ImagePostState extends State<ImagePost>
                       onPressed: () {
                         final comment = _commentController.text.trim();
                         if (comment.isNotEmpty) {
-                          // TODO: submit comment logic
                           _commentController.clear();
                           setState(() {
                             _showCommentBox = false;
