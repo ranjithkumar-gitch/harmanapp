@@ -23,16 +23,26 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   bool isFollowing = false;
 
   SampleItem? selectedItem;
+  @override
+  void initState() {
+    super.initState();
+    posts.shuffle();
+  }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      posts.shuffle();
-    });
     const profileSize = 80.0;
+
+    if (posts.isEmpty) {
+      return const Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
+    }
 
     final user = posts.firstWhere(
       (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+      orElse: () => posts.first,
     );
 
     return DefaultTabController(
@@ -609,13 +619,15 @@ class ImagesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imagePaths = [
-      'assets/sources/profiles/averie-woodard.jpg',
-
-      'assets/sources/profiles/aiony-haust.jpg',
-      'assets/sources/profiles/azamat-zhanisov-.jpg',
-      'assets/sources/profiles/deco-dev.png',
-      'assets/sources/profiles/foto-sushi.jpg',
-      'assets/sources/profiles/michael-frattaroli.jpg',
+      'assets/sources/profiles/bhatia.jpg',
+      'assets/sources/profiles/deepika.jpg',
+      'assets/sources/profiles/Virat_Kohli.jpg',
+      'assets/sources/profiles/dion.jpg',
+      'assets/sources/profiles/elon.jpeg',
+      'assets/sources/profiles/greta.jpeg',
+      "assets/sources/profiles/jack.jpg",
+      "assets/sources/profiles/jeff.jpeg",
+      "assets/sources/profiles/malala.jpg",
     ];
     return GridView.builder(
       padding: EdgeInsets.zero,
@@ -640,10 +652,10 @@ class ReelsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videos = [
-      'assets/sources/videos/1.mp4',
-      'assets/sources/videos/2.mp4',
-      'assets/sources/videos/3.mp4',
-      'assets/sources/videos/4.mp4',
+      'assets/sources/videos/deepika.mp4',
+      'assets/sources/videos/obama.mp4',
+      'assets/sources/videos/oprah.mp4',
+      'assets/sources/videos/virat.mp4',
     ];
 
     return GridView.builder(

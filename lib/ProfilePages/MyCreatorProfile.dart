@@ -21,18 +21,26 @@ enum SampleItem { itemOne }
 
 class _MycreatorprofileState extends State<Mycreatorprofile> {
   bool isFollowing = false;
-
   SampleItem? selectedItem;
 
   @override
+  void initState() {
+    super.initState();
+    posts.shuffle(); // ✅ moved here
+  }
+
+  @override
   Widget build(BuildContext context) {
-    setState(() {
-      posts.shuffle();
-    });
-    const profileSize = 80.0;
+    if (posts.isEmpty) {
+      return const Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
+    }
 
     final user = posts.firstWhere(
       (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+      orElse: () => posts.first,
     );
 
     return DefaultTabController(
@@ -40,7 +48,6 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
       child: Scaffold(
         backgroundColor: CupertinoColors.black,
         appBar: const CustomAppBar(),
-
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -49,7 +56,6 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CoverImage('assets/sources/profiles/${user.profileImage}'),
-
                     ProfileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
@@ -266,117 +272,10 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     ),
                   ),
                 ),
-
-                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
-          // Row(
-          //   children: [
-          //     Row(
-          //       children: [
-          //         Container(
-          //           height: 100,
-          //           width: 100,
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(10),
-          //             gradient: const LinearGradient(
-          //               colors: [Color(0xffd4af37), Colors.white],
-          //             ),
-          //           ),
 
-          //           child: Container(
-          //             padding: const EdgeInsets.all(2),
-          //             child: Container(
-          //               decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(10),
-          //                 image: DecorationImage(
-          //                   image: AssetImage(imagePath),
-          //                   fit: BoxFit.cover,
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //         if (name == "Srikanth Natarajan")
-          //           Container(
-          //             height: 30,
-          //             width: 30,
-          //             decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(36),
-          //               gradient: const LinearGradient(
-          //                 colors: [
-          //                   CupertinoColors.white,
-          //                   CupertinoColors.white,
-          //                 ],
-          //               ),
-          //             ),
-          //             transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-          //             //padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          //             child: Icon(
-          //               Icons.star,
-          //               color: Color(0xFFDAA520),
-          //               size: 30,
-          //             ),
-          //           ),
-          //         if (name == "Devi S Prasad")
-          //           Container(
-          //             height: 30,
-          //             width: 30,
-          //             decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(36),
-          //               gradient: const LinearGradient(
-          //                 colors: [
-          //                   CupertinoColors.white,
-          //                   CupertinoColors.white,
-          //                 ],
-          //               ),
-          //             ),
-          //             transform: Matrix4.translationValues(-15.0, 30.0, 0.0),
-
-          //             child: Icon(
-          //               Icons.star,
-          //               color: CupertinoColors.systemGrey,
-          //               size: 30,
-          //             ),
-          //           ),
-          //       ],
-          //     ),
-
-          //     const SizedBox(width: 8),
-          //     Row(
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Column(
-          //               children: [
-          //                 SizedBox(height: 30),
-          //                 Text(
-          //                   name,
-          //                   style: const TextStyle(
-          //                     color: Colors.white,
-          //                     fontSize: 13,
-          //                     fontWeight: FontWeight.bold,
-          //                   ),
-          //                 ),
-          //                 Text(
-          //                   '@ ${name}',
-          //                   style: const TextStyle(
-          //                     color: Colors.white,
-          //                     fontSize: 12,
-          //                     fontStyle: FontStyle.italic,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
           SizedBox(height: 12),
 
           Row(
@@ -752,13 +651,15 @@ class ImagesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imagePaths = [
-      'assets/sources/profiles/averie-woodard.jpg',
-
-      'assets/sources/profiles/aiony-haust.jpg',
-      'assets/sources/profiles/azamat-zhanisov-.jpg',
-      'assets/sources/profiles/deco-dev.png',
-      'assets/sources/profiles/foto-sushi.jpg',
-      'assets/sources/profiles/michael-frattaroli.jpg',
+      'assets/sources/profiles/bhatia.jpg',
+      'assets/sources/profiles/deepika.jpg',
+      'assets/sources/profiles/Virat_Kohli.jpg',
+      'assets/sources/profiles/dion.jpg',
+      'assets/sources/profiles/elon.jpeg',
+      'assets/sources/profiles/greta.jpeg',
+      "assets/sources/profiles/jack.jpg",
+      "assets/sources/profiles/jeff.jpeg",
+      "assets/sources/profiles/malala.jpg",
     ];
     return GridView.builder(
       padding: EdgeInsets.zero,
@@ -783,10 +684,10 @@ class ReelsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videos = [
-      'assets/sources/videos/1.mp4',
-      'assets/sources/videos/2.mp4',
-      'assets/sources/videos/3.mp4',
-      'assets/sources/videos/4.mp4',
+      'assets/sources/videos/deepika.mp4',
+      'assets/sources/videos/obama.mp4',
+      'assets/sources/videos/oprah.mp4',
+      'assets/sources/videos/virat.mp4',
     ];
 
     return GridView.builder(

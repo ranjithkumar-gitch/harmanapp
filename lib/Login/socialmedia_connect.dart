@@ -60,17 +60,25 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(Icons.arrow_back_ios, color: Colors.white),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFFF5D778),
+                        ),
                       ),
                       const SizedBox(width: 10),
-                      Icon(Icons.music_note_rounded, color: Colors.white),
-                      const SizedBox(width: 6),
-                      const Text(
-                        "HM",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                      // Icon(Icons.music_note_rounded, color: Colors.white),
+                      // const SizedBox(width: 6),
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xFFF5D778)),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: AssetImage('assets/App_logo_2.jpeg'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ],

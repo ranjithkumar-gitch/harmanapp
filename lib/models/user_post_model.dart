@@ -26,30 +26,30 @@ class UserPostModel {
 
 List<UserPostModel> posts = [
   UserPostModel(
-    name: 'Srikanth Natarajan',
-    sname: '@srikanthNatarajan',
-    profileImage: 'foto-sushi.jpg',
-    category: 'athelete',
+    name: 'Virat Kohli',
+    sname: '@ViratKohli',
+    profileImage: 'Virat_Kohli.jpg',
+    category: 'Cricketer & youth icon',
     post: PostModel(
       postType: Post.reel,
-      video: '1.mp4',
-      description: 'WhatsApp Clone part 2',
+      video: 'virat.mp4',
+      description: 'Funny Moment',
       likes: '6',
       date: 'December 03',
     ),
     hasStory: true,
   ),
   UserPostModel(
-    name: 'Priyanka C',
-    sname: '@Priyanka C',
+    name: 'Ratan Tata',
+    sname: '@ratantata',
 
-    profileImage: 'aiony-haust.jpg',
-    category: 'athelete',
+    profileImage: 'Ratan_Tata.jpg',
+    category: 'Business icon & philanthropist',
 
     post: PostModel(
       postType: Post.picture,
-      images: ['1-1.jpg', '1-2.jpg'],
-      description: 'Payment App\nBy @design_bijay.singh',
+      images: ['tata-jaguar.webp', 'jaguar.webp'],
+      description: 'Tata - jaguar',
       likes: '26',
       comments: '5',
       date: '2 hours ago',
@@ -57,17 +57,17 @@ List<UserPostModel> posts = [
     hasStory: true,
   ),
   UserPostModel(
-    name: 'Sathya Nadella',
-    sname: '@Sathya Nadella',
+    name: 'Deepika Padukone',
+    sname: '@deepikapadukone',
 
-    profileImage: 'foto-sushi.jpg',
-    category: 'actor',
+    profileImage: 'deepika.jpg',
+    category: 'Actress & mental health advocate',
 
     post: PostModel(
       postType: Post.reel,
-      video: '2.mp4',
+      video: 'deepika.mp4',
       description:
-          '1500 x ❤️ = full tutorial 🍿Animated Cube effect in Figma coming soon! (That’s if we hit 1500 ❤️s) 😁✌️Cheers!',
+          'Pregnant Deepika Padukone plays ‘Dandiya’ with Ranveer Singh at Anant-Radhika’s pre-wedding ',
       likes: '1,279',
       comments: '97',
       date: '3 hours ago',
@@ -75,32 +75,32 @@ List<UserPostModel> posts = [
     hasStory: true,
   ),
   UserPostModel(
-    name: 'Sathya Nadella',
-    sname: '@Sathya Nadella',
+    name: 'Narayana Murthy',
+    sname: '@narayanamurthy',
 
-    profileImage: 'foto-sushi.jpg',
-    category: 'athelete',
+    profileImage: 'murthy.jpg',
+    category: 'Infosys founder',
 
     post: PostModel(
       postType: Post.picture,
-      images: ['2.jpg'],
-      description: 'By @dotpixelagency ',
+      images: ['infosys.jpg'],
+      description: 'Infosys',
       likes: '22',
       comments: '9',
       date: '2 days ago',
     ),
   ),
   UserPostModel(
-    name: 'Devi S Prasad',
-    sname: '@Devi S Prasad',
+    name: 'Falguni Nayar',
+    sname: '@falguni_nayar',
 
-    profileImage: 'lucas-sankey.jpg',
-    category: 'singer',
+    profileImage: 'nayar.jpeg',
+    category: 'Nykaa founder',
 
     post: PostModel(
       postType: Post.picture,
-      images: ['3.jpg', '4.jpg'],
-      description: 'Job board App\nBy @johnnycreated',
+      images: ['falguni1.webp', 'falguni2.jpeg'],
+      description: 'NYKAA',
       likes: '50',
       comments: '15',
       date: '1 day ago',
@@ -108,32 +108,32 @@ List<UserPostModel> posts = [
     hasStory: true,
   ),
   UserPostModel(
-    name: 'Srikanth N',
-    sname: '@Srikanth N',
+    name: 'Oprah Winfrey',
+    sname: '@oprah',
 
-    profileImage: 'foto-sushi.jpg',
-    category: 'singer',
+    profileImage: 'oprah.jpg',
+    category: 'Media mogul',
 
     post: PostModel(
       postType: Post.reel,
-      video: '3.mp4',
-      description: 'Facebook Clone with Flutter\n@scorpioclubuabt',
+      video: 'oprah.mp4',
+      description: 'Devices are stealing kids childhood',
       likes: '14',
       comments: '4',
       date: 'November 21',
     ),
   ),
   UserPostModel(
-    name: 'Richa Mathews',
-    sname: '@Richa Mathews',
+    name: 'Elon Musk',
+    sname: '@elonmusk',
 
-    profileImage: 'averie-woodard.jpg',
-    category: 'actor',
+    profileImage: 'elon.jpeg',
+    category: 'Tesla & SpaceX founder',
 
     post: PostModel(
       postType: Post.picture,
-      images: ['5.jpg'],
-      description: 'Job board App\nBy @johnnycreated',
+      images: ['tesla.jpg'],
+      description: 'Tesla',
       likes: '100',
       comments: '9',
       date: '1 day ago',
@@ -141,17 +141,16 @@ List<UserPostModel> posts = [
     hasStory: true,
   ),
   UserPostModel(
-    name: 'Uday Ch',
-    sname: '@Uday Ch',
+    name: 'Barack Obama',
+    sname: '@barackobama',
 
-    profileImage: 'michael-frattaroli.jpg',
-    category: 'athelete',
+    profileImage: 'obama.jpg',
+    category: 'Former U.S. President',
 
     post: PostModel(
       postType: Post.reel,
-      video: '4.mp4',
-      description:
-          'Design a dynamic input field in Figma - Design Basics #2 Don’t forget to hit like and follow @uiadrian for more tutorials, freebies and design-related content 🔥P.S. if you’re interested in web and mobile design - check out my ebooks - I’ve got gifts for Christmas! 🎁🎄Best,Adrian',
+      video: 'obama.mp4',
+      description: 'Barack Obama Worst Day As President  ',
       likes: '1,396',
       comments: '122',
       date: '2 days ago',

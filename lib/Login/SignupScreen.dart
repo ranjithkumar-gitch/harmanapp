@@ -31,28 +31,32 @@ class _SignupscreenState extends State<Signupscreen> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.music_note_rounded, color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xFFF5D778),
+                        ),
+                      ),
+
                       const SizedBox(width: 6),
-                      const Text(
-                        "HM",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xFFF5D778)),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: AssetImage('assets/App_logo_2.jpeg'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ],
                   ),
-                  // Row(
-                  //   children: const [
-                  //     Icon(Icons.language, color: Colors.white70),
-                  //     SizedBox(width: 6),
-                  //     Text(
-                  //       "English (US)",
-                  //       style: TextStyle(color: Colors.white70, fontSize: 15),
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
 
@@ -60,7 +64,7 @@ class _SignupscreenState extends State<Signupscreen> {
 
               Center(
                 child: Text(
-                  'Harman App',
+                  'My Autobiography',
                   style: GoogleFonts.greatVibes(
                     textStyle: const TextStyle(
                       fontSize: 32,
@@ -104,7 +108,7 @@ class _SignupscreenState extends State<Signupscreen> {
               _optionCard(
                 title: "I am a Star",
                 subtitle: "Live a life & leave a legacy",
-                icon: Icons.emoji_emotions,
+                icon: Icons.star,
                 isSelected: selectedRole == "Star",
                 onTap: () => setState(() => selectedRole = "Star"),
               ),
@@ -196,12 +200,22 @@ class _SignupscreenState extends State<Signupscreen> {
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: isSelected
-                  ? Color(0xFFF5D778) //Color(0xFF1A1A1A)
-                  : Colors.white.withOpacity(0.2),
+            Container(
+              height: 40,
+              width: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? const Color(0xFFF5D778)
+                    : Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(
+                  4,
+                ), // remove for sharp square
+              ),
+
               child: Icon(icon, color: Colors.white),
             ),
+
             const SizedBox(width: 15),
             Expanded(
               child: Column(

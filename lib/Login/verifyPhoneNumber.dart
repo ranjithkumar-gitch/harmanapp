@@ -20,13 +20,38 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0F0F0F),
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back_ios, color: Colors.white),
+        leadingWidth: 90, // 👈 IMPORTANT
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Color(0xFFF5D778),
+                  size: 24,
+                ),
+              ),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFF5D778)),
+                borderRadius: BorderRadius.circular(8.0),
+                image: const DecorationImage(
+                  image: AssetImage('assets/App_logo_2.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
         ),
-        centerTitle: true,
       ),
 
       body: Padding(
@@ -86,7 +111,7 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
             const Spacer(),
             Center(
               child: Text(
-                'Harman App',
+                'My Autobiography',
                 style: GoogleFonts.greatVibes(
                   textStyle: const TextStyle(
                     fontSize: 40,

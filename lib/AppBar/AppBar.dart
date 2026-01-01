@@ -29,15 +29,33 @@ class CustomAppBar extends StatelessWidget
         statusBarIconBrightness: Brightness.light,
       ),
 
-      title: Text(
-        'Harman App',
-        style: GoogleFonts.greatVibes(
-          textStyle: const TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 245, 183, 67),
+      title: Row(
+        children: [
+          Container(
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFFF5D778)),
+              color: Colors.transparent,
+              image: DecorationImage(
+                image: AssetImage('assets/App_logo_2.jpeg'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
           ),
-        ),
+          SizedBox(width: 10),
+          Text(
+            'My Autobiography',
+            style: GoogleFonts.greatVibes(
+              textStyle: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 245, 183, 67),
+              ),
+            ),
+          ),
+        ],
       ),
 
       actions: [

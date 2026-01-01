@@ -68,7 +68,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Harman App',
+                          'My Autobiography',
                           style: GoogleFonts.greatVibes(
                             textStyle: const TextStyle(
                               fontSize: 32,

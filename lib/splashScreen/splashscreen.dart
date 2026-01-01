@@ -54,34 +54,32 @@ class _SplashscreenState extends State<Splashscreen>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Container(
+              //   padding: const EdgeInsets.all(20),
+              //   decoration: BoxDecoration(
+              //     color: Colors.orange,
+              //     shape: BoxShape.circle,
+              //   ),
+              //   child: const Icon(
+              //     Icons.flash_on,
+              //     color: Colors.white,
+              //     size: 60,
+              //   ),
+              // ),
               Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.orange,
+                width: 450,
+                height: 450,
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.flash_on,
-                  color: Colors.white,
-                  size: 60,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Harman App',
-                // style: TextStyle(
-                //   fontSize: 32,
-                //   fontWeight: FontWeight.bold,
-                //   letterSpacing: 2,
-                // ),
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                  color: Colors.orange,
+                  image: DecorationImage(
+                    image: AssetImage('assets/App_logo.jpeg'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -44,11 +44,40 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0F0F0F),
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        leadingWidth: 90, // 👈 IMPORTANT
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Color(0xFFF5D778),
+                  size: 18,
+                ),
+              ),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              height: 35,
+              width: 35,
+              decoration: BoxDecoration(
+                border: Border.all(color: Color(0xFFF5D778)),
+                borderRadius: BorderRadius.circular(8.0),
+                image: const DecorationImage(
+                  image: AssetImage('assets/App_logo_2.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26),
         child: Column(
@@ -97,7 +126,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
             const Spacer(),
             Center(
               child: Text(
-                'Harman App',
+                'My Autobiography',
                 style: GoogleFonts.greatVibes(
                   textStyle: const TextStyle(
                     fontSize: 40,
@@ -146,57 +175,6 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
     );
   }
 
-  // Widget _otpBox(
-  //   TextEditingController controller,
-  //   FocusNode currentFocus,
-  //   FocusNode? nextFocus,
-  // ) {
-  //   return RawKeyboardListener(
-  //     focusNode: FocusNode(),
-  //     onKey: (event) {
-  //       if (event is RawKeyDownEvent &&
-  //           event.logicalKey == LogicalKeyboardKey.backspace &&
-  //           controller.text.isEmpty) {
-  //         FocusScope.of(context).previousFocus();
-  //       }
-  //     },
-  //     child: Container(
-  //       width: 60,
-  //       height: 60,
-  //       decoration: BoxDecoration(
-  //         color: const Color(0xFF1A1A1A),
-  //         borderRadius: BorderRadius.circular(14),
-  //       ),
-  //       child: TextField(
-  //         controller: controller,
-  //         focusNode: currentFocus,
-  //         maxLength: 1,
-  //         textAlign: TextAlign.center,
-  //         style: const TextStyle(fontSize: 24, color: Colors.white),
-  //         keyboardType: TextInputType.number,
-  //         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-  //         onChanged: (value) {
-  //           if (value.isNotEmpty && nextFocus != null) {
-  //             FocusScope.of(context).requestFocus(nextFocus);
-  //           }
-  //         },
-  //         decoration: InputDecoration(
-  //           counterText: "",
-  //           contentPadding: EdgeInsets.zero,
-  //           border: InputBorder.none,
-  //           enabledBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(14),
-  //             borderSide: const BorderSide(color: Colors.white, width: 1),
-  //           ),
-  //           focusedBorder: OutlineInputBorder(
-  //             borderRadius: BorderRadius.circular(14),
-  //             borderSide: const BorderSide(color: Color(0xFFF5D778), width: 2),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   Widget otpBox({
     required BuildContext context,
     required TextEditingController controller,
