@@ -18,7 +18,8 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: CustomAppBar(),
       body: ListView(
-        padding: EdgeInsets.zero,
+        // padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(bottom: 80),
         children: [
           const SizedBox(height: 12),
 
