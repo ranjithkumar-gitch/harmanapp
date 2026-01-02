@@ -54,268 +54,257 @@ class _LoginscreenState extends State<Loginscreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 40),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
 
-                  Center(
-                    child: Column(
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 140,
+                        width: 140,
+                        child: Image(
+                          image: AssetImage('assets/App_logo_2.jpeg'),
+                        ),
+                      ),
+                      Text(
+                        'My Autobiography',
+                        style: GoogleFonts.greatVibes(
+                          textStyle: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: kgoldColor,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      const Text(
+                        "Welcome back",
+                        style: TextStyle(color: kgreyColor, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                const Text(
+                  "Email *",
+                  style: TextStyle(color: kwhiteColor, fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+
+                // EMAIL FIELD
+                TextField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  onChanged: (_) => setState(() {}),
+                  style: const TextStyle(color: kwhiteColor),
+                  decoration: InputDecoration(
+                    hintText: "Enter your email",
+                    hintStyle: const TextStyle(color: kgreyColor),
+                    filled: true,
+                    fillColor: kfillgreyColor,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: emailGold ? kgoldColor : kwhiteColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: kgoldColor, width: 2),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                const Text(
+                  "Password *",
+                  style: TextStyle(color: kwhiteColor, fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+
+                // PASSWORD FIELD
+                TextField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocus,
+                  obscureText: _obscureText,
+                  onChanged: (_) => setState(() {}),
+                  style: const TextStyle(color: kwhiteColor),
+                  decoration: InputDecoration(
+                    hintText: "Enter your password",
+                    hintStyle: const TextStyle(color: kgreyColor),
+                    filled: true,
+                    fillColor: kfillgreyColor,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: passwordGold ? kgoldColor : Colors.white,
+                        width: 1.5,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: kgoldColor, width: 2),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                        color: kgoldColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+                const Text(
+                  "Forgot password?",
+                  style: TextStyle(color: kgreyColor),
+                ),
+
+                const SizedBox(height: 25),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(
+                        () => MainScreen(),
+                        // () => MainScreen(),
+                        transition: Transition.zoom,
+                        duration: const Duration(seconds: 1),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kblackColor,
+                      foregroundColor: kgoldColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        side: const BorderSide(color: kgoldColor, width: 2),
+                      ),
+                    ),
+                    child: Text(
+                      "Sign in",
+                      style: TextStyle(
+                        color: kgoldColor,
+                        fontSize: fontsize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(height: 1, color: Colors.white24),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        "OR",
+                        style: TextStyle(color: Colors.white60),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(height: 1, color: kwhiteopacityColor),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SocialIcon(
+                      child: Image.asset(
+                        'assets/google1.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        print("Apple login tapped");
+                      },
+                      child: SocialIcon(
+                        child: Icon(Icons.apple, color: Colors.white),
+                      ),
+                    ),
+
+                    SocialIcon(
+                      child: Image.asset(
+                        'assets/facebook.png',
+                        width: 26,
+                        height: 26,
+                      ),
+                    ),
+                    SocialIcon(
+                      child: Icon(
+                        FontAwesomeIcons.xTwitter,
+                        color: Colors.white,
+                        size: 26,
+                      ),
+                    ),
+                    SocialIcon(
+                      child: Icon(
+                        FontAwesomeIcons.twitch,
+                        color: Colors.white,
+                        size: 26,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 40),
+
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: const TextStyle(color: Colors.white70),
                       children: [
-                        SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: Image(
-                            image: AssetImage('assets/App_logo_2.jpeg'),
+                        TextSpan(
+                          text: "Sign up",
+                          style: const TextStyle(
+                            color: kgoldColor,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        Text(
-                          'My Autobiography',
-                          style: GoogleFonts.greatVibes(
-                            textStyle: const TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: kgoldColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        const Text(
-                          "Welcome back",
-                          style: TextStyle(color: kgreyColor, fontSize: 16),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Signupscreen(),
+                                ),
+                              );
+                            },
                         ),
                       ],
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 20),
-
-                  const Text(
-                    "Email *",
-                    style: TextStyle(color: kwhiteColor, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // EMAIL FIELD
-                  TextField(
-                    controller: _emailController,
-                    focusNode: _emailFocus,
-                    onChanged: (_) => setState(() {}),
-                    style: const TextStyle(color: kwhiteColor),
-                    decoration: InputDecoration(
-                      hintText: "Enter your email",
-                      hintStyle: const TextStyle(color: kgreyColor),
-                      filled: true,
-                      fillColor: kfillgreyColor,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: emailGold ? kgoldColor : kwhiteColor,
-                          width: 1.5,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: kgoldColor,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  const Text(
-                    "Password *",
-                    style: TextStyle(color: kwhiteColor, fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // PASSWORD FIELD
-                  TextField(
-                    controller: _passwordController,
-                    focusNode: _passwordFocus,
-                    obscureText: _obscureText,
-                    onChanged: (_) => setState(() {}),
-                    style: const TextStyle(color: kwhiteColor),
-                    decoration: InputDecoration(
-                      hintText: "Enter your password",
-                      hintStyle: const TextStyle(color: kgreyColor),
-                      filled: true,
-                      fillColor: kfillgreyColor,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: passwordGold ? kgoldColor : Colors.white,
-                          width: 1.5,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: kgoldColor,
-                          width: 2,
-                        ),
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: kgoldColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Forgot password?",
-                    style: TextStyle(color: kgreyColor),
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(
-                          () => MainScreen(),
-                          // () => MainScreen(),
-                          transition: Transition.zoom,
-                          duration: const Duration(seconds: 1),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kblackColor,
-                        foregroundColor: kgoldColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          side: const BorderSide(color: kgoldColor, width: 2),
-                        ),
-                      ),
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(
-                          color: kgoldColor,
-                          fontSize: fontsize,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(height: 1, color: Colors.white24),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "OR",
-                          style: TextStyle(color: Colors.white60),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(height: 1, color: kwhiteopacityColor),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SocialIcon(
-                        child: Image.asset(
-                          'assets/google1.png',
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          print("Apple login tapped");
-                        },
-                        child: SocialIcon(
-                          child: Icon(Icons.apple, color: Colors.white),
-                        ),
-                      ),
-
-                      SocialIcon(
-                        child: Image.asset(
-                          'assets/facebook.png',
-                          width: 26,
-                          height: 26,
-                        ),
-                      ),
-                      SocialIcon(
-                        child: Icon(
-                          FontAwesomeIcons.xTwitter,
-                          color: Colors.white,
-                          size: 26,
-                        ),
-                      ),
-                      SocialIcon(
-                        child: Icon(
-                          FontAwesomeIcons.twitch,
-                          color: Colors.white,
-                          size: 26,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Don't have an account? ",
-                        style: const TextStyle(color: Colors.white70),
-                        children: [
-                          TextSpan(
-                            text: "Sign up",
-                            style: const TextStyle(
-                              color: kgoldColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Signupscreen(),
-                                  ),
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-                ],
-              ),
+                const SizedBox(height: 30),
+              ],
             ),
           ),
         ),
