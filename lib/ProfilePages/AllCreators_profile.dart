@@ -32,7 +32,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
 
   @override
   Widget build(BuildContext context) {
-    const profileSize = 80.0;
+    // const profileSize = 80.0;
 
     if (posts.isEmpty) {
       return const Scaffold(
@@ -115,7 +115,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(imagePath), // AssetImage(imagePath),
+                image: AssetImage("assets/sources/images/cover.jpeg"),
                 fit: BoxFit.cover,
               ),
             ),

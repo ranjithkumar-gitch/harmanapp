@@ -56,7 +56,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoverImage('assets/sources/profiles/${user.profileImage}'),
+                    CoverImage('assets/sources/images/cover.jpeg'),
                     ProfileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
