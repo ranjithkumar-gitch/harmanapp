@@ -263,16 +263,16 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
                     children: [
                       Image.asset(
                         'assets/App_logo_2.jpeg',
-                        height: size.width * 0.4,
-                        width: size.width * 0.4,
+                        height: size.width * 0.3,
+                        width: size.width * 0.3,
                         fit: BoxFit.contain,
                       ),
-                      SizedBox(height: isSmallScreen ? 8 : 16),
+                      SizedBox(height: isSmallScreen ? 6 : 12),
                       Text(
                         'My Autobiography',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.greatVibes(
-                          fontSize: size.width * 0.1,
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
                           color: kgoldColor,
                         ),

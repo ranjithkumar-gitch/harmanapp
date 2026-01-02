@@ -41,7 +41,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final isSmallScreen = size.height < 700;
+    final isSmallScreen = size.height < 700;
     return Scaffold(
       backgroundColor: kblackColor,
       appBar: AppBar(
@@ -65,7 +65,6 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 26),
         child: Column(
           children: [
-            const SizedBox(height: 40),
             const Text(
               "Enter Verification Code",
               style: TextStyle(
@@ -79,7 +78,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
               "We sent a 4-digit code to your phone.",
               style: TextStyle(color: Colors.white70, fontSize: 15),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 25),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,31 +105,31 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
               ],
             ),
 
-            const Spacer(),
+            SizedBox(height: size.height * 0.08),
+
             Center(
               child: Column(
                 children: [
                   Image.asset(
                     'assets/App_logo_2.jpeg',
-                    height: size.width * 0.4,
-                    width: size.width * 0.4,
+                    height: size.width * 0.3,
+                    width: size.width * 0.3,
                     fit: BoxFit.contain,
                   ),
+                  SizedBox(height: isSmallScreen ? 6 : 12),
                   Text(
                     'My Autobiography',
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.greatVibes(
-                      textStyle: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: kgoldColor,
-                      ),
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: kgoldColor,
                     ),
                   ),
                 ],
               ),
             ),
-
-            const Spacer(),
+            Spacer(),
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -144,7 +143,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
                   //     MaterialPageRoute(
                   //       builder: (context) => const MainScreen(),
                   //     ),
-                  //   );
+                  //   );1
                   // }
                   Navigator.push(
                     context,

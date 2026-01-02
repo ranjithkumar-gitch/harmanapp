@@ -82,14 +82,14 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 ],
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
 
               Center(
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 200,
-                      width: 200,
+                      height: 140,
+                      width: 140,
                       child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
                     Text(

@@ -58,14 +58,14 @@ class _SignupscreenState extends State<Signupscreen> {
                 ],
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 10),
 
               Center(
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 200,
-                      width: 200,
+                      height: 140,
+                      width: 140,
                       child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
                     Text(
