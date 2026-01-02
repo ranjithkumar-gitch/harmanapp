@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class ViewProduct extends StatefulWidget {
   const ViewProduct({super.key});
@@ -13,7 +14,7 @@ class _ViewProductState extends State<ViewProduct> {
   int quantity = 1;
   int selectedColor = 0;
   int selectedSize = 0;
-  static const gold = Color(0xFFF5D778);
+  static const gold = kgoldColor;
   final colors = [
     Colors.black,
     Colors.grey,
@@ -26,10 +27,10 @@ class _ViewProductState extends State<ViewProduct> {
     // bool isFashion = widget.product["type"] == "fashion";
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
 
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: kblackColor,
         elevation: 0,
         foregroundColor: Colors.white,
         title: Text(

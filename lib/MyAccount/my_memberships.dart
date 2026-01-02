@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class MembershipScreen extends StatelessWidget {
   const MembershipScreen({super.key});
@@ -7,7 +8,7 @@ class MembershipScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
@@ -29,7 +30,7 @@ class MembershipScreen extends StatelessWidget {
             creatorName: "Alex Star",
             plan: "Monthly",
             price: "\$9.99",
-            tierColor: const Color(0xFFF5D778),
+            tierColor: kgoldColor,
             onUnsubscribe: () {
               _showUnsubscribeDialog(context);
             },
@@ -70,13 +71,10 @@ class MembershipScreen extends StatelessWidget {
           brightness: Brightness.dark,
           barBackgroundColor: Colors.black,
           scaffoldBackgroundColor: Colors.black,
-          primaryColor: Color(0xFFF5D778),
+          primaryColor: kgoldColor,
         ),
         child: CupertinoAlertDialog(
-          title: const Text(
-            "Unsubscribe",
-            style: TextStyle(color: Color(0xFFF5D778)),
-          ),
+          title: const Text("Unsubscribe", style: TextStyle(color: kgoldColor)),
           content: const Text(
             "Are you sure you want to unsubscribe?",
             style: TextStyle(color: Colors.white70),
@@ -93,7 +91,7 @@ class MembershipScreen extends StatelessWidget {
               isDestructiveAction: true,
               child: const Text(
                 "Unsubscribe",
-                style: TextStyle(color: Color(0xFFF5D778)),
+                style: TextStyle(color: kgoldColor),
               ),
               onPressed: () {
                 Navigator.pop(context);
