@@ -421,6 +421,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     final width = MediaQuery.of(context).size.width;
 
     return ListView.builder(
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: list.length,
