@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/Login/verifyPhoneNumber.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class SocialmediaConnect extends StatefulWidget {
   const SocialmediaConnect({super.key});
@@ -60,50 +61,45 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFFF5D778),
-                        ),
+                        child: Icon(Icons.arrow_back_ios, color: kgoldColor),
                       ),
                       const SizedBox(width: 10),
-                      // Icon(Icons.music_note_rounded, color: Colors.white),
-                      // const SizedBox(width: 6),
-                      Container(
-                        height: 35,
-                        width: 35,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFFF5D778)),
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                            image: AssetImage('assets/App_logo_2.jpeg'),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
+
+                      // Container(
+                      //   height: 35,
+                      //   width: 35,
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: Color(0xFFF5D778)),
+                      //     color: Colors.transparent,
+                      //     image: DecorationImage(
+                      //       image: AssetImage('assets/App_logo_2.jpeg'),
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8.0),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
-                // Row(
-                //   children: const [
-                //     Icon(Icons.language, color: Colors.white70),
-                //     SizedBox(width: 6),
-                //     Text(
-                //       "English (US)",
-                //       style: TextStyle(color: Colors.white70),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
-            const SizedBox(height: 20),
-            const Text(
-              "Connect Social Media Accounts",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            const SizedBox(height: 40),
+            Column(
+              children: [
+                // SizedBox(
+                //   height: 200,
+                //   width: 200,
+                //   child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
+                // ),
+                const Text(
+                  "Connect Social Media Accounts",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 30),
 
@@ -152,7 +148,7 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xFFF5D778) : Colors.white24,
+            color: isSelected ? kgoldColor : Colors.white24,
             width: isSelected ? 2 : 1,
           ),
           color: Colors.white.withOpacity(isSelected ? 0.08 : 0.04),
@@ -179,9 +175,7 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
                   Text(
                     title,
                     style: TextStyle(
-                      color: isSelected
-                          ? const Color(0xFFF5D778)
-                          : Colors.white,
+                      color: isSelected ? kgoldColor : Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -200,7 +194,7 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
-                  side: const BorderSide(color: Color(0xFFF5D778)),
+                  side: const BorderSide(color: kgoldColor),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -209,14 +203,12 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => Verifyphonenumber(), // dashboard later
-                    ),
+                    MaterialPageRoute(builder: (_) => Verifyphonenumber()),
                   );
                 },
                 child: const Text(
                   "Connect",
-                  style: TextStyle(color: Color(0xFFF5D778)),
+                  style: TextStyle(color: kgoldColor),
                 ),
               ),
           ],

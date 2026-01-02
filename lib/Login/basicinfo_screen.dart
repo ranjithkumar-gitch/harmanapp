@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/socialmedia_connect.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   const BasicInfoScreen({super.key});
@@ -46,7 +47,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         displayNameController.text.isNotEmpty || displayNameFocus.hasFocus;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
@@ -61,38 +62,47 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     },
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: Color(0xFFF5D778),
+                      color: kgoldColor,
                       size: 24,
                     ),
                   ),
-                  Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFFF5D778)),
-                      color: Colors.transparent,
-                      image: DecorationImage(
-                        image: AssetImage('assets/App_logo_2.jpeg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 35,
+                  //   width: 35,
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(color: Color(0xFFF5D778)),
+                  //     color: Colors.transparent,
+                  //     image: DecorationImage(
+                  //       image: AssetImage('assets/App_logo_2.jpeg'),
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //     borderRadius: BorderRadius.circular(8.0),
+                  //   ),
+                  // ),
                 ],
               ),
 
-              const SizedBox(height: 55),
+              const SizedBox(height: 25),
 
               Center(
-                child: Text(
-                  'My Autobiography',
-                  style: GoogleFonts.greatVibes(
-                    textStyle: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF5D778),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
-                  ),
+                    Text(
+                      'My Autobiography',
+                      style: GoogleFonts.greatVibes(
+                        textStyle: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: kgoldColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -183,7 +193,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 children: [
                   Checkbox(
                     value: termsAccepted,
-                    activeColor: const Color(0xFFF5D778),
+                    activeColor: kgoldColor,
                     checkColor: Colors.black,
                     onChanged: (v) => setState(() => termsAccepted = v!),
                   ),
@@ -197,7 +207,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                           TextSpan(
                             text: "Terms of Service",
                             style: TextStyle(
-                              color: Color(0xFFF5D778),
+                              color: kgoldColor,
                               decoration: TextDecoration.underline,
                             ),
                           ),
@@ -218,10 +228,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(
-                        color: Color(0xFFF5D778),
-                        width: 2,
-                      ),
+                      side: const BorderSide(color: kgoldColor, width: 2),
                     ),
                   ),
                   onPressed: () {
@@ -235,7 +242,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   child: const Text(
                     "Confirm and Continue",
                     style: TextStyle(
-                      color: Color(0xFFF5D778),
+                      color: kgoldColor,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -270,13 +277,13 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: isGold ? const Color(0xFFF5D778) : Colors.white,
+            color: isGold ? kgoldColor : Colors.white,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFF5D778), width: 2),
+          borderSide: const BorderSide(color: kgoldColor, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -299,7 +306,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         color: const Color(0xFF1C1C1E),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: isSelected ? const Color(0xFFF5D778) : Colors.white,
+          color: isSelected ? kgoldColor : Colors.white,
           width: 2,
         ),
       ),

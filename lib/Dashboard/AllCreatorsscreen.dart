@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/ProfilePages/AllCreators_profile.dart';
 
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class AllCreatorsScreen extends StatefulWidget {
   const AllCreatorsScreen({super.key});
@@ -19,7 +21,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -33,7 +35,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: Color(0xFFF5D778)),
+                      side: BorderSide(color: kgoldColor),
                     ),
                   ),
 
@@ -65,7 +67,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               ),
             ),
 
-            _title("Gold", const Color(0xFFF5D778)),
+            _title("Gold", kgoldColor),
             _creatorCarousel(
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 3,

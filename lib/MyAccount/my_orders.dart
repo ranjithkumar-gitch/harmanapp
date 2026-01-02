@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/MyAccount/my_product_view.dart';
 import 'package:harmanapp/MyAccount/viewproduct.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class MyOrders extends StatefulWidget {
   const MyOrders({super.key});
@@ -11,7 +12,7 @@ class MyOrders extends StatefulWidget {
 
 class _MyOrdersState extends State<MyOrders> {
   int selectedIndex = -1;
-  static const gold = Color(0xFFF5D778);
+  static const gold = kgoldColor;
   int tappedIndex = -1;
 
   final orders = [

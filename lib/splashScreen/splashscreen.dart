@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:harmanapp/Login/LoginScreen.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -47,31 +48,19 @@ class _SplashscreenState extends State<Splashscreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       body: Center(
         child: ScaleTransition(
           scale: _scaleAnimation,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Container(
-              //   padding: const EdgeInsets.all(20),
-              //   decoration: BoxDecoration(
-              //     color: Colors.orange,
-              //     shape: BoxShape.circle,
-              //   ),
-              //   child: const Icon(
-              //     Icons.flash_on,
-              //     color: Colors.white,
-              //     size: 60,
-              //   ),
-              // ),
               Container(
                 width: 450,
                 height: 450,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.orange,
+
                   image: DecorationImage(
                     image: AssetImage('assets/App_logo.jpeg'),
                     fit: BoxFit.cover,

@@ -1,10 +1,10 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 
 import 'package:harmanapp/models/post_model.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/colors.dart';
 import 'package:harmanapp/widgets/image_post.dart';
 import 'package:harmanapp/widgets/reel_post.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       appBar: CustomAppBar(),
       body: ListView(
         // padding: EdgeInsets.zero,

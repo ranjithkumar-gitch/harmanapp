@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class MyProductView extends StatefulWidget {
   const MyProductView({super.key});
@@ -13,7 +14,7 @@ class _MyProductViewState extends State<MyProductView> {
   int quantity = 1;
   int selectedColor = 0;
   int selectedSize = 0;
-  static const gold = Color(0xFFF5D778);
+  static const gold = kgoldColor;
   final colors = [
     Colors.black,
     Colors.grey,
@@ -186,12 +187,12 @@ class _MyProductViewState extends State<MyProductView> {
           brightness: Brightness.dark,
           barBackgroundColor: Colors.black,
           scaffoldBackgroundColor: Colors.black,
-          primaryColor: Color(0xFFF5D778),
+          primaryColor: kgoldColor,
         ),
         child: CupertinoAlertDialog(
           title: const Text(
             "Buy it again",
-            style: TextStyle(color: Color(0xFFF5D778)),
+            style: TextStyle(color: kgoldColor),
           ),
           content: const Text(
             "Are you sure you want to Buy it agail?",
@@ -207,10 +208,7 @@ class _MyProductViewState extends State<MyProductView> {
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,
-              child: const Text(
-                "Yes",
-                style: TextStyle(color: Color(0xFFF5D778)),
-              ),
+              child: const Text("Yes", style: TextStyle(color: kgoldColor)),
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.pop(context);

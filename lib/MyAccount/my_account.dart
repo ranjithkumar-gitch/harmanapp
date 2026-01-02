@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -29,7 +30,7 @@ class _MyAccountState extends State<MyAccount> {
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: const Color(0xFF0F0F0F),
+        backgroundColor: kblackColor,
         endDrawer: _endDrawer(),
         body: Column(
           children: [
@@ -221,7 +222,7 @@ class _MyAccountState extends State<MyAccount> {
                         padding: const EdgeInsets.all(4.0),
                         child: Icon(Icons.menu),
                       ),
-                      color: Color(0xFFDAA520),
+                      color: kgoldColor,
                     ),
                   ],
                 ),
@@ -264,10 +265,7 @@ class _MyAccountState extends State<MyAccount> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: const LinearGradient(
-                    colors: [
-                      CupertinoColors.systemOrange,
-                      CupertinoColors.systemRed,
-                    ],
+                    colors: [kgoldColor, CupertinoColors.systemRed],
                   ),
                 ),
                 padding: const EdgeInsets.all(2),
@@ -331,26 +329,26 @@ class _MyAccountState extends State<MyAccount> {
             curve: Easing.emphasizedDecelerate,
             duration: Duration(seconds: 2),
           ),
-          icon: const Icon(Icons.more_vert, color: Color(0xFFDAA520)),
+          icon: const Icon(Icons.more_vert, color: kgoldColor),
           onSelected: (Menu item) {},
           itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
             PopupMenuItem<Menu>(
               value: Menu.preview,
               child: ListTile(
-                leading: Icon(Icons.edit, color: Color(0xFFDAA520)),
+                leading: Icon(Icons.edit, color: kgoldColor),
                 title: Text(
                   'Edit Profile',
-                  style: GoogleFonts.poppins(color: Color(0xFFDAA520)),
+                  style: GoogleFonts.poppins(color: kgoldColor),
                 ),
               ),
             ),
             PopupMenuItem<Menu>(
               value: Menu.share,
               child: ListTile(
-                leading: Icon(Icons.share_outlined, color: Color(0xFFDAA520)),
+                leading: Icon(Icons.share_outlined, color: kgoldColor),
                 title: Text(
                   'Share Profile',
-                  style: GoogleFonts.poppins(color: Color(0xFFDAA520)),
+                  style: GoogleFonts.poppins(color: kgoldColor),
                 ),
               ),
             ),
@@ -359,10 +357,10 @@ class _MyAccountState extends State<MyAccount> {
             PopupMenuItem<Menu>(
               value: Menu.remove,
               child: ListTile(
-                leading: Icon(Icons.delete_outline, color: Color(0xFFDAA520)),
+                leading: Icon(Icons.delete_outline, color: kgoldColor),
                 title: Text(
                   'Delete account',
-                  style: GoogleFonts.poppins(color: Color(0xFFDAA520)),
+                  style: GoogleFonts.poppins(color: kgoldColor),
                 ),
               ),
             ),
@@ -392,7 +390,7 @@ class _MyAccountState extends State<MyAccount> {
                       textStyle: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFF5D778),
+                        color: kgoldColor,
                       ),
                     ),
                   ),
@@ -445,7 +443,7 @@ class _MyAccountState extends State<MyAccount> {
     required VoidCallback onTap,
     required VoidCallback onButtonPressed,
   }) {
-    const gold = Color(0xFFF5D778);
+    const gold = kgoldColor;
 
     return GestureDetector(
       onTap: onTap,
@@ -462,7 +460,6 @@ class _MyAccountState extends State<MyAccount> {
         ),
         child: Row(
           children: [
-            /// 🔵 Circle avatar with dynamic border & icon color
             Container(
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(

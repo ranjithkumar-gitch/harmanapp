@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/colors.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
@@ -90,7 +91,7 @@ class _ImagePostState extends State<ImagePost>
                     textStyle: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF5D778),
+                      color: kgoldColor,
                     ),
                   ),
                 ),
@@ -119,10 +120,7 @@ class _ImagePostState extends State<ImagePost>
               builder: (context) {
                 return CupertinoButton(
                   padding: EdgeInsets.zero,
-                  child: const Icon(
-                    CupertinoIcons.ellipsis,
-                    color: Color(0xFFF5D778),
-                  ),
+                  child: const Icon(CupertinoIcons.ellipsis, color: kgoldColor),
                   onPressed: () async {
                     final RenderBox button =
                         context.findRenderObject() as RenderBox;
@@ -277,9 +275,7 @@ class _ImagePostState extends State<ImagePost>
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: _showCommentBox
-                      ? const Color(0xFFD4AF37)
-                      : CupertinoColors.white,
+                  color: _showCommentBox ? kgoldColor : CupertinoColors.white,
                 ),
               ),
 
@@ -298,7 +294,14 @@ class _ImagePostState extends State<ImagePost>
               ),
               const Spacer(),
               if (widget.post.post.images!.length != 1)
-                DotsIndicator(dotsCount: 2, position: _currentImage.toDouble()),
+                DotsIndicator(
+                  dotsCount: 2,
+                  position: _currentImage.toDouble(),
+                  decorator: DotsDecorator(
+                    color: kgoldColor,
+                    activeColor: Colors.white,
+                  ),
+                ),
               const Spacer(flex: 3),
               CupertinoButton(
                 onPressed: () {
@@ -311,7 +314,7 @@ class _ImagePostState extends State<ImagePost>
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: Color(0xFFD4AF37),
+                  color: kgoldColor,
                 ),
               ),
             ],
@@ -322,10 +325,7 @@ class _ImagePostState extends State<ImagePost>
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xFFD4AF37), // gold color
-                  width: 1,
-                ),
+                border: Border.all(color: kgoldColor, width: 1),
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -363,7 +363,7 @@ class _ImagePostState extends State<ImagePost>
                           child: Icon(
                             size: 24,
                             Icons.check_circle_outline,
-                            color: _rating == 0.0 ? Colors.grey : Colors.amber,
+                            color: _rating == 0.0 ? Colors.grey : kgoldColor,
                           ),
 
                           onPressed: () {
@@ -400,7 +400,7 @@ class _ImagePostState extends State<ImagePost>
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFD4AF37), width: 1),
+                border: Border.all(color: kgoldColor, width: 1),
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -421,7 +421,7 @@ class _ImagePostState extends State<ImagePost>
                       hintText: "Write a comment...",
                       hintStyle: const TextStyle(color: Colors.white54),
                       filled: true,
-                      fillColor: Colors.black,
+                      fillColor: kblackColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -431,14 +431,13 @@ class _ImagePostState extends State<ImagePost>
 
                   const SizedBox(height: 8),
 
-                  /// 📤 Post button
                   Align(
                     alignment: Alignment.centerRight,
                     child: CupertinoButton(
                       padding: EdgeInsets.zero,
                       child: const Icon(
                         CupertinoIcons.paperplane_fill,
-                        color: Color(0xFFD4AF37),
+                        color: kgoldColor,
                       ),
                       onPressed: () {
                         final comment = _commentController.text.trim();
@@ -510,7 +509,7 @@ class _ImagePostState extends State<ImagePost>
                     'View all ${widget.post.post.comments} comments',
                     style: TextStyle(
                       fontFamily: "Gilroy",
-                      color: Color(0xFFFFD700),
+                      color: kgoldColor,
                       fontSize: 16,
                     ),
                   ),
@@ -543,7 +542,7 @@ class _ImagePostState extends State<ImagePost>
 
   Color _getRatingColor(double rating) {
     if (rating == 5.0) {
-      return const Color(0xFFFFD700); // Gold
+      return kgoldColor; // Gold
     } else if (rating >= 4.5) {
       return const Color(0xFFC0C0C0); // Silver
     } else if (rating >= 0.0) {
@@ -563,7 +562,7 @@ class _ImagePostState extends State<ImagePost>
               style: const TextStyle(
                 fontFamily: "Gilroy",
                 fontWeight: FontWeight.w600,
-                color: Color(0xFFFFD700),
+                color: kgoldColor,
                 fontSize: 14,
               ),
             ),
@@ -760,7 +759,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             padding: EdgeInsets.zero,
             child: const Icon(
               CupertinoIcons.paperplane_fill,
-              color: Color(0xFFD4AF37),
+              color: kgoldColor,
             ),
             // child: const Text(
             //   "Post",

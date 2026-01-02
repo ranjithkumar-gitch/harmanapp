@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -116,7 +117,7 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.black,
+      backgroundColor: kblackColor,
 
       // appBar: CustomAppBar(),
       body: Column(
@@ -193,7 +194,7 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
   Widget productCard(Map<String, dynamic> item) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: kblackColor,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: Color(0xFFF5D778)),
       ),
@@ -318,7 +319,7 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   side: const BorderSide(
-                    color: Color(0xFFF5D778), // gold border
+                    color: kgoldColor, // gold border
                     width: 1.5,
                   ),
                   shape: RoundedRectangleBorder(
@@ -328,7 +329,7 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
                 child: Text(
                   "Buy Now",
                   style: GoogleFonts.poppins(
-                    color: Color(0xFFF5D778),
+                    color: kgoldColor,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),
@@ -444,7 +445,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFF5D778),
+                    color: kgoldColor,
                   ),
                 ),
               ),
@@ -528,7 +529,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                           ),
                           decoration: BoxDecoration(
                             color: selectedSize == index
-                                ? Color(0xFFF5D778)
+                                ? kgoldColor
                                 : Color.fromRGBO(244, 226, 167, 1),
 
                             borderRadius: BorderRadius.circular(10),
@@ -597,7 +598,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
             Container(
               height: 40,
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFDAA520)),
+                border: Border.all(color: kgoldColor),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -612,13 +613,13 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     quantity.toString(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
-                      color: Color(0xFFDAA520),
+                      color: kgoldColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   IconButton(
                     onPressed: () => setState(() => quantity++),
-                    icon: const Icon(Icons.add, color: Color(0xFFDAA520)),
+                    icon: const Icon(Icons.add, color: kgoldColor),
                   ),
                 ],
               ),
@@ -736,7 +737,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                                 "Item added to cart!",
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
-                                  color: Color(0xFFDAA520),
+                                  color: kgoldColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -748,15 +749,11 @@ class _ProductViewPageState extends State<ProductViewPage> {
                                   Navigator.pop(context);
                                 },
                                 style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                    color: Color(0xFFDAA520),
-                                  ),
+                                  side: const BorderSide(color: kgoldColor),
                                 ),
                                 child: Text(
                                   "OK",
-                                  style: GoogleFonts.poppins(
-                                    color: Color(0xFFDAA520),
-                                  ),
+                                  style: GoogleFonts.poppins(color: kgoldColor),
                                 ),
                               ),
                             ],
@@ -767,7 +764,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFFDAA520), width: 1.5),
+                  side: const BorderSide(color: kgoldColor, width: 1.5),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -778,7 +775,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFDAA520),
+                    color: kgoldColor,
                   ),
                 ),
               ),

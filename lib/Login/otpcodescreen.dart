@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class OtpCodeScreen extends StatefulWidget {
   const OtpCodeScreen({super.key});
@@ -39,39 +40,21 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
   @override
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    // final isSmallScreen = size.height < 700;
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F0F),
+      backgroundColor: kblackColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F0F0F),
+        backgroundColor: kblackColor,
         elevation: 0,
-        leadingWidth: 90, // 👈 IMPORTANT
+        leadingWidth: 90,
         leading: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => Navigator.pop(context),
               child: const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Color(0xFFF5D778),
-                  size: 18,
-                ),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFF5D778)),
-                borderRadius: BorderRadius.circular(8.0),
-                image: const DecorationImage(
-                  image: AssetImage('assets/App_logo_2.jpeg'),
-                  fit: BoxFit.cover,
-                ),
+                padding: EdgeInsets.only(left: 16.0),
+                child: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 24),
               ),
             ),
           ],
@@ -125,15 +108,25 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
 
             const Spacer(),
             Center(
-              child: Text(
-                'My Autobiography',
-                style: GoogleFonts.greatVibes(
-                  textStyle: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFF5D778),
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/App_logo_2.jpeg',
+                    height: size.width * 0.4,
+                    width: size.width * 0.4,
+                    fit: BoxFit.contain,
                   ),
-                ),
+                  Text(
+                    'My Autobiography',
+                    style: GoogleFonts.greatVibes(
+                      textStyle: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: kgoldColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -143,20 +136,24 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  final otp = _c1.text + _c2.text + _c3.text + _c4.text;
+                  // final otp = _c1.text + _c2.text + _c3.text + _c4.text;
 
-                  if (otp.length == 4) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
-                      ),
-                    );
-                  }
+                  // if (otp.length == 4) {
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const MainScreen(),
+                  //     ),
+                  //   );
+                  // }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MainScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
-                  foregroundColor: const Color(0xFFF5D778),
+                  foregroundColor: kgoldColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                     side: const BorderSide(color: Color(0xFFF5D778), width: 2),
@@ -213,19 +210,14 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: BorderSide(
-                  color: hasValue
-                      ? const Color(0xFFF5D778) // ✅ GOLD after input
-                      : Colors.white,
+                  color: hasValue ? kgoldColor : Colors.white,
                   width: 1.5,
                 ),
               ),
 
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(
-                  color: Color(0xFFF5D778),
-                  width: 2,
-                ),
+                borderSide: const BorderSide(color: kgoldColor, width: 2),
               ),
             ),
           );

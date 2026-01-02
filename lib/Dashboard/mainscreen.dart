@@ -1,14 +1,12 @@
-import 'dart:math';
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:harmanapp/Dashboard/MyCreatorsScreen.dart';
-import 'package:harmanapp/ProfilePages/AllCreators_profile.dart';
+
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/Dashboard/homescreen.dart';
 import 'package:harmanapp/Dashboard/AllCreatorsscreen.dart';
 import 'package:harmanapp/Dashboard/marketplace_screen.dart';
 import 'package:harmanapp/btm_nav/curvednavbar.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,10 +17,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final _pageController = PageController(initialPage: 0);
-
-  // final NotchBottomBarController _controller = NotchBottomBarController(
-  //   index: 0,
-  // );
 
   int currentpage = 0;
 
@@ -45,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: kblackColor,
       body: bottomBarPages[currentpage],
 
       extendBody: true,
@@ -53,14 +47,13 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: Theme(
         data: Theme.of(
           context,
-        ).copyWith(iconTheme: IconThemeData(color: Colors.amber)),
+        ).copyWith(iconTheme: IconThemeData(color: kgoldColor)),
         child: CurvedNavigationBar(
-          // change black to white if light mode selected
           buttonBackgroundColor: Colors.black,
           height: 75,
-          // maxWidth: 100,
+
           index: currentpage,
-          // change black to white if light mode selected
+
           color: Colors.black,
           backgroundColor: Colors.transparent,
           animationCurve: Curves.easeInOut,
@@ -84,11 +77,7 @@ class _MainScreenState extends State<MainScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          size: 22,
-          color: isSelected ? Color(0xFFF5D778) : Colors.white,
-        ),
+        Icon(icon, size: 22, color: isSelected ? kgoldColor : Colors.white),
         if (!isSelected)
           Text(
             label,

@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
 
   static const accentGradient = LinearGradient(
-    colors: [Color(0xFFDAA520), Colors.orange],
+    colors: [kgoldColor, kwhiteColor],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -20,16 +22,16 @@ class ExploreScreen extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: CupertinoColors.black,
+        backgroundColor: kblackColor,
         appBar: CustomAppBar(),
         body: Column(
           children: [
             const SizedBox(height: 8),
 
             TabBar(
-              indicatorColor: Color(0xFFDAA520),
+              indicatorColor: kgoldColor,
               indicatorWeight: 4,
-              labelColor: Color(0xFFDAA520),
+              labelColor: kgoldColor,
               unselectedLabelColor: Colors.grey,
               dividerColor: Colors.transparent,
 
@@ -104,26 +106,15 @@ final List<String> sampleImages = [
 ];
 
 final sampleReels = [
-  {"video": "deepika.mp4"},
+  {"video": "tesla2.mp4"},
   {"video": "obama.mp4"},
+  {"video": "rcb.mp4"},
+  {"video": "tesla.mp4"},
+  {"video": "deepika2.mp4"},
   {"video": "oprah.mp4"},
   {"video": "virat.mp4"},
   {"video": "7.mp4"},
   {"video": "deepika.mp4"},
-  {"video": "obama.mp4"},
-  {"video": "oprah.mp4"},
-  {"video": "virat.mp4"},
-  {"video": "7.mp4"},
-  {"video": "deepika.mp4"},
-  {"video": "obama.mp4"},
-  {"video": "oprah.mp4"},
-  {"video": "virat.mp4"},
-  {"video": "7.mp4"},
-  {"video": "deepika.mp4"},
-  {"video": "obama.mp4"},
-  {"video": "oprah.mp4"},
-  {"video": "virat.mp4"},
-  {"video": "7.mp4"},
 ];
 
 class ImagesTab extends StatelessWidget {
@@ -191,6 +182,75 @@ class ReelsTab extends StatelessWidget {
   }
 }
 
+// class ReelCard extends StatefulWidget {
+//   final String videoName;
+//   final int index;
+
+//   const ReelCard({required this.videoName, required this.index, super.key});
+
+//   @override
+//   State<ReelCard> createState() => _ReelCardState();
+// }
+
+// class _ReelCardState extends State<ReelCard> {
+//   late VideoPlayerController _controller;
+//   bool initialized = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     _controller =
+//         VideoPlayerController.asset("assets/sources/videos/${widget.videoName}")
+//           ..initialize().then((_) {
+//             setState(() => initialized = true);
+//             _controller.pause();
+//           });
+//   }
+
+//   @override
+//   void dispose() {
+//     _controller.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final height = (widget.index % 7 == 0)
+//         ? 300.0
+//         : (widget.index % 3 == 0)
+//         ? 180.0
+//         : 150.0;
+
+//     return GestureDetector(
+//       onTap: () {
+//         Navigator.push(
+//           context,
+//           CupertinoPageRoute(
+//             builder: (_) => ReelsFullScreenPage(startIndex: widget.index),
+//           ),
+//         );
+//       },
+//       child: ClipRRect(
+//         borderRadius: BorderRadius.circular(6),
+//         child: Stack(
+//           alignment: Alignment.center,
+//           children: [
+//             SizedBox(
+//               height: height,
+//               width: double.infinity,
+//               child: initialized
+//                   ? VideoPlayer(_controller)
+//                   : Container(color: Colors.black12),
+//             ),
+
+//             const Icon(Icons.play_circle_fill, size: 40, color: Colors.white),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 class ReelCard extends StatefulWidget {
   final String videoName;
   final int index;
@@ -202,59 +262,79 @@ class ReelCard extends StatefulWidget {
 }
 
 class _ReelCardState extends State<ReelCard> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   bool initialized = false;
 
-  @override
-  void initState() {
-    super.initState();
+  void _initVideo() async {
+    if (_controller != null) return;
 
-    _controller =
-        VideoPlayerController.asset("assets/sources/videos/${widget.videoName}")
-          ..initialize().then((_) {
-            setState(() => initialized = true);
-            _controller.pause();
-          });
+    _controller = VideoPlayerController.asset(
+      "assets/sources/videos/${widget.videoName}",
+    );
+
+    await _controller!.initialize();
+    _controller!
+      ..setLooping(true)
+      ..setVolume(0)
+      ..play();
+
+    setState(() => initialized = true);
+  }
+
+  void _disposeVideo() {
+    _controller?.pause();
+    _controller?.dispose();
+    _controller = null;
+    initialized = false;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _disposeVideo();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final height = (widget.index % 7 == 0)
-        ? 300.0
-        : (widget.index % 3 == 0)
-        ? 180.0
-        : 150.0;
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (_) => ReelsFullScreenPage(startIndex: widget.index),
-          ),
-        );
+    return VisibilityDetector(
+      key: Key(widget.videoName),
+      onVisibilityChanged: (info) {
+        if (info.visibleFraction > 0.6) {
+          _initVideo();
+        } else {
+          _disposeVideo();
+        }
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(6),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              height: height,
-              width: double.infinity,
-              child: initialized
-                  ? VideoPlayer(_controller)
-                  : Container(color: Colors.black12),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) => ReelsFullScreenPage(startIndex: widget.index),
             ),
-
-            const Icon(Icons.play_circle_fill, size: 40, color: Colors.white),
-          ],
+          );
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: initialized
+                    ? _controller!.value.aspectRatio
+                    : 9 / 16,
+                child: initialized
+                    ? VideoPlayer(_controller!)
+                    : Container(color: Colors.black12),
+              ),
+              if (!initialized)
+                const Icon(
+                  Icons.play_circle_fill,
+                  size: 40,
+                  color: Colors.white,
+                ),
+            ],
+          ),
         ),
       ),
     );

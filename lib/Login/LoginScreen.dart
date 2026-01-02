@@ -5,6 +5,7 @@ import 'package:harmanapp/Login/SignupScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -49,7 +50,7 @@ class _LoginscreenState extends State<Loginscreen> {
         _passwordController.text.isNotEmpty || _passwordFocus.hasFocus;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F0F),
+      backgroundColor: kblackColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -67,30 +68,37 @@ class _LoginscreenState extends State<Loginscreen> {
                   Center(
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: Image(
+                            image: AssetImage('assets/App_logo_2.jpeg'),
+                          ),
+                        ),
                         Text(
                           'My Autobiography',
                           style: GoogleFonts.greatVibes(
                             textStyle: const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFF5D778),
+                              color: kgoldColor,
                             ),
                           ),
                         ),
                         const SizedBox(height: 6),
                         const Text(
                           "Welcome back",
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                          style: TextStyle(color: kgreyColor, fontSize: 16),
                         ),
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
 
                   const Text(
                     "Email *",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: kwhiteColor, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
 
@@ -99,25 +107,23 @@ class _LoginscreenState extends State<Loginscreen> {
                     controller: _emailController,
                     focusNode: _emailFocus,
                     onChanged: (_) => setState(() {}),
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: kwhiteColor),
                     decoration: InputDecoration(
                       hintText: "Enter your email",
-                      hintStyle: const TextStyle(color: Colors.white38),
+                      hintStyle: const TextStyle(color: kgreyColor),
                       filled: true,
-                      fillColor: const Color(0xFF1A1A1A),
+                      fillColor: kfillgreyColor,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(
-                          color: emailGold
-                              ? const Color(0xFFF5D778)
-                              : Colors.white,
+                          color: emailGold ? kgoldColor : kwhiteColor,
                           width: 1.5,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Color(0xFFF5D778),
+                          color: kgoldColor,
                           width: 2,
                         ),
                       ),
@@ -128,7 +134,7 @@ class _LoginscreenState extends State<Loginscreen> {
 
                   const Text(
                     "Password *",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: kwhiteColor, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
 
@@ -138,25 +144,23 @@ class _LoginscreenState extends State<Loginscreen> {
                     focusNode: _passwordFocus,
                     obscureText: _obscureText,
                     onChanged: (_) => setState(() {}),
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: kwhiteColor),
                     decoration: InputDecoration(
                       hintText: "Enter your password",
-                      hintStyle: const TextStyle(color: Colors.white38),
+                      hintStyle: const TextStyle(color: kgreyColor),
                       filled: true,
-                      fillColor: const Color(0xFF1A1A1A),
+                      fillColor: kfillgreyColor,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(
-                          color: passwordGold
-                              ? const Color(0xFFF5D778)
-                              : Colors.white,
+                          color: passwordGold ? kgoldColor : Colors.white,
                           width: 1.5,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Color(0xFFF5D778),
+                          color: kgoldColor,
                           width: 2,
                         ),
                       ),
@@ -165,7 +169,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           _obscureText
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: Color(0xFFF5D778),
+                          color: kgoldColor,
                         ),
                         onPressed: () {
                           setState(() {
@@ -179,7 +183,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   const SizedBox(height: 10),
                   const Text(
                     "Forgot password?",
-                    style: TextStyle(color: Colors.white54),
+                    style: TextStyle(color: kgreyColor),
                   ),
 
                   const SizedBox(height: 25),
@@ -197,20 +201,17 @@ class _LoginscreenState extends State<Loginscreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        foregroundColor: const Color(0xFFF5D778),
+                        backgroundColor: kblackColor,
+                        foregroundColor: kgoldColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
-                          side: const BorderSide(
-                            color: Color(0xFFF5D778),
-                            width: 2,
-                          ),
+                          side: const BorderSide(color: kgoldColor, width: 2),
                         ),
                       ),
                       child: Text(
                         "Sign in",
                         style: TextStyle(
-                          color: const Color(0xFFF5D778),
+                          color: kgoldColor,
                           fontSize: fontsize,
                           fontWeight: FontWeight.bold,
                         ),
@@ -233,7 +234,7 @@ class _LoginscreenState extends State<Loginscreen> {
                         ),
                       ),
                       Expanded(
-                        child: Container(height: 1, color: Colors.white24),
+                        child: Container(height: 1, color: kwhiteopacityColor),
                       ),
                     ],
                   ),
@@ -294,7 +295,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           TextSpan(
                             text: "Sign up",
                             style: const TextStyle(
-                              color: Color(0xFFF5D778),
+                              color: kgoldColor,
                               fontWeight: FontWeight.bold,
                             ),
                             recognizer: TapGestureRecognizer()

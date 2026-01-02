@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -17,7 +18,7 @@ class _SignupscreenState extends State<Signupscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F0F),
+      backgroundColor: kblackColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -35,26 +36,23 @@ class _SignupscreenState extends State<Signupscreen> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFFF5D778),
-                        ),
+                        child: Icon(Icons.arrow_back_ios, color: kgoldColor),
                       ),
 
                       const SizedBox(width: 6),
-                      Container(
-                        height: 35,
-                        width: 35,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFFF5D778)),
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                            image: AssetImage('assets/App_logo_2.jpeg'),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 35,
+                      //   width: 35,
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: Color(0xFFF5D778)),
+                      //     color: Colors.transparent,
+                      //     image: DecorationImage(
+                      //       image: AssetImage('assets/App_logo_2.jpeg'),
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //     borderRadius: BorderRadius.circular(8.0),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
@@ -63,24 +61,25 @@ class _SignupscreenState extends State<Signupscreen> {
               const SizedBox(height: 40),
 
               Center(
-                child: Text(
-                  'My Autobiography',
-                  style: GoogleFonts.greatVibes(
-                    textStyle: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF5D778),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
-                  ),
+                    Text(
+                      'My Autobiography',
+                      style: GoogleFonts.greatVibes(
+                        textStyle: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: kgoldColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                // Text(
-                //   "Sign up",
-                //   style: TextStyle(
-                //     color: Colors.white,
-                //     fontSize: 28,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
               ),
 
               const SizedBox(height: 10),
@@ -120,11 +119,11 @@ class _SignupscreenState extends State<Signupscreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    foregroundColor: Color(0xFFF5D778), //Colors.black,
+                    foregroundColor: kgoldColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: Color(0xFFF5D778), width: 2),
+                      side: BorderSide(color: kgoldColor, width: 2),
                     ),
                   ),
                   onPressed: () {
@@ -153,7 +152,7 @@ class _SignupscreenState extends State<Signupscreen> {
                       TextSpan(
                         text: "Sign in",
                         style: TextStyle(
-                          color: Color(0xFFF5D778),
+                          color: kgoldColor,
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()
@@ -193,29 +192,48 @@ class _SignupscreenState extends State<Signupscreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? Color(0xFFF5D778) : Color(0xFFFFFFFF),
+            color: isSelected ? kgoldColor : Color(0xFFFFFFFF),
             width: isSelected ? 2 : 1,
           ),
           color: Colors.white.withOpacity(isSelected ? 0.07 : 0.03),
         ),
         child: Row(
           children: [
+            // Container(
+            //   height: 40,
+            //   width: 40,
+            //   alignment: Alignment.center,
+            //   decoration: BoxDecoration(
+            //     color: isSelected
+            //         ? const Color(0xFFF5D778)
+            //         : Colors.white.withOpacity(0.2),
+            //     borderRadius: BorderRadius.circular(
+            //       4,
+            //     ), // remove for sharp square
+            //   ),
+
+            //   child: Icon(icon, color: Colors.white),
+            // ),
             Container(
-              height: 40,
-              width: 40,
-              alignment: Alignment.center,
+              padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xFFF5D778)
-                    : Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(
-                  4,
-                ), // remove for sharp square
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: isSelected ? kgoldColor : Colors.white,
+                  width: 1.5,
+                ),
               ),
-
-              child: Icon(icon, color: Colors.white),
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.transparent,
+                child: Icon(
+                  icon,
+                  size: 22,
+                  color: isSelected ? kgoldColor : Colors.white,
+                ),
+              ),
             ),
-
             const SizedBox(width: 15),
             Expanded(
               child: Column(
@@ -243,7 +261,7 @@ class _SignupscreenState extends State<Signupscreen> {
             ),
             Icon(
               isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: isSelected ? Color(0xFFF5D778) : Colors.white54,
+              color: isSelected ? kgoldColor : Colors.white54,
             ),
           ],
         ),

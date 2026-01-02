@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
+import 'package:harmanapp/widgets/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
@@ -54,7 +55,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        backgroundColor: CupertinoColors.black,
+        backgroundColor: kblackColor,
         appBar: CustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
@@ -69,9 +70,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   ),
 
                   const TabBar(
-                    indicatorColor: Color(0xFFDAA520),
+                    indicatorColor: kgoldColor,
                     indicatorWeight: 4,
-                    labelColor: Color(0xFFDAA520),
+                    labelColor: kgoldColor,
                     unselectedLabelColor: Colors.white54,
                     tabs: [
                       Tab(icon: Icon(Icons.apps)),
@@ -219,7 +220,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [Color(0xffd4af37), Colors.white],
+                        colors: [kgoldColor, Colors.white],
                       ),
                     ),
 
@@ -269,10 +270,37 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   ),
                 ],
               ),
+              // Positioned(
+              //   bottom: 0,
+              //   left: 80,
+              //   child: Image.asset("assets/screenshots/gold.png", scale: 12),
+              // ),
               Positioned(
-                bottom: 0,
-                left: 80,
-                child: Image.asset("assets/screenshots/gold.png", scale: 12),
+                bottom: 5,
+                left: 85,
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(36),
+                  //   gradient: const LinearGradient(
+                  //     colors: [CupertinoColors.white, CupertinoColors.white],
+                  //   ),
+                  // ),
+                  child: Positioned(
+                    bottom: -10,
+                    right: -10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: kgoldColor, width: 1),
+                      ),
+                      child: Icon(Icons.star, color: kgoldColor, size: 20),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -286,7 +314,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      backgroundColor: Color(0xFFF5D778),
+                      backgroundColor: kgoldColor,
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -329,12 +357,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
-                          ? Color(0xFFF5D778)
+                          ? kgoldColor
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing
-                            ? Color(0xFFF5D778)
-                            : Color(0xFFF5D778),
+                        color: isFollowing ? kgoldColor : kgoldColor,
                       ),
                       foregroundColor: isFollowing
                           ? Colors.black
@@ -400,7 +426,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               const Text(
                 'o',
                 style: TextStyle(
-                  color: Color(0xFFF5D778),
+                  color: kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -432,7 +458,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               const Text(
                 'O',
                 style: TextStyle(
-                  color: Color(0xFFF5D778),
+                  color: kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),

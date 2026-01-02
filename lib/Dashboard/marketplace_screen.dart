@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -116,7 +117,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CupertinoColors.black,
+      backgroundColor: kblackColor,
       appBar: CustomAppBar(),
 
       body: Column(
@@ -129,7 +130,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(color: Color(0xFFF5D778)),
+                    side: BorderSide(color: kgoldColor),
                   ),
                 ),
 
@@ -151,7 +152,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 padding: const WidgetStatePropertyAll<EdgeInsets>(
                   EdgeInsets.symmetric(horizontal: 16.0),
                 ),
-                trailing: [const Icon(Icons.search, color: Color(0xFFF5D778))],
+                trailing: [const Icon(Icons.search, color: kgoldColor)],
 
                 onTap: () {},
                 onChanged: (value) {},
@@ -195,9 +196,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   Widget productCard(Map<String, dynamic> item) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: kblackColor,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Color(0xFFF5D778)),
+        border: Border.all(color: kgoldColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +232,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   child: Text(
                     item["price"],
                     style: GoogleFonts.poppins(
-                      color: CupertinoColors.black,
+                      color: kblackColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -319,10 +320,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  side: const BorderSide(
-                    color: Color(0xFFF5D778), // gold border
-                    width: 1.5,
-                  ),
+                  side: const BorderSide(color: kgoldColor, width: 1.5),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -330,7 +328,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 child: Text(
                   "Buy Now",
                   style: GoogleFonts.poppins(
-                    color: Color(0xFFF5D778),
+                    color: kgoldColor,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),
@@ -446,7 +444,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFF5D778),
+                    color: kgoldColor,
                   ),
                 ),
               ),
@@ -530,7 +528,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                           ),
                           decoration: BoxDecoration(
                             color: selectedSize == index
-                                ? Color(0xFFF5D778)
+                                ? kgoldColor
                                 : Color.fromRGBO(244, 226, 167, 1),
 
                             borderRadius: BorderRadius.circular(10),
@@ -614,7 +612,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     quantity.toString(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
-                      color: Color(0xFFDAA520),
+                      color: kgoldColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -659,7 +657,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                                 "Item added to cart!",
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
-                                  color: Color(0xFFDAA520),
+                                  color: kgoldColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -671,15 +669,11 @@ class _ProductViewPageState extends State<ProductViewPage> {
                                   Navigator.pop(context);
                                 },
                                 style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                    color: Color(0xFFDAA520),
-                                  ),
+                                  side: const BorderSide(color: kgoldColor),
                                 ),
                                 child: Text(
                                   "OK",
-                                  style: GoogleFonts.poppins(
-                                    color: Color(0xFFDAA520),
-                                  ),
+                                  style: GoogleFonts.poppins(color: kgoldColor),
                                 ),
                               ),
                             ],
@@ -690,7 +684,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFFDAA520), width: 1.5),
+                  side: const BorderSide(color: kgoldColor, width: 1.5),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -701,7 +695,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFDAA520),
+                    color: kgoldColor,
                   ),
                 ),
               ),

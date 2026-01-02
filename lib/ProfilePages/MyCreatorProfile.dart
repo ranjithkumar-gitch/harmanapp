@@ -7,6 +7,7 @@ import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -26,14 +27,14 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
   @override
   void initState() {
     super.initState();
-    posts.shuffle(); // ✅ moved here
+    posts.shuffle();
   }
 
   @override
   Widget build(BuildContext context) {
     if (posts.isEmpty) {
       return const Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: kblackColor,
         body: Center(child: CircularProgressIndicator(color: Colors.white)),
       );
     }
@@ -46,7 +47,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        backgroundColor: CupertinoColors.black,
+        backgroundColor: kblackColor,
         appBar: const CustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -62,9 +63,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     ),
 
                     TabBar(
-                      indicatorColor: Color(0xFFDAA520),
+                      indicatorColor: kgoldColor,
                       indicatorWeight: 4,
-                      labelColor: Color(0xFFDAA520),
+                      labelColor: kgoldColor,
                       unselectedLabelColor: Colors.white54,
                       tabs: [
                         Tab(
@@ -193,7 +194,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [Color(0xffd4af37), Colors.white],
+                        colors: [kgoldColor, Colors.white],
                       ),
                     ),
                     child: Container(
@@ -262,13 +263,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       decoration: BoxDecoration(
                         color: Colors.black,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Color(0xFFF5D778), width: 1),
+                        border: Border.all(color: kgoldColor, width: 1),
                       ),
-                      child: Icon(
-                        Icons.star,
-                        color: Color(0xFFF5D778),
-                        size: 20,
-                      ),
+                      child: Icon(Icons.star, color: kgoldColor, size: 20),
                     ),
                   ),
                 ),
@@ -286,7 +283,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      backgroundColor: Color(0xFFF5D778),
+                      backgroundColor: kgoldColor,
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -307,7 +304,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      side: const BorderSide(color: Color(0xFFF5D778)),
+                      side: const BorderSide(color: kgoldColor),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -329,12 +326,10 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
-                          ? Color(0xFFF5D778)
+                          ? kgoldColor
                           : Colors.transparent,
                       side: BorderSide(
-                        color: isFollowing
-                            ? Color(0xFFF5D778)
-                            : Color(0xFFF5D778),
+                        color: isFollowing ? kgoldColor : kgoldColor,
                       ),
                       foregroundColor: isFollowing
                           ? Colors.black
@@ -400,7 +395,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
               const Text(
                 'o',
                 style: TextStyle(
-                  color: Color(0xFFF5D778),
+                  color: kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -432,7 +427,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
               const Text(
                 'O',
                 style: TextStyle(
-                  color: Color(0xFFF5D778),
+                  color: kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),

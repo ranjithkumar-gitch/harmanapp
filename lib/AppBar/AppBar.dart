@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
 import 'package:harmanapp/MyAccount/my_account.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -20,12 +21,12 @@ class CustomAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.black,
+      backgroundColor: kblackColor,
       elevation: 1,
       centerTitle: false,
 
       systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.black,
+        statusBarColor: kblackColor,
         statusBarIconBrightness: Brightness.light,
       ),
 
@@ -51,7 +52,7 @@ class CustomAppBar extends StatelessWidget
               textStyle: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 245, 183, 67),
+                color: kgoldColor,
               ),
             ),
           ),
@@ -68,17 +69,13 @@ class CustomAppBar extends StatelessWidget
           },
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFFF5D778)),
+              border: Border.all(color: kgoldColor),
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Padding(
               padding: const EdgeInsets.all(3.0),
-              child: Icon(
-                Icons.person_2_outlined,
-                size: 24,
-                color: Color.fromARGB(255, 245, 183, 67),
-              ),
+              child: Icon(Icons.person_2_outlined, size: 24, color: kgoldColor),
             ),
           ),
         ),
@@ -90,7 +87,7 @@ class CustomAppBar extends StatelessWidget
             children: [
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFF5D778)),
+                  border: Border.all(color: kgoldColor),
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -99,7 +96,7 @@ class CustomAppBar extends StatelessWidget
                   child: Icon(
                     Icons.shopping_bag_outlined,
                     size: 24,
-                    color: Color.fromARGB(255, 245, 183, 67),
+                    color: kgoldColor,
                   ),
                 ),
               ),
@@ -133,24 +130,14 @@ class CustomAppBar extends StatelessWidget
                         color: Colors.black, // background
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Color.fromARGB(
-                            255,
-                            245,
-                            183,
-                            67,
-                          ), // gold border
+                          color: kgoldColor, // gold border
                           width: 2,
                         ),
                       ),
                       child: Text(
                         count.toString(),
                         style: const TextStyle(
-                          color: Color.fromARGB(
-                            255,
-                            245,
-                            183,
-                            67,
-                          ), // gold number
+                          color: kgoldColor, // gold number
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),

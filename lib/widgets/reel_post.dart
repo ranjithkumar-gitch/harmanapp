@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/colors.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
@@ -98,7 +99,7 @@ class _ReelPostState extends State<ReelPost>
                     textStyle: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF5D778),
+                      color: kgoldColor,
                     ),
                   ),
                 ),
@@ -119,10 +120,7 @@ class _ReelPostState extends State<ReelPost>
               builder: (context) {
                 return CupertinoButton(
                   padding: EdgeInsets.zero,
-                  child: const Icon(
-                    CupertinoIcons.ellipsis,
-                    color: Color(0xFFF5D778),
-                  ),
+                  child: const Icon(CupertinoIcons.ellipsis, color: kgoldColor),
                   onPressed: () async {
                     final RenderBox button =
                         context.findRenderObject() as RenderBox;
@@ -306,9 +304,7 @@ class _ReelPostState extends State<ReelPost>
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: _showCommentBox
-                      ? const Color(0xFFD4AF37)
-                      : CupertinoColors.white,
+                  color: _showCommentBox ? kgoldColor : CupertinoColors.white,
                 ),
               ),
               // CupertinoButton(
@@ -344,9 +340,7 @@ class _ReelPostState extends State<ReelPost>
                 },
                 child: Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
-                  color: _isSharing
-                      ? const Color(0xFFD4AF37)
-                      : CupertinoColors.white,
+                  color: _isSharing ? kgoldColor : CupertinoColors.white,
                 ),
               ),
 
@@ -362,7 +356,7 @@ class _ReelPostState extends State<ReelPost>
                   widget.post.post.saved
                       ? CupertinoIcons.bookmark_fill
                       : CupertinoIcons.bookmark,
-                  color: Color(0xFFD4AF37),
+                  color: kgoldColor,
                 ),
               ),
             ],
@@ -373,7 +367,7 @@ class _ReelPostState extends State<ReelPost>
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.amber, width: 1),
+                border: Border.all(color: kgoldColor, width: 1),
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -396,7 +390,7 @@ class _ReelPostState extends State<ReelPost>
                           itemSize: 28,
                           unratedColor: Colors.grey,
                           itemBuilder: (context, _) =>
-                              const Icon(Icons.star, color: Colors.amber),
+                              const Icon(Icons.star, color: kgoldColor),
                           onRatingUpdate: (rating) {
                             _rating = rating;
                             setState(() {
@@ -412,7 +406,7 @@ class _ReelPostState extends State<ReelPost>
                           child: Icon(
                             size: 24,
                             Icons.check_circle_outline,
-                            color: _rating == 0.0 ? Colors.grey : Colors.amber,
+                            color: _rating == 0.0 ? Colors.grey : kgoldColor,
                           ),
 
                           onPressed: () {
@@ -449,7 +443,7 @@ class _ReelPostState extends State<ReelPost>
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFD4AF37), width: 1),
+                border: Border.all(color: kgoldColor, width: 1),
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -487,7 +481,7 @@ class _ReelPostState extends State<ReelPost>
                       padding: EdgeInsets.zero,
                       child: const Icon(
                         CupertinoIcons.paperplane_fill,
-                        color: Color(0xFFD4AF37),
+                        color: kgoldColor,
                       ),
                       onPressed: () {
                         final comment = _commentController.text.trim();
@@ -574,7 +568,7 @@ class _ReelPostState extends State<ReelPost>
 
   Color _getRatingColor(double rating) {
     if (rating == 5.0) {
-      return const Color(0xFFFFD700); // Gold
+      return kgoldColor; // Gold
     } else if (rating >= 4.5) {
       return const Color(0xFFC0C0C0); // Silver
     } else if (rating >= 0.0) {
@@ -619,7 +613,7 @@ class _RatingCardState extends State<RatingCard> {
                   starIndex <= _rating
                       ? CupertinoIcons.star_fill
                       : CupertinoIcons.star,
-                  color: CupertinoColors.systemOrange,
+                  color: kgoldColor,
                   size: 28,
                 ),
               ),
