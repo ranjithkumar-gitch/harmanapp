@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 class NavCustomPainter extends CustomPainter {
   late double loc;
@@ -49,7 +50,7 @@ class NavCustomPainter extends CustomPainter {
     canvas.drawPath(path, fillPaint);
     // Paint for top border only
     final borderPaint = Paint()
-      ..color = Color(0xFFF5D778)
+      ..color = kgoldColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     // Path only for the top edge

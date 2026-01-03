@@ -155,7 +155,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
                   foregroundColor: kgoldColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
-                    side: const BorderSide(color: Color(0xFFF5D778), width: 2),
+                    side: const BorderSide(color: kgoldColor, width: 2),
                   ),
                 ),
                 child: const Text(

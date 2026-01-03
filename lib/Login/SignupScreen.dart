@@ -242,7 +242,7 @@ class _SignupscreenState extends State<Signupscreen> {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Color(isSelected ? 0xFFF5D778 : 0xFFFFFFFF),
+                      color: isSelected ? kgoldColor : Color(0xFFFFFFFF),
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),

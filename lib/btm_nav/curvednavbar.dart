@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/btm_nav/custom_clipper.dart';
 import 'package:harmanapp/btm_nav/custom_painter.dart';
 import 'package:harmanapp/btm_nav/nav_button.dart';
+import 'package:harmanapp/widgets/colors.dart';
 
 typedef _LetIndexPage = bool Function(int value);
 
@@ -141,10 +142,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Color(0xFFF5D778),
-                              width: 1,
-                            ),
+                            border: Border.all(color: kgoldColor, width: 1),
                           ),
                           child: Material(
                             // color: Colors.red,

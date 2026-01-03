@@ -131,7 +131,12 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
             child: SafeArea(
               child: IconButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black54),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  backgroundColor: WidgetStateProperty.all(Colors.black54),
                 ),
                 onPressed: () => Navigator.pop(context),
                 padding: const EdgeInsets.only(

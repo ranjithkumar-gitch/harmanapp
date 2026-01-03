@@ -32,18 +32,24 @@ class CustomAppBar extends StatelessWidget
 
       title: Row(
         children: [
-          Container(
+          // Container(
+          //   height: 35,
+          //   width: 35,
+          //   decoration: BoxDecoration(
+          //     border: Border.all(color: kgoldColor),
+          //     color: Colors.transparent,
+          //     image: DecorationImage(
+          //       image: AssetImage('assets/App_logo_2.jpeg'),
+          //       fit: BoxFit.cover,
+          //     ),
+          //     borderRadius: BorderRadius.circular(8.0),
+          //   ),
+          // ),
+          // SizedBox(width: 10),
+          SizedBox(
             height: 35,
             width: 35,
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFFF5D778)),
-              color: Colors.transparent,
-              image: DecorationImage(
-                image: AssetImage('assets/App_logo_2.jpeg'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
+            child: Image.asset('assets/App_logo_2.jpeg', fit: BoxFit.cover),
           ),
           SizedBox(width: 10),
           Text(

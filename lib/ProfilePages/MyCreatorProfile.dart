@@ -56,7 +56,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoverImage('assets/sources/images/cover.jpeg'),
+                    coverImage('assets/sources/images/cover.png'),
                     ProfileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
@@ -129,52 +129,92 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
     );
   }
 
-  Widget CoverImage(String imagePath) {
+  Widget coverImage(String imagePath) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+      height: 220,
+      width: double.infinity,
+      child: Stack(
         children: [
           Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath), // AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
+            height: 220,
+            child: Image.asset(imagePath, fit: BoxFit.fill),
+          ),
+
+          /// 🔙 Back Button (Top Left)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SafeArea(
+              child: IconButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () => Navigator.pop(context),
-                    icon: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 0.0,
-                        top: 2.0,
-                        bottom: 2.0,
-                      ),
-                      child: const Icon(Icons.arrow_back_ios),
-                    ),
-                    color: Colors.white,
                   ),
-                ],
+                  backgroundColor: WidgetStateProperty.all(Colors.black54),
+                ),
+                onPressed: () => Navigator.pop(context),
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 0.0,
+                  top: 2.0,
+                  bottom: 2.0,
+                ),
+                icon: const Icon(Icons.arrow_back_ios),
+                color: Colors.white,
               ),
             ),
           ),
         ],
       ),
     );
+
+    // Container(
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     children: [
+    //       Container(
+    //         height: 200,
+    //         width: double.infinity,
+    //         decoration: BoxDecoration(
+    //           image: DecorationImage(
+    //             image: AssetImage(imagePath), // AssetImage(imagePath),
+    //             fit: BoxFit.cover,
+    //           ),
+    //         ),
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(8.0),
+    //           child: Column(
+    //             // mainAxisAlignment: MainAxisAlignment.start,
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             children: [
+    //               IconButton(
+    //                 style: ButtonStyle(
+    //                   backgroundColor: MaterialStateProperty.all(
+    //                     Colors.black54,
+    //                   ),
+    //                 ),
+    //                 onPressed: () => Navigator.pop(context),
+    //                 icon: Padding(
+    //                   padding: const EdgeInsets.only(
+    //                     left: 8.0,
+    //                     right: 0.0,
+    //                     top: 2.0,
+    //                     bottom: 2.0,
+    //                   ),
+    //                   child: const Icon(Icons.arrow_back_ios),
+    //                 ),
+    //                 color: Colors.white,
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget ProfileImage(String imagePath, String name) {
