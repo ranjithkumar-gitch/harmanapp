@@ -25,9 +25,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "default",
       "description":
           "A premium eco-friendly yoga mat crafted from natural materials designed for maximum comfort and grip. Perfect for daily yoga practice, meditation, stretching, and home workouts. Sweat-resistant and durable for long-term use.",
-      "image": [
-        "https://cdn.canvaschamp.in/static/images/landingpage/yogamats/fitness-yoga-mat.jpg",
-      ],
+      "image": ["assets/bat.png"],
     },
     {
       "name": "Lymio Hoodie",
@@ -36,11 +34,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "fashion",
       "description":
           "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
-      "image": [
-        "https://m.media-amazon.com/images/I/31SaUxjdDdL.jpg",
-        "https://m.media-amazon.com/images/I/314Y8rbyx9L.jpg",
-        "https://m.media-amazon.com/images/I/316uuYEYJkL.jpg",
-      ],
+      "image": ["assets/award.png"],
     },
 
     {
@@ -50,9 +44,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "default",
       "description":
           "A fast-absorbing creatine supplement that enhances ATP energy production, giving you more power during high-intensity workouts. Supports muscle growth, strength gains, and improved workout capacity.",
-      "image": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu5LgzI3d_ULFW8Kbs_abeuKoZ9-1AeIkR3w&s",
-      ],
+      "image": ["assets/huddie.png"],
     },
     {
       "name": "Copper Water Bottle",
@@ -61,9 +53,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "default",
       'description':
           'A handcrafted 100% pure copper bottle with natural Ayurvedic health benefits. Helps purify water, boosts immunity, and improves digestion. Beautifully designed for home, yoga sessions, office, or travel.',
-      "image": [
-        "https://m.media-amazon.com/images/I/71MkUmlTBPL._AC_UF894,1000_QL80_.jpg",
-      ],
+      "image": ["assets/signature.png"],
     },
     {
       "name": "Herbal Green Tea Pack",
@@ -72,9 +62,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "default",
       'description':
           'A soothing blend of premium handpicked green tea leaves packed with antioxidants. Helps boost metabolism, reduce stress, and promote a healthy lifestyle. Perfect for morning refreshment or evening relaxation.',
-      "image": [
-        "https://nutritionsource.hsph.harvard.edu/wp-content/uploads/2019/07/tee-2427846_1280.jpg",
-      ],
+      "image": ["assets/signature2.png"],
     },
     {
       "name": "Lymio Hoodie",
@@ -83,34 +71,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
       "type": "fashion",
       "description":
           "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
-      "image": [
-        "https://m.media-amazon.com/images/I/31SaUxjdDdL.jpg",
-        "https://m.media-amazon.com/images/I/314Y8rbyx9L.jpg",
-        "https://m.media-amazon.com/images/I/316uuYEYJkL.jpg",
-      ],
-    },
-
-    {
-      "name": "Ultra Pure Creatine",
-      "creator": "TrainWithArjun",
-      "price": "\$20.99",
-      "type": "default",
-      "description":
-          "A fast-absorbing creatine supplement that enhances ATP energy production, giving you more power during high-intensity workouts. Supports muscle growth, strength gains, and improved workout capacity.",
-      "image": [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu5LgzI3d_ULFW8Kbs_abeuKoZ9-1AeIkR3w&s",
-      ],
-    },
-    {
-      "name": "Copper Water Bottle",
-      "creator": "EarthyFeelsCo",
-      "price": "\$30.99",
-      "type": "default",
-      'description':
-          'A handcrafted 100% pure copper bottle with natural Ayurvedic health benefits. Helps purify water, boosts immunity, and improves digestion. Beautifully designed for home, yoga sessions, office, or travel.',
-      "image": [
-        "https://m.media-amazon.com/images/I/71MkUmlTBPL._AC_UF894,1000_QL80_.jpg",
-      ],
+      "image": ["assets/jersey_joshi.png"],
     },
   ];
 
@@ -210,11 +171,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
                 ),
-                child: Image.network(
+                child: Image.asset(
                   item["image"][0],
                   height: 140,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               Positioned(

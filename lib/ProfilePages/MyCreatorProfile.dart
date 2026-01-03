@@ -20,14 +20,24 @@ class Mycreatorprofile extends StatefulWidget {
 
 enum SampleItem { itemOne }
 
-class _MycreatorprofileState extends State<Mycreatorprofile> {
+class _MycreatorprofileState extends State<Mycreatorprofile>
+    with SingleTickerProviderStateMixin {
   bool isFollowing = false;
   SampleItem? selectedItem;
+  late TabController _tabController;
+  final List<String> _icons = [
+    "assets/reels.png",
+    "assets/livestream.png",
+    "assets/star_legacy.png",
+    "assets/gold_ai.png",
+    "assets/gold_cart.png",
+  ];
 
   @override
   void initState() {
     super.initState();
     posts.shuffle();
+    _tabController = TabController(length: _icons.length, vsync: this);
   }
 
   @override
@@ -62,49 +72,73 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                       user.name,
                     ),
 
-                    TabBar(
-                      indicatorColor: kgoldColor,
-                      indicatorWeight: 4,
-                      labelColor: kgoldColor,
-                      unselectedLabelColor: Colors.white54,
-                      tabs: [
-                        Tab(
-                          icon: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Image.asset("assets/reels.png"),
-                          ),
-                        ),
-                        Tab(
-                          icon: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Image.asset("assets/livestream.png"),
-                          ),
-                        ),
-                        Tab(
-                          icon: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Image.asset("assets/star_legacy.png"),
-                          ),
-                        ),
+                    // TabBar(
+                    //   indicatorColor: kgoldColor,
+                    //   indicatorWeight: 4,
+                    //   labelColor: kgoldColor,
+                    //   unselectedLabelColor: Colors.white54,
 
-                        Tab(
-                          icon: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Image.asset("assets/gold_ai.png"),
-                          ),
-                        ),
-                        Tab(
-                          icon: SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Image.asset("assets/gold_cart.png"),
-                          ),
-                        ),
-                      ],
+                    //   tabs: [
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/reels.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/livestream.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/star_legacy.png"),
+                    //       ),
+                    //     ),
+
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/gold_ai.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/gold_cart.png"),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    AnimatedBuilder(
+                      animation: _tabController,
+                      builder: (_, __) {
+                        return TabBar(
+                          controller: _tabController,
+                          indicatorColor: kgoldColor,
+                          indicatorWeight: 4,
+                          labelPadding: EdgeInsets.zero,
+                          tabs: List.generate(_icons.length, (index) {
+                            final bool isSelected =
+                                _tabController.index == index;
+
+                            return Tab(
+                              icon: Image.asset(
+                                _icons[index],
+                                height: 40,
+                                color: isSelected ? kgoldColor : Colors.grey,
+                              ),
+                            );
+                          }),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -112,7 +146,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
             ];
           },
 
-          body: const TabBarView(
+          body: TabBarView(
+            controller: _tabController,
+
             children: [
               ImagesTab(),
               // ReelsTab(),
@@ -130,12 +166,12 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
   }
 
   Widget coverImage(String imagePath) {
-    return Container(
+    return SizedBox(
       height: 220,
       width: double.infinity,
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: 220,
             child: Image.asset(imagePath, fit: BoxFit.fill),
           ),
@@ -225,6 +261,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            clipBehavior: Clip.none,
             children: [
               Row(
                 children: [
@@ -284,7 +321,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
                 ],
               ),
               Positioned(
-                bottom: 5,
+                bottom: -5,
                 left: 85,
                 child: Container(
                   height: 30,
@@ -313,7 +350,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile> {
             ],
           ),
 
-          SizedBox(height: 12),
+          SizedBox(height: 16),
 
           Row(
             children: [

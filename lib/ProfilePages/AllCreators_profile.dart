@@ -20,14 +20,30 @@ class AllCreatorsProfile extends StatefulWidget {
 
 enum SampleItem { itemOne }
 
-class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
+class _AllCreatorsProfileState extends State<AllCreatorsProfile>
+    with SingleTickerProviderStateMixin {
   bool isFollowing = false;
+  late TabController _tabController;
+  final List<String> _icons = [
+    "assets/reels.png",
+    "assets/livestream.png",
+    "assets/star_legacy.png",
+    "assets/gold_ai.png",
+    "assets/gold_cart.png",
+  ];
 
   SampleItem? selectedItem;
   @override
   void initState() {
     super.initState();
     posts.shuffle();
+    _tabController = TabController(length: _icons.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,27 +75,79 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoverImage('assets/sources/profiles/${user.profileImage}'),
+                    CoverImage('assets/sources/images/cover.png'),
 
                     ProfileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
                     ),
 
-                    const TabBar(
-                      indicatorColor: kgoldColor,
-                      indicatorWeight: 4,
-                      labelColor: kgoldColor,
-                      unselectedLabelColor: Colors.white54,
-                      tabs: [
-                        Tab(icon: Icon(Icons.apps, size: 28)),
-                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                        Tab(icon: Icon(Icons.live_tv, size: 28)),
-                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
+                    // TabBar(
+                    //   indicatorColor: kgoldColor,
+                    //   indicatorWeight: 4,
+                    //   labelColor: kgoldColor,
+                    //   unselectedLabelColor: Colors.white54,
+                    //   tabs: [
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/reels.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/livestream.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/star_legacy.png"),
+                    //       ),
+                    //     ),
 
-                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
-                      ],
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/gold_ai.png"),
+                    //       ),
+                    //     ),
+                    //     Tab(
+                    //       icon: SizedBox(
+                    //         height: 40,
+                    //         width: 40,
+                    //         child: Image.asset("assets/gold_cart.png"),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    AnimatedBuilder(
+                      animation: _tabController,
+                      builder: (_, __) {
+                        return TabBar(
+                          controller: _tabController,
+                          indicatorColor: kgoldColor,
+                          indicatorWeight: 4,
+                          labelPadding: EdgeInsets.zero,
+                          tabs: List.generate(_icons.length, (index) {
+                            final bool isSelected =
+                                _tabController.index == index;
+
+                            return Tab(
+                              icon: Image.asset(
+                                _icons[index],
+                                height: 40,
+                                color: isSelected ? kgoldColor : Colors.grey,
+                              ),
+                            );
+                          }),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -87,17 +155,20 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
             ];
           },
 
-          body: const TabBarView(
-            children: [
-              ImagesTab(),
-              // ReelsTab(),
-              // ImagesTab(),
-              LiveTab(),
-              LegacyTab(),
+          body: Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ImagesTab(),
+                // ReelsTab(),
+                // ImagesTab(),
+                LiveTab(),
+                LegacyTab(),
 
-              EmptyTab(),
-              Mycreatorsmarketplace(),
-            ],
+                EmptyTab(),
+                Mycreatorsmarketplace(),
+              ],
+            ),
           ),
         ),
       ),
@@ -105,45 +176,39 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
   }
 
   Widget CoverImage(String imagePath) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+    return SizedBox(
+      height: 220,
+      width: double.infinity,
+      child: Stack(
         children: [
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/sources/images/cover.jpeg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
+          SizedBox(
+            height: 220,
+            child: Image.asset(imagePath, fit: BoxFit.fill),
+          ),
+
+          /// 🔙 Back Button (Top Left)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SafeArea(
+              child: IconButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () => Navigator.pop(context),
-                    icon: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 0.0,
-                        top: 2.0,
-                        bottom: 2.0,
-                      ),
-                      child: const Icon(Icons.arrow_back_ios),
-                    ),
-                    color: Colors.white,
                   ),
-                ],
+                  backgroundColor: WidgetStateProperty.all(Colors.black54),
+                ),
+                onPressed: () => Navigator.pop(context),
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 0.0,
+                  top: 2.0,
+                  bottom: 2.0,
+                ),
+                icon: const Icon(Icons.arrow_back_ios),
+                color: Colors.white,
               ),
             ),
           ),
@@ -160,6 +225,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            clipBehavior: Clip.none,
             children: [
               Row(
                 children: [
@@ -219,9 +285,9 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
                 ],
               ),
               Positioned(
-                bottom: 5,
+                bottom: -5,
                 left: 85,
-                child: Container(
+                child: SizedBox(
                   height: 30,
                   width: 30,
                   // decoration: BoxDecoration(
@@ -246,7 +312,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile> {
             ],
           ),
 
-          SizedBox(height: 12),
+          SizedBox(height: 16),
 
           Row(
             children: [

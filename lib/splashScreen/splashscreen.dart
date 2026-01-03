@@ -62,7 +62,7 @@ class _SplashscreenState extends State<Splashscreen>
                   shape: BoxShape.circle,
 
                   image: DecorationImage(
-                    image: AssetImage('assets/App_logo.jpeg'),
+                    image: AssetImage('assets/App_logo1.png'),
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -111,7 +111,7 @@ class _OtpCodeScreenState extends State<OtpCodeScreen> {
               child: Column(
                 children: [
                   Image.asset(
-                    'assets/App_logo_2.jpeg',
+                    'assets/app_logo2.png',
                     height: size.width * 0.3,
                     width: size.width * 0.3,
                     fit: BoxFit.contain,

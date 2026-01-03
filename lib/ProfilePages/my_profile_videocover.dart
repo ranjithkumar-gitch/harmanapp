@@ -18,11 +18,20 @@ class Mycreator_videocover extends StatefulWidget {
   State<Mycreator_videocover> createState() => _Mycreator_videocoverState();
 }
 
-class _Mycreator_videocoverState extends State<Mycreator_videocover> {
+class _Mycreator_videocoverState extends State<Mycreator_videocover>
+    with SingleTickerProviderStateMixin {
   late VideoPlayerController _videoController;
   bool isVideoReady = false;
   bool isFollowing = false;
   bool _isMuted = true;
+  late TabController _tabController;
+  final List<String> _icons = [
+    "assets/reels.png",
+    "assets/livestream.png",
+    "assets/star_legacy.png",
+    "assets/gold_ai.png",
+    "assets/gold_cart.png",
+  ];
 
   @override
   void initState() {
@@ -42,6 +51,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
         setState(() {});
       }
     });
+    _tabController = TabController(length: _icons.length, vsync: this);
   }
 
   @override
@@ -69,25 +79,49 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
                     widget.usrName,
                   ),
 
-                  const TabBar(
-                    indicatorColor: kgoldColor,
-                    indicatorWeight: 4,
-                    labelColor: kgoldColor,
-                    unselectedLabelColor: Colors.white54,
-                    tabs: [
-                      Tab(icon: Icon(Icons.apps)),
-                      Tab(icon: Icon(Icons.live_tv)),
-                      Tab(icon: Icon(Icons.emoji_events_outlined)),
+                  // const TabBar(
+                  //   indicatorColor: kgoldColor,
+                  //   indicatorWeight: 4,
+                  //   labelColor: kgoldColor,
+                  //   unselectedLabelColor: Colors.white54,
+                  //   tabs: [
+                  //     Tab(icon: Icon(Icons.apps)),
+                  //     Tab(icon: Icon(Icons.live_tv)),
+                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
 
-                      Tab(icon: Icon(Icons.person_outline)),
-                      Tab(icon: Icon(Icons.shopping_bag_outlined)),
-                    ],
+                  //     Tab(icon: Icon(Icons.person_outline)),
+                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
+                  //   ],
+                  // ),
+                  AnimatedBuilder(
+                    animation: _tabController,
+                    builder: (_, __) {
+                      return TabBar(
+                        controller: _tabController,
+                        indicatorColor: kgoldColor,
+                        indicatorWeight: 4,
+                        labelPadding: EdgeInsets.zero,
+                        tabs: List.generate(_icons.length, (index) {
+                          final bool isSelected = _tabController.index == index;
+
+                          return Tab(
+                            icon: Image.asset(
+                              _icons[index],
+                              height: 40,
+                              color: isSelected ? kgoldColor : Colors.grey,
+                            ),
+                          );
+                        }),
+                      );
+                    },
                   ),
                 ],
               ),
             ),
           ],
-          body: const TabBarView(
+          body: TabBarView(
+            controller: _tabController,
+
             children: [
               ImagesTab(),
 
@@ -216,6 +250,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            clipBehavior: Clip.none,
             children: [
               Row(
                 children: [
@@ -281,7 +316,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               //   child: Image.asset("assets/screenshots/gold.png", scale: 12),
               // ),
               Positioned(
-                bottom: 5,
+                bottom: -5,
                 left: 85,
                 child: SizedBox(
                   height: 30,
@@ -309,7 +344,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover> {
               ),
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 16),
 
           Row(
             children: [

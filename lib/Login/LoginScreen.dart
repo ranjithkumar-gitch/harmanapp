@@ -70,9 +70,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       SizedBox(
                         height: 140,
                         width: 140,
-                        child: Image(
-                          image: AssetImage('assets/App_logo_2.jpeg'),
-                        ),
+                        child: Image(image: AssetImage('assets/app_logo2.png')),
                       ),
                       Text(
                         'My Autobiography',

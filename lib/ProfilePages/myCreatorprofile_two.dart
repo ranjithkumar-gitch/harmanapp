@@ -97,50 +97,46 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
   }
 
   Widget CoverImage(String imagePath) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath), // AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    icon: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 0.0,
-                        top: 2.0,
-                        bottom: 2.0,
-                      ),
-                      child: const Icon(Icons.arrow_back_ios),
-                    ),
-                    color: Colors.white,
-                  ),
-                ],
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: 200,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(imagePath), // AssetImage(imagePath),
+              fit: BoxFit.cover,
             ),
           ),
-        ],
-      ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black54),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  icon: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 0.0,
+                      top: 2.0,
+                      bottom: 2.0,
+                    ),
+                    child: const Icon(Icons.arrow_back_ios),
+                  ),
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

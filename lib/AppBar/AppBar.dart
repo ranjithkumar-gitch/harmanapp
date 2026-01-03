@@ -49,22 +49,12 @@ class CustomAppBar extends StatelessWidget
           SizedBox(
             height: 35,
             width: 35,
-            child: Image.asset('assets/App_logo_2.jpeg', fit: BoxFit.cover),
+            child: Image.asset('assets/app_logo2.png', fit: BoxFit.cover),
           ),
           SizedBox(width: 10),
-          // Text(
-          //   'My Autobiography',
-          //   style: GoogleFonts.greatVibes(
-          //     textStyle: const TextStyle(
-          //       fontSize: 25,
-          //       fontWeight: FontWeight.bold,
-          //       color: kgoldColor,
-          //     ),
-          //   ),
-          // ),
           Text(
             'My Autobiography',
-            style: GoogleFonts.tangerine(
+            style: GoogleFonts.greatVibes(
               textStyle: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -72,6 +62,16 @@ class CustomAppBar extends StatelessWidget
               ),
             ),
           ),
+          // Text(
+          //   'My Autobiography',
+          //   style: GoogleFonts.tangerine(
+          //     textStyle: const TextStyle(
+          //       fontSize: 25,
+          //       fontWeight: FontWeight.bold,
+          //       color: kgoldColor,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
 
