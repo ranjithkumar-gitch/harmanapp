@@ -52,9 +52,19 @@ class CustomAppBar extends StatelessWidget
             child: Image.asset('assets/App_logo_2.jpeg', fit: BoxFit.cover),
           ),
           SizedBox(width: 10),
+          // Text(
+          //   'My Autobiography',
+          //   style: GoogleFonts.greatVibes(
+          //     textStyle: const TextStyle(
+          //       fontSize: 25,
+          //       fontWeight: FontWeight.bold,
+          //       color: kgoldColor,
+          //     ),
+          //   ),
+          // ),
           Text(
             'My Autobiography',
-            style: GoogleFonts.greatVibes(
+            style: GoogleFonts.tangerine(
               textStyle: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
