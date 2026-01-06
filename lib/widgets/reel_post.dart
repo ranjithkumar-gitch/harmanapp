@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/image_post.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
@@ -52,7 +53,6 @@ class _ReelPostState extends State<ReelPost>
       duration: const Duration(seconds: 5), // play for 5 seconds
     );
 
-    // Listen for completion
     _lottieController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
@@ -109,7 +109,9 @@ class _ReelPostState extends State<ReelPost>
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
-                    color: Colors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ],
@@ -140,7 +142,9 @@ class _ReelPostState extends State<ReelPost>
                     );
 
                     final value = await showMenu(
-                      color: Colors.black,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
                       context: context,
                       position: position,
                       items: [
@@ -149,7 +153,11 @@ class _ReelPostState extends State<ReelPost>
                           child: Text(
                             'Restrict',
                             style: TextStyle(
-                              color: Colors.white,
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
@@ -160,7 +168,11 @@ class _ReelPostState extends State<ReelPost>
                           child: Text(
                             'Report',
                             style: TextStyle(
-                              color: Colors.white,
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
@@ -171,7 +183,11 @@ class _ReelPostState extends State<ReelPost>
                           child: Text(
                             'Block',
                             style: TextStyle(
-                              color: Colors.white,
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
@@ -182,7 +198,11 @@ class _ReelPostState extends State<ReelPost>
                           child: Text(
                             'Cancel',
                             style: TextStyle(
-                              color: Colors.white,
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
@@ -286,9 +306,11 @@ class _ReelPostState extends State<ReelPost>
                             ],
                           ),
                         )
-                      : const Icon(
+                      : Icon(
                           CupertinoIcons.star_fill,
-                          color: CupertinoColors.white,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
                           size: 18,
                         ),
                 ),
@@ -304,22 +326,14 @@ class _ReelPostState extends State<ReelPost>
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: _showCommentBox ? kgoldColor : CupertinoColors.white,
+                  color: _showCommentBox
+                      ? kgoldColor
+                      : Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
-              // CupertinoButton(
-              //   onPressed: () {
-              //     Share.share(
-              //       'Check out this post!',
-              //       subject: 'Shared from app',
-              //     );
-              //   },
-              //   padding: EdgeInsets.zero,
-              //   child: const Icon(
-              //     CupertinoIcons.arrowshape_turn_up_right,
-              //     color: CupertinoColors.white,
-              //   ),
-              // ),
+
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () async {
@@ -340,7 +354,11 @@ class _ReelPostState extends State<ReelPost>
                 },
                 child: Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
-                  color: _isSharing ? kgoldColor : CupertinoColors.white,
+                  color: _isSharing
+                      ? kgoldColor
+                      : Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
 
@@ -432,8 +450,6 @@ class _ReelPostState extends State<ReelPost>
                       ),
                     ],
                   ),
-
-                  //const SizedBox(height: 6),
                 ],
               ),
             ),
@@ -455,16 +471,21 @@ class _ReelPostState extends State<ReelPost>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// 📝 Comment field
                   TextField(
                     controller: _commentController,
                     maxLines: 2,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       hintText: "Write a comment...",
-                      hintStyle: const TextStyle(color: Colors.white54),
+                      hintStyle: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
+                      ),
                       filled: true,
-                      fillColor: Colors.black,
+                      fillColor: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -474,7 +495,6 @@ class _ReelPostState extends State<ReelPost>
 
                   const SizedBox(height: 8),
 
-                  /// 📤 Post button
                   Align(
                     alignment: Alignment.centerRight,
                     child: CupertinoButton(
@@ -505,9 +525,11 @@ class _ReelPostState extends State<ReelPost>
             children: [
               Text(
                 '${widget.post.post.likes} Stars',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
               RichText(
@@ -517,17 +539,21 @@ class _ReelPostState extends State<ReelPost>
                   children: [
                     TextSpan(
                       text: widget.post.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.white,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 16,
                       ),
                     ),
                     const TextSpan(text: '  '),
                     TextSpan(
                       text: widget.post.post.description ?? '',
-                      style: const TextStyle(
-                        color: CupertinoColors.white,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 16,
                       ),
                     ),
@@ -536,11 +562,23 @@ class _ReelPostState extends State<ReelPost>
               ),
               if (widget.post.post.comments != null) ...[
                 const SizedBox(height: 5),
-                Text(
-                  'View all ${widget.post.post.comments} comments',
-                  style: TextStyle(
-                    color: CupertinoColors.black.withOpacity(.8),
-                    fontSize: 16,
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => CommentBottomSheet(post: widget.post),
+                    );
+                  },
+
+                  child: Text(
+                    'View all ${widget.post.post.comments} comments',
+                    style: TextStyle(
+                      fontFamily: "Gilroy",
+                      color: kgoldColor,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ],
@@ -548,7 +586,9 @@ class _ReelPostState extends State<ReelPost>
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
-                  color: CupertinoColors.white.withOpacity(.8),
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                   fontSize: 16,
                 ),
               ),

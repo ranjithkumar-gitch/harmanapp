@@ -77,11 +77,11 @@ class _CartPageState extends State<CartPage> {
                       vertical: 6,
                     ),
                     child: ListTile(
-                      leading: Image.network(
+                      leading: Image.asset(
                         product["image"][0],
                         width: 55,
                         height: 55,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fitHeight,
                       ),
 
                       title: Row(

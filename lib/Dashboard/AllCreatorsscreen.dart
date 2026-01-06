@@ -99,7 +99,16 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
   Widget _title(String text, Color color) {
     return Padding(
       padding: EdgeInsets.all(8),
-      child: Icon(Icons.star, color: color),
+      // child: Icon(Icons.star, color: color),
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+          border: Border.all(color: color, width: 1),
+        ),
+        child: Icon(Icons.star, color: color, size: 20),
+      ),
       // child: Text(
       //   text,
 
