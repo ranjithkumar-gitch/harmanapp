@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
-import 'package:harmanapp/widgets/colors.dart';
-
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
 class MarketplaceScreen extends StatefulWidget {
@@ -19,58 +18,58 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 
   final products = [
     {
-      "name": "Handmade Yoga Mat",
-      "creator": "YogiShruti",
+      "name": "Signed Cricket Bat",
+      "creator": "Virat Kohli",
       "price": "\$39.99",
       "type": "default",
       "description":
-          "A premium eco-friendly yoga mat crafted from natural materials designed for maximum comfort and grip. Perfect for daily yoga practice, meditation, stretching, and home workouts. Sweat-resistant and durable for long-term use.",
+          "Own a piece of cricketing history with this authentic Virat Kohli signed bat. Perfect for passionate fans and collectors, this exclusive memorabilia captures the spirit of one of the greatest batsmen of all time.",
       "image": ["assets/bat.png"],
     },
     {
-      "name": "Lymio Hoodie",
-      "creator": "Lavish Store",
+      "name": "Best Actor Replica",
+      "creator": "Deepika padukone",
       "price": "\$59.99",
-      "type": "fashion",
+      "type": "default",
       "description":
-          "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
+          "Celebrate cinematic excellence with this Best Actor Award Replica—a stunning keepsake inspired by the iconic trophies of the film industry. Crafted with a polished golden finish and mounted on a sleek base, it’s perfect for movie lovers, aspiring actors, or as a fun gift for friends.",
       "image": ["assets/award.png"],
     },
 
     {
-      "name": "Ultra Pure Creatine",
-      "creator": "TrainWithArjun",
+      "name": "Signed Hoodie",
+      "creator": "Oprah Winfrey",
       "price": "\$20.99",
       "type": "default",
       "description":
-          "A fast-absorbing creatine supplement that enhances ATP energy production, giving you more power during high-intensity workouts. Supports muscle growth, strength gains, and improved workout capacity.",
+          "Step into style and fandom with this exclusive signed hoodie. Featuring a sleek design and the authentic autograph of your favorite star, it’s more than just apparel",
       "image": ["assets/huddie.png"],
     },
     {
-      "name": "Copper Water Bottle",
-      "creator": "EarthyFeelsCo",
+      "name": "Digital Signature",
+      "creator": "Elon Musk",
       "price": "\$30.99",
       "type": "default",
       'description':
-          'A handcrafted 100% pure copper bottle with natural Ayurvedic health benefits. Helps purify water, boosts immunity, and improves digestion. Beautifully designed for home, yoga sessions, office, or travel.',
+          'Own a piece of digital authenticity with this exclusive Digital Signature collectible. Each signature is securely created and verified, giving fans a unique way to connect with their favorite star in the digital world.',
       "image": ["assets/signature.png"],
     },
     {
-      "name": "Herbal Green Tea Pack",
-      "creator": "WellnessByKaira",
+      "name": "Exclusive Signature",
+      "creator": "Elon Musk",
       "price": "\$18.99",
       "type": "default",
       'description':
-          'A soothing blend of premium handpicked green tea leaves packed with antioxidants. Helps boost metabolism, reduce stress, and promote a healthy lifestyle. Perfect for morning refreshment or evening relaxation.',
+          'Own a piece of digital authenticity with this exclusive Digital Signature collectible. Each signature is securely created and verified, giving fans a unique way to connect with their favorite star in the digital world.',
       "image": ["assets/signature2.png"],
     },
     {
-      "name": "Lymio Hoodie",
-      "creator": "Lavish Store",
+      "name": "Signed Jersey",
+      "creator": "Lionel Messi",
       "price": "\$59.99",
-      "type": "fashion",
+      "type": "default",
       "description":
-          "A stylish, ultra-soft hoodie designed for all-day comfort. Made with breathable cotton fleece, this hoodie keeps you warm without feeling heavy. Ideal for gym sessions, casual outings, or travel.",
+          "Show your passion for the game with this exclusive signed sports T-shirt. Autographed by a celebrated athlete, this collectible blends everyday comfort with iconic memorabilia. ",
       "image": ["assets/jersey_joshi.png"],
     },
   ];
@@ -367,12 +366,11 @@ class _ProductViewPageState extends State<ProductViewPage> {
                         duration: const Duration(milliseconds: 300),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
-                          child: Image.network(
-                            widget.product["image"][selectedColor],
-                            key: ValueKey(
-                              widget.product["image"][selectedColor],
-                            ),
-                            fit: BoxFit.cover,
+                          child: Image.asset(
+                            widget.product["image"][0],
+                            // height: 140,
+                            width: double.infinity,
+                            fit: BoxFit.fitHeight,
                           ),
                         ),
                       ),
@@ -410,110 +408,109 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
 
-              if (isFashion) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    "Colors",
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
+              // if (isFashion) ...[
+              //   Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 16),
+              //     child: Text(
+              //       "Colors",
+              //       style: GoogleFonts.poppins(
+              //         fontSize: 14,
+              //         color: Colors.white,
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //   ),
+              //   const SizedBox(height: 10),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: List.generate(colors.length, (index) {
-                      return GestureDetector(
-                        onTap: () => setState(() => selectedColor = index),
+              //   Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 16),
+              //     child: Row(
+              //       children: List.generate(colors.length, (index) {
+              //         return GestureDetector(
+              //           onTap: () => setState(() => selectedColor = index),
 
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 12),
-                          padding: const EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: selectedColor == index
-                                  ? Colors.grey
-                                  : Colors.grey.shade400,
-                              width: 2,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            radius: 14,
-                            backgroundColor: colors[index],
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
+              //           child: Container(
+              //             margin: const EdgeInsets.only(right: 12),
+              //             padding: const EdgeInsets.all(3),
+              //             decoration: BoxDecoration(
+              //               shape: BoxShape.circle,
+              //               border: Border.all(
+              //                 color: selectedColor == index
+              //                     ? Colors.grey
+              //                     : Colors.grey.shade400,
+              //                 width: 2,
+              //               ),
+              //             ),
+              //             child: CircleAvatar(
+              //               radius: 14,
+              //               backgroundColor: colors[index],
+              //             ),
+              //           ),
+              //         );
+              //       }),
+              //     ),
+              //   ),
 
-                const SizedBox(height: 10),
-              ],
+              //   const SizedBox(height: 10),
+              // ],
 
-              if (isFashion) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    "Sizes",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
+              // if (isFashion) ...[
+              //   Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 16),
+              //     child: Text(
+              //       "Sizes",
+              //       style: GoogleFonts.poppins(
+              //         fontSize: 16,
+              //         color: Colors.white,
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //   ),
+              //   const SizedBox(height: 10),
 
-                Container(
-                  height: 35,
-                  padding: const EdgeInsets.only(left: 16),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: sizes.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => setState(() => selectedSize = index),
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 12),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: selectedSize == index
-                                ? kgoldColor
-                                : Color.fromRGBO(244, 226, 167, 1),
+              //   Container(
+              //     height: 35,
+              //     padding: const EdgeInsets.only(left: 16),
+              //     child: ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: sizes.length,
+              //       itemBuilder: (context, index) {
+              //         return GestureDetector(
+              //           onTap: () => setState(() => selectedSize = index),
+              //           child: Container(
+              //             margin: const EdgeInsets.only(right: 12),
+              //             padding: const EdgeInsets.symmetric(
+              //               horizontal: 15,
+              //               vertical: 8,
+              //             ),
+              //             decoration: BoxDecoration(
+              //               color: selectedSize == index
+              //                   ? kgoldColor
+              //                   : Color.fromRGBO(244, 226, 167, 1),
 
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            sizes[index],
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: selectedSize == index
-                                  ? FontWeight.w500
-                                  : FontWeight.w400,
-                              color: selectedSize == index
-                                  ? Colors.black
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
-
+              //               borderRadius: BorderRadius.circular(10),
+              //             ),
+              //             child: Text(
+              //               sizes[index],
+              //               style: GoogleFonts.poppins(
+              //                 fontSize: 14,
+              //                 fontWeight: selectedSize == index
+              //                     ? FontWeight.w500
+              //                     : FontWeight.w400,
+              //                 color: selectedSize == index
+              //                     ? Colors.black
+              //                     : Colors.black,
+              //               ),
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ),
+              //   const SizedBox(height: 10),
+              // ],
               Divider(color: CupertinoColors.opaqueSeparator),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -541,8 +538,8 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   ),
                 ),
               ),
-              Divider(color: CupertinoColors.opaqueSeparator),
 
+              // Divider(color: CupertinoColors.opaqueSeparator),
               const SizedBox(height: 10),
             ],
           ),

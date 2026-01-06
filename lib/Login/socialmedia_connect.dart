@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/Login/verifyPhoneNumber.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class SocialmediaConnect extends StatefulWidget {
   const SocialmediaConnect({super.key});

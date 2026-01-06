@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/colors.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -97,19 +97,12 @@ class _ImagePostState extends State<ImagePost>
                 ),
                 Text(
                   widget.post.sname,
-
-                  // style: GoogleFonts.poppins(
-                  //   textStyle: const TextStyle(
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.w300,
-                  //     color: Color(0xFFF5D778),
-                  //   ),
-                  // ),
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ],
@@ -140,49 +133,68 @@ class _ImagePostState extends State<ImagePost>
                     );
 
                     final value = await showMenu(
-                      color: Colors.black,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
                       context: context,
                       position: position,
-                      items: const [
-                        const PopupMenuItem(
+                      items: [
+                        PopupMenuItem(
                           value: 'Restrict',
                           child: Text(
                             'Restrict',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Report',
                           child: Text(
                             'Report',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+
+                        PopupMenuItem(
                           value: 'Block',
                           child: Text(
                             'Block',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Cancel',
                           child: Text(
                             'Cancel',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
@@ -211,7 +223,9 @@ class _ImagePostState extends State<ImagePost>
                 (image) => Container(
                   height: 450,
                   decoration: BoxDecoration(
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                     image: DecorationImage(
                       image: AssetImage('assets/sources/images/$image'),
                       fit: BoxFit.cover,
@@ -257,9 +271,11 @@ class _ImagePostState extends State<ImagePost>
                             ],
                           ),
                         )
-                      : const Icon(
+                      : Icon(
                           CupertinoIcons.star_fill,
-                          color: CupertinoColors.white,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
                           size: 18,
                         ),
                 ),
@@ -275,7 +291,11 @@ class _ImagePostState extends State<ImagePost>
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: _showCommentBox ? kgoldColor : CupertinoColors.white,
+                  color: _showCommentBox
+                      ? kgoldColor
+                      : Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
 
@@ -287,9 +307,11 @@ class _ImagePostState extends State<ImagePost>
                   );
                 },
                 padding: EdgeInsets.zero,
-                child: const Icon(
+                child: Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
-                  color: CupertinoColors.white,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
               const Spacer(),
@@ -298,8 +320,10 @@ class _ImagePostState extends State<ImagePost>
                   dotsCount: 2,
                   position: _currentImage.toDouble(),
                   decorator: DotsDecorator(
-                    color: kgoldColor,
-                    activeColor: Colors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    activeColor: kgoldColor,
                   ),
                 ),
               const Spacer(flex: 3),
@@ -416,12 +440,22 @@ class _ImagePostState extends State<ImagePost>
                   TextField(
                     controller: _commentController,
                     maxLines: 2,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
+                    ),
                     decoration: InputDecoration(
                       hintText: "Write a comment...",
-                      hintStyle: const TextStyle(color: Colors.white54),
+                      hintStyle: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
+                      ),
                       filled: true,
-                      fillColor: kblackColor,
+                      fillColor: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
@@ -440,13 +474,11 @@ class _ImagePostState extends State<ImagePost>
                         color: kgoldColor,
                       ),
                       onPressed: () {
-                        final comment = _commentController.text.trim();
-                        if (comment.isNotEmpty) {
-                          _commentController.clear();
-                          setState(() {
-                            _showCommentBox = false;
-                          });
-                        }
+                        // final comment = _commentController.text.trim();
+                        _commentController.clear();
+                        setState(() {
+                          _showCommentBox = false;
+                        });
                       },
                     ),
                   ),
@@ -462,8 +494,10 @@ class _ImagePostState extends State<ImagePost>
             children: [
               Text(
                 '${widget.post.post.likes} Stars',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                   fontWeight: FontWeight.w600,
                   fontFamily: "Gilroy",
                 ),
@@ -475,9 +509,11 @@ class _ImagePostState extends State<ImagePost>
                   children: [
                     TextSpan(
                       text: widget.post.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: CupertinoColors.white,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 16,
                         fontFamily: "Gilroy",
                       ),
@@ -485,8 +521,10 @@ class _ImagePostState extends State<ImagePost>
                     const TextSpan(text: '  '),
                     TextSpan(
                       text: widget.post.post.description ?? '',
-                      style: const TextStyle(
-                        color: CupertinoColors.white,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 16,
                       ),
                     ),
@@ -494,7 +532,6 @@ class _ImagePostState extends State<ImagePost>
                 ),
               ),
               if (widget.post.post.comments != null) ...[
-                const SizedBox(height: 5),
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
@@ -510,7 +547,7 @@ class _ImagePostState extends State<ImagePost>
                     style: TextStyle(
                       fontFamily: "Gilroy",
                       color: kgoldColor,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -524,12 +561,14 @@ class _ImagePostState extends State<ImagePost>
                   _comment("sophia_l", "Absolutely stunning ❤️"),
                 ],
               ],
-              const SizedBox(height: 5),
+
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
                   fontFamily: "Gilroy",
-                  color: CupertinoColors.white,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                   fontSize: 14,
                 ),
               ),
@@ -568,9 +607,11 @@ class _ImagePostState extends State<ImagePost>
             ),
             TextSpan(
               text: text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: "Gilroy",
-                color: CupertinoColors.white,
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
                 fontSize: 14,
               ),
             ),
@@ -650,8 +691,10 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.black,
+          decoration: BoxDecoration(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kblackColor
+                : kwhiteColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
           ),
           child: Column(
@@ -662,17 +705,21 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 height: 4,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: Colors.white24,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white24
+                      : Colors.black26,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
               const SizedBox(height: 12),
 
               /// title
-              const Text(
+              Text(
                 "Comments",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -680,21 +727,6 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
 
               const Divider(color: Colors.white12),
 
-              /// comments list
-              // Expanded(
-              //   child: ListView.builder(
-              //     controller: scrollController,
-              //     itemCount: 5,
-              //     itemBuilder: (_, index) {
-              //       return _CommentItem(
-              //         image: "assets/sources/profiles/aiony-haust.jpg",
-              //         name: "john_doe",
-              //         date: "2d",
-              //         comment: "This looks amazing 🔥🔥",
-              //       );
-              //     },
-              //   ),
-              // ),
               Expanded(
                 child: ListView.builder(
                   controller: scrollController,
@@ -724,8 +756,14 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
   Widget _commentInput() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.white12)),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
       ),
       child: Row(
         children: [
@@ -746,10 +784,18 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
           Expanded(
             child: TextField(
               controller: _controller,
-              style: const TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
+              style: TextStyle(
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+              ),
+              decoration: InputDecoration(
                 hintText: "Add a comment...",
-                hintStyle: TextStyle(color: Colors.white54),
+                hintStyle: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white54
+                      : Colors.black54,
+                ),
                 border: InputBorder.none,
               ),
             ),
@@ -761,10 +807,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               CupertinoIcons.paperplane_fill,
               color: kgoldColor,
             ),
-            // child: const Text(
-            //   "Post",
-            //   style: TextStyle(color: Color(0xFFD4AF37)),
-            // ),
+
             onPressed: () {
               if (_controller.text.trim().isNotEmpty) {
                 _controller.clear();
@@ -825,14 +868,18 @@ class _CommentItem extends StatelessWidget {
                         fontStyle: FontStyle.italic,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
                       ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       date,
-                      style: const TextStyle(
-                        color: Colors.white54,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
                         fontSize: 12,
                       ),
                     ),
@@ -841,7 +888,12 @@ class _CommentItem extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   comment,
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),

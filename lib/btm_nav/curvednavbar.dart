@@ -1,10 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:harmanapp/btm_nav/custom_clipper.dart';
 import 'package:harmanapp/btm_nav/custom_painter.dart';
 import 'package:harmanapp/btm_nav/nav_button.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 typedef _LetIndexPage = bool Function(int value);
 

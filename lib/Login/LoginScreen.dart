@@ -5,7 +5,7 @@ import 'package:harmanapp/Login/SignupScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
 import 'package:harmanapp/Dashboard/mainscreen.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});

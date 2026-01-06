@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 import 'package:harmanapp/Cart/Cartpage.dart';
 import 'package:harmanapp/MyAccount/my_account.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -21,31 +21,24 @@ class CustomAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: kblackColor,
-      elevation: 1,
+
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? kblackColor
+          : kwhiteColor,
+      elevation: 0,
       centerTitle: false,
 
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: kblackColor,
-        statusBarIconBrightness: Brightness.light,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Theme.of(context).brightness == Brightness.dark
+            ? kblackColor
+            : kwhiteColor,
+        statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
       ),
 
       title: Row(
         children: [
-          // Container(
-          //   height: 35,
-          //   width: 35,
-          //   decoration: BoxDecoration(
-          //     border: Border.all(color: kgoldColor),
-          //     color: Colors.transparent,
-          //     image: DecorationImage(
-          //       image: AssetImage('assets/App_logo_2.jpeg'),
-          //       fit: BoxFit.cover,
-          //     ),
-          //     borderRadius: BorderRadius.circular(8.0),
-          //   ),
-          // ),
-          // SizedBox(width: 10),
           SizedBox(
             height: 35,
             width: 35,
@@ -62,16 +55,6 @@ class CustomAppBar extends StatelessWidget
               ),
             ),
           ),
-          // Text(
-          //   'My Autobiography',
-          //   style: GoogleFonts.tangerine(
-          //     textStyle: const TextStyle(
-          //       fontSize: 25,
-          //       fontWeight: FontWeight.bold,
-          //       color: kgoldColor,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
 
@@ -125,21 +108,7 @@ class CustomAppBar extends StatelessWidget
                   return Positioned(
                     right: -10,
                     top: -10,
-                    // child: Container(
-                    //   padding: const EdgeInsets.all(4),
-                    //   decoration: const BoxDecoration(
-                    //     color: Colors.red,
-                    //     shape: BoxShape.circle,
-                    //   ),
-                    //   child: Text(
-                    //     count.toString(),
-                    //     style: const TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 12,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    // ),
+
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(

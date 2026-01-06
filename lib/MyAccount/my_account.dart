@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/sidemenu.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -30,8 +30,10 @@ class _MyAccountState extends State<MyAccount> {
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: kblackColor,
-        endDrawer: _endDrawer(),
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? kblackColor
+            : kwhiteColor,
+        endDrawer: endDrawer(context),
         body: Column(
           children: [
             SizedBox(
@@ -56,17 +58,35 @@ class _MyAccountState extends State<MyAccount> {
                 children: [
                   Text(
                     'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
-                    style: const TextStyle(color: Colors.white, fontSize: 13),
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? kwhiteColor
+                          : kblackColor,
+                      fontSize: 13,
+                    ),
                   ),
                   SizedBox(height: 10),
                   Row(
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.email, color: Colors.white, size: 15),
+                          Icon(
+                            Icons.email,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
+                            size: 15,
+                          ),
                           Text(
                             'peeter_hain@gmail.com',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? kwhiteColor
+                                  : kblackColor,
+                            ),
                           ),
                           SizedBox(width: 5),
                           Text(
@@ -80,12 +100,21 @@ class _MyAccountState extends State<MyAccount> {
                           SizedBox(width: 5),
                           Icon(
                             Icons.calendar_month,
-                            color: Colors.white,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
                             size: 15,
                           ),
                           Text(
                             '14/05/1989',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? kwhiteColor
+                                  : kblackColor,
+                            ),
                           ),
                         ],
                       ),
@@ -98,17 +127,32 @@ class _MyAccountState extends State<MyAccount> {
                         children: [
                           Icon(
                             Icons.location_on,
-                            color: Colors.white,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
                             size: 15,
                           ),
                           Text(
                             'Circular Quay,',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? kwhiteColor
+                                  : kblackColor,
+                            ),
                           ),
                           SizedBox(width: 2),
                           Text(
                             'Australia',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? kwhiteColor
+                                  : kblackColor,
+                            ),
                           ),
                         ],
                       ),
@@ -133,7 +177,7 @@ class _MyAccountState extends State<MyAccount> {
                   _optionCard(
                     icon: Icons.card_membership_outlined,
                     title: 'Memberships',
-                    subtitle: 'Checkout all my membership list',
+                    subtitle: 'Checkout all my memberships',
                     isSelected: selectedCard == "Memberships",
                     onTap: () => setState(() => selectedCard = "Memberships"),
                     onButtonPressed: () {
@@ -274,7 +318,7 @@ class _MyAccountState extends State<MyAccount> {
                     borderRadius: BorderRadius.circular(10),
                     color: CupertinoColors.white,
                   ),
-                  padding: const EdgeInsets.all(2),
+                  // padding: const EdgeInsets.all(2),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -293,16 +337,20 @@ class _MyAccountState extends State<MyAccount> {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '@ $name',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? kwhiteColor
+                            : kblackColor,
                         fontSize: 12,
                         fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.normal,
@@ -324,7 +372,9 @@ class _MyAccountState extends State<MyAccount> {
     return Column(
       children: <Widget>[
         PopupMenuButton<Menu>(
-          color: Colors.black,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? kblackColor
+              : kwhiteColor,
           popUpAnimationStyle: AnimationStyle(
             curve: Easing.emphasizedDecelerate,
             duration: Duration(seconds: 2),
@@ -370,71 +420,6 @@ class _MyAccountState extends State<MyAccount> {
     );
   }
 
-  Widget _endDrawer() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
-      child: Drawer(
-        backgroundColor: Colors.black,
-
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(color: Colors.black),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    'Harman App',
-                    style: GoogleFonts.greatVibes(
-                      textStyle: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: kgoldColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Settings',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Privacy & Policy',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Terms & Conditions',
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Loginscreen()),
-                );
-              },
-              child: ListTile(
-                title: Text(
-                  'Logout',
-                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 14),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _optionCard({
     required String title,
     required String subtitle,
@@ -453,10 +438,17 @@ class _MyAccountState extends State<MyAccount> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? gold : Colors.white,
+            color: isSelected
+                ? gold
+                : Theme.of(context).brightness == Brightness.dark
+                ? kwhiteColor
+                : kblackColor,
+
             width: isSelected ? 2 : 1,
           ),
-          color: Colors.black.withOpacity(isSelected ? 0.4 : 0.25),
+          color: Theme.of(context).brightness == Brightness.dark
+              ? kblackColor
+              : kwhiteColor,
         ),
         child: Row(
           children: [
@@ -466,17 +458,29 @@ class _MyAccountState extends State<MyAccount> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: isSelected ? gold : Colors.white,
+                  color: isSelected
+                      ? gold
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? kwhiteColor
+                      : kblackColor,
+
                   width: 1.5,
                 ),
               ),
               child: CircleAvatar(
                 radius: 22,
-                backgroundColor: Colors.black,
+                backgroundColor: Theme.of(context).brightness == Brightness.dark
+                    ? kblackColor
+                    : kwhiteColor,
+
                 child: Icon(
                   icon,
                   size: 22,
-                  color: isSelected ? gold : Colors.white,
+                  color: isSelected
+                      ? gold
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? kwhiteColor
+                      : kblackColor,
                 ),
               ),
             ),
@@ -491,7 +495,11 @@ class _MyAccountState extends State<MyAccount> {
                   Text(
                     title,
                     style: TextStyle(
-                      color: isSelected ? gold : Colors.white,
+                      color: isSelected
+                          ? gold
+                          : Theme.of(context).brightness == Brightness.dark
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -499,7 +507,12 @@ class _MyAccountState extends State<MyAccount> {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: const TextStyle(color: Colors.white70, fontSize: 13),
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? kwhiteColor
+                          : kblackColor,
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),

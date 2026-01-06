@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MembershipScreen extends StatelessWidget {
   const MembershipScreen({super.key});

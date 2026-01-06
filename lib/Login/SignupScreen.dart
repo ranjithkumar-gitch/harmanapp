@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/LoginScreen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});

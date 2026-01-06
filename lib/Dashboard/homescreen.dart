@@ -1,13 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
-
 import 'package:harmanapp/models/post_model.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/colors.dart';
 import 'package:harmanapp/widgets/image_post.dart';
 import 'package:harmanapp/widgets/reel_post.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +14,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       appBar: CustomAppBar(),
       body: ListView(
         // padding: EdgeInsets.zero,
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 12),
 
           SizedBox(
-            height: 110,
+            height: 100,
             child: CarouselSlider.builder(
               itemCount: posts.where((post) => post.hasStory).length,
               itemBuilder: (context, index, realIndex) {
@@ -38,8 +39,8 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               options: CarouselOptions(
-                height: 360,
-                autoPlay: false,
+                // height: 300,
+                autoPlay: true,
                 autoPlayInterval: Duration(seconds: 3),
                 enlargeCenterPage: true,
                 aspectRatio: 16 / 9,
@@ -50,9 +51,15 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 15),
-            child: Divider(color: Colors.white12, height: 1),
+            child: Divider(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? Colors.white12
+                  : Colors.black12,
+
+              height: 1,
+            ),
           ),
 
           ...posts.map((post) {

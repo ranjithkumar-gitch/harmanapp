@@ -7,7 +7,7 @@ import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 

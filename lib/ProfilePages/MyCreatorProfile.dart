@@ -7,7 +7,7 @@ import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -117,28 +117,31 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                     //     ),
                     //   ],
                     // ),
-                    AnimatedBuilder(
-                      animation: _tabController,
-                      builder: (_, __) {
-                        return TabBar(
-                          controller: _tabController,
-                          indicatorColor: kgoldColor,
-                          indicatorWeight: 4,
-                          labelPadding: EdgeInsets.zero,
-                          tabs: List.generate(_icons.length, (index) {
-                            final bool isSelected =
-                                _tabController.index == index;
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+                      child: AnimatedBuilder(
+                        animation: _tabController,
+                        builder: (_, __) {
+                          return TabBar(
+                            controller: _tabController,
+                            indicatorColor: kgoldColor,
+                            indicatorWeight: 4,
+                            labelPadding: EdgeInsets.zero,
+                            tabs: List.generate(_icons.length, (index) {
+                              final bool isSelected =
+                                  _tabController.index == index;
 
-                            return Tab(
-                              icon: Image.asset(
-                                _icons[index],
-                                height: 40,
-                                color: isSelected ? kgoldColor : Colors.grey,
-                              ),
-                            );
-                          }),
-                        );
-                      },
+                              return Tab(
+                                icon: Image.asset(
+                                  _icons[index],
+                                  height: 40,
+                                  color: isSelected ? kgoldColor : Colors.grey,
+                                ),
+                              );
+                            }),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -146,19 +149,22 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
             ];
           },
 
-          body: TabBarView(
-            controller: _tabController,
+          body: Container(
+            transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+            child: TabBarView(
+              controller: _tabController,
 
-            children: [
-              ImagesTab(),
-              // ReelsTab(),
-              // ImagesTab(),
-              LiveTab(),
-              LegacyTab(),
+              children: [
+                ImagesTab(),
+                // ReelsTab(),
+                // ImagesTab(),
+                LiveTab(),
+                LegacyTab(),
 
-              EmptyTab(),
-              Mycreatorsmarketplace(),
-            ],
+                EmptyTab(),
+                Mycreatorsmarketplace(),
+              ],
+            ),
           ),
         ),
       ),

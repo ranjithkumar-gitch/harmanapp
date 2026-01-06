@@ -6,7 +6,7 @@ import 'package:harmanapp/Dashboard/homescreen.dart';
 import 'package:harmanapp/Dashboard/AllCreatorsscreen.dart';
 import 'package:harmanapp/Dashboard/marketplace_screen.dart';
 import 'package:harmanapp/btm_nav/curvednavbar.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -49,13 +49,18 @@ class _MainScreenState extends State<MainScreen> {
           context,
         ).copyWith(iconTheme: IconThemeData(color: kgoldColor)),
         child: CurvedNavigationBar(
-          buttonBackgroundColor: Colors.black,
+          buttonBackgroundColor: Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
+
           height: 75,
 
           index: currentpage,
 
-          color: Colors.black,
-          backgroundColor: Colors.transparent,
+          color: Colors.transparent,
+          backgroundColor: Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 500),
           items: <Widget>[

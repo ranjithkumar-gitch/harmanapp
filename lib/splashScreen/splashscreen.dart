@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:harmanapp/Login/LoginScreen.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

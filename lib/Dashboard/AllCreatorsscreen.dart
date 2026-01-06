@@ -1,12 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/AppBar.dart';
 import 'package:harmanapp/ProfilePages/AllCreators_profile.dart';
-
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/colors.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class AllCreatorsScreen extends StatefulWidget {
   const AllCreatorsScreen({super.key});
