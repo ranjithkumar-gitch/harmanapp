@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               options: CarouselOptions(
-                // height: 300,
+                height: 300,
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 3),
                 enlargeCenterPage: true,

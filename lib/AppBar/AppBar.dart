@@ -21,13 +21,13 @@ class CustomAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-
+      shadowColor: Colors.transparent,
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? kblackColor
           : kwhiteColor,
       elevation: 0,
       centerTitle: false,
-
+      surfaceTintColor: Colors.transparent,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Theme.of(context).brightness == Brightness.dark
             ? kblackColor

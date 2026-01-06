@@ -9,7 +9,7 @@ final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: kwhiteColor,
   primaryColor: kgoldColor,
-  secondaryHeaderColor: kgreyColor,
+  secondaryHeaderColor: kwhiteColor,
   dividerColor: kgreyColor,
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: kblackColor),
@@ -19,7 +19,8 @@ final ThemeData lightTheme = ThemeData(
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: kwhiteColor,
-    foregroundColor: kblackColor,
+    foregroundColor: kwhiteColor,
+    shadowColor: Colors.transparent,
   ),
   extensions: <ThemeExtension<dynamic>>[AppColors.light],
   // bottomAppBarTheme: const BottomAppBarTheme(
@@ -44,7 +45,7 @@ final ThemeData darkTheme = ThemeData(
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: kblackColor,
-    foregroundColor: kwhiteColor,
+    foregroundColor: kblackColor,
   ),
   extensions: <ThemeExtension<dynamic>>[AppColors.dark],
   // bottomAppBarTheme: const BottomAppBarTheme(
