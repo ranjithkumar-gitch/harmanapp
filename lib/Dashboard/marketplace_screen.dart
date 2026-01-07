@@ -181,18 +181,23 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 top: 8,
                 right: 8,
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: kblackColor,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: kgoldColor),
+                  ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 5,
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   color: Colors.white.withOpacity(0.85),
+                  //   borderRadius: BorderRadius.circular(8),
+                  // ),
                   child: Text(
                     item["price"],
                     style: GoogleFonts.poppins(
-                      color: kblackColor,
+                      color: kwhiteColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),

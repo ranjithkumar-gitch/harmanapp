@@ -140,18 +140,23 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
                 top: 8,
                 right: 8,
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: kblackColor,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: kgoldColor),
+                  ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 5,
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   color: Colors.white.withOpacity(0.85),
+                  //   borderRadius: BorderRadius.circular(8),
+                  // ),
                   child: Text(
                     item["price"],
                     style: GoogleFonts.poppins(
-                      color: CupertinoColors.black,
+                      color: CupertinoColors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -301,7 +306,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                         duration: const Duration(milliseconds: 300),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 300),
-                          child: Image.network(
+                          child: Image.asset(
                             widget.product["image"][selectedColor],
                             key: ValueKey(
                               widget.product["image"][selectedColor],
