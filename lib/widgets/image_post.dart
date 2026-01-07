@@ -474,11 +474,13 @@ class _ImagePostState extends State<ImagePost>
                         color: kgoldColor,
                       ),
                       onPressed: () {
-                        // final comment = _commentController.text.trim();
-                        _commentController.clear();
-                        setState(() {
-                          _showCommentBox = false;
-                        });
+                        final comment = _commentController.text.trim();
+                        if (comment.isNotEmpty) {
+                          _commentController.clear();
+                          setState(() {
+                            _showCommentBox = false;
+                          });
+                        }
                       },
                     ),
                   ),

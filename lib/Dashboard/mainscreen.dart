@@ -57,7 +57,9 @@ class _MainScreenState extends State<MainScreen> {
 
           index: currentpage,
 
-          color: Colors.transparent,
+          color: Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
           backgroundColor: Brightness.dark == Theme.of(context).brightness
               ? kblackColor
               : kwhiteColor,
@@ -82,11 +84,25 @@ class _MainScreenState extends State<MainScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 22, color: isSelected ? kgoldColor : Colors.white),
+        Icon(
+          icon,
+          size: 22,
+          color: isSelected
+              ? kgoldColor
+              : Brightness.dark == Theme.of(context).brightness
+              ? kwhiteColor
+              : kblackColor,
+        ),
         if (!isSelected)
           Text(
             label,
-            style: const TextStyle(color: Colors.white, fontSize: 10),
+            style: TextStyle(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kwhiteColor
+                  : kblackColor,
+
+              fontSize: 10,
+            ),
           ),
       ],
     );
