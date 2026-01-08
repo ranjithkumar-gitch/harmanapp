@@ -64,7 +64,9 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     final width = size.width;
 
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       appBar: CustomAppBar(),
       body: isPlaying
           ? Stack(
@@ -120,7 +122,11 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     return Padding(
       padding: const EdgeInsets.all(12),
       child: SearchBar(
-        backgroundColor: const WidgetStatePropertyAll(Colors.black),
+        backgroundColor: WidgetStatePropertyAll(
+          Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
+        ),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -128,8 +134,20 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           ),
         ),
         hintText: "Search Stars...",
-        hintStyle: const WidgetStatePropertyAll(TextStyle(color: Colors.white)),
-        textStyle: const WidgetStatePropertyAll(TextStyle(color: Colors.white)),
+        hintStyle: WidgetStatePropertyAll(
+          TextStyle(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
+        ),
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
+        ),
         trailing: const [Icon(Icons.search, color: kgoldColor)],
       ),
     );
@@ -164,7 +182,9 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: kblackColor,
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kblackColor
+                  : kwhiteColor,
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: color, width: 1.8),
             ),
@@ -192,7 +212,9 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: kblackColor,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kblackColor
+                              : kwhiteColor,
                           shape: BoxShape.circle,
                           border: Border.all(color: color),
                         ),
@@ -208,8 +230,10 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
                     children: [
                       Text(
                         user.name,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
                           fontSize: 16,
                         ),
                       ),

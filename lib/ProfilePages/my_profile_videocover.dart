@@ -65,7 +65,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        backgroundColor: kblackColor,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         appBar: CustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
@@ -287,16 +289,24 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                               SizedBox(height: 30),
                               Text(
                                 name,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color:
+                                      Brightness.dark ==
+                                          Theme.of(context).brightness
+                                      ? kwhiteColor
+                                      : kblackColor,
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                 '@ ${name}',
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color:
+                                      Brightness.dark ==
+                                          Theme.of(context).brightness
+                                      ? kwhiteColor
+                                      : kblackColor,
                                   fontSize: 12,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.normal,
@@ -333,7 +343,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
                         shape: BoxShape.circle,
                         border: Border.all(color: kgoldColor, width: 1),
                       ),
@@ -355,7 +367,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: kgoldColor,
-                      foregroundColor: Colors.black,
+                      foregroundColor:
+                          Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -376,7 +391,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       side: const BorderSide(color: Color(0xFFF5D778)),
-                      foregroundColor: Colors.white,
+                      foregroundColor:
+                          Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -403,8 +421,10 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                         color: isFollowing ? kgoldColor : kgoldColor,
                       ),
                       foregroundColor: isFollowing
-                          ? Colors.black
-                          : Colors.white,
+                          ? Brightness.dark == Theme.of(context).brightness
+                                ? kwhiteColor
+                                : kblackColor
+                          : Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -433,19 +453,26 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
           SizedBox(height: 10),
           Text(
             'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
-            style: const TextStyle(color: Colors.white, fontSize: 13),
+            style: TextStyle(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kwhiteColor
+                  : kblackColor,
+              fontSize: 13,
+            ),
           ),
           SizedBox(height: 10),
 
           Row(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Text(
                     '14',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -455,7 +482,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                   Text(
                     'Stills',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1,
                     ),
@@ -472,12 +501,14 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                 ),
               ),
               const SizedBox(width: 5),
-              const Row(
+              Row(
                 children: [
                   Text(
                     '12',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -486,7 +517,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                   Text(
                     'Bits',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1.0,
                     ),
@@ -504,12 +537,14 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                 ),
               ),
               const SizedBox(width: 5),
-              const Row(
+              Row(
                 children: [
                   Text(
                     '20',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -518,7 +553,9 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                   Text(
                     'Stars',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1.0,
                     ),
@@ -542,20 +579,29 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                         print("Apple login tapped");
                       },
 
-                      child: Icon(Icons.apple, color: Colors.white),
+                      child: Icon(
+                        Icons.apple,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
+                      ),
                     ),
 
                     Image.asset('assets/facebook.png', width: 20, height: 20),
 
                     Icon(
                       FontAwesomeIcons.xTwitter,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       size: 20,
                     ),
 
                     Icon(
                       FontAwesomeIcons.twitch,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       size: 20,
                     ),
                   ],

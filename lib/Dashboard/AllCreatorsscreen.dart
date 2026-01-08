@@ -16,10 +16,10 @@ class AllCreatorsScreen extends StatefulWidget {
 class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -29,7 +29,11 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               padding: const EdgeInsets.all(12.0),
               child: SizedBox(
                 child: SearchBar(
-                  backgroundColor: WidgetStatePropertyAll(Colors.black),
+                  backgroundColor: WidgetStatePropertyAll(
+                    Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
+                  ),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -40,14 +44,18 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                   hintText: "Search Stars...",
                   hintStyle: WidgetStatePropertyAll(
                     TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   textStyle: WidgetStatePropertyAll(
                     TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -103,23 +111,14 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
           shape: BoxShape.circle,
           border: Border.all(color: color, width: 1),
         ),
         child: Icon(Icons.star, color: color, size: 20),
       ),
-      // child: Text(
-      //   text,
-
-      //   style: GoogleFonts.greatVibes(
-      //     textStyle: TextStyle(
-      //       color: color,
-      //       fontWeight: FontWeight.bold,
-      //       fontSize: 20,
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -136,12 +135,6 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
             builder: (context) {
               return GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   CupertinoPageRoute(
-                  //     builder: (_) => MycreatorprofileDummy(usrName: ""),
-                  //   ),
-                  // );
                   Navigator.push(
                     context,
                     CupertinoPageRoute(builder: (_) => AllCreatorsProfile()),

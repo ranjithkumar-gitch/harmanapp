@@ -77,7 +77,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       appBar: CustomAppBar(),
 
       body: Column(
@@ -86,7 +88,11 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
             padding: const EdgeInsets.all(12.0),
             child: SizedBox(
               child: SearchBar(
-                backgroundColor: WidgetStatePropertyAll(Colors.black),
+                backgroundColor: WidgetStatePropertyAll(
+                  Brightness.dark == Theme.of(context).brightness
+                      ? kblackColor
+                      : kwhiteColor,
+                ),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -97,14 +103,18 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 hintText: "Search Here...",
                 hintStyle: WidgetStatePropertyAll(
                   TextStyle(
-                    color: Colors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 textStyle: WidgetStatePropertyAll(
                   TextStyle(
-                    color: Colors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -156,7 +166,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   Widget productCard(Map<String, dynamic> item) {
     return Container(
       decoration: BoxDecoration(
-        color: kblackColor,
+        color: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: kgoldColor),
       ),
@@ -182,7 +194,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                 right: 8,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: kblackColor,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: kgoldColor),
                   ),
@@ -197,7 +211,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   child: Text(
                     item["price"],
                     style: GoogleFonts.poppins(
-                      color: kwhiteColor,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -216,7 +232,9 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                color: CupertinoColors.white,
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
@@ -241,34 +259,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
             padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
             child: SizedBox(
               width: double.infinity,
-              // child: ElevatedButton(
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (_) => ProductViewPage(
-              //           product: item,
-              //           onCartUpdated: () {
-              //             setState(() {});
-              //           },
-              //         ),
-              //       ),
-              //     );
-              //   },
 
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Color(0xFFF5D778),
-              //     padding: const EdgeInsets.symmetric(vertical: 10),
-              //   ),
-              //   child: Text(
-              //     "Buy Now",
-              //     style: GoogleFonts.poppins(
-              //       color: Colors.black,
-              //       fontSize: 13,
-              //       fontWeight: FontWeight.w500,
-              //     ),
-              //   ),
-              // ),
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.push(
@@ -334,19 +325,36 @@ class _ProductViewPageState extends State<ProductViewPage> {
     bool isFashion = widget.product["type"] == "fashion";
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
 
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         elevation: 0,
-        foregroundColor: Colors.white,
+        foregroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         title: Text(
           "Shop from ${widget.product["creator"]}",
           style: GoogleFonts.poppins(
-            color: CupertinoColors.white,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
 
@@ -391,7 +399,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 child: Text(
                   widget.product["name"],
                   style: GoogleFonts.poppins(
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
@@ -413,109 +423,6 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 ),
               ),
 
-              // const SizedBox(height: 10),
-
-              // if (isFashion) ...[
-              //   Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 16),
-              //     child: Text(
-              //       "Colors",
-              //       style: GoogleFonts.poppins(
-              //         fontSize: 14,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.w600,
-              //       ),
-              //     ),
-              //   ),
-              //   const SizedBox(height: 10),
-
-              //   Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 16),
-              //     child: Row(
-              //       children: List.generate(colors.length, (index) {
-              //         return GestureDetector(
-              //           onTap: () => setState(() => selectedColor = index),
-
-              //           child: Container(
-              //             margin: const EdgeInsets.only(right: 12),
-              //             padding: const EdgeInsets.all(3),
-              //             decoration: BoxDecoration(
-              //               shape: BoxShape.circle,
-              //               border: Border.all(
-              //                 color: selectedColor == index
-              //                     ? Colors.grey
-              //                     : Colors.grey.shade400,
-              //                 width: 2,
-              //               ),
-              //             ),
-              //             child: CircleAvatar(
-              //               radius: 14,
-              //               backgroundColor: colors[index],
-              //             ),
-              //           ),
-              //         );
-              //       }),
-              //     ),
-              //   ),
-
-              //   const SizedBox(height: 10),
-              // ],
-
-              // if (isFashion) ...[
-              //   Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 16),
-              //     child: Text(
-              //       "Sizes",
-              //       style: GoogleFonts.poppins(
-              //         fontSize: 16,
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.w600,
-              //       ),
-              //     ),
-              //   ),
-              //   const SizedBox(height: 10),
-
-              //   Container(
-              //     height: 35,
-              //     padding: const EdgeInsets.only(left: 16),
-              //     child: ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       itemCount: sizes.length,
-              //       itemBuilder: (context, index) {
-              //         return GestureDetector(
-              //           onTap: () => setState(() => selectedSize = index),
-              //           child: Container(
-              //             margin: const EdgeInsets.only(right: 12),
-              //             padding: const EdgeInsets.symmetric(
-              //               horizontal: 15,
-              //               vertical: 8,
-              //             ),
-              //             decoration: BoxDecoration(
-              //               color: selectedSize == index
-              //                   ? kgoldColor
-              //                   : Color.fromRGBO(244, 226, 167, 1),
-
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: Text(
-              //               sizes[index],
-              //               style: GoogleFonts.poppins(
-              //                 fontSize: 14,
-              //                 fontWeight: selectedSize == index
-              //                     ? FontWeight.w500
-              //                     : FontWeight.w400,
-              //                 color: selectedSize == index
-              //                     ? Colors.black
-              //                     : Colors.black,
-              //               ),
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //   ),
-              //   const SizedBox(height: 10),
-              // ],
               Divider(color: CupertinoColors.opaqueSeparator),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -524,7 +431,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ),
@@ -539,7 +448,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ),
@@ -554,7 +465,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         height: 70,
-        color: Colors.black,
+        color: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         child: Row(
           children: [
             Container(
@@ -599,7 +512,10 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     barrierDismissible: false,
                     builder: (context) {
                       return Dialog(
-                        backgroundColor: Colors.black,
+                        backgroundColor:
+                            Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),

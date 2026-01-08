@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -21,7 +23,9 @@ class ExploreScreen extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: kblackColor,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         appBar: CustomAppBar(),
         body: Column(
           children: [
@@ -61,24 +65,6 @@ class ExploreScreen extends StatelessWidget {
     );
   }
 }
-
-// final List<Map<String, dynamic>> sampleReels = List.generate(
-//   20,
-//   (i) => {
-//     'thumb': 'https://picsum.photos/seed/reel\$i/600/400',
-//     'duration': '${(15 + i * 5) % 60}s',
-//     'title': 'Reel #\$i',
-//   },
-// );
-
-// final List<Map<String, dynamic>> sampleLives = List.generate(
-//   4,
-//   (i) => {
-//     'thumb': 'https://picsum.photos/seed/live\$i/1200/700',
-//     'viewers': 120 + i * 35,
-//     'title': 'Live: Creator \$i',
-//   },
-// );
 
 final List<String> sampleImages = [
   'assets/sources/profiles/bhatia.jpg',
@@ -181,75 +167,6 @@ class ReelsTab extends StatelessWidget {
   }
 }
 
-// class ReelCard extends StatefulWidget {
-//   final String videoName;
-//   final int index;
-
-//   const ReelCard({required this.videoName, required this.index, super.key});
-
-//   @override
-//   State<ReelCard> createState() => _ReelCardState();
-// }
-
-// class _ReelCardState extends State<ReelCard> {
-//   late VideoPlayerController _controller;
-//   bool initialized = false;
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     _controller =
-//         VideoPlayerController.asset("assets/sources/videos/${widget.videoName}")
-//           ..initialize().then((_) {
-//             setState(() => initialized = true);
-//             _controller.pause();
-//           });
-//   }
-
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final height = (widget.index % 7 == 0)
-//         ? 300.0
-//         : (widget.index % 3 == 0)
-//         ? 180.0
-//         : 150.0;
-
-//     return GestureDetector(
-//       onTap: () {
-//         Navigator.push(
-//           context,
-//           CupertinoPageRoute(
-//             builder: (_) => ReelsFullScreenPage(startIndex: widget.index),
-//           ),
-//         );
-//       },
-//       child: ClipRRect(
-//         borderRadius: BorderRadius.circular(6),
-//         child: Stack(
-//           alignment: Alignment.center,
-//           children: [
-//             SizedBox(
-//               height: height,
-//               width: double.infinity,
-//               child: initialized
-//                   ? VideoPlayer(_controller)
-//                   : Container(color: Colors.black12),
-//             ),
-
-//             const Icon(Icons.play_circle_fill, size: 40, color: Colors.white),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 class ReelCard extends StatefulWidget {
   final String videoName;
   final int index;
@@ -551,18 +468,128 @@ class LiveTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return ListView.separated(
+    //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+    //   itemCount: sampleLives.length,
+    //   separatorBuilder: (_, __) => const SizedBox(height: 12),
+    //   itemBuilder: (context, i) {
+    //     final live = sampleLives[i];
+    //     return _LiveCard(
+    //       videoId: live['videoId'] as String,
+    //       title: live['title'] as String,
+    //       viewers: live['viewers'] as int,
+    //     );
+    //   },
+    // );
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      itemCount: sampleLives.length,
+      itemCount: sampleLives.length + 1,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, i) {
-        final live = sampleLives[i];
+        if (i == 0) {
+          return const _ScheduledLiveCard(
+            videoId: "Y21kE_LHaOY",
+            scheduledTime: "Jan 10 • 8:00 PM",
+          );
+        }
+
+        final live = sampleLives[i - 1];
         return _LiveCard(
           videoId: live['videoId'] as String,
           title: live['title'] as String,
           viewers: live['viewers'] as int,
         );
       },
+    );
+  }
+}
+
+class _ScheduledLiveCard extends StatelessWidget {
+  final String videoId;
+  final String scheduledTime;
+
+  const _ScheduledLiveCard({
+    required this.videoId,
+    required this.scheduledTime,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ytThumb = "https://img.youtube.com/vi/$videoId/hqdefault.jpg";
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: SizedBox(
+        width: double.infinity,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // Thumbnail
+              Image.network(ytThumb, fit: BoxFit.cover),
+
+              // Blur overlay
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                child: Container(color: Colors.black.withOpacity(0.35)),
+              ),
+
+              // Lock badge
+              Positioned(
+                top: 12,
+                right: 12,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.lock, size: 14, color: Colors.white),
+                      SizedBox(width: 6),
+                      Text(
+                        "SCHEDULED",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.schedule, color: Colors.white, size: 26),
+                    const SizedBox(height: 6),
+                    Text(
+                      scheduledTime,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -732,47 +759,115 @@ class EmptyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 160,
-            height: 160,
-            decoration: BoxDecoration(
-              gradient: ExploreScreen.accentGradient,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
-                  blurRadius: 18,
+    return Stack(
+      children: [
+        /// Main content (center)
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 145,
+                height: 145,
+                decoration: BoxDecoration(
+                  gradient: ExploreScreen.accentGradient,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 18,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: const Icon(
-              Icons.construction,
-              size: 72,
-              color: Colors.white,
+                child: const Icon(
+                  Icons.construction,
+                  size: 65,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              const Text(
+                'AI Avatar feature coming soon ✨',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.orange,
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+
+        Positioned(
+          bottom: 30,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: ExploreScreen.accentGradient,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 12,
+                  ),
+                ],
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.mic, color: Colors.white, size: 32),
+                onPressed: () {},
+              ),
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'AI Avatar feature coming soon ✨',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'We are working to bring more creative tools for creators.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
+    // Center(
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Container(
+    //         width: 160,
+    //         height: 160,
+    //         decoration: BoxDecoration(
+    //           gradient: ExploreScreen.accentGradient,
+    //           borderRadius: BorderRadius.circular(20),
+    //           boxShadow: [
+    //             BoxShadow(
+    //               color: Colors.black.withOpacity(0.08),
+    //               blurRadius: 18,
+    //             ),
+    //           ],
+    //         ),
+    //         child: const Icon(
+    //           Icons.construction,
+    //           size: 72,
+    //           color: Colors.white,
+    //         ),
+    //       ),
+    //       const SizedBox(height: 20),
+    //       const Text(
+    //         'AI Avatar feature coming soon ✨',
+    //         style: TextStyle(
+    //           fontSize: 16,
+    //           fontWeight: FontWeight.w600,
+    //           color: Colors.white,
+    //         ),
+    //       ),
+    //       const SizedBox(height: 8),
+    //       const Text(
+    //         'We are working to bring more creative tools for creators.',
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(color: Colors.black54),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
 

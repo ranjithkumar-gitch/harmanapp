@@ -76,7 +76,9 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
 
       body: Column(
         children: [
@@ -115,7 +117,9 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
   Widget productCard(Map<String, dynamic> item) {
     return Container(
       decoration: BoxDecoration(
-        color: kblackColor,
+        color: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: kgoldColor),
       ),
@@ -141,7 +145,9 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
                 right: 8,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: kblackColor,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: kgoldColor),
                   ),
@@ -156,7 +162,9 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
                   child: Text(
                     item["price"],
                     style: GoogleFonts.poppins(
-                      color: CupertinoColors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -175,7 +183,9 @@ class _MycreatorsmarketplaceState extends State<Mycreatorsmarketplace> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                color: CupertinoColors.white,
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
@@ -269,16 +279,24 @@ class _ProductViewPageState extends State<ProductViewPage> {
     bool isFashion = widget.product["type"] == "fashion";
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
 
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         elevation: 0,
-        foregroundColor: Colors.white,
+        foregroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kwhiteColor
+            : kblackColor,
         title: Text(
           "Shop from ${widget.product["creator"]}",
           style: GoogleFonts.poppins(
-            color: CupertinoColors.white,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -327,7 +345,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                 child: Text(
                   widget.product["name"],
                   style: GoogleFonts.poppins(
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   ),
@@ -358,7 +378,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     "Colors",
                     style: GoogleFonts.poppins(
                       fontSize: 14,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -404,7 +426,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     "Sizes",
                     style: GoogleFonts.poppins(
                       fontSize: 16,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -461,7 +485,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ),
@@ -476,7 +502,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: CupertinoColors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
               ),
@@ -491,7 +519,9 @@ class _ProductViewPageState extends State<ProductViewPage> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         height: 70,
-        color: Colors.black,
+        color: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         child: Row(
           children: [
             Container(
@@ -536,7 +566,10 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     barrierDismissible: false,
                     builder: (context) {
                       return Dialog(
-                        backgroundColor: Colors.black,
+                        backgroundColor:
+                            Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

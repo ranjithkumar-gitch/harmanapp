@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/CartManager.dart';
 
 import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
 class CartPage extends StatefulWidget {
@@ -29,17 +30,32 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         title: Text(
           "Your Cart",
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
           ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
 
@@ -47,7 +63,12 @@ class _CartPageState extends State<CartPage> {
           ? Center(
               child: Text(
                 "No items in cart",
-                style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
+                ),
               ),
             )
           : ListView.builder(
@@ -70,112 +91,111 @@ class _CartPageState extends State<CartPage> {
                       width: 1.5,
                     ),
                   ),
-                  child: Card(
-                    color: Colors.black,
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                  child: ListTile(
+                    leading: Image.asset(
+                      product["image"][0],
+                      width: 55,
+                      height: 55,
+                      fit: BoxFit.fitHeight,
                     ),
-                    child: ListTile(
-                      leading: Image.asset(
-                        product["image"][0],
-                        width: 55,
-                        height: 55,
-                        fit: BoxFit.fitHeight,
-                      ),
 
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            product["name"],
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          product["name"],
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color:
+                                Brightness.dark == Theme.of(context).brightness
+                                ? kwhiteColor
+                                : kblackColor,
+                            fontWeight: FontWeight.w700,
                           ),
+                        ),
 
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                // CartManager.cartItems.removeAt(index);
-                                CartManager.removeFromCart(index);
-                              });
-                            },
-                            icon: Icon(
-                              Icons.delete_outline,
-                              color: Color(0xFFD4AF37),
-                              size: 26,
-                            ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              // CartManager.cartItems.removeAt(index);
+                              CartManager.removeFromCart(index);
+                            });
+                          },
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: Color(0xFFD4AF37),
+                            size: 26,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
 
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xFFD4AF37)),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      if (cartItem["quantity"] > 1) {
-                                        cartItem["quantity"]--;
-                                      } else {
-                                        // CartManager.cartItems.removeAt(index);
-                                        CartManager.removeFromCart(index);
-                                      }
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove,
-                                    color: Color(0xFFD4AF37),
-                                  ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFD4AF37)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (cartItem["quantity"] > 1) {
+                                      cartItem["quantity"]--;
+                                    } else {
+                                      // CartManager.cartItems.removeAt(index);
+                                      CartManager.removeFromCart(index);
+                                    }
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: Color(0xFFD4AF37),
                                 ),
-                                Text(
-                                  quantity.toString(),
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Color(0xFFD4AF37),
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              ),
+                              Text(
+                                quantity.toString(),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: Color(0xFFD4AF37),
+                                  fontWeight: FontWeight.w600,
                                 ),
+                              ),
 
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      cartItem["quantity"]++;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: Color(0xFFD4AF37),
-                                  ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    cartItem["quantity"]++;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: Color(0xFFD4AF37),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ),
 
-                          const SizedBox(width: 10),
+                        const SizedBox(width: 10),
 
-                          Text(
-                            product["price"],
-                            style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              color: Colors.white,
+                        Text(
+                          product["price"],
+                          style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            color:
+                                Brightness.dark == Theme.of(context).brightness
+                                ? kwhiteColor
+                                : kblackColor,
 
-                              fontWeight: FontWeight.bold,
-                            ),
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -209,7 +229,9 @@ class _CartPageState extends State<CartPage> {
                     "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
                     style: GoogleFonts.poppins(
                       fontSize: 18,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -267,7 +289,9 @@ class _CartPageState extends State<CartPage> {
 
   void showPaymentMethods(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: Colors.black,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
       context: context,
       shape: const RoundedRectangleBorder(
         side: BorderSide(color: Color(0xFFD4AF37), width: 1),
@@ -284,7 +308,9 @@ class _CartPageState extends State<CartPage> {
                 "Select Payment Method",
                 style: GoogleFonts.poppins(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
 
                   fontWeight: FontWeight.bold,
                 ),
@@ -327,13 +353,20 @@ class _CartPageState extends State<CartPage> {
 
         child: Row(
           children: [
-            Icon(icon, color: Colors.white),
+            Icon(
+              icon,
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kwhiteColor
+                  : kblackColor,
+            ),
             const SizedBox(width: 15),
             Text(
               text,
               style: GoogleFonts.poppins(
                 fontSize: 15,
-                color: Colors.white,
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -412,7 +445,9 @@ class _CartPageState extends State<CartPage> {
       context,
       MaterialPageRoute(
         builder: (_) => Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Brightness.dark == Theme.of(context).brightness
+              ? kblackColor
+              : kwhiteColor,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -424,13 +459,20 @@ class _CartPageState extends State<CartPage> {
                   style: GoogleFonts.poppins(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
                   ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   "Thank you for your purchase.",
-                  style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
+                  style: GoogleFonts.poppins(
+                    fontSize: 15,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                  ),
                 ),
 
                 SizedBox(height: 20),
