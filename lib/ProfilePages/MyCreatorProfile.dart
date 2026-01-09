@@ -170,52 +170,6 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
         ],
       ),
     );
-
-    // Container(
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     mainAxisAlignment: MainAxisAlignment.start,
-    //     children: [
-    //       Container(
-    //         height: 200,
-    //         width: double.infinity,
-    //         decoration: BoxDecoration(
-    //           image: DecorationImage(
-    //             image: AssetImage(imagePath), // AssetImage(imagePath),
-    //             fit: BoxFit.cover,
-    //           ),
-    //         ),
-    //         child: Padding(
-    //           padding: const EdgeInsets.all(8.0),
-    //           child: Column(
-    //             // mainAxisAlignment: MainAxisAlignment.start,
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: [
-    //               IconButton(
-    //                 style: ButtonStyle(
-    //                   backgroundColor: MaterialStateProperty.all(
-    //                     Colors.black54,
-    //                   ),
-    //                 ),
-    //                 onPressed: () => Navigator.pop(context),
-    //                 icon: Padding(
-    //                   padding: const EdgeInsets.only(
-    //                     left: 8.0,
-    //                     right: 0.0,
-    //                     top: 2.0,
-    //                     bottom: 2.0,
-    //                   ),
-    //                   child: const Icon(Icons.arrow_back_ios),
-    //                 ),
-    //                 color: Colors.white,
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
   Widget ProfileImage(String imagePath, String name) {
@@ -299,12 +253,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                 child: Container(
                   height: 30,
                   width: 30,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(36),
-                  //   gradient: const LinearGradient(
-                  //     colors: [CupertinoColors.white, CupertinoColors.white],
-                  //   ),
-                  // ),
+
                   child: Positioned(
                     bottom: -10,
                     right: -10,
@@ -378,24 +327,40 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                 child: SizedBox(
                   height: 40,
                   child: OutlinedButton(
+                    // style: OutlinedButton.styleFrom(
+                    //   padding: EdgeInsets.zero,
+                    //   backgroundColor: isFollowing
+                    //       ? kgoldColor
+                    //       : Colors.transparent,
+                    //   side: BorderSide(
+                    //     color: isFollowing ? kgoldColor : kgoldColor,
+                    //   ),
+                    //   foregroundColor: isFollowing
+                    //       ? Brightness.dark == Theme.of(context).brightness
+                    //             ? kwhiteColor
+                    //             : kblackColor
+                    //       : Colors.black,
+
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    // ),
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
                           ? kgoldColor
                           : Colors.transparent,
-                      side: BorderSide(
-                        color: isFollowing ? kgoldColor : kgoldColor,
-                      ),
+                      side: const BorderSide(color: kgoldColor),
                       foregroundColor: isFollowing
-                          ? Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : (Theme.of(context).brightness == Brightness.dark
                                 ? kwhiteColor
-                                : kblackColor
-                          : Colors.black,
-
+                                : kblackColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
+
                     onPressed: () {
                       setState(() => isFollowing = !isFollowing);
                     },

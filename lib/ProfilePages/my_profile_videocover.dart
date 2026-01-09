@@ -390,7 +390,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      side: const BorderSide(color: Color(0xFFF5D778)),
+                      side: const BorderSide(color: kgoldColor),
                       foregroundColor:
                           Brightness.dark == Theme.of(context).brightness
                           ? kwhiteColor
@@ -417,14 +417,12 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                       backgroundColor: isFollowing
                           ? kgoldColor
                           : Colors.transparent,
-                      side: BorderSide(
-                        color: isFollowing ? kgoldColor : kgoldColor,
-                      ),
+                      side: const BorderSide(color: kgoldColor),
                       foregroundColor: isFollowing
-                          ? Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : (Theme.of(context).brightness == Brightness.dark
                                 ? kwhiteColor
-                                : kblackColor
-                          : Colors.black,
+                                : kblackColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

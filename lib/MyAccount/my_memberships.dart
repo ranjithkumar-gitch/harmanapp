@@ -7,55 +7,52 @@ class MembershipScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        title: const Text(
+        title: Text(
           "My Memberships",
           style: TextStyle(
-            color: Colors.white,
+            color: isDark ? kwhiteColor : kblackColor,
             fontFamily: "Gilroy",
             fontWeight: FontWeight.bold,
           ),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
         centerTitle: true,
       ),
       body: ListView(
         children: [
           membershipCard(
+            context: context,
             image: "assets/sources/profiles/averie-woodard.jpg",
             creatorName: "Alex Star",
             plan: "Monthly",
             price: "\$9.99",
             tierColor: kgoldColor,
-            onUnsubscribe: () {
-              _showUnsubscribeDialog(context);
-            },
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
           ),
-
           membershipCard(
+            context: context,
             image: "assets/sources/profiles/aiony-haust.jpg",
             creatorName: "Sophia Ray",
             plan: "Yearly",
             price: "\$99.99",
             tierColor: CupertinoColors.systemGrey,
-            onUnsubscribe: () {
-              _showUnsubscribeDialog(context);
-            },
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
           ),
-
           membershipCard(
+            context: context,
             image: "assets/sources/profiles/azamat-zhanisov-.jpg",
             creatorName: "Mark Vibe",
             plan: "Weekly",
             price: "\$4.99",
             tierColor: CupertinoColors.systemBrown,
-            onUnsubscribe: () {
-              _showUnsubscribeDialog(context);
-            },
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
           ),
         ],
       ),
@@ -64,38 +61,33 @@ class MembershipScreen extends StatelessWidget {
 
   /// 🔔 Confirmation dialog
   void _showUnsubscribeDialog(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     showCupertinoDialog(
       context: context,
       builder: (_) => CupertinoTheme(
-        data: const CupertinoThemeData(
-          brightness: Brightness.dark,
-          barBackgroundColor: Colors.black,
-          scaffoldBackgroundColor: Colors.black,
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
           primaryColor: kgoldColor,
         ),
         child: CupertinoAlertDialog(
           title: const Text("Unsubscribe", style: TextStyle(color: kgoldColor)),
-          content: const Text(
+          content: Text(
             "Are you sure you want to unsubscribe?",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
           ),
           actions: [
             CupertinoDialogAction(
-              child: const Text(
-                "Cancel",
-                style: TextStyle(color: Colors.white),
-              ),
               onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,
+              onPressed: () => Navigator.pop(context),
               child: const Text(
                 "Unsubscribe",
                 style: TextStyle(color: kgoldColor),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
           ],
         ),
@@ -104,29 +96,28 @@ class MembershipScreen extends StatelessWidget {
   }
 }
 
-/// =======================================================
-/// 🧩 MEMBERSHIP CARD WIDGET
-/// =======================================================
-
 Widget membershipCard({
+  required BuildContext context,
   required String image,
   required String creatorName,
-  required String plan, // Monthly / Yearly / Weekly
-  required String price, // $9.99 / $99.99 etc
+  required String plan,
+  required String price,
   required Color tierColor,
   required VoidCallback onUnsubscribe,
 }) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      color: CupertinoColors.darkBackgroundGray,
+      color: isDark ? kblackColor : kwhiteColor,
       borderRadius: BorderRadius.circular(14),
       border: Border.all(color: tierColor, width: 1.8),
     ),
     child: Row(
       children: [
-        /// 📸 Image + star
+        /// 📸 Image
         Stack(
           clipBehavior: Clip.none,
           children: [
@@ -145,11 +136,11 @@ Widget membershipCard({
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: isDark ? kblackColor : kwhiteColor,
                   shape: BoxShape.circle,
-                  border: Border.all(color: tierColor, width: 1),
+                  border: Border.all(color: tierColor),
                 ),
-                child: Icon(Icons.star, color: tierColor, size: 14),
+                child: Icon(Icons.star, size: 14, color: tierColor),
               ),
             ),
           ],
@@ -157,66 +148,26 @@ Widget membershipCard({
 
         const SizedBox(width: 14),
 
-        /// 📝 Name + plan + price
+        /// 📝 Info
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 creatorName,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: isDark ? kwhiteColor : kblackColor,
                   fontSize: 16,
                   fontFamily: "Gilroy",
                   fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 6),
-
               Row(
                 children: [
-                  /// Plan badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: tierColor),
-                    ),
-                    child: Text(
-                      plan,
-                      style: TextStyle(
-                        color: tierColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-
+                  _badge(plan, tierColor),
                   const SizedBox(width: 8),
-
-                  /// Price badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: tierColor.withOpacity(0.15),
-                      border: Border.all(color: tierColor),
-                    ),
-                    child: Text(
-                      price,
-                      style: TextStyle(
-                        color: tierColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  _priceBadge(price, tierColor),
                 ],
               ),
             ],
@@ -239,3 +190,28 @@ Widget membershipCard({
     ),
   );
 }
+
+Widget _badge(String text, Color color) => Container(
+  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    border: Border.all(color: color),
+  ),
+  child: Text(
+    text,
+    style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
+  ),
+);
+
+Widget _priceBadge(String text, Color color) => Container(
+  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    color: color.withOpacity(0.15),
+    border: Border.all(color: color),
+  ),
+  child: Text(
+    text,
+    style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold),
+  ),
+);

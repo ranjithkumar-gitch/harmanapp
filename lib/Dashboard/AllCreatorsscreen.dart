@@ -80,7 +80,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               tiername: "Gold",
             ),
 
-            const Divider(color: Colors.white24),
+            const Divider(color: Colors.grey),
 
             _title("Silver", Colors.grey),
             _creatorCarousel(
@@ -89,7 +89,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               tiername: "Silver",
             ),
 
-            const Divider(color: Colors.white24),
+            const Divider(color: Colors.grey),
 
             _title("Bronze", CupertinoColors.systemBrown),
             _creatorCarousel(
