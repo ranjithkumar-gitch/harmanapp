@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/ProfilePages/my_profile_videocover.dart';
-import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/ProfilePages/MyCreatorProfile.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
+import 'package:harmanapp/ProfilePages/view_mystar_profile_videocover.dart';
+
+import 'package:harmanapp/ProfilePages/view_mystars_profile.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
@@ -40,7 +40,7 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           MaterialPageRoute(
             builder: (_) => tappedIndex == 0
                 ? Mycreatorprofile(usrName: strName)
-                : Mycreator_videocover(usrName: strName),
+                : MyCreatorVideoCover(usrName: strName),
           ),
         );
       }

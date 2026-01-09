@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Login/LoginScreen.dart';
+import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
@@ -195,7 +195,7 @@ class _SignupscreenState extends State<Signupscreen> {
             color: isSelected ? kgoldColor : Color(0xFFFFFFFF),
             width: isSelected ? 2 : 1,
           ),
-          color: Colors.white.withOpacity(isSelected ? 0.07 : 0.03),
+          color: Colors.white.withValues(alpha: isSelected ? 0.07 : 0.03),
         ),
         child: Row(
           children: [

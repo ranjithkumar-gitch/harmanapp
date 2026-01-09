@@ -12,16 +12,16 @@ class TimelineReels extends StatefulWidget {
   const TimelineReels({super.key, required this.post});
   final UserPostModel post;
   @override
-  State<TimelineReels> createState() => _TimelineReelsState(post);
+  State<TimelineReels> createState() => _TimelineReelsState();
 }
 
 class _TimelineReelsState extends State<TimelineReels> {
   late VideoPlayerController _playerController;
-  late UserPostModel post;
+  // late UserPostModel post;
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
-  _TimelineReelsState(this.post);
+  // _TimelineReelsState(this.post);
   double _starScale = 1.0;
   late final AnimationController _lottieController;
 
@@ -32,13 +32,13 @@ class _TimelineReelsState extends State<TimelineReels> {
     try {
       _playerController =
           VideoPlayerController.asset(
-              'assets/sources/videos/${post.post.video}',
+              'assets/sources/videos/${widget.post.post.video}',
             )
             ..addListener(() {})
             ..setLooping(true)
             ..initialize().then((value) => setState(() {}));
     } catch (error) {
-      print(error);
+      debugPrint('Video initialization error: $error');
     }
 
     super.initState();
@@ -133,44 +133,44 @@ class _TimelineReelsState extends State<TimelineReels> {
                       context: context,
                       position: position,
                       items: const [
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Restrict',
                           child: Text(
                             'Restrict',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Report',
                           child: Text(
                             'Report',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Block',
                           child: Text(
                             'Block',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Cancel',
                           child: Text(
                             'Cancel',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
@@ -233,7 +233,7 @@ class _TimelineReelsState extends State<TimelineReels> {
                       _playerController.value.volume == 1
                           ? CupertinoIcons.speaker_2_fill
                           : CupertinoIcons.volume_off,
-                      color: CupertinoColors.white.withOpacity(1),
+                      color: CupertinoColors.white.withValues(alpha: 1),
                     ),
                     onPressed: () {
                       if (_playerController.value.volume == 0) {
@@ -437,7 +437,7 @@ class _TimelineReelsState extends State<TimelineReels> {
                 Text(
                   'View all ${widget.post.post.comments} comments',
                   style: TextStyle(
-                    color: CupertinoColors.black.withOpacity(.8),
+                    color: CupertinoColors.black.withValues(alpha: 0.8),
                     fontSize: 16,
                   ),
                 ),
@@ -446,7 +446,7 @@ class _TimelineReelsState extends State<TimelineReels> {
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
-                  color: CupertinoColors.white.withOpacity(.8),
+                  color: CupertinoColors.white.withValues(alpha: 0.8),
                   fontSize: 16,
                 ),
               ),
@@ -479,8 +479,7 @@ class _TimelineReelsState extends State<TimelineReels> {
 class RatingCard extends StatefulWidget {
   final Function(double) onRatingSelected;
 
-  const RatingCard({Key? key, required this.onRatingSelected})
-    : super(key: key);
+  const RatingCard({super.key, required this.onRatingSelected});
 
   @override
   State<RatingCard> createState() => _RatingCardState();

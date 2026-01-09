@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/Cart/CartManager.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
+import 'package:harmanapp/Cart/cart_manager.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
@@ -322,7 +322,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isFashion = widget.product["type"] == "fashion";
+    // bool isFashion = widget.product["type"] == "fashion";
 
     return Scaffold(
       backgroundColor: Brightness.dark == Theme.of(context).brightness

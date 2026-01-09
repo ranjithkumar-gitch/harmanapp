@@ -3,49 +3,66 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
+import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-class MyCreatorPageTwo extends StatefulWidget {
-  const MyCreatorPageTwo({super.key, required String usrName});
-
-  // String get strName => strName;
+class Mycreatorprofile extends StatefulWidget {
+  const Mycreatorprofile({super.key, required String usrName});
 
   @override
-  State<MyCreatorPageTwo> createState() => _MyCreatorPageTwoState();
+  State<Mycreatorprofile> createState() => _MycreatorprofileState();
 }
 
 enum SampleItem { itemOne }
 
-class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
+class _MycreatorprofileState extends State<Mycreatorprofile>
+    with SingleTickerProviderStateMixin {
   bool isFollowing = false;
-
-  //var profileName = "";
   SampleItem? selectedItem;
-  // void initState() {
-  //   super.initState();
-  //   profileName = widget.strName;
-  // }
+  late TabController _tabController;
+  final List<String> _icons = [
+    "assets/reels.png",
+    "assets/livestream.png",
+    "assets/star_legacy.png",
+    "assets/gold_ai.png",
+    "assets/gold_cart.png",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    posts.shuffle();
+    _tabController = TabController(length: _icons.length, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      posts.shuffle();
-    });
-    const profileSize = 80.0;
-    // var size = MediaQuery.of(context).size;
-    final user = posts.firstWhere((p) => p.name == "Srikanth Natarajan");
+    if (posts.isEmpty) {
+      return Scaffold(
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
+    }
+
+    final user = posts.firstWhere(
+      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+      orElse: () => posts.first,
+    );
 
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        backgroundColor: CupertinoColors.black,
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         appBar: const CustomAppBar(),
-
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -53,26 +70,37 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoverImage('assets/sources/profiles/${user.profileImage}'),
-
-                    ProfileImage(
+                    coverImage('assets/sources/images/cover.png'),
+                    profileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
                     ),
 
-                    const TabBar(
-                      indicatorColor: Color(0xFFDAA520),
-                      indicatorWeight: 4,
-                      labelColor: Color(0xFFDAA520),
-                      unselectedLabelColor: Colors.white54,
-                      tabs: [
-                        Tab(icon: Icon(Icons.apps, size: 28)),
-                        // Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-                        Tab(icon: Icon(Icons.live_tv, size: 28)),
-                        Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
-                        Tab(icon: Icon(Icons.emoji_events_outlined, size: 28)),
-                      ],
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+                      child: AnimatedBuilder(
+                        animation: _tabController,
+                        builder: (_, __) {
+                          return TabBar(
+                            controller: _tabController,
+                            indicatorColor: kgoldColor,
+                            indicatorWeight: 4,
+                            labelPadding: EdgeInsets.zero,
+                            tabs: List.generate(_icons.length, (index) {
+                              final bool isSelected =
+                                  _tabController.index == index;
+
+                              return Tab(
+                                icon: Image.asset(
+                                  _icons[index],
+                                  height: 40,
+                                  color: isSelected ? kgoldColor : Colors.grey,
+                                ),
+                              );
+                            }),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -80,67 +108,71 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
             ];
           },
 
-          body: const TabBarView(
-            children: [
-              ImagesTab(),
-              // ReelsTab(),
-              // ImagesTab(),
-              LiveTab(),
-              EmptyTab(),
-              Mycreatorsmarketplace(),
-              LegacyTab(),
-            ],
+          body: Container(
+            transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+            child: TabBarView(
+              controller: _tabController,
+
+              children: [
+                ImagesTab(),
+                // ReelsTab(),
+                // ImagesTab(),
+                LiveTab(),
+                LegacyTab(),
+
+                EmptyTab(),
+                Mycreatorsmarketplace(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget CoverImage(String imagePath) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          height: 200,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imagePath), // AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
+  Widget coverImage(String imagePath) {
+    return SizedBox(
+      height: 220,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 220,
+            child: Image.asset(imagePath, fit: BoxFit.fill),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IconButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black54),
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                  icon: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 0.0,
-                      top: 2.0,
-                      bottom: 2.0,
+
+          /// 🔙 Back Button (Top Left)
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SafeArea(
+              child: IconButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(Icons.arrow_back_ios),
                   ),
-                  color: Colors.white,
+                  backgroundColor: WidgetStateProperty.all(Colors.black54),
                 ),
-              ],
+                onPressed: () => Navigator.pop(context),
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 0.0,
+                  top: 2.0,
+                  bottom: 2.0,
+                ),
+                icon: const Icon(Icons.arrow_back_ios),
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget ProfileImage(String imagePath, String name) {
+  Widget profileImage(String imagePath, String name) {
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -148,6 +180,7 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
+            clipBehavior: Clip.none,
             children: [
               Row(
                 children: [
@@ -157,15 +190,10 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       gradient: const LinearGradient(
-                        colors: [Color(0xffd4af37), Colors.white],
+                        colors: [kgoldColor, Colors.white],
                       ),
                     ),
-                    // padding: const EdgeInsets.all(2),
                     child: Container(
-                      // decoration: BoxDecoration(
-                      //   borderRadius: BorderRadius.circular(10),
-                      //   color: CupertinoColors.white,
-                      // ),
                       padding: const EdgeInsets.all(2),
                       child: Container(
                         decoration: BoxDecoration(
@@ -178,7 +206,7 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 20),
                   Row(
                     children: [
                       Row(
@@ -188,16 +216,24 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                               SizedBox(height: 30),
                               Text(
                                 name,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color:
+                                      Brightness.dark ==
+                                          Theme.of(context).brightness
+                                      ? kwhiteColor
+                                      : kblackColor,
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '@ ${name}',
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                '@ $name',
+                                style: TextStyle(
+                                  color:
+                                      Brightness.dark ==
+                                          Theme.of(context).brightness
+                                      ? kwhiteColor
+                                      : kblackColor,
                                   fontSize: 12,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.normal,
@@ -212,13 +248,33 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                 ],
               ),
               Positioned(
-                bottom: 0,
-                left: 80,
-                child: Image.asset("assets/screenshots/silver.png", scale: 12),
+                bottom: -5,
+                left: 85,
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+
+                  child: Positioned(
+                    bottom: -10,
+                    right: -10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: kgoldColor, width: 1),
+                      ),
+                      child: Icon(Icons.star, color: kgoldColor, size: 20),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-          SizedBox(height: 12),
+
+          SizedBox(height: 16),
 
           Row(
             children: [
@@ -228,8 +284,8 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                      backgroundColor: kgoldColor,
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -249,8 +305,11 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      side: const BorderSide(color: Colors.white30),
-                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: kgoldColor),
+                      foregroundColor:
+                          Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -268,19 +327,40 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                 child: SizedBox(
                   height: 40,
                   child: OutlinedButton(
+                    // style: OutlinedButton.styleFrom(
+                    //   padding: EdgeInsets.zero,
+                    //   backgroundColor: isFollowing
+                    //       ? kgoldColor
+                    //       : Colors.transparent,
+                    //   side: BorderSide(
+                    //     color: isFollowing ? kgoldColor : kgoldColor,
+                    //   ),
+                    //   foregroundColor: isFollowing
+                    //       ? Brightness.dark == Theme.of(context).brightness
+                    //             ? kwhiteColor
+                    //             : kblackColor
+                    //       : Colors.black,
+
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    // ),
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
-                          ? Colors.blue
+                          ? kgoldColor
                           : Colors.transparent,
-                      side: BorderSide(
-                        color: isFollowing ? Colors.blue : Colors.white30,
-                      ),
-                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: kgoldColor),
+                      foregroundColor: isFollowing
+                          ? kblackColor
+                          : (Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
+
                     onPressed: () {
                       setState(() => isFollowing = !isFollowing);
                     },
@@ -291,7 +371,8 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                         if (isFollowing) const Icon(Icons.done_all, size: 16),
                         if (isFollowing) const SizedBox(width: 4),
                         Text(
-                          isFollowing ? "Following" : "Follow",
+                          isFollowing ? "Stargazing" : "Stargaze",
+
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -305,27 +386,37 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
           SizedBox(height: 10),
           Text(
             'Digital Artist | Content Creator | Photographer | Travel Enthusiast',
-            style: const TextStyle(color: Colors.white, fontSize: 13),
+            style: TextStyle(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kwhiteColor
+                  : kblackColor,
+              fontSize: 13,
+            ),
           ),
           SizedBox(height: 10),
 
           Row(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Text(
                     '14',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Post',
+                    'Stills',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1,
                     ),
@@ -333,29 +424,36 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                 ],
               ),
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'o',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
               const SizedBox(width: 5),
-              const Row(
+              Row(
                 children: [
                   Text(
                     '12',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
-                    'Media',
+                    'Bits',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1.0,
                     ),
@@ -364,39 +462,54 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
               ),
 
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'O',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kgoldColor
+                      : kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
               const SizedBox(width: 5),
-              const Row(
+              Row(
                 children: [
                   Text(
                     '20',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(width: 5),
                   Text(
                     'Stars',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       fontSize: 14,
                       letterSpacing: 1.0,
                     ),
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   SizedBox(width: 8),
-                  Text('|', style: TextStyle(color: Colors.grey, fontSize: 20)),
+                  Text(
+                    '|',
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
+                      fontSize: 20,
+                    ),
+                  ),
                 ],
               ),
               Expanded(
@@ -406,24 +519,31 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
                     Image.asset('assets/google1.png', width: 25, height: 25),
 
                     GestureDetector(
-                      onTap: () {
-                        print("Apple login tapped");
-                      },
+                      onTap: () {},
 
-                      child: Icon(Icons.apple, color: Colors.white),
+                      child: Icon(
+                        Icons.apple,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
+                      ),
                     ),
 
                     Image.asset('assets/facebook.png', width: 20, height: 20),
 
                     Icon(
                       FontAwesomeIcons.xTwitter,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       size: 20,
                     ),
 
                     Icon(
                       FontAwesomeIcons.twitch,
-                      color: Colors.white,
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       size: 20,
                     ),
                   ],
@@ -435,109 +555,7 @@ class _MyCreatorPageTwoState extends State<MyCreatorPageTwo> {
       ),
     );
   }
-
-  // Widget _subscribeBanner() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 10.0),
-  //     padding: const EdgeInsets.all(2.0),
-  //     decoration: BoxDecoration(
-  //       color: Colors.grey.shade900,
-  //       borderRadius: BorderRadius.circular(0.0),
-  //     ),
-  //   );
-  // }
-
-  // Widget tabsContainer(Size size) {
-  //   return Stack(
-  //     children: [
-  //       TabBar(
-  //         indicatorColor: Color(0xFFDAA520),
-  //         indicatorWeight: 4,
-  //         labelColor: Color(0xFFDAA520),
-  //         unselectedLabelColor: Colors.white54,
-  //         tabs: [
-  //           Tab(icon: Icon(Icons.apps, size: 28)),
-  //           Tab(icon: Icon(Icons.video_library_sharp, size: 28)),
-  //           Tab(icon: Icon(Icons.live_tv, size: 28)),
-  //           Tab(icon: Icon(Icons.person_2_outlined, size: 28)),
-  //           Tab(icon: Icon(Icons.shopping_bag_outlined, size: 28)),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
 }
-
-// class SocialIcon2 extends StatelessWidget {
-//   final Widget child;
-//   final double size;
-
-//   const SocialIcon2({super.key, required this.child, this.size = 20});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       // width: size + 20,
-//       // height: size + 20,
-//       decoration: BoxDecoration(
-//         color: const Color(0xFF1A1A1A),
-//         borderRadius: BorderRadius.circular(16),
-//       ),
-//       alignment: Alignment.center,
-//       child: child,
-//     );
-//   }
-// }
-
-// class _Stat extends StatelessWidget {
-//   final String value;
-//   final String label;
-//   const _Stat(this.value, this.label);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Text(
-//           value,
-//           style: const TextStyle(
-//             color: Colors.white,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         Text(
-//           label,
-//           style: const TextStyle(
-//             color: Colors.white,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class _Button extends StatelessWidget {
-//   final String text;
-//   final Color color;
-//   const _Button({required this.text, required this.color});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 38,
-//       child: ElevatedButton(
-//         style: ElevatedButton.styleFrom(
-//           backgroundColor: color,
-//           foregroundColor: Colors.white,
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-//         ),
-//         onPressed: () {},
-//         child: Text(text),
-//       ),
-//     );
-//   }
-// }
 
 final sampleLives = [
   {
@@ -655,7 +673,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(.45),
+                  color: Colors.black.withValues(alpha: .45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -687,13 +705,15 @@ class ImagesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imagePaths = [
-      'assets/sources/profiles/averie-woodard.jpg',
-
-      'assets/sources/profiles/aiony-haust.jpg',
-      'assets/sources/profiles/azamat-zhanisov-.jpg',
-      'assets/sources/profiles/deco-dev.png',
-      'assets/sources/profiles/foto-sushi.jpg',
-      'assets/sources/profiles/michael-frattaroli.jpg',
+      'assets/sources/profiles/bhatia.jpg',
+      'assets/sources/profiles/deepika.jpg',
+      'assets/sources/profiles/Virat_Kohli.jpg',
+      'assets/sources/profiles/dion.jpg',
+      'assets/sources/profiles/elon.jpeg',
+      'assets/sources/profiles/greta.jpeg',
+      "assets/sources/profiles/jack.jpg",
+      "assets/sources/profiles/jeff.jpeg",
+      "assets/sources/profiles/malala.jpg",
     ];
     return GridView.builder(
       padding: EdgeInsets.zero,
@@ -718,10 +738,10 @@ class ReelsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videos = [
-      'assets/sources/videos/1.mp4',
-      'assets/sources/videos/2.mp4',
-      'assets/sources/videos/3.mp4',
-      'assets/sources/videos/4.mp4',
+      'assets/sources/videos/deepika.mp4',
+      'assets/sources/videos/obama.mp4',
+      'assets/sources/videos/oprah.mp4',
+      'assets/sources/videos/virat.mp4',
     ];
 
     return GridView.builder(
@@ -823,7 +843,7 @@ class EmptyTab extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
+                      color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 18,
                     ),
                   ],
@@ -841,7 +861,7 @@ class EmptyTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Colors.orange,
                 ),
               ),
               const SizedBox(height: 8),
@@ -863,16 +883,14 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],
               ),
               child: IconButton(
                 icon: const Icon(Icons.mic, color: Colors.white, size: 32),
-                onPressed: () {
-                  // TODO: mic action
-                },
+                onPressed: () {},
               ),
             ),
           ),
@@ -913,7 +931,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 18,
                 ),
               ],

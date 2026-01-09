@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class OtpCodeScreen extends StatefulWidget {

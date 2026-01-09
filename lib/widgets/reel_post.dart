@@ -14,17 +14,17 @@ class ReelPost extends StatefulWidget {
   const ReelPost({super.key, required this.post});
   final UserPostModel post;
   @override
-  State<ReelPost> createState() => _ReelPostState(post);
+  State<ReelPost> createState() => _ReelPostState();
 }
 
 class _ReelPostState extends State<ReelPost>
     with SingleTickerProviderStateMixin {
   late VideoPlayerController _playerController;
-  late UserPostModel post;
+  // late UserPostModel post;
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
-  _ReelPostState(this.post);
+  // _ReelPostState(this.post);
   double _starScale = 1.0;
   bool _useLottieStar = false;
   late final AnimationController _lottieController;
@@ -39,18 +39,19 @@ class _ReelPostState extends State<ReelPost>
     try {
       _playerController =
           VideoPlayerController.asset(
-              'assets/sources/videos/${post.post.video}',
+              'assets/sources/videos/${widget.post.post.video}',
             )
             ..addListener(() {})
             ..setLooping(true)
             ..initialize().then((value) => setState(() {}));
-    } catch (error) {
-      print(error);
+    } catch (error, stackTrace) {
+      debugPrint('VideoPlayer initialization failed: $error');
+      debugPrintStack(stackTrace: stackTrace);
     }
 
     _lottieController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5), // play for 5 seconds
+      duration: const Duration(seconds: 5),
     );
 
     _lottieController.addStatusListener((status) {
@@ -256,7 +257,7 @@ class _ReelPostState extends State<ReelPost>
                       _playerController.value.volume == 1
                           ? CupertinoIcons.speaker_2_fill
                           : CupertinoIcons.volume_off,
-                      color: CupertinoColors.white.withOpacity(1),
+                      color: CupertinoColors.white.withValues(alpha: 1),
                     ),
                     onPressed: () {
                       if (_playerController.value.volume == 0) {
@@ -341,9 +342,8 @@ class _ReelPostState extends State<ReelPost>
                     _isSharing = true;
                   });
 
-                  await Share.share(
-                    'Check out this post!',
-                    subject: 'Shared from app',
+                  SharePlus.instance.share(
+                    ShareParams(text: 'Check this out!'),
                   );
 
                   if (!mounted) return;
@@ -621,8 +621,7 @@ class _ReelPostState extends State<ReelPost>
 class RatingCard extends StatefulWidget {
   final Function(double) onRatingSelected;
 
-  const RatingCard({Key? key, required this.onRatingSelected})
-    : super(key: key);
+  const RatingCard({super.key, required this.onRatingSelected});
 
   @override
   State<RatingCard> createState() => _RatingCardState();

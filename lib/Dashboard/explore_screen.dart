@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -532,7 +532,7 @@ class _ScheduledLiveCard extends StatelessWidget {
               // Blur overlay
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                child: Container(color: Colors.black.withOpacity(0.35)),
+                child: Container(color: Colors.black.withValues(alpha: 0.35)),
               ),
 
               // Lock badge
@@ -545,7 +545,7 @@ class _ScheduledLiveCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.6),
+                    color: Color(0x14000000),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -664,7 +664,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(.45),
+                  color: Colors.black.withValues(alpha: 0.45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -773,10 +773,7 @@ class EmptyTab extends StatelessWidget {
                   gradient: ExploreScreen.accentGradient,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 18,
-                    ),
+                    BoxShadow(color: Color(0x14000000), blurRadius: 18),
                   ],
                 ),
                 child: const Icon(
@@ -813,7 +810,7 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],

@@ -301,9 +301,8 @@ class _ImagePostState extends State<ImagePost>
 
               CupertinoButton(
                 onPressed: () {
-                  Share.share(
-                    'Check out this post!',
-                    subject: 'Shared from app',
+                  SharePlus.instance.share(
+                    ShareParams(text: 'Check this out!'),
                   );
                 },
                 padding: EdgeInsets.zero,

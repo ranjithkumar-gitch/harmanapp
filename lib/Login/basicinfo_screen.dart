@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Login/socialmedia_connect.dart';
+import 'package:harmanapp/Login/add_socialmedia.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class BasicInfoScreen extends StatefulWidget {

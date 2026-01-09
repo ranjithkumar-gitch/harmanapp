@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/CartManager.dart';
+import 'package:harmanapp/Cart/cart_manager.dart';
 
-import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 

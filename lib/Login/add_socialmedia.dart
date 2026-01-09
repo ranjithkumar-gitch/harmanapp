@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/Login/verifyPhoneNumber.dart';
+import 'package:harmanapp/Login/verify_mobilenumber_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class SocialmediaConnect extends StatefulWidget {
@@ -151,7 +151,7 @@ class _SocialmediaConnectState extends State<SocialmediaConnect> {
             color: isSelected ? kgoldColor : Colors.white24,
             width: isSelected ? 2 : 1,
           ),
-          color: Colors.white.withOpacity(isSelected ? 0.08 : 0.04),
+          color: Colors.white.withValues(alpha: isSelected ? 0.08 : 0.04),
         ),
         child: Row(
           children: [

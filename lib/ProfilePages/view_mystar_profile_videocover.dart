@@ -2,23 +2,23 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/AppBar.dart';
-import 'package:harmanapp/ProfilePages/MycreatorsMarketPlace.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
+import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-class Mycreator_videocover extends StatefulWidget {
+class MyCreatorVideoCover extends StatefulWidget {
   final String usrName;
 
-  const Mycreator_videocover({super.key, required this.usrName});
+  const MyCreatorVideoCover({super.key, required this.usrName});
 
   @override
-  State<Mycreator_videocover> createState() => _Mycreator_videocoverState();
+  State<MyCreatorVideoCover> createState() => _MyCreatorVideoCoverState();
 }
 
-class _Mycreator_videocoverState extends State<Mycreator_videocover>
+class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
     with SingleTickerProviderStateMixin {
   late VideoPlayerController _videoController;
   bool isVideoReady = false;
@@ -76,7 +76,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _videoCover(),
-                  ProfileImage(
+                  profileImage(
                     'assets/sources/profiles/deepika.jpg',
                     widget.usrName,
                   ),
@@ -196,9 +196,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                 children: [
                   IconButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
                     ),
                     icon: Icon(
                       _isMuted ? Icons.volume_off : Icons.volume_up,
@@ -217,9 +215,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                   /// ▶️ Play / Pause (Below Mute)
                   IconButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.black54,
-                      ),
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
                     ),
                     icon: Icon(
                       _videoController.value.isPlaying
@@ -244,7 +240,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
     );
   }
 
-  Widget ProfileImage(String imagePath, String name) {
+  Widget profileImage(String imagePath, String name) {
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -300,7 +296,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                                 ),
                               ),
                               Text(
-                                '@ ${name}',
+                                '@ $name',
                                 style: TextStyle(
                                   color:
                                       Brightness.dark ==
@@ -573,9 +569,7 @@ class _Mycreator_videocoverState extends State<Mycreator_videocover>
                     Image.asset('assets/google1.png', width: 25, height: 25),
 
                     GestureDetector(
-                      onTap: () {
-                        print("Apple login tapped");
-                      },
+                      onTap: () {},
 
                       child: Icon(
                         Icons.apple,
@@ -731,7 +725,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(.45),
+                  color: Colors.black.withValues(alpha: .45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -901,7 +895,7 @@ class EmptyTab extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
+                      color: Colors.black.withValues(alpha: .08),
                       blurRadius: 18,
                     ),
                   ],
@@ -919,7 +913,7 @@ class EmptyTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Colors.orange,
                 ),
               ),
               const SizedBox(height: 8),
@@ -941,16 +935,14 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],
               ),
               child: IconButton(
                 icon: const Icon(Icons.mic, color: Colors.white, size: 32),
-                onPressed: () {
-                  // TODO: mic action
-                },
+                onPressed: () {},
               ),
             ),
           ),
@@ -991,7 +983,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: .08),
                   blurRadius: 18,
                 ),
               ],

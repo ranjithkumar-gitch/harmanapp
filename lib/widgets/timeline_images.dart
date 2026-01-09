@@ -147,44 +147,44 @@ class _TimelineImagesState extends State<TimelineImages>
                       context: context,
                       position: position,
                       items: const [
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Restrict',
                           child: Text(
                             'Restrict',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Report',
                           child: Text(
                             'Report',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Block',
                           child: Text(
                             'Block',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",
                             ),
                           ),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'Cancel',
                           child: Text(
                             'Cancel',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontFamily: "Gilroy",

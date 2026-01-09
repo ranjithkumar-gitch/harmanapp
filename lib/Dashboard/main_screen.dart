@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/Dashboard/MyCreatorsScreen.dart';
+import 'package:harmanapp/Dashboard/my_stars_list.dart';
 
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-import 'package:harmanapp/Dashboard/homescreen.dart';
-import 'package:harmanapp/Dashboard/AllCreatorsscreen.dart';
-import 'package:harmanapp/Dashboard/marketplace_screen.dart';
-import 'package:harmanapp/btm_nav/curvednavbar.dart';
+import 'package:harmanapp/Dashboard/home_screen.dart';
+import 'package:harmanapp/Dashboard/all_stars_list.dart';
+import 'package:harmanapp/Dashboard/market_place.dart';
+import 'package:harmanapp/btm_nav/curved_navbar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MainScreen extends StatefulWidget {
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
             _buildNavItem(Icons.storefront, "Store", 4),
           ],
 
-          onTap: (index) => setState(() => this.currentpage = index),
+          onTap: (index) => setState(() => currentpage = index),
         ),
       ),
     );

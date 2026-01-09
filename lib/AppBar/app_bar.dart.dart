@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/CartManager.dart';
-import 'package:harmanapp/Cart/Cartpage.dart';
+import 'package:harmanapp/Cart/cart_manager.dart';
+import 'package:harmanapp/Cart/cart_page.dart';
 import 'package:harmanapp/MyAccount/my_account.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 

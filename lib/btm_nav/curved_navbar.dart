@@ -5,7 +5,7 @@ import 'package:harmanapp/btm_nav/custom_painter.dart';
 import 'package:harmanapp/btm_nav/nav_button.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
-typedef _LetIndexPage = bool Function(int value);
+typedef LetIndexPage = bool Function(int value);
 
 class CurvedNavigationBar extends StatefulWidget {
   final List<Widget> items;
@@ -15,14 +15,14 @@ class CurvedNavigationBar extends StatefulWidget {
   final Color? buttonBackgroundColor;
   final Color backgroundColor;
   final ValueChanged<int>? onTap;
-  final _LetIndexPage letIndexChange;
+  final LetIndexPage letIndexChange;
   final Curve animationCurve;
   final Duration animationDuration;
   final double height;
   final double? maxWidth;
 
   CurvedNavigationBar({
-    Key? key,
+    super.key,
     required this.items,
 
     this.index = 0,
@@ -30,7 +30,7 @@ class CurvedNavigationBar extends StatefulWidget {
     this.buttonBackgroundColor,
     this.backgroundColor = Colors.blueAccent,
     this.onTap,
-    _LetIndexPage? letIndexChange,
+    LetIndexPage? letIndexChange,
     this.animationCurve = Curves.easeOut,
     this.animationDuration = const Duration(milliseconds: 600),
     this.height = 75.0,
@@ -39,8 +39,7 @@ class CurvedNavigationBar extends StatefulWidget {
        assert(items.isNotEmpty),
        assert(0 <= index && index < items.length),
        assert(0 <= height && height <= 75.0),
-       assert(maxWidth == null || 0 <= maxWidth),
-       super(key: key);
+       assert(maxWidth == null || 0 <= maxWidth);
 
   @override
   CurvedNavigationBarState createState() => CurvedNavigationBarState();

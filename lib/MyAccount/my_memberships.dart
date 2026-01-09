@@ -207,7 +207,7 @@ Widget _priceBadge(String text, Color color) => Container(
   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
-    color: color.withOpacity(0.15),
+    color: color.withValues(alpha: 0.15),
     border: Border.all(color: color),
   ),
   child: Text(

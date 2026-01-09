@@ -5,10 +5,10 @@ class PurchaseDialog extends StatefulWidget {
   final String? price;
 
   const PurchaseDialog({
-    Key? key,
+    super.key,
     this.tierName = 'Premium Tier',
     this.price = '\$9.99',
-  }) : super(key: key);
+  });
 
   @override
   State<PurchaseDialog> createState() => _PurchaseDialogState();
@@ -98,21 +98,21 @@ class _PurchaseDialogState extends State<PurchaseDialog>
                   ),
                   decoration: BoxDecoration(
                     color: widget.tierName == "Gold Tier"
-                        ? Color(0xFFFFD700).withOpacity(0.1)
+                        ? Color(0xFFFFD700).withValues(alpha: 0.1)
                         : widget.tierName == "Silver Tier"
-                        ? Color(0xFFC0C0C0).withOpacity(0.1)
+                        ? Color(0xFFC0C0C0).withValues(alpha: 0.1)
                         : widget.tierName == "Bronze Tier"
-                        ? Color(0xFFCD7F32).withOpacity(0.1)
-                        : Color(0xFFFFD700).withOpacity(0.1),
+                        ? Color(0xFFCD7F32).withValues(alpha: 0.1)
+                        : Color(0xFFFFD700).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: widget.tierName == "Gold Tier"
-                          ? Color(0xFFFFD700).withOpacity(0.1)
+                          ? Color(0xFFFFD700).withValues(alpha: 0.1)
                           : widget.tierName == "Silver Tier"
-                          ? Color(0xFFC0C0C0).withOpacity(0.1)
+                          ? Color(0xFFC0C0C0).withValues(alpha: 0.1)
                           : widget.tierName == "Bronze Tier"
-                          ? Color(0xFFCD7F32).withOpacity(0.1)
-                          : Color(0xFFFFD700).withOpacity(0.1),
+                          ? Color(0xFFCD7F32).withValues(alpha: 0.1)
+                          : Color(0xFFFFD700).withValues(alpha: 0.1),
                       width: 1.5,
                     ),
                   ),
@@ -146,11 +146,12 @@ class _PurchaseDialogState extends State<PurchaseDialog>
                       ),
                     ),
                     onPressed: () async {
-                      // Close with animation
+                      final navigator = Navigator.of(context);
+
                       await _animationController.reverse();
-                      if (mounted) {
-                        Navigator.of(context).pop();
-                      }
+                      if (!mounted) return;
+
+                      navigator.pop();
                     },
                     child: const Text(
                       'Purchase Now',
@@ -178,9 +179,11 @@ class _PurchaseDialogState extends State<PurchaseDialog>
                     onPressed: () async {
                       // Close with animation
                       await _animationController.reverse();
-                      if (mounted) {
-                        Navigator.of(context).pop();
-                      }
+                      if (!context.mounted) return;
+                      Navigator.of(context).pop();
+                      // if (mounted) {
+                      //   Navigator.of(context).pop();
+                      // }
                     },
                     child: const Text(
                       'Cancel',

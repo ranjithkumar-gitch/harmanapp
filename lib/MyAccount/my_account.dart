@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
-import 'package:harmanapp/widgets/sidemenu.dart';
+import 'package:harmanapp/widgets/side_menu.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MyAccount extends StatefulWidget {
@@ -40,11 +40,11 @@ class _MyAccountState extends State<MyAccount> {
               height: 290,
               child: Stack(
                 children: [
-                  CoverImage(
+                  coverImage(
                     'assets/sources/profiles/lucas-sankey.jpg',
                     'Peeter Hain',
                   ),
-                  ProfileImage(
+                  profileImage(
                     'assets/sources/profiles/lucas-sankey.jpg',
                     'Peeter Hain',
                   ),
@@ -214,7 +214,7 @@ class _MyAccountState extends State<MyAccount> {
     );
   }
 
-  Widget CoverImage(String imagePath, String Name) {
+  Widget coverImage(String imagePath, String name) {
     return Stack(
       children: [
         Container(
@@ -235,7 +235,7 @@ class _MyAccountState extends State<MyAccount> {
                   children: [
                     IconButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                           Colors.black54,
                         ),
                       ),
@@ -253,7 +253,7 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                     IconButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                           Colors.black54,
                         ),
                       ),
@@ -279,7 +279,7 @@ class _MyAccountState extends State<MyAccount> {
           right: 10,
           child: IconButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.black54),
+              backgroundColor: WidgetStateProperty.all(Colors.black54),
             ),
             onPressed: () {},
             icon: Padding(
@@ -292,7 +292,7 @@ class _MyAccountState extends State<MyAccount> {
     );
   }
 
-  Widget ProfileImage(String imagePath, String name) {
+  Widget profileImage(String imagePath, String name) {
     return Container(
       // height: 200,
       transform: Matrix4.translationValues(0.0, 170.0, 0.0),

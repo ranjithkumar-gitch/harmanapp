@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:harmanapp/Login/SignupScreen.dart';
+import 'package:harmanapp/Login/signup_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
-import 'package:harmanapp/Dashboard/mainscreen.dart';
+import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -241,9 +241,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        print("Apple login tapped");
-                      },
+                      onTap: () {},
                       child: SocialIcon(
                         child: Icon(Icons.apple, color: Colors.white),
                       ),
