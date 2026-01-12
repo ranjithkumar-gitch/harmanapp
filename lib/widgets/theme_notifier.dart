@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/widgets/app_colors.dart';
 
-final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.dark);
 
 // Define light theme
 final ThemeData lightTheme = ThemeData(

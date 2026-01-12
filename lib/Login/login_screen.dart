@@ -24,6 +24,7 @@ class _LoginscreenState extends State<Loginscreen> {
   final FocusNode _passwordFocus = FocusNode();
 
   bool _obscureText = true;
+  String? _selectedRole;
 
   @override
   void initState() {
@@ -39,6 +40,231 @@ class _LoginscreenState extends State<Loginscreen> {
     _emailFocus.dispose();
     _passwordFocus.dispose();
     super.dispose();
+  }
+
+  void _showRoleSelectionDialog() {
+    setState(() {
+      _selectedRole = null;
+    });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setDialogState) {
+            return Dialog(
+              backgroundColor: kblackColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: kgoldColor, width: 2),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Which Role would you Prefer?",
+                      style: TextStyle(
+                        color: kwhiteColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    // Stargazer Radio Button
+                    GestureDetector(
+                      onTap: () {
+                        setDialogState(() {
+                          _selectedRole = 'Stargazer';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: _selectedRole == 'Stargazer'
+                                ? kgoldColor
+                                : Colors.transparent,
+                            width: 2,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: kgoldColor, width: 2),
+                              ),
+                              child: _selectedRole == 'Stargazer'
+                                  ? Center(
+                                      child: Container(
+                                        width: 12,
+                                        height: 12,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kgoldColor,
+                                        ),
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              'Stargazer',
+                              style: TextStyle(
+                                color: kwhiteColor,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Star Radio Button
+                    GestureDetector(
+                      onTap: () {
+                        setDialogState(() {
+                          _selectedRole = 'Star';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: _selectedRole == 'Star'
+                                ? kgoldColor
+                                : Colors.transparent,
+                            width: 2,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: kgoldColor, width: 2),
+                              ),
+                              child: _selectedRole == 'Star'
+                                  ? Center(
+                                      child: Container(
+                                        width: 12,
+                                        height: 12,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kgoldColor,
+                                        ),
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              'Star',
+                              style: TextStyle(
+                                color: kwhiteColor,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Cancel and Login Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: kblackColor,
+                              side: const BorderSide(
+                                color: kgoldColor,
+                                width: 2,
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              if (_selectedRole != null) {
+                                Navigator.of(context).pop();
+                                if (_selectedRole == 'Stargazer') {
+                                  Get.to(
+                                    () => const MainScreen(),
+                                    transition: Transition.zoom,
+                                    duration: const Duration(seconds: 1),
+                                  );
+                                } else if (_selectedRole == 'Star') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                        'Star role selected',
+                                        style: TextStyle(color: kwhiteColor),
+                                      ),
+                                      backgroundColor: kgoldColor,
+                                      duration: const Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: kblackColor,
+                              side: const BorderSide(
+                                color: kgoldColor,
+                                width: 2,
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -182,12 +408,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(
-                        () => MainScreen(),
-                        // () => MainScreen(),
-                        transition: Transition.zoom,
-                        duration: const Duration(seconds: 1),
-                      );
+                      _showRoleSelectionDialog();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kblackColor,

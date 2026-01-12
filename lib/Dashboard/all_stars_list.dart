@@ -29,12 +29,12 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
               padding: const EdgeInsets.all(12.0),
               child: SizedBox(
                 child: SearchBar(
-                  backgroundColor: WidgetStatePropertyAll(
+                  backgroundColor: WidgetStateProperty.all(
                     Brightness.dark == Theme.of(context).brightness
                         ? kblackColor
                         : kwhiteColor,
                   ),
-                  shape: WidgetStatePropertyAll(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                       side: BorderSide(color: kgoldColor),
@@ -42,7 +42,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                   ),
 
                   hintText: "Search Stars...",
-                  hintStyle: WidgetStatePropertyAll(
+                  hintStyle: WidgetStateProperty.all(
                     TextStyle(
                       color: Brightness.dark == Theme.of(context).brightness
                           ? kwhiteColor
@@ -51,7 +51,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  textStyle: WidgetStatePropertyAll(
+                  textStyle: WidgetStateProperty.all(
                     TextStyle(
                       color: Brightness.dark == Theme.of(context).brightness
                           ? kwhiteColor
@@ -60,7 +60,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  padding: const WidgetStatePropertyAll<EdgeInsets>(
+                  padding: WidgetStateProperty.all<EdgeInsets>(
                     EdgeInsets.symmetric(horizontal: 16.0),
                   ),
                   trailing: [

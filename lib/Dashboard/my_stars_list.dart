@@ -122,26 +122,26 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
     return Padding(
       padding: const EdgeInsets.all(12),
       child: SearchBar(
-        backgroundColor: WidgetStatePropertyAll(
+        backgroundColor: WidgetStateProperty.all(
           Brightness.dark == Theme.of(context).brightness
               ? kblackColor
               : kwhiteColor,
         ),
-        shape: WidgetStatePropertyAll(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: const BorderSide(color: kgoldColor),
           ),
         ),
         hintText: "Search Stars...",
-        hintStyle: WidgetStatePropertyAll(
+        hintStyle: WidgetStateProperty.all(
           TextStyle(
             color: Brightness.dark == Theme.of(context).brightness
                 ? kwhiteColor
                 : kblackColor,
           ),
         ),
-        textStyle: WidgetStatePropertyAll(
+        textStyle: WidgetStateProperty.all(
           TextStyle(
             color: Brightness.dark == Theme.of(context).brightness
                 ? kwhiteColor
