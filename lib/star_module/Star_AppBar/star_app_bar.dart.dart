@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/cart_manager.dart';
-import 'package:harmanapp/Cart/cart_page.dart';
-import 'package:harmanapp/MyAccount/my_account.dart';
+
 import 'package:harmanapp/star_module/MyAccount/star_my_account.dart';
 import 'package:harmanapp/star_module/Star_Cart/star_cart_page.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
+import 'package:harmanapp/star_module/MyAccount/create_post.dart';
 import 'package:harmanapp/star_module/widgets/star_side_menu.dart';
-import 'package:harmanapp/widgets/side_menu.dart';
+
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class StarMyAccount extends StatefulWidget {
@@ -209,16 +210,18 @@ class _StarMyAccountState extends State<StarMyAccount> {
                   const SizedBox(height: 12),
 
                   _optionCard(
-                    icon: Icons.checklist_sharp,
+                    icon: Icons.add_box_outlined,
                     title: 'Create Post',
-                    subtitle: 'Stills | Bits | Videos ',
-                    isSelected: selectedCard == "Orders",
-                    onTap: () => setState(() => selectedCard = "Orders"),
+                    subtitle: 'Stills | Bits | Videos',
+                    isSelected: selectedCard == "CreatePost",
+                    onTap: () => setState(() => selectedCard = "CreatePost"),
                     onButtonPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (_) => const MyOrders()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CreatePostPage(),
+                        ),
+                      );
                     },
                   ),
                 ],
