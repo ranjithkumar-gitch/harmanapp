@@ -4,6 +4,16 @@
 .dart_tool/
 .packages
 build/
+ios/
+android/
+web/
+macos/
+windows/
+linux/
+.flutter-plugins
+.flutter-plugins-dependencies
+.generated/
+.idea/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 
