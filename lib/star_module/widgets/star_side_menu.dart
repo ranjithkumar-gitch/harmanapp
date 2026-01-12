@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
-Widget endDrawer(BuildContext context) {
+Widget starendDrawer(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * 0.5,
     child: Drawer(

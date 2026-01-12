@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/widgets/app_colors.dart';
+import 'package:harmanapp/star_module/widgets/star_app_colors.dart';
 
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
@@ -22,7 +22,7 @@ final ThemeData lightTheme = ThemeData(
     foregroundColor: kwhiteColor,
     shadowColor: Colors.transparent,
   ),
-  extensions: <ThemeExtension<dynamic>>[AppColors.light],
+  extensions: <ThemeExtension<dynamic>>[StarAppColors.light],
   // bottomAppBarTheme: const BottomAppBarTheme(
   //   backgroundColor: kLightSurfaceColor,
   //   color: kLightTextColor,
@@ -47,7 +47,7 @@ final ThemeData darkTheme = ThemeData(
     backgroundColor: kblackColor,
     foregroundColor: kblackColor,
   ),
-  extensions: <ThemeExtension<dynamic>>[AppColors.dark],
+  extensions: <ThemeExtension<dynamic>>[StarAppColors.dark],
   // bottomAppBarTheme: const BottomAppBarTheme(
   //   backgroundColor: kDarkSurfaceColor,
   //   color: kDarkTextColor,

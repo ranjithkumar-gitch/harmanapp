@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
-// class StoryPicture extends StatelessWidget {
-//   const StoryPicture({
+// class StarStoryPicture extends StatelessWidget {
+//   const StarStoryPicture({
 //     super.key,
 //     required this.user,
 //     this.hideName = false,
@@ -74,8 +74,8 @@ import 'package:harmanapp/widgets/theme_notifier.dart';
 //     );
 //   }
 // }
-class StoryPicture extends StatelessWidget {
-  const StoryPicture({
+class StarStoryPicture extends StatelessWidget {
+  const StarStoryPicture({
     super.key,
     required this.user,
     this.hideName = false,

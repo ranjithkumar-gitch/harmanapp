@@ -1,67 +1,54 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
 
-class TimelineImages extends StatefulWidget {
-  const TimelineImages({super.key, required this.post});
+import 'package:video_player/video_player.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+class StarTimelineReels extends StatefulWidget {
+  const StarTimelineReels({super.key, required this.post});
   final UserPostModel post;
   @override
-  State<TimelineImages> createState() => _TimelineImagesState();
+  State<StarTimelineReels> createState() => _StarTimelineReelsState();
 }
 
-class _TimelineImagesState extends State<TimelineImages>
-    with SingleTickerProviderStateMixin {
-  late PageController _pageController;
-  int _currentImage = 0;
+class _StarTimelineReelsState extends State<StarTimelineReels> {
+  late VideoPlayerController _playerController;
+  // late UserPostModel post;
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
+  // _StarTimelineReelsState(this.post);
   double _starScale = 1.0;
   late final AnimationController _lottieController;
-  bool isPlaying = false;
 
   bool _useLottieStar = false;
+
   @override
   void initState() {
-    _pageController = PageController(initialPage: 0)
-      ..addListener(() {
-        setState(() {
-          _currentImage = _pageController.page?.toInt() ?? 0;
-        });
-      });
-    _lottieController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 5), // play for 5 seconds
-    );
+    try {
+      _playerController =
+          VideoPlayerController.asset(
+              'assets/sources/videos/${widget.post.post.video}',
+            )
+            ..addListener(() {})
+            ..setLooping(true)
+            ..initialize().then((value) => setState(() {}));
+    } catch (error) {
+      debugPrint('Video initialization error: $error');
+    }
 
-    // Listen for completion
-    _lottieController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          isPlaying = false;
-        });
-      }
-    });
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     _lottieController.dispose();
     super.dispose();
-  }
-
-  void _playAnimation() {
-    setState(() {
-      isPlaying = true;
-    });
-    _lottieController.forward(from: 0);
   }
 
   @override
@@ -73,17 +60,21 @@ class _TimelineImagesState extends State<TimelineImages>
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: StoryPicture(user: widget.post, hideName: true, size: 60),
+              child: StarStoryPicture(
+                user: widget.post,
+                hideName: true,
+                size: 60,
+              ),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.post.name,
                   // style: const TextStyle(
                   //   fontSize: 16,
-                  //   color: Color(0xFFF5D778),
                   //   fontWeight: FontWeight.bold,
-                  //   fontFamily: "Gilroy",
+                  //   color: Color(0xFFF5D778),
                   // ),
                   style: GoogleFonts.greatVibes(
                     textStyle: const TextStyle(
@@ -96,7 +87,7 @@ class _TimelineImagesState extends State<TimelineImages>
                 Row(
                   children: [
                     Text(
-                      '1h',
+                      '19m',
                       style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
                           fontSize: 15,
@@ -195,10 +186,7 @@ class _TimelineImagesState extends State<TimelineImages>
                     );
 
                     if (value == 'edit') {
-                      // handle edit
-                    } else if (value == 'delete') {
-                      // handle delete
-                    }
+                    } else if (value == 'delete') {}
                   },
                 );
               },
@@ -208,123 +196,133 @@ class _TimelineImagesState extends State<TimelineImages>
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Social media screens ',
+            'Video description',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        SizedBox(
-          height: 450,
-          child: PageView(
-            controller: _pageController,
-            children: [
-              ...widget.post.post.images!.map(
-                (image) => Container(
+        SizedBox(width: 5),
+        GestureDetector(
+          onTap: () {
+            if (_playerController.value.isPlaying) {
+              _playerController.pause();
+            } else {
+              _playerController.play();
+            }
+          },
+          onLongPressStart: (event) {
+            _playerController.pause();
+          },
+          onLongPressEnd: (event) {
+            _playerController.play();
+          },
+          child: ClipRect(
+            clipBehavior: Clip.hardEdge,
+            child: Stack(
+              children: [
+                Container(
                   height: 450,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.white,
-                    image: DecorationImage(
-                      image: AssetImage('assets/sources/images/$image'),
-                      fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: AspectRatio(
+                      aspectRatio: _playerController.value.aspectRatio,
+                      child: VideoPlayer(_playerController),
                     ),
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: CupertinoButton(
+                    child: Icon(
+                      _playerController.value.volume == 1
+                          ? CupertinoIcons.speaker_2_fill
+                          : CupertinoIcons.volume_off,
+                      color: CupertinoColors.white.withValues(alpha: 1),
+                    ),
+                    onPressed: () {
+                      if (_playerController.value.volume == 0) {
+                        _playerController.setVolume(1);
+                        setState(() {});
+                      } else {
+                        setState(() {});
+                        _playerController.setVolume(0);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (widget.post.post.images!.length != 1)
-                Center(
-                  child: Container(
-                    transform: Matrix4.translationValues(0.0, -20.0, 0.0),
-                    child: DotsIndicator(
-                      dotsCount: 2,
-                      position: _currentImage.toDouble(),
-                    ),
-                  ),
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  setState(() {
+                    _showRatingBar = !_showRatingBar;
+                  });
+                },
+                child: AnimatedScale(
+                  scale: _starScale,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.elasticOut,
+                  child: _useLottieStar
+                      ? Lottie.asset(
+                          'assets/Star.json',
+
+                          width: 40,
+                          height: 40,
+                          repeat: false,
+                          delegates: LottieDelegates(
+                            values: [
+                              ValueDelegate.color(['**'], value: _ratingColor),
+                            ],
+                          ),
+                        )
+                      : const Icon(
+                          CupertinoIcons.star_fill,
+                          color: CupertinoColors.white,
+                          size: 18,
+                        ),
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      setState(() {
-                        _showRatingBar = !_showRatingBar;
-                      });
-                    },
-                    child: AnimatedScale(
-                      scale: _starScale,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.elasticOut,
-                      child: _useLottieStar
-                          ? Lottie.asset(
-                              'assets/Star.json',
-                              width: 40,
-                              height: 40,
-                              repeat: false,
-                              controller: _lottieController,
-                              onLoaded: (composition) {
-                                // Set controller duration to match Lottie file or override
-                                _lottieController.duration = const Duration(
-                                  seconds: 5,
-                                );
-                                // _controller.setSpeed(2.0);
-                              },
-                              delegates: LottieDelegates(
-                                values: [
-                                  ValueDelegate.color([
-                                    '**',
-                                  ], value: _ratingColor),
-                                ],
-                              ),
-                            )
-                          : const Icon(
-                              CupertinoIcons.star_fill,
-                              color: CupertinoColors.white,
-                              size: 18,
-                            ),
-                    ),
-                  ),
-
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: const Icon(
-                      CupertinoIcons.text_bubble,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: const Icon(
-                      CupertinoIcons.arrowshape_turn_up_right,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
-                  // const Spacer(),
-
-                  //const Spacer(flex: 3),
-                  // CupertinoButton(
-                  //   onPressed: () {
-                  //     setState(() {
-                  //       widget.post.post.saved = !widget.post.post.saved;
-                  //     });
-                  //   },
-                  //   padding: EdgeInsets.zero,
-                  //   child: Icon(
-                  //     widget.post.post.saved
-                  //         ? CupertinoIcons.bookmark_fill
-                  //         : CupertinoIcons.bookmark,
-                  //     color: CupertinoColors.white,
-                  //   ),
-                  // ),
-                ],
               ),
+
+              CupertinoButton(
+                onPressed: () {},
+                padding: EdgeInsets.zero,
+                child: const Icon(
+                  CupertinoIcons.text_bubble,
+                  color: CupertinoColors.white,
+                ),
+              ),
+              CupertinoButton(
+                onPressed: () {},
+                padding: EdgeInsets.zero,
+                child: const Icon(
+                  CupertinoIcons.arrowshape_turn_up_right,
+                  color: CupertinoColors.white,
+                ),
+              ),
+              //const Spacer(),
+              // CupertinoButton(
+              //   onPressed: () {
+              //     setState(() {
+              //       widget.post.post.saved = !widget.post.post.saved;
+              //     });
+              //   },
+              //  padding: EdgeInsets.zero,
+              // child: Icon(
+              //   widget.post.post.saved
+              //       ? CupertinoIcons.bookmark_fill
+              //       : CupertinoIcons.bookmark,
+              //   color: CupertinoColors.white,
+              // ),
+              // ),
             ],
           ),
         ),
@@ -353,7 +351,7 @@ class _TimelineImagesState extends State<TimelineImages>
                         padding: const EdgeInsets.all(8.0),
                         child: RatingBar.builder(
                           initialRating: _rating,
-                          minRating: 0,
+                          minRating: 1,
                           allowHalfRating: true,
                           itemCount: 5,
                           itemSize: 28,
@@ -361,33 +359,25 @@ class _TimelineImagesState extends State<TimelineImages>
                           itemBuilder: (context, _) =>
                               const Icon(Icons.star, color: Colors.amber),
                           onRatingUpdate: (rating) {
-                            setState(() {
-                              _rating = rating;
-                            });
+                            _rating = rating;
                           },
                         ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: CupertinoButton(
-                          padding: EdgeInsets.all(5),
-                          child: Icon(
-                            size: 24,
-                            Icons.check_circle_outline,
-                            color: _rating == 0.0 ? Colors.grey : Colors.amber,
+                          padding: EdgeInsets.zero,
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
                           ),
-                          // onPressed: () {
-                          //   setState(() {
-                          //     _ratingColor = _getRatingColor(_rating);
-                          //     _showRatingBar = false;
-                          //   });
-                          // },
+
                           onPressed: () {
                             setState(() {
                               _ratingColor = _getRatingColor(_rating);
                               _showRatingBar = false;
                               _useLottieStar = true;
-                              _playAnimation();
+
                               _starScale = 1.4;
                             });
 
@@ -411,7 +401,6 @@ class _TimelineImagesState extends State<TimelineImages>
               ),
             ),
           ),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
@@ -420,9 +409,8 @@ class _TimelineImagesState extends State<TimelineImages>
               Text(
                 '${widget.post.post.likes} Stars',
                 style: const TextStyle(
-                  color: Colors.white,
                   fontWeight: FontWeight.w600,
-                  fontFamily: "Gilroy",
+                  color: Colors.white,
                 ),
               ),
               RichText(
@@ -436,7 +424,6 @@ class _TimelineImagesState extends State<TimelineImages>
                         fontWeight: FontWeight.w600,
                         color: CupertinoColors.white,
                         fontSize: 16,
-                        fontFamily: "Gilroy",
                       ),
                     ),
                     const TextSpan(text: '  '),
@@ -455,8 +442,7 @@ class _TimelineImagesState extends State<TimelineImages>
                 Text(
                   'View all ${widget.post.post.comments} comments',
                   style: TextStyle(
-                    fontFamily: "Gilroy",
-                    color: CupertinoColors.white,
+                    color: CupertinoColors.black.withValues(alpha: 0.8),
                     fontSize: 16,
                   ),
                 ),
@@ -465,9 +451,8 @@ class _TimelineImagesState extends State<TimelineImages>
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
-                  fontFamily: "Gilroy",
-                  color: CupertinoColors.white,
-                  fontSize: 14,
+                  color: CupertinoColors.white.withValues(alpha: 0.8),
+                  fontSize: 16,
                 ),
               ),
             ],
@@ -475,6 +460,13 @@ class _TimelineImagesState extends State<TimelineImages>
         ),
       ],
     );
+  }
+
+  String getRatingLevel(double rating) {
+    if (rating == 5.0) return "Gold";
+    if (rating >= 4.5) return "Silver";
+    if (rating >= 4.0) return "Bronze";
+    return "None";
   }
 
   Color _getRatingColor(double rating) {
@@ -486,5 +478,51 @@ class _TimelineImagesState extends State<TimelineImages>
       return const Color(0xFFCD7F32); // Bronze
     }
     return CupertinoColors.white;
+  }
+}
+
+class RatingCard extends StatefulWidget {
+  final Function(double) onRatingSelected;
+
+  const RatingCard({super.key, required this.onRatingSelected});
+
+  @override
+  State<RatingCard> createState() => _RatingCardState();
+}
+
+class _RatingCardState extends State<RatingCard> {
+  double _rating = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPopupSurface(
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(5, (index) {
+            final starIndex = index + 1;
+            return GestureDetector(
+              onTap: () {
+                setState(() => _rating = starIndex.toDouble());
+                widget.onRatingSelected(_rating);
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Icon(
+                  starIndex <= _rating
+                      ? CupertinoIcons.star_fill
+                      : CupertinoIcons.star,
+                  color: CupertinoColors.systemOrange,
+                  size: 28,
+                ),
+              ),
+            );
+          }),
+        ),
+      ),
+    );
   }
 }

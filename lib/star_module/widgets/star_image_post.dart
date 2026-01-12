@@ -1,54 +1,45 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/image_post.dart';
+import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:video_player/video_player.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ReelPost extends StatefulWidget {
-  const ReelPost({super.key, required this.post});
+class StarImagePost extends StatefulWidget {
+  const StarImagePost({super.key, required this.post});
   final UserPostModel post;
   @override
-  State<ReelPost> createState() => _ReelPostState();
+  State<StarImagePost> createState() => _StarImagePostState();
 }
 
-class _ReelPostState extends State<ReelPost>
+class _StarImagePostState extends State<StarImagePost>
     with SingleTickerProviderStateMixin {
-  late VideoPlayerController _playerController;
-  // late UserPostModel post;
+  late PageController _pageController;
+  int _currentImage = 0;
   double _rating = 0.0;
   bool _showRatingBar = false;
   Color _ratingColor = CupertinoColors.white;
-  // _ReelPostState(this.post);
   double _starScale = 1.0;
-  bool _useLottieStar = false;
   late final AnimationController _lottieController;
   bool isPlaying = false;
   bool _showCommentBox = false;
-  bool _isSharing = false;
-
   final TextEditingController _commentController = TextEditingController();
+  bool showComments = false;
 
+  bool _useLottieStar = false;
   @override
   void initState() {
-    try {
-      _playerController =
-          VideoPlayerController.asset(
-              'assets/sources/videos/${widget.post.post.video}',
-            )
-            ..addListener(() {})
-            ..setLooping(true)
-            ..initialize().then((value) => setState(() {}));
-    } catch (error, stackTrace) {
-      debugPrint('VideoPlayer initialization failed: $error');
-      debugPrintStack(stackTrace: stackTrace);
-    }
-
+    _pageController = PageController(initialPage: 0)
+      ..addListener(() {
+        setState(() {
+          _currentImage = _pageController.page?.toInt() ?? 0;
+        });
+      });
     _lottieController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -61,12 +52,12 @@ class _ReelPostState extends State<ReelPost>
         });
       }
     });
-
     super.initState();
   }
 
   @override
   void dispose() {
+    _pageController.dispose();
     _lottieController.dispose();
     super.dispose();
   }
@@ -87,11 +78,16 @@ class _ReelPostState extends State<ReelPost>
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: StoryPicture(user: widget.post, hideName: true, size: 60),
+              child: StarStoryPicture(
+                user: widget.post,
+                hideName: true,
+                size: 60,
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Text(
                   widget.post.name,
@@ -105,8 +101,7 @@ class _ReelPostState extends State<ReelPost>
                   ),
                 ),
                 Text(
-                  widget.post.sname.toString(),
-
+                  widget.post.sname,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
@@ -179,6 +174,7 @@ class _ReelPostState extends State<ReelPost>
                             ),
                           ),
                         ),
+
                         PopupMenuItem(
                           value: 'Block',
                           child: Text(
@@ -213,65 +209,36 @@ class _ReelPostState extends State<ReelPost>
                     );
 
                     if (value == 'edit') {
-                    } else if (value == 'delete') {}
+                      // handle edit
+                    } else if (value == 'delete') {
+                      // handle delete
+                    }
                   },
                 );
               },
             ),
           ],
         ),
-        GestureDetector(
-          onTap: () {
-            if (_playerController.value.isPlaying) {
-              _playerController.pause();
-            } else {
-              _playerController.play();
-            }
-          },
-          onLongPressStart: (event) {
-            _playerController.pause();
-          },
-          onLongPressEnd: (event) {
-            _playerController.play();
-          },
-          child: ClipRect(
-            clipBehavior: Clip.hardEdge,
-            child: Stack(
-              children: [
-                Container(
+        SizedBox(
+          height: 450,
+          child: PageView(
+            controller: _pageController,
+            children: [
+              ...widget.post.post.images!.map(
+                (image) => Container(
                   height: 450,
-                  alignment: Alignment.center,
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: AspectRatio(
-                      aspectRatio: _playerController.value.aspectRatio,
-                      child: VideoPlayer(_playerController),
+                  decoration: BoxDecoration(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    image: DecorationImage(
+                      image: AssetImage('assets/sources/images/$image'),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CupertinoButton(
-                    child: Icon(
-                      _playerController.value.volume == 1
-                          ? CupertinoIcons.speaker_2_fill
-                          : CupertinoIcons.volume_off,
-                      color: CupertinoColors.white.withValues(alpha: 1),
-                    ),
-                    onPressed: () {
-                      if (_playerController.value.volume == 0) {
-                        _playerController.setVolume(1);
-                        setState(() {});
-                      } else {
-                        setState(() {});
-                        _playerController.setVolume(0);
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Padding(
@@ -297,9 +264,11 @@ class _ReelPostState extends State<ReelPost>
                           repeat: false,
                           controller: _lottieController,
                           onLoaded: (composition) {
+                            // Set controller duration to match Lottie file or override
                             _lottieController.duration = const Duration(
                               seconds: 5,
                             );
+                            // _controller.setSpeed(2.0);
                           },
                           delegates: LottieDelegates(
                             values: [
@@ -336,33 +305,32 @@ class _ReelPostState extends State<ReelPost>
               ),
 
               CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () async {
-                  setState(() {
-                    _isSharing = true;
-                  });
-
+                onPressed: () {
                   SharePlus.instance.share(
                     ShareParams(text: 'Check this out!'),
                   );
-
-                  if (!mounted) return;
-
-                  setState(() {
-                    _isSharing = false;
-                  });
                 },
+                padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.arrowshape_turn_up_right,
-                  color: _isSharing
-                      ? kgoldColor
-                      : Brightness.dark == Theme.of(context).brightness
+                  color: Brightness.dark == Theme.of(context).brightness
                       ? kwhiteColor
                       : kblackColor,
                 ),
               ),
-
               const Spacer(),
+              if (widget.post.post.images!.length != 1)
+                DotsIndicator(
+                  dotsCount: 2,
+                  position: _currentImage.toDouble(),
+                  decorator: DotsDecorator(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    activeColor: kgoldColor,
+                  ),
+                ),
+              const Spacer(flex: 3),
               CupertinoButton(
                 onPressed: () {
                   setState(() {
@@ -408,9 +376,8 @@ class _ReelPostState extends State<ReelPost>
                           itemSize: 28,
                           unratedColor: Colors.grey,
                           itemBuilder: (context, _) =>
-                              const Icon(Icons.star, color: kgoldColor),
+                              const Icon(Icons.star, color: Colors.amber),
                           onRatingUpdate: (rating) {
-                            _rating = rating;
                             setState(() {
                               _rating = rating;
                             });
@@ -420,7 +387,7 @@ class _ReelPostState extends State<ReelPost>
                       Align(
                         alignment: Alignment.centerRight,
                         child: CupertinoButton(
-                          padding: EdgeInsets.zero,
+                          padding: EdgeInsets.all(5),
                           child: Icon(
                             size: 24,
                             Icons.check_circle_outline,
@@ -450,6 +417,8 @@ class _ReelPostState extends State<ReelPost>
                       ),
                     ],
                   ),
+
+                  //const SizedBox(height: 6),
                 ],
               ),
             ),
@@ -471,10 +440,15 @@ class _ReelPostState extends State<ReelPost>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /// 📝 Comment field
                   TextField(
                     controller: _commentController,
                     maxLines: 2,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
+                    ),
                     decoration: InputDecoration(
                       hintText: "Write a comment...",
                       hintStyle: TextStyle(
@@ -518,6 +492,7 @@ class _ReelPostState extends State<ReelPost>
               ),
             ),
           ),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
@@ -526,10 +501,11 @@ class _ReelPostState extends State<ReelPost>
               Text(
                 '${widget.post.post.likes} Stars',
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
                   color: Brightness.dark == Theme.of(context).brightness
                       ? kwhiteColor
                       : kblackColor,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Gilroy",
                 ),
               ),
               RichText(
@@ -545,6 +521,7 @@ class _ReelPostState extends State<ReelPost>
                             ? kwhiteColor
                             : kblackColor,
                         fontSize: 16,
+                        fontFamily: "Gilroy",
                       ),
                     ),
                     const TextSpan(text: '  '),
@@ -561,7 +538,6 @@ class _ReelPostState extends State<ReelPost>
                 ),
               ),
               if (widget.post.post.comments != null) ...[
-                const SizedBox(height: 5),
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
@@ -581,15 +557,25 @@ class _ReelPostState extends State<ReelPost>
                     ),
                   ),
                 ),
+                if (showComments) ...[
+                  const SizedBox(height: 6),
+
+                  _comment("john_doe", "This looks amazing 🔥"),
+                  _comment("alex_99", "Pure elegance ✨"),
+                  _comment("maria_k", "Luxury vibes only 💫"),
+                  _comment("rohit.dev", "Nice shot 📸"),
+                  _comment("sophia_l", "Absolutely stunning ❤️"),
+                ],
               ],
-              const SizedBox(height: 5),
+
               Text(
                 widget.post.post.date!,
                 style: TextStyle(
+                  fontFamily: "Gilroy",
                   color: Brightness.dark == Theme.of(context).brightness
                       ? kwhiteColor
                       : kblackColor,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ],
@@ -597,13 +583,6 @@ class _ReelPostState extends State<ReelPost>
         ),
       ],
     );
-  }
-
-  String getRatingLevel(double rating) {
-    if (rating == 5.0) return "Gold";
-    if (rating >= 4.5) return "Silver";
-    if (rating >= 4.0) return "Bronze";
-    return "None";
   }
 
   Color _getRatingColor(double rating) {
@@ -616,49 +595,316 @@ class _ReelPostState extends State<ReelPost>
     }
     return CupertinoColors.white;
   }
+
+  Widget _comment(String username, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: "$username ",
+              style: const TextStyle(
+                fontFamily: "Gilroy",
+                fontWeight: FontWeight.w600,
+                color: kgoldColor,
+                fontSize: 14,
+              ),
+            ),
+            TextSpan(
+              text: text,
+              style: TextStyle(
+                fontFamily: "Gilroy",
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class RatingCard extends StatefulWidget {
-  final Function(double) onRatingSelected;
+final List<CommentModel> comments = [
+  CommentModel(
+    username: "john_doe",
+    image: "assets/sources/profiles/aiony-haust.jpg",
+    message: "This looks amazing 🔥🔥",
+    time: "2d",
+  ),
+  CommentModel(
+    username: "alex_99",
+    image: "assets/sources/profiles/deco-dev.png",
+    message: "Pure elegance ✨",
+    time: "1d",
+  ),
+  CommentModel(
+    username: "maria_k",
+    image: "assets/sources/profiles/aiony-haust.jpg",
+    message: "Luxury vibes only 💫",
+    time: "5h",
+  ),
+  CommentModel(
+    username: "rohit.dev",
+    image: "assets/sources/profiles/azamat-zhanisov-.jpg",
+    message: "Nice shot 📸",
+    time: "3h",
+  ),
+  CommentModel(
+    username: "sophia_l",
+    image: "assets/sources/profiles/foto-sushi.jpg",
+    message: "Absolutely stunning ❤️",
+    time: "1h",
+  ),
+];
 
-  const RatingCard({super.key, required this.onRatingSelected});
+class CommentModel {
+  final String username;
+  final String image;
+  final String message;
+  final String time;
+
+  CommentModel({
+    required this.username,
+    required this.image,
+    required this.message,
+    required this.time,
+  });
+}
+
+class CommentBottomSheet extends StatefulWidget {
+  final UserPostModel post;
+  const CommentBottomSheet({super.key, required this.post});
 
   @override
-  State<RatingCard> createState() => _RatingCardState();
+  State<CommentBottomSheet> createState() => _CommentBottomSheetState();
 }
 
-class _RatingCardState extends State<RatingCard> {
-  double _rating = 0;
+class _CommentBottomSheetState extends State<CommentBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPopupSurface(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(5, (index) {
-            final starIndex = index + 1;
-            return GestureDetector(
-              onTap: () {
-                setState(() => _rating = starIndex.toDouble());
-                widget.onRatingSelected(_rating);
-                Navigator.pop(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Icon(
-                  starIndex <= _rating
-                      ? CupertinoIcons.star_fill
-                      : CupertinoIcons.star,
-                  color: kgoldColor,
-                  size: 28,
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.4,
+      maxChildSize: 0.95,
+      builder: (context, scrollController) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          decoration: BoxDecoration(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kblackColor
+                : kwhiteColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+          ),
+          child: Column(
+            children: [
+              /// drag handle
+              const SizedBox(height: 8),
+              Container(
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white24
+                      : Colors.black26,
+                  borderRadius: BorderRadius.circular(4),
                 ),
               ),
-            );
-          }),
+              const SizedBox(height: 12),
+
+              /// title
+              Text(
+                "Comments",
+                style: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              const Divider(color: Colors.white12),
+
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: comments.length,
+                  itemBuilder: (_, index) {
+                    final comment = comments[index];
+
+                    return _CommentItem(
+                      image: comment.image,
+                      name: comment.username,
+                      date: comment.time,
+                      comment: comment.message,
+                    );
+                  },
+                ),
+              ),
+
+              /// input field
+              _commentInput(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _commentInput() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
         ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 36,
+            width: 36,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: AssetImage("assets/sources/profiles/averie-woodard.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              style: TextStyle(
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+              ),
+              decoration: InputDecoration(
+                hintText: "Add a comment...",
+                hintStyle: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white54
+                      : Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: const Icon(
+              CupertinoIcons.paperplane_fill,
+              color: kgoldColor,
+            ),
+
+            onPressed: () {
+              if (_controller.text.trim().isNotEmpty) {
+                _controller.clear();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CommentItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String date;
+  final String comment;
+
+  const _CommentItem({
+    required this.image,
+    required this.name,
+    required this.date,
+    required this.comment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// avatar
+          Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 12),
+
+          /// text
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  comment,
+                  style: TextStyle(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

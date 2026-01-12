@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
+import 'package:harmanapp/star_module/widgets/star_side_menu.dart';
 import 'package:harmanapp/widgets/side_menu.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
@@ -33,7 +34,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? kblackColor
             : kwhiteColor,
-        endDrawer: endDrawer(context),
+        endDrawer: starendDrawer(context),
         body: Column(
           children: [
             SizedBox(

@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/cart_manager.dart';
 import 'package:harmanapp/Cart/cart_page.dart';
 import 'package:harmanapp/MyAccount/my_account.dart';
+import 'package:harmanapp/star_module/MyAccount/star_my_account.dart';
+import 'package:harmanapp/star_module/Star_Cart/star_cart_page.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class StarCustomAppBar extends StatelessWidget
@@ -63,7 +65,9 @@ class StarCustomAppBar extends StatelessWidget
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute<void>(builder: (context) => const MyAccount()),
+              MaterialPageRoute<void>(
+                builder: (context) => const StarMyAccount(),
+              ),
             );
           },
           child: Container(
@@ -138,7 +142,7 @@ class StarCustomAppBar extends StatelessWidget
           onPressed: () async {
             await Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const CartPage()),
+              MaterialPageRoute(builder: (_) => const StarCartPage()),
             );
           },
         ),
