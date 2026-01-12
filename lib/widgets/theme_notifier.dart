@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/widgets/app_colors.dart';
 
@@ -55,6 +56,9 @@ final ThemeData darkTheme = ThemeData(
 );
 
 const kgoldColor = Color(0xFFc09d41);
+const ksilverColor = Colors.grey;
+const kbronzeColor = CupertinoColors.systemBrown;
+
 const kwhiteColor = Color(0xFFFFFFFF);
 const kwhiteopacityColor = Color(0x3DFFFFFF);
 

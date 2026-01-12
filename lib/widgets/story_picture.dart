@@ -102,20 +102,28 @@ class StoryPicture extends StatelessWidget {
               width: size - 10,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(borderRadius + 2),
-                gradient: const LinearGradient(
-                  colors: [
-                    CupertinoColors.systemOrange,
-                    CupertinoColors.systemRed,
-                  ],
+                gradient: LinearGradient(
+                  colors: user.tier == 'gold'
+                      ? [kgoldColor, kgoldColor]
+                      : user.tier == 'silver'
+                      ? [ksilverColor, ksilverColor]
+                      : [kbronzeColor, kbronzeColor],
+
+                  // ),
                 ),
               ),
+
               padding: const EdgeInsets.all(2),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius),
-                  color: CupertinoColors.white,
+                  color: user.tier == 'gold'
+                      ? kgoldColor
+                      : user.tier == 'silver'
+                      ? ksilverColor
+                      : kbronzeColor,
                 ),
-                padding: const EdgeInsets.all(2),
+                padding: const EdgeInsets.all(1),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(borderRadius - 2),

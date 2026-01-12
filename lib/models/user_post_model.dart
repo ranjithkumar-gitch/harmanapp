@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:harmanapp/models/post_model.dart';
 
 class UserPostModel {
   String name;
   String sname;
-
+  String tier;
   String profileImage;
   String category;
   PostModel post;
@@ -13,7 +14,7 @@ class UserPostModel {
   UserPostModel({
     required this.name,
     required this.sname,
-
+    required this.tier,
     required this.profileImage,
     required this.category,
     required this.post,
@@ -30,6 +31,7 @@ List<UserPostModel> posts = [
     sname: '@ViratKohli',
     profileImage: 'Virat_Kohli.jpg',
     category: 'Cricketer & youth icon',
+    tier: 'gold',
     post: PostModel(
       postType: Post.reel,
       video: 'virat.mp4',
@@ -42,7 +44,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Ratan Tata',
     sname: '@ratantata',
-
+    tier: 'gold',
     profileImage: 'Ratan_Tata.jpg',
     category: 'Business icon & philanthropist',
 
@@ -59,7 +61,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Deepika Padukone',
     sname: '@deepikapadukone',
-
+    tier: 'bronze',
     profileImage: 'deepika.jpg',
     category: 'Actress & mental health advocate',
 
@@ -77,7 +79,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Narayana Murthy',
     sname: '@narayanamurthy',
-
+    tier: 'gold',
     profileImage: 'murthy.jpg',
     category: 'Infosys founder',
 
@@ -93,7 +95,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Falguni Nayar',
     sname: '@falguni_nayar',
-
+    tier: 'silver',
     profileImage: 'nayar.jpeg',
     category: 'Nykaa founder',
 
@@ -110,7 +112,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Oprah Winfrey',
     sname: '@oprah',
-
+    tier: 'bronze',
     profileImage: 'oprah.jpg',
     category: 'Media mogul',
 
@@ -126,7 +128,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Elon Musk',
     sname: '@elonmusk',
-
+    tier: 'bronze',
     profileImage: 'elon.jpeg',
     category: 'Tesla & SpaceX founder',
 
@@ -143,7 +145,7 @@ List<UserPostModel> posts = [
   UserPostModel(
     name: 'Barack Obama',
     sname: '@barackobama',
-
+    tier: 'gold',
     profileImage: 'obama.jpg',
     category: 'Former U.S. President',
 

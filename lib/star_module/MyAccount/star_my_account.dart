@@ -205,6 +205,21 @@ class _StarMyAccountState extends State<StarMyAccount> {
                       );
                     },
                   ),
+                  const SizedBox(height: 12),
+
+                  _optionCard(
+                    icon: Icons.checklist_sharp,
+                    title: 'Create Post',
+                    subtitle: 'Stills | Bits | Videos ',
+                    isSelected: selectedCard == "Orders",
+                    onTap: () => setState(() => selectedCard = "Orders"),
+                    onButtonPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (_) => const MyOrders()),
+                      // );
+                    },
+                  ),
                 ],
               ),
             ),
