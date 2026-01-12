@@ -6,14 +6,14 @@ import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+class StarCartPage extends StatefulWidget {
+  const StarCartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  State<StarCartPage> createState() => _StarCartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _StarCartPageState extends State<StarCartPage> {
   double calculateTotalPrice() {
     double total = 0;
 

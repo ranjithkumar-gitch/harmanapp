@@ -5,6 +5,7 @@ import 'package:harmanapp/Login/signup_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
 import 'package:harmanapp/Dashboard/main_screen.dart';
+import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -221,15 +222,10 @@ class _LoginscreenState extends State<Loginscreen> {
                                     duration: const Duration(seconds: 1),
                                   );
                                 } else if (_selectedRole == 'Star') {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: const Text(
-                                        'Star role selected',
-                                        style: TextStyle(color: kwhiteColor),
-                                      ),
-                                      backgroundColor: kgoldColor,
-                                      duration: const Duration(seconds: 2),
-                                    ),
+                                  Get.to(
+                                    () => const StarMainScreen(),
+                                    transition: Transition.zoom,
+                                    duration: const Duration(seconds: 1),
                                   );
                                 }
                               }
