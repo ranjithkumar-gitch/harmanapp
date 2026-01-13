@@ -476,7 +476,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   void initState() {
     super.initState();
     _postTypeFocus.addListener(() {
-      setState(() => postTypeGold = _postTypeFocus.hasFocus);
+      setState(() {}); // forces rebuild on focus change
     });
     _descriptionFocus.addListener(() {
       setState(() => descriptionGold = _descriptionFocus.hasFocus);
@@ -520,12 +520,59 @@ class _CreatePostPageState extends State<CreatePostPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// POST TYPE
+                // DropdownButtonFormField<PostType>(
+                //   value: _selectedType,
+                //   focusNode: _postTypeFocus,
+                //   dropdownColor: bgColor,
+                //   iconEnabledColor: kgoldColor,
+                //   style: TextStyle(color: textColor),
+                //   decoration: InputDecoration(
+                //     hintText: "Select Post Type",
+                //     hintStyle: const TextStyle(color: kgreyColor),
+                //     filled: true,
+                //     fillColor: bgColor,
+
+                //     enabledBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(12),
+                //       borderSide: BorderSide(color: inactiveColor, width: 1.5),
+                //     ),
+
+                //     focusedBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(12),
+                //       borderSide: const BorderSide(color: kgoldColor, width: 2),
+                //     ),
+                //   ),
+                //   items: [
+                //     DropdownMenuItem(
+                //       value: PostType.bits,
+                //       child: Text("Bits", style: TextStyle(color: textColor)),
+                //     ),
+                //     DropdownMenuItem(
+                //       value: PostType.stills,
+                //       child: Text("Stills", style: TextStyle(color: textColor)),
+                //     ),
+                //     DropdownMenuItem(
+                //       value: PostType.longVideos,
+                //       child: Text(
+                //         "Long Videos",
+                //         style: TextStyle(color: textColor),
+                //       ),
+                //     ),
+                //   ],
+                //   onChanged: (value) {
+                //     setState(() {
+                //       _selectedType = value!;
+                //       selectedMedia.clear();
+                //     });
+                //   },
+                // ),
                 DropdownButtonFormField<PostType>(
                   value: _selectedType,
                   focusNode: _postTypeFocus,
                   dropdownColor: bgColor,
                   iconEnabledColor: kgoldColor,
                   style: TextStyle(color: textColor),
+
                   decoration: InputDecoration(
                     hintText: "Select Post Type",
                     hintStyle: const TextStyle(color: kgreyColor),
@@ -534,7 +581,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: inactiveColor, width: 1.5),
+                      borderSide: BorderSide(
+                        color:
+                            (_postTypeFocus.hasFocus || _selectedType != null)
+                            ? kgoldColor
+                            : inactiveColor,
+                        width:
+                            (_postTypeFocus.hasFocus || _selectedType != null)
+                            ? 2
+                            : 1.5,
+                      ),
                     ),
 
                     focusedBorder: OutlineInputBorder(
@@ -542,23 +598,19 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       borderSide: const BorderSide(color: kgoldColor, width: 2),
                     ),
                   ),
-                  items: [
-                    DropdownMenuItem(
-                      value: PostType.bits,
-                      child: Text("Bits", style: TextStyle(color: textColor)),
-                    ),
+
+                  items: const [
+                    DropdownMenuItem(value: PostType.bits, child: Text("Bits")),
                     DropdownMenuItem(
                       value: PostType.stills,
-                      child: Text("Stills", style: TextStyle(color: textColor)),
+                      child: Text("Stills"),
                     ),
                     DropdownMenuItem(
                       value: PostType.longVideos,
-                      child: Text(
-                        "Long Videos",
-                        style: TextStyle(color: textColor),
-                      ),
+                      child: Text("Long Videos"),
                     ),
                   ],
+
                   onChanged: (value) {
                     setState(() {
                       _selectedType = value!;
@@ -589,7 +641,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: mediaGold ? kgoldColor : borderColor,
+                          color:
+                              (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
+                              ? kgoldColor
+                              : borderColor,
                           width: mediaGold ? 2 : 1.5,
                         ),
                       ),
