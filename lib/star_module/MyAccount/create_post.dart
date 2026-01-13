@@ -769,9 +769,17 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
+                          // style: OutlinedButton.styleFrom(
+                          //   foregroundColor: kgoldColor,
+                          //   side: const BorderSide(color: kgoldColor, width: 2),
+                          // ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: bgColor,
                             foregroundColor: kgoldColor,
                             side: const BorderSide(color: kgoldColor, width: 2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
                           ),
                           onPressed: () async {
                             final date = await showDatePicker(
@@ -793,9 +801,17 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
+                          // style: OutlinedButton.styleFrom(
+                          //   foregroundColor: kgoldColor,
+                          //   side: const BorderSide(color: kgoldColor, width: 2),
+                          // ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: bgColor,
                             foregroundColor: kgoldColor,
                             side: const BorderSide(color: kgoldColor, width: 2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
                           ),
                           onPressed: () async {
                             final time = await showTimePicker(
