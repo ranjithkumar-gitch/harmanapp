@@ -62,7 +62,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                     ),
                     profileImage(
                       'assets/sources/profiles/lucas-sankey.jpg',
-                      'Peeter Hain',
+                      'Virat Kohli',
                     ),
                   ],
                 ),
@@ -420,32 +420,56 @@ class _StarMyAccountState extends State<StarMyAccount> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: const LinearGradient(
-                    colors: [kgoldColor, kgoldColor],
-                  ),
-                ),
-                padding: const EdgeInsets.all(2),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: CupertinoColors.white,
-                  ),
-                  // padding: const EdgeInsets.all(2),
-                  child: Container(
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(imagePath),
-                        fit: BoxFit.cover,
+                      gradient: const LinearGradient(
+                        colors: [kgoldColor, kgoldColor],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: CupertinoColors.white,
+                      ),
+                      // padding: const EdgeInsets.all(2),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(imagePath),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    bottom: -6,
+                    right: -6,
+                    child: GestureDetector(
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: kgoldColor, width: 1.5),
+                        ),
+                        child: const Icon(
+                          Icons.star,
+                          color: kgoldColor,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(width: 8),
               Expanded(

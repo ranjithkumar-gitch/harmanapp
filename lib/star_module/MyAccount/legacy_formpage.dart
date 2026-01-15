@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
 class LegacyFormPage extends StatefulWidget {
@@ -13,19 +12,27 @@ class LegacyFormPage extends StatefulWidget {
 
 class _LegacyFormPageState extends State<LegacyFormPage> {
   final TextEditingController achievementCtrl = TextEditingController();
-  final TextEditingController titleCtrl = TextEditingController();
   final TextEditingController descCtrl = TextEditingController();
 
   final FocusNode achievementFocus = FocusNode();
-  final FocusNode titleFocus = FocusNode();
   final FocusNode descFocus = FocusNode();
+
   final ImagePicker _picker = ImagePicker();
   List<XFile> selectedMedia = [];
+
   DateTime? selectedDate;
   bool scheduleLater = false;
-
   DateTime? scheduledDate;
   TimeOfDay? scheduledTime;
+
+  /// THEME HELPERS
+  Color get bgColor => Theme.of(context).scaffoldBackgroundColor;
+  Color get cardColor => Theme.of(context).cardColor;
+  Color get textColor => Theme.of(context).textTheme.bodyLarge!.color!;
+  Color get hintColor => Theme.of(context).hintColor;
+  Color get borderColor => Theme.of(context).dividerColor;
+
+  static const Color kgoldColor = Color(0xFFD4AF37);
 
   bool isGold(FocusNode f, TextEditingController c) =>
       f.hasFocus || c.text.isNotEmpty;
@@ -34,172 +41,178 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
   void initState() {
     super.initState();
     achievementFocus.addListener(() => setState(() {}));
-    titleFocus.addListener(() => setState(() {}));
     descFocus.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: kblackColor,
+        backgroundColor: bgColor,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: kwhiteColor),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text("Add Legacy", style: TextStyle(color: kwhiteColor)),
+        iconTheme: IconThemeData(color: textColor),
+        title: Text("Add Legacy", style: TextStyle(color: textColor)),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: textColor),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             /// DATE
-            _box(
-              isGold: selectedDate != null,
-              child: ListTile(
-                title: Text(
-                  selectedDate == null
-                      ? "Select Date"
-                      : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
-                  style: const TextStyle(color: Colors.white),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Select Date",
+                  style: TextStyle(
+                    color: selectedMedia.isNotEmpty
+                        ? kgoldColor
+                        : textColor.withOpacity(0.7),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                trailing: const Icon(Icons.calendar_today, color: kgoldColor),
-                onTap: () async {
-                  final d = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
-                    initialDate: DateTime.now(),
-                  );
-                  if (d != null) setState(() => selectedDate = d);
-                },
-              ),
+                SizedBox(height: 8),
+                _box(
+                  isGold: selectedDate != null,
+                  child: ListTile(
+                    title: Text(
+                      selectedDate == null
+                          ? "Select Date"
+                          : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
+                      style: TextStyle(color: textColor),
+                    ),
+                    trailing: const Icon(
+                      Icons.calendar_today,
+                      color: kgoldColor,
+                    ),
+                    onTap: () async {
+                      final d = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                        initialDate: DateTime.now(),
+                      );
+                      if (d != null) setState(() => selectedDate = d);
+                    },
+                  ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
             /// ACHIEVEMENT
-            _input(
+            _labeledInput(
+              label: "Achievement",
               controller: achievementCtrl,
               focusNode: achievementFocus,
-              hint: "Achievement",
+              hint: "Enter achievement",
               isGold: isGold(achievementFocus, achievementCtrl),
             ),
 
-            const SizedBox(height: 16),
-
-            /// TITLE
-            _input(
-              controller: titleCtrl,
-              focusNode: titleFocus,
-              hint: "Title",
-              isGold: isGold(titleFocus, titleCtrl),
-            ),
-
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
             /// DESCRIPTION
-            _input(
+            _labeledInput(
+              label: "Description",
               controller: descCtrl,
               focusNode: descFocus,
-              hint: "Description",
+              hint: "Write something meaningful...",
               maxLines: 3,
               isGold: isGold(descFocus, descCtrl),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
-            // _box(
-            //   isGold: selectedMedia.isNotEmpty,
-            //   child: ListTile(
-            //     leading: const Icon(Icons.upload, color: kgoldColor),
-            //     title: const Text(
-            //       "Upload Media",
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //     subtitle: selectedMedia.isNotEmpty
-            //         ? Text(
-            //             "${selectedMedia.length} file(s) selected",
-            //             style: const TextStyle(
-            //               color: Colors.white60,
-            //               fontSize: 12,
-            //             ),
-            //           )
-            //         : null,
-            //     onTap: _uploadMedia,
-            //   ),
-            // ),
-            _box(
-              isGold: selectedMedia.isNotEmpty,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: selectedMedia.isEmpty
-                    ? ListTile(
-                        leading: const Icon(Icons.upload, color: kgoldColor),
-                        title: const Text(
-                          "Upload Media",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: _uploadMedia,
-                      )
-                    : SizedBox(
-                        height: 110, // 🔑 fixed height = no render error
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: selectedMedia.length + 1,
-                          itemBuilder: (context, index) {
-                            /// ➕ ADD BUTTON
-                            if (index == selectedMedia.length) {
-                              return GestureDetector(
-                                onTap: _uploadMedia,
-                                child: Container(
-                                  width: 90,
-                                  margin: const EdgeInsets.symmetric(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Upload Media",
+                  style: TextStyle(
+                    color: selectedMedia.isNotEmpty
+                        ? kgoldColor
+                        : textColor.withOpacity(0.7),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                _box(
+                  isGold: selectedMedia.isNotEmpty,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: selectedMedia.isEmpty
+                        ? ListTile(
+                            leading: const Icon(
+                              Icons.upload,
+                              color: kgoldColor,
+                            ),
+                            title: Text(
+                              "Upload Media",
+                              style: TextStyle(color: textColor),
+                            ),
+                            onTap: _uploadMedia,
+                          )
+                        : SizedBox(
+                            height: 110,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: selectedMedia.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index == selectedMedia.length) {
+                                  return GestureDetector(
+                                    onTap: _uploadMedia,
+                                    child: Container(
+                                      width: 90,
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: kgoldColor,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: kgoldColor,
+                                        size: 32,
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                final file = selectedMedia[index];
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
                                     horizontal: 6,
                                   ),
-                                  decoration: BoxDecoration(
+                                  child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: kgoldColor,
-                                      width: 1.5,
+                                    child: Image.file(
+                                      File(file.path),
+                                      width: 90,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: kgoldColor,
-                                    size: 32,
-                                  ),
-                                ),
-                              );
-                            }
-
-                            /// MEDIA PREVIEW
-                            final file = selectedMedia[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.file(
-                                  File(file.path),
-                                  width: 90,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-              ),
+                                );
+                              },
+                            ),
+                          ),
+                  ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
             Row(
               children: [
@@ -209,17 +222,14 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                   activeColor: kgoldColor,
                   onChanged: (v) => setState(() => scheduleLater = v!),
                 ),
-                const Text("Publish Now", style: TextStyle(color: kgreyColor)),
+                Text("Publish Now", style: TextStyle(color: textColor)),
                 Radio<bool>(
                   value: true,
                   groupValue: scheduleLater,
                   activeColor: kgoldColor,
                   onChanged: (v) => setState(() => scheduleLater = v!),
                 ),
-                const Text(
-                  "Schedule Later",
-                  style: TextStyle(color: kgreyColor),
-                ),
+                Text("Schedule Later", style: TextStyle(color: textColor)),
               ],
             ),
 
@@ -227,76 +237,54 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                      // style: OutlinedButton.styleFrom(
-                      //   foregroundColor: kgoldColor,
-                      //   side: const BorderSide(color: kgoldColor, width: 2),
-                      // ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kblackColor,
-                        foregroundColor: kgoldColor,
-                        side: const BorderSide(color: kgoldColor, width: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                      onPressed: () async {
+                    child: _scheduleButton(
+                      text: scheduledDate == null
+                          ? "Select Date"
+                          : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
+                      onTap: () async {
                         final date = await showDatePicker(
                           context: context,
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2100),
                           initialDate: DateTime.now(),
                         );
-                        if (date != null) setState(() => scheduledDate = date);
+                        if (date != null) {
+                          setState(() => scheduledDate = date);
+                        }
                       },
-                      child: Text(
-                        scheduledDate == null
-                            ? "Select Date"
-                            : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
-                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: OutlinedButton(
-                      // style: OutlinedButton.styleFrom(
-                      //   foregroundColor: kgoldColor,
-                      //   side: const BorderSide(color: kgoldColor, width: 2),
-                      // ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kblackColor,
-                        foregroundColor: kgoldColor,
-                        side: const BorderSide(color: kgoldColor, width: 2),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                      onPressed: () async {
+                    child: _scheduleButton(
+                      text: scheduledTime == null
+                          ? "Select Time"
+                          : scheduledTime!.format(context),
+                      onTap: () async {
                         final time = await showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
                         );
-                        if (time != null) setState(() => scheduledTime = time);
+                        if (time != null) {
+                          setState(() => scheduledTime = time);
+                        }
                       },
-                      child: Text(
-                        scheduledTime == null
-                            ? "Select Time"
-                            : scheduledTime!.format(context),
-                      ),
                     ),
                   ),
                 ],
               ),
 
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-            /// SUBMIT
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: kgoldColor, width: 2),
                   padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                 ),
                 onPressed: () {},
                 child: const Text(
@@ -315,36 +303,52 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     );
   }
 
-  /// INPUT FIELD
-  Widget _input({
+  /// LABELED INPUT
+  Widget _labeledInput({
+    required String label,
     required TextEditingController controller,
     required FocusNode focusNode,
     required String hint,
     required bool isGold,
     int maxLines = 1,
   }) {
-    return TextField(
-      controller: controller,
-      focusNode: focusNode,
-      maxLines: maxLines,
-      onChanged: (_) => setState(() {}),
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white38),
-        filled: true,
-        fillColor: const Color(0xFF1C1C1E),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: isGold ? kgoldColor : Colors.grey,
-            width: 1.5,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: isGold ? kgoldColor : textColor.withOpacity(0.7),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: kgoldColor, width: 2),
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          focusNode: focusNode,
+          maxLines: maxLines,
+          onChanged: (_) => setState(() {}),
+          style: TextStyle(color: textColor),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(color: hintColor),
+            filled: true,
+            fillColor: cardColor,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: isGold ? kgoldColor : borderColor,
+                width: 1.5,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: kgoldColor, width: 2),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -352,10 +356,10 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
   Widget _box({required Widget child, required bool isGold}) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF1C1C1E),
+        color: cardColor,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isGold ? kgoldColor : Colors.grey,
+          color: isGold ? kgoldColor : borderColor,
           width: isGold ? 2 : 1.5,
         ),
       ),
@@ -363,10 +367,25 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     );
   }
 
+  /// SCHEDULE BUTTON
+  Widget _scheduleButton({required String text, required VoidCallback onTap}) {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        side: const BorderSide(color: kgoldColor, width: 2),
+        foregroundColor: kgoldColor,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      ),
+      onPressed: onTap,
+      child: Text(text),
+    );
+  }
+
+  /// MEDIA PICKER
   Future<void> _uploadMedia() async {
     showModalBottomSheet(
       context: context,
-      backgroundColor: kblackColor,
+      backgroundColor: bgColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -377,10 +396,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
             children: [
               ListTile(
                 leading: const Icon(Icons.image, color: kgoldColor),
-                title: const Text(
-                  "Pick Image",
-                  style: TextStyle(color: Colors.white),
-                ),
+                title: Text("Pick Image", style: TextStyle(color: textColor)),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? image = await _picker.pickImage(
@@ -393,10 +409,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
               ),
               ListTile(
                 leading: const Icon(Icons.videocam, color: kgoldColor),
-                title: const Text(
-                  "Pick Video",
-                  style: TextStyle(color: Colors.white),
-                ),
+                title: Text("Pick Video", style: TextStyle(color: textColor)),
                 onTap: () async {
                   Navigator.pop(context);
                   final XFile? video = await _picker.pickVideo(

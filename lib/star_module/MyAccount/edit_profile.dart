@@ -66,29 +66,74 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 20),
 
               /// 👤 PROFILE IMAGE
+              // Center(
+              //   child: Stack(
+              //     children: [
+              //       Container(
+              //         height: 130,
+              //         width: 130,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(10),
+              //           border: Border.all(color: kgoldColor, width: 2),
+              //           image: DecorationImage(
+              //             fit: BoxFit.cover,
+              //             image: _profileImage != null
+              //                 ? FileImage(_profileImage!)
+              //                 : const AssetImage(
+              //                         'assets/sources/profiles/lucas-sankey.jpg',
+              //                       )
+              //                       as ImageProvider,
+              //           ),
+              //         ),
+              //       ),
+              //       Positioned(
+              //         bottom: -6,
+              //         right: -6,
+              //         child: GestureDetector(
+              //           onTap: _pickProfileImage,
+              //           child: Container(
+              //             padding: const EdgeInsets.all(6),
+              //             decoration: BoxDecoration(
+              //               color: Colors.black,
+              //               shape: BoxShape.circle,
+              //               border: Border.all(color: kgoldColor),
+              //             ),
+              //             child: const Icon(
+              //               Icons.camera_alt,
+              //               color: kgoldColor,
+              //               size: 18,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Center(
                 child: Stack(
+                  clipBehavior: Clip.none,
                   children: [
                     Container(
                       height: 130,
                       width: 130,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: kgoldColor, width: 2),
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: _profileImage != null
                               ? FileImage(_profileImage!)
                               : const AssetImage(
-                                      'assets/sources/profiles/lucas-sankey.jpg',
-                                    )
-                                    as ImageProvider,
+                                  'assets/sources/profiles/lucas-sankey.jpg',
+                                ),
                         ),
                       ),
                     ),
+
+                    /// CAMERA ICON
                     Positioned(
-                      bottom: 4,
-                      right: 4,
+                      bottom: -6,
+                      right: -6,
                       child: GestureDetector(
                         onTap: _pickProfileImage,
                         child: Container(
@@ -96,7 +141,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           decoration: BoxDecoration(
                             color: Colors.black,
                             shape: BoxShape.circle,
-                            border: Border.all(color: kgoldColor),
+                            border: Border.all(color: kgoldColor, width: 1.5),
                           ),
                           child: const Icon(
                             Icons.camera_alt,
@@ -129,7 +174,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _inputField(
                 controller: usernameController,
                 focusNode: usernameFocus,
-                hint: "Enter username",
+                hint: "Virat Kohli",
                 isGold: usernameGold,
               ),
 
@@ -141,7 +186,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _inputField(
                 controller: displayNameController,
                 focusNode: displayNameFocus,
-                hint: "Enter bio",
+                hint: "Cricketer",
                 isGold: displayNameGold,
               ),
               const SizedBox(height: 20),
@@ -152,7 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _inputField(
                 controller: displayNameController,
                 focusNode: displayNameFocus,
-                hint: "Enter email",
+                hint: "virat@gmail.com",
                 isGold: displayNameGold,
               ),
               const SizedBox(height: 20),
@@ -163,7 +208,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _inputField(
                 controller: displayNameController,
                 focusNode: displayNameFocus,
-                hint: "Enter date of birth",
+                hint: "18 Feb 1990",
                 isGold: displayNameGold,
               ),
               const SizedBox(height: 20),
@@ -173,7 +218,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _inputField(
                 controller: displayNameController,
                 focusNode: displayNameFocus,
-                hint: "Enter address",
+                hint: "Mumbai",
                 isGold: displayNameGold,
               ),
 

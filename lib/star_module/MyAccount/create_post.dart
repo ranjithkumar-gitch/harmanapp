@@ -1,3 +1,406 @@
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
+// import 'package:image_picker/image_picker.dart';
+
+// enum PostType { bits, stills, longVideos }
+
+// class CreatePostPage extends StatefulWidget {
+//   const CreatePostPage({super.key});
+
+//   @override
+//   State<CreatePostPage> createState() => _CreatePostPageState();
+// }
+
+// class _CreatePostPageState extends State<CreatePostPage> {
+//   PostType _selectedType = PostType.stills;
+//   final ImagePicker _picker = ImagePicker();
+//   final TextEditingController _descriptionController = TextEditingController();
+
+//   bool mediaGold = false;
+//   bool descriptionGold = false;
+//   bool postTypeGold = false;
+
+//   final FocusNode _mediaFocus = FocusNode();
+//   final FocusNode _descriptionFocus = FocusNode();
+//   final FocusNode _postTypeFocus = FocusNode();
+
+//   bool scheduleLater = false;
+//   DateTime? scheduledDate;
+//   TimeOfDay? scheduledTime;
+
+//   List<XFile> selectedMedia = [];
+
+//   Future<void> _pickImages() async {
+//     final images = await _picker.pickMultiImage();
+//     if (images.isNotEmpty) {
+//       setState(() => selectedMedia.addAll(images));
+//     }
+//   }
+
+//   Future<void> _pickVideos() async {
+//     final videos = await _picker.pickMultipleMedia();
+//     setState(() {
+//       selectedMedia = videos
+//           .where((e) => e.mimeType?.startsWith('video') ?? false)
+//           .toList();
+//     });
+//   }
+
+//   void _onCreatePost() {
+//     debugPrint("Post Type: $_selectedType");
+//     debugPrint("Media Count: ${selectedMedia.length}");
+//     debugPrint("Description: ${_descriptionController.text}");
+//     debugPrint("Schedule Later: $scheduleLater");
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _postTypeFocus.addListener(() {
+//       setState(() {}); // forces rebuild on focus change
+//     });
+//     _descriptionFocus.addListener(() {
+//       setState(() => descriptionGold = _descriptionFocus.hasFocus);
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     _mediaFocus.dispose();
+//     _descriptionFocus.dispose();
+//     _postTypeFocus.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+//     final bgColor = isDark ? kblackColor : kwhiteColor;
+//     final textColor = isDark ? kwhiteColor : kblackColor;
+//     final borderColor = isDark ? kwhiteColor : kblackColor;
+//     final Color inactiveColor = kgreyColor;
+
+//     return Scaffold(
+//       backgroundColor: bgColor,
+//       appBar: AppBar(
+//         centerTitle: true,
+//         elevation: 0,
+//         backgroundColor: bgColor,
+//         leading: IconButton(
+//           icon: Icon(Icons.arrow_back_ios, color: textColor),
+//           onPressed: () => Navigator.pop(context),
+//         ),
+//         title: Text("Create Post", style: TextStyle(color: textColor)),
+//       ),
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           child: Padding(
+//             padding: const EdgeInsets.all(16),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 DropdownButtonFormField<PostType>(
+//                   value: _selectedType,
+//                   focusNode: _postTypeFocus,
+//                   dropdownColor: bgColor,
+//                   iconEnabledColor: kgoldColor,
+//                   style: TextStyle(color: textColor),
+
+//                   decoration: InputDecoration(
+//                     hintText: "Select Post Type",
+//                     hintStyle: const TextStyle(color: kgreyColor),
+//                     filled: true,
+//                     fillColor: bgColor,
+
+//                     enabledBorder: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(12),
+//                       borderSide: BorderSide(
+//                         color:
+//                             (_postTypeFocus.hasFocus || _selectedType != null)
+//                             ? kgoldColor
+//                             : inactiveColor,
+//                         width:
+//                             (_postTypeFocus.hasFocus || _selectedType != null)
+//                             ? 2
+//                             : 1.5,
+//                       ),
+//                     ),
+
+//                     focusedBorder: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(12),
+//                       borderSide: const BorderSide(color: kgoldColor, width: 2),
+//                     ),
+//                   ),
+
+//                   items: const [
+//                     DropdownMenuItem(
+//                       value: PostType.stills,
+//                       child: Text("Stills"),
+//                     ),
+//                     DropdownMenuItem(value: PostType.bits, child: Text("Bits")),
+
+//                     DropdownMenuItem(
+//                       value: PostType.longVideos,
+//                       child: Text("Long Videos"),
+//                     ),
+//                   ],
+
+//                   onChanged: (value) {
+//                     setState(() {
+//                       _selectedType = value!;
+//                       selectedMedia.clear();
+//                     });
+//                   },
+//                 ),
+
+//                 const SizedBox(height: 16),
+
+//                 /// MEDIA PICKER
+//                 GestureDetector(
+//                   onTap: () {
+//                     _mediaFocus.requestFocus();
+//                     if (_selectedType == PostType.stills) {
+//                       _pickImages();
+//                     } else {
+//                       _pickVideos();
+//                     }
+//                   },
+//                   child: Focus(
+//                     focusNode: _mediaFocus,
+//                     onFocusChange: (hasFocus) {
+//                       setState(() => mediaGold = hasFocus);
+//                     },
+//                     child: Container(
+//                       height: 140,
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(12),
+//                         border: Border.all(
+//                           color:
+//                               (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
+//                               ? kgoldColor
+//                               : borderColor,
+//                           width: mediaGold ? 2 : 1.5,
+//                         ),
+//                       ),
+//                       child: selectedMedia.isEmpty
+//                           ? Center(
+//                               child: Text(
+//                                 _selectedType == PostType.stills
+//                                     ? "Tap to add images"
+//                                     : "Tap to add videos",
+//                                 style: const TextStyle(color: kgreyColor),
+//                               ),
+//                             )
+//                           : ListView.builder(
+//                               scrollDirection: Axis.horizontal,
+//                               itemCount: selectedMedia.length + 1,
+//                               itemBuilder: (_, index) {
+//                                 if (index == selectedMedia.length &&
+//                                     _selectedType == PostType.stills) {
+//                                   return GestureDetector(
+//                                     onTap: _pickImages,
+//                                     child: Container(
+//                                       width: 100,
+//                                       margin: const EdgeInsets.all(8),
+//                                       decoration: BoxDecoration(
+//                                         borderRadius: BorderRadius.circular(8),
+//                                         border: Border.all(
+//                                           color: kgoldColor,
+//                                           width: 1.5,
+//                                         ),
+//                                       ),
+//                                       child: const Icon(
+//                                         Icons.add,
+//                                         color: kgoldColor,
+//                                       ),
+//                                     ),
+//                                   );
+//                                 }
+
+//                                 final file = selectedMedia[index];
+//                                 return Padding(
+//                                   padding: const EdgeInsets.all(8),
+//                                   child: ClipRRect(
+//                                     borderRadius: BorderRadius.circular(8),
+//                                     child: Image.file(
+//                                       File(file.path),
+//                                       width: 100,
+//                                       fit: BoxFit.cover,
+//                                     ),
+//                                   ),
+//                                 );
+//                               },
+//                             ),
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 16),
+
+//                 /// DESCRIPTION
+//                 TextField(
+//                   controller: _descriptionController,
+//                   focusNode: _descriptionFocus,
+//                   maxLines: 2,
+//                   style: TextStyle(color: textColor),
+
+//                   decoration: InputDecoration(
+//                     hintText: "Description",
+//                     hintStyle: const TextStyle(color: kgreyColor),
+//                     filled: true,
+//                     fillColor: bgColor,
+//                     enabledBorder: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(12),
+//                       borderSide: BorderSide(
+//                         color: descriptionGold ? kgoldColor : borderColor,
+//                         width: 1.5,
+//                       ),
+//                     ),
+//                     focusedBorder: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(12),
+//                       borderSide: const BorderSide(color: kgoldColor, width: 2),
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 16),
+
+//                 /// POST TIMING
+//                 Text(
+//                   "Post Timing",
+//                   style: TextStyle(
+//                     color: textColor,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+
+//                 Row(
+//                   children: [
+//                     Radio<bool>(
+//                       value: false,
+//                       groupValue: scheduleLater,
+//                       activeColor: kgoldColor,
+//                       onChanged: (v) => setState(() => scheduleLater = v!),
+//                     ),
+//                     const Text(
+//                       "Publish Now",
+//                       style: TextStyle(color: kgreyColor),
+//                     ),
+//                     Radio<bool>(
+//                       value: true,
+//                       groupValue: scheduleLater,
+//                       activeColor: kgoldColor,
+//                       onChanged: (v) => setState(() => scheduleLater = v!),
+//                     ),
+//                     const Text(
+//                       "Schedule Later",
+//                       style: TextStyle(color: kgreyColor),
+//                     ),
+//                   ],
+//                 ),
+
+//                 if (scheduleLater)
+//                   Row(
+//                     children: [
+//                       Expanded(
+//                         child: OutlinedButton(
+//                           // style: OutlinedButton.styleFrom(
+//                           //   foregroundColor: kgoldColor,
+//                           //   side: const BorderSide(color: kgoldColor, width: 2),
+//                           // ),
+//                           style: ElevatedButton.styleFrom(
+//                             backgroundColor: bgColor,
+//                             foregroundColor: kgoldColor,
+//                             side: const BorderSide(color: kgoldColor, width: 2),
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(14),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+//                             final date = await showDatePicker(
+//                               context: context,
+//                               firstDate: DateTime.now(),
+//                               lastDate: DateTime(2100),
+//                               initialDate: DateTime.now(),
+//                             );
+//                             if (date != null)
+//                               setState(() => scheduledDate = date);
+//                           },
+//                           child: Text(
+//                             scheduledDate == null
+//                                 ? "Select Date"
+//                                 : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(width: 12),
+//                       Expanded(
+//                         child: OutlinedButton(
+//                           // style: OutlinedButton.styleFrom(
+//                           //   foregroundColor: kgoldColor,
+//                           //   side: const BorderSide(color: kgoldColor, width: 2),
+//                           // ),
+//                           style: ElevatedButton.styleFrom(
+//                             backgroundColor: bgColor,
+//                             foregroundColor: kgoldColor,
+//                             side: const BorderSide(color: kgoldColor, width: 2),
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(14),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+//                             final time = await showTimePicker(
+//                               context: context,
+//                               initialTime: TimeOfDay.now(),
+//                             );
+//                             if (time != null)
+//                               setState(() => scheduledTime = time);
+//                           },
+//                           child: Text(
+//                             scheduledTime == null
+//                                 ? "Select Time"
+//                                 : scheduledTime!.format(context),
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+
+//                 SizedBox(height: 40),
+
+//                 /// CREATE BUTTON
+//                 SizedBox(
+//                   width: double.infinity,
+//                   height: 55,
+//                   child: ElevatedButton(
+//                     onPressed: _onCreatePost,
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: bgColor,
+//                       foregroundColor: kgoldColor,
+//                       side: const BorderSide(color: kgoldColor, width: 2),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(14),
+//                       ),
+//                     ),
+//                     child: const Text(
+//                       "Create Post",
+//                       style: TextStyle(
+//                         fontSize: 14,
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
@@ -14,16 +417,13 @@ class CreatePostPage extends StatefulWidget {
 
 class _CreatePostPageState extends State<CreatePostPage> {
   PostType _selectedType = PostType.stills;
+
   final ImagePicker _picker = ImagePicker();
   final TextEditingController _descriptionController = TextEditingController();
 
-  bool mediaGold = false;
-  bool descriptionGold = false;
-  bool postTypeGold = false;
-
+  final FocusNode _postTypeFocus = FocusNode();
   final FocusNode _mediaFocus = FocusNode();
   final FocusNode _descriptionFocus = FocusNode();
-  final FocusNode _postTypeFocus = FocusNode();
 
   bool scheduleLater = false;
   DateTime? scheduledDate;
@@ -55,32 +455,12 @@ class _CreatePostPageState extends State<CreatePostPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _postTypeFocus.addListener(() {
-      setState(() {}); // forces rebuild on focus change
-    });
-    _descriptionFocus.addListener(() {
-      setState(() => descriptionGold = _descriptionFocus.hasFocus);
-    });
-  }
-
-  @override
-  void dispose() {
-    _mediaFocus.dispose();
-    _descriptionFocus.dispose();
-    _postTypeFocus.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final bgColor = isDark ? kblackColor : kwhiteColor;
     final textColor = isDark ? kwhiteColor : kblackColor;
     final borderColor = isDark ? kwhiteColor : kblackColor;
-    final Color inactiveColor = kgreyColor;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -96,355 +476,291 @@ class _CreatePostPageState extends State<CreatePostPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// POST TYPE
-                // DropdownButtonFormField<PostType>(
-                //   value: _selectedType,
-                //   focusNode: _postTypeFocus,
-                //   dropdownColor: bgColor,
-                //   iconEnabledColor: kgoldColor,
-                //   style: TextStyle(color: textColor),
-                //   decoration: InputDecoration(
-                //     hintText: "Select Post Type",
-                //     hintStyle: const TextStyle(color: kgreyColor),
-                //     filled: true,
-                //     fillColor: bgColor,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// POST TYPE LABEL
+              _label("Post Type", _postTypeFocus.hasFocus, textColor),
+              const SizedBox(height: 8),
 
-                //     enabledBorder: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(12),
-                //       borderSide: BorderSide(color: inactiveColor, width: 1.5),
-                //     ),
+              DropdownButtonFormField<PostType>(
+                value: _selectedType,
+                focusNode: _postTypeFocus,
+                dropdownColor: bgColor,
+                iconEnabledColor: kgoldColor,
+                style: TextStyle(color: textColor),
+                decoration: _inputDecoration(
+                  bgColor,
+                  borderColor,
+                  _postTypeFocus.hasFocus,
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: PostType.stills,
+                    child: Text("Stills"),
+                  ),
+                  DropdownMenuItem(value: PostType.bits, child: Text("Bits")),
+                  DropdownMenuItem(
+                    value: PostType.longVideos,
+                    child: Text("Long Videos"),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedType = value!;
+                    selectedMedia.clear();
+                  });
+                },
+              ),
 
-                //     focusedBorder: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(12),
-                //       borderSide: const BorderSide(color: kgoldColor, width: 2),
-                //     ),
-                //   ),
-                //   items: [
-                //     DropdownMenuItem(
-                //       value: PostType.bits,
-                //       child: Text("Bits", style: TextStyle(color: textColor)),
-                //     ),
-                //     DropdownMenuItem(
-                //       value: PostType.stills,
-                //       child: Text("Stills", style: TextStyle(color: textColor)),
-                //     ),
-                //     DropdownMenuItem(
-                //       value: PostType.longVideos,
-                //       child: Text(
-                //         "Long Videos",
-                //         style: TextStyle(color: textColor),
-                //       ),
-                //     ),
-                //   ],
-                //   onChanged: (value) {
-                //     setState(() {
-                //       _selectedType = value!;
-                //       selectedMedia.clear();
-                //     });
-                //   },
-                // ),
-                DropdownButtonFormField<PostType>(
-                  value: _selectedType,
-                  focusNode: _postTypeFocus,
-                  dropdownColor: bgColor,
-                  iconEnabledColor: kgoldColor,
-                  style: TextStyle(color: textColor),
+              const SizedBox(height: 20),
 
-                  decoration: InputDecoration(
-                    hintText: "Select Post Type",
-                    hintStyle: const TextStyle(color: kgreyColor),
-                    filled: true,
-                    fillColor: bgColor,
+              /// MEDIA LABEL
+              _label(
+                "Media",
+                _mediaFocus.hasFocus || selectedMedia.isNotEmpty,
+                textColor,
+              ),
+              const SizedBox(height: 8),
 
-                    enabledBorder: OutlineInputBorder(
+              GestureDetector(
+                onTap: () {
+                  _mediaFocus.requestFocus();
+                  _selectedType == PostType.stills
+                      ? _pickImages()
+                      : _pickVideos();
+                },
+                child: Focus(
+                  focusNode: _mediaFocus,
+                  child: Container(
+                    height: 140,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
+                      border: Border.all(
                         color:
-                            (_postTypeFocus.hasFocus || _selectedType != null)
+                            (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
                             ? kgoldColor
-                            : inactiveColor,
+                            : borderColor,
                         width:
-                            (_postTypeFocus.hasFocus || _selectedType != null)
+                            (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
                             ? 2
                             : 1.5,
                       ),
                     ),
-
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: kgoldColor, width: 2),
-                    ),
-                  ),
-
-                  items: const [
-                    DropdownMenuItem(
-                      value: PostType.stills,
-                      child: Text("Stills"),
-                    ),
-                    DropdownMenuItem(value: PostType.bits, child: Text("Bits")),
-
-                    DropdownMenuItem(
-                      value: PostType.longVideos,
-                      child: Text("Long Videos"),
-                    ),
-                  ],
-
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedType = value!;
-                      selectedMedia.clear();
-                    });
-                  },
-                ),
-
-                const SizedBox(height: 16),
-
-                /// MEDIA PICKER
-                GestureDetector(
-                  onTap: () {
-                    _mediaFocus.requestFocus();
-                    if (_selectedType == PostType.stills) {
-                      _pickImages();
-                    } else {
-                      _pickVideos();
-                    }
-                  },
-                  child: Focus(
-                    focusNode: _mediaFocus,
-                    onFocusChange: (hasFocus) {
-                      setState(() => mediaGold = hasFocus);
-                    },
-                    child: Container(
-                      height: 140,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color:
-                              (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
-                              ? kgoldColor
-                              : borderColor,
-                          width: mediaGold ? 2 : 1.5,
-                        ),
-                      ),
-                      child: selectedMedia.isEmpty
-                          ? Center(
-                              child: Text(
-                                _selectedType == PostType.stills
-                                    ? "Tap to add images"
-                                    : "Tap to add videos",
-                                style: const TextStyle(color: kgreyColor),
-                              ),
-                            )
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: selectedMedia.length + 1,
-                              itemBuilder: (_, index) {
-                                if (index == selectedMedia.length &&
-                                    _selectedType == PostType.stills) {
-                                  return GestureDetector(
-                                    onTap: _pickImages,
-                                    child: Container(
-                                      width: 100,
-                                      margin: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: kgoldColor,
-                                          width: 1.5,
-                                        ),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: kgoldColor,
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                final file = selectedMedia[index];
-                                return Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.file(
-                                      File(file.path),
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              },
+                    child: selectedMedia.isEmpty
+                        ? Center(
+                            child: Text(
+                              _selectedType == PostType.stills
+                                  ? "Tap to add images"
+                                  : "Tap to add videos",
+                              style: const TextStyle(color: kgreyColor),
                             ),
-                    ),
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: selectedMedia.length + 1,
+                            itemBuilder: (_, index) {
+                              if (index == selectedMedia.length &&
+                                  _selectedType == PostType.stills) {
+                                return _addMediaButton(_pickImages);
+                              }
+
+                              final file = selectedMedia[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.file(
+                                    File(file.path),
+                                    width: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
-                /// DESCRIPTION
-                TextField(
-                  controller: _descriptionController,
-                  focusNode: _descriptionFocus,
-                  maxLines: 2,
-                  style: TextStyle(color: textColor),
+              /// DESCRIPTION LABEL
+              _label(
+                "Description",
+                _descriptionFocus.hasFocus ||
+                    _descriptionController.text.isNotEmpty,
+                textColor,
+              ),
+              const SizedBox(height: 8),
 
-                  decoration: InputDecoration(
-                    hintText: "Description",
-                    hintStyle: const TextStyle(color: kgreyColor),
-                    filled: true,
-                    fillColor: bgColor,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: descriptionGold ? kgoldColor : borderColor,
-                        width: 1.5,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: kgoldColor, width: 2),
-                    ),
-                  ),
+              TextField(
+                controller: _descriptionController,
+                focusNode: _descriptionFocus,
+                maxLines: 2,
+                style: TextStyle(color: textColor),
+                decoration: _inputDecoration(
+                  bgColor,
+                  borderColor,
+                  _descriptionFocus.hasFocus,
+                  hint: "Write something...",
                 ),
+              ),
 
-                const SizedBox(height: 16),
+              const SizedBox(height: 24),
 
-                /// POST TIMING
-                Text(
-                  "Post Timing",
-                  style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.bold,
+              /// POST TIMING
+              Text(
+                "Post Timing",
+                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+              ),
+
+              Row(
+                children: [
+                  Radio<bool>(
+                    value: false,
+                    groupValue: scheduleLater,
+                    activeColor: kgoldColor,
+                    onChanged: (v) => setState(() => scheduleLater = v!),
                   ),
-                ),
+                  const Text(
+                    "Publish Now",
+                    style: TextStyle(color: kgreyColor),
+                  ),
+                  Radio<bool>(
+                    value: true,
+                    groupValue: scheduleLater,
+                    activeColor: kgoldColor,
+                    onChanged: (v) => setState(() => scheduleLater = v!),
+                  ),
+                  const Text(
+                    "Schedule Later",
+                    style: TextStyle(color: kgreyColor),
+                  ),
+                ],
+              ),
 
+              if (scheduleLater)
                 Row(
                   children: [
-                    Radio<bool>(
-                      value: false,
-                      groupValue: scheduleLater,
-                      activeColor: kgoldColor,
-                      onChanged: (v) => setState(() => scheduleLater = v!),
+                    Expanded(
+                      child: _scheduleButton("Select Date", () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2100),
+                          initialDate: DateTime.now(),
+                        );
+                        if (date != null) setState(() => scheduledDate = date);
+                      }),
                     ),
-                    const Text(
-                      "Publish Now",
-                      style: TextStyle(color: kgreyColor),
-                    ),
-                    Radio<bool>(
-                      value: true,
-                      groupValue: scheduleLater,
-                      activeColor: kgoldColor,
-                      onChanged: (v) => setState(() => scheduleLater = v!),
-                    ),
-                    const Text(
-                      "Schedule Later",
-                      style: TextStyle(color: kgreyColor),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _scheduleButton("Select Time", () async {
+                        final time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+                        if (time != null) setState(() => scheduledTime = time);
+                      }),
                     ),
                   ],
                 ),
 
-                if (scheduleLater)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          // style: OutlinedButton.styleFrom(
-                          //   foregroundColor: kgoldColor,
-                          //   side: const BorderSide(color: kgoldColor, width: 2),
-                          // ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: bgColor,
-                            foregroundColor: kgoldColor,
-                            side: const BorderSide(color: kgoldColor, width: 2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
-                          onPressed: () async {
-                            final date = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
-                              initialDate: DateTime.now(),
-                            );
-                            if (date != null)
-                              setState(() => scheduledDate = date);
-                          },
-                          child: Text(
-                            scheduledDate == null
-                                ? "Select Date"
-                                : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: OutlinedButton(
-                          // style: OutlinedButton.styleFrom(
-                          //   foregroundColor: kgoldColor,
-                          //   side: const BorderSide(color: kgoldColor, width: 2),
-                          // ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: bgColor,
-                            foregroundColor: kgoldColor,
-                            side: const BorderSide(color: kgoldColor, width: 2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
-                          onPressed: () async {
-                            final time = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                            );
-                            if (time != null)
-                              setState(() => scheduledTime = time);
-                          },
-                          child: Text(
-                            scheduledTime == null
-                                ? "Select Time"
-                                : scheduledTime!.format(context),
-                          ),
-                        ),
-                      ),
-                    ],
+              const SizedBox(height: 40),
+
+              /// CREATE BUTTON
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: _onCreatePost,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: bgColor,
+                    foregroundColor: kgoldColor,
+                    side: const BorderSide(color: kgoldColor, width: 2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
-
-                SizedBox(height: 40),
-
-                /// CREATE BUTTON
-                SizedBox(
-                  width: double.infinity,
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: _onCreatePost,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: bgColor,
-                      foregroundColor: kgoldColor,
-                      side: const BorderSide(color: kgoldColor, width: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                    child: const Text(
-                      "Create Post",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  child: const Text(
+                    "Create Post",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  /// LABEL
+  Widget _label(String text, bool isActive, Color textColor) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: isActive ? kgoldColor : textColor.withOpacity(0.7),
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  /// INPUT DECORATION
+  InputDecoration _inputDecoration(
+    Color bgColor,
+    Color borderColor,
+    bool isFocused, {
+    String? hint,
+  }) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: kgreyColor),
+      filled: true,
+      fillColor: bgColor,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(
+          color: isFocused ? kgoldColor : borderColor,
+          width: 1.5,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: kgoldColor, width: 2),
+      ),
+    );
+  }
+
+  /// ADD MEDIA BUTTON
+  Widget _addMediaButton(VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: kgoldColor, width: 1.5),
+        ),
+        child: const Icon(Icons.add, color: kgoldColor),
+      ),
+    );
+  }
+
+  /// SCHEDULE BUTTON
+  Widget _scheduleButton(String text, VoidCallback onTap) {
+    return OutlinedButton(
+      onPressed: onTap,
+      style: OutlinedButton.styleFrom(
+        side: const BorderSide(color: kgoldColor, width: 2),
+        foregroundColor: kgoldColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      ),
+      child: Text(text),
     );
   }
 }

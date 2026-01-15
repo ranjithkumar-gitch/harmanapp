@@ -8,19 +8,34 @@ class Legacy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: Brightness.dark == Theme.of(context).brightness
+          ? kblackColor
+          : kwhiteColor,
 
-      /// APP BAR
       appBar: AppBar(
-        backgroundColor: Colors.black.withOpacity(0.6),
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: kwhiteColor),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Legacy", style: TextStyle(color: kwhiteColor)),
+        title: Text(
+          "Legacy",
+          style: TextStyle(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+          ),
+        ),
         actions: [
           TextButton.icon(
             onPressed: () {
@@ -29,44 +44,34 @@ class Legacy extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const LegacyFormPage()),
               );
             },
-            icon: const Icon(Icons.add, color: kwhiteColor),
-            label: const Text("Add New", style: TextStyle(color: kwhiteColor)),
+            icon: Icon(
+              Icons.add,
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? kwhiteColor
+                  : kblackColor,
+            ),
+            label: Text(
+              "Add New",
+              style: TextStyle(
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+              ),
+            ),
           ),
         ],
         centerTitle: true,
       ),
 
-      /// BODY WITH FULL IMAGE
       body: Stack(
         fit: StackFit.expand,
         children: [
-          /// BACKGROUND IMAGE
           Image.asset(
             "assets/sources/profiles/timeline.jpeg",
             fit: BoxFit.cover,
           ),
 
-          /// DARK OVERLAY (for readability)
           Container(color: Colors.black.withOpacity(0.35)),
-
-          /// OPTIONAL CONTENT
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.history, color: kgoldColor, size: 60),
-                SizedBox(height: 12),
-                Text(
-                  "Your Legacy Timeline",
-                  style: TextStyle(
-                    color: kgoldColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
