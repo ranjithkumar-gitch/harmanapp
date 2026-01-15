@@ -53,12 +53,22 @@ class _StarMyOrdersState extends State<StarMyOrders> {
         appBar: AppBar(
           backgroundColor: isDark ? kblackColor : kwhiteColor,
           elevation: 0,
-          centerTitle: true,
-          iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
+          scrolledUnderElevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: isDark ? kwhiteColor : kblackColor,
+              size: 18,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text(
             "Orders",
             style: TextStyle(
               color: isDark ? kwhiteColor : kblackColor,
+              fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -71,7 +81,9 @@ class _StarMyOrdersState extends State<StarMyOrders> {
               Tab(text: "Received Orders"),
             ],
           ),
+          centerTitle: true,
         ),
+
         body: TabBarView(
           children: [
             _ordersList(isReceived: false),
