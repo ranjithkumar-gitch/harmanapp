@@ -154,9 +154,9 @@ class _StarReelPostState extends State<StarReelPost>
                       position: position,
                       items: [
                         PopupMenuItem(
-                          value: 'Restrict',
+                          value: 'Hide',
                           child: Text(
-                            'Restrict',
+                            'Hide',
                             style: TextStyle(
                               color:
                                   Brightness.dark ==
@@ -168,21 +168,7 @@ class _StarReelPostState extends State<StarReelPost>
                             ),
                           ),
                         ),
-                        PopupMenuItem(
-                          value: 'Report',
-                          child: Text(
-                            'Report',
-                            style: TextStyle(
-                              color:
-                                  Brightness.dark ==
-                                      Theme.of(context).brightness
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Gilroy",
-                            ),
-                          ),
-                        ),
+
                         PopupMenuItem(
                           value: 'Block',
                           child: Text(
@@ -199,9 +185,9 @@ class _StarReelPostState extends State<StarReelPost>
                           ),
                         ),
                         PopupMenuItem(
-                          value: 'Cancel',
+                          value: 'Delete',
                           child: Text(
-                            'Cancel',
+                            'Delete',
                             style: TextStyle(
                               color:
                                   Brightness.dark ==
@@ -216,8 +202,154 @@ class _StarReelPostState extends State<StarReelPost>
                       ],
                     );
 
-                    if (value == 'edit') {
-                    } else if (value == 'delete') {}
+                    if (value == 'Hide') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Hide Post",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Hide this post?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Hide",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle edit
+                    } else if (value == 'Block') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Block Account",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Block this account?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Block",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle block
+                    } else if (value == 'Delete') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Delete Post",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Delete this post?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Delete",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle delete
+                    }
                   },
                 );
               },

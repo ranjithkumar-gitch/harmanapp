@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:harmanapp/models/post_model.dart';
-import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/star_module/widgets/star_image_post.dart';
 import 'package:harmanapp/star_module/widgets/star_reel_post.dart';

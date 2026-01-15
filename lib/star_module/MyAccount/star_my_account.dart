@@ -310,6 +310,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),

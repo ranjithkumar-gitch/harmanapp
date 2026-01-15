@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
-import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:video_player/video_player.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class StarTimelineReels extends StatefulWidget {
   const StarTimelineReels({super.key, required this.post});
-  final UserPostModel post;
+  final StarPostModel post;
   @override
   State<StarTimelineReels> createState() => _StarTimelineReelsState();
 }

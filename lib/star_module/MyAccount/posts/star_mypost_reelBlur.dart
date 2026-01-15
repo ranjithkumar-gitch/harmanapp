@@ -10,14 +10,14 @@ import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class StarReelPost extends StatefulWidget {
-  const StarReelPost({super.key, required this.post});
+class StarReelBlurPost extends StatefulWidget {
+  const StarReelBlurPost({super.key, required this.post});
   final StarPostModel post;
   @override
-  State<StarReelPost> createState() => _StarReelPostState();
+  State<StarReelBlurPost> createState() => _StarReelBlurPostState();
 }
 
-class _StarReelPostState extends State<StarReelPost>
+class _StarReelBlurPostState extends State<StarReelBlurPost>
     with SingleTickerProviderStateMixin {
   late VideoPlayerController _playerController;
   // late UserPostModel post;
@@ -154,9 +154,9 @@ class _StarReelPostState extends State<StarReelPost>
                       position: position,
                       items: [
                         PopupMenuItem(
-                          value: 'Restrict',
+                          value: 'Publish',
                           child: Text(
-                            'Restrict',
+                            'Publish Now',
                             style: TextStyle(
                               color:
                                   Brightness.dark ==
@@ -169,39 +169,9 @@ class _StarReelPostState extends State<StarReelPost>
                           ),
                         ),
                         PopupMenuItem(
-                          value: 'Report',
+                          value: 'Delete',
                           child: Text(
-                            'Report',
-                            style: TextStyle(
-                              color:
-                                  Brightness.dark ==
-                                      Theme.of(context).brightness
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Gilroy",
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 'Block',
-                          child: Text(
-                            'Block',
-                            style: TextStyle(
-                              color:
-                                  Brightness.dark ==
-                                      Theme.of(context).brightness
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Gilroy",
-                            ),
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 'Cancel',
-                          child: Text(
-                            'Cancel',
+                            'Delete',
                             style: TextStyle(
                               color:
                                   Brightness.dark ==
@@ -216,67 +186,206 @@ class _StarReelPostState extends State<StarReelPost>
                       ],
                     );
 
-                    if (value == 'edit') {
-                    } else if (value == 'delete') {}
+                    if (value == 'Publish') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Publish Post",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Publish this post Now?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Publish",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle block
+                    } else if (value == 'Delete') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Delete Post",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Delete this post?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Delete",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle delete
+                    }
                   },
                 );
               },
             ),
           ],
         ),
-        GestureDetector(
-          onTap: () {
-            if (_playerController.value.isPlaying) {
-              _playerController.pause();
-            } else {
-              _playerController.play();
-            }
-          },
-          onLongPressStart: (event) {
-            _playerController.pause();
-          },
-          onLongPressEnd: (event) {
-            _playerController.play();
-          },
-          child: ClipRect(
-            clipBehavior: Clip.hardEdge,
-            child: Stack(
-              children: [
-                Container(
-                  height: 450,
-                  alignment: Alignment.center,
-                  child: Transform.scale(
-                    scale: 1.5,
-                    child: AspectRatio(
-                      aspectRatio: _playerController.value.aspectRatio,
-                      child: VideoPlayer(_playerController),
-                    ),
+        Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: GestureDetector(
+                onTap: () {
+                  if (_playerController.value.isPlaying) {
+                    _playerController.pause();
+                  } else {
+                    _playerController.play();
+                  }
+                },
+                onLongPressStart: (event) {
+                  _playerController.pause();
+                },
+                onLongPressEnd: (event) {
+                  _playerController.play();
+                },
+                child: ClipRect(
+                  clipBehavior: Clip.hardEdge,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 450,
+                        alignment: Alignment.center,
+                        child: Transform.scale(
+                          scale: 1.5,
+                          child: AspectRatio(
+                            aspectRatio: _playerController.value.aspectRatio,
+                            child: VideoPlayer(_playerController),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: CupertinoButton(
+                          child: Icon(
+                            _playerController.value.volume == 1
+                                ? CupertinoIcons.speaker_2_fill
+                                : CupertinoIcons.volume_off,
+                            color: CupertinoColors.white.withValues(alpha: 1),
+                          ),
+                          onPressed: () {
+                            if (_playerController.value.volume == 0) {
+                              _playerController.setVolume(1);
+                              setState(() {});
+                            } else {
+                              setState(() {});
+                              _playerController.setVolume(0);
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CupertinoButton(
-                    child: Icon(
-                      _playerController.value.volume == 1
-                          ? CupertinoIcons.speaker_2_fill
-                          : CupertinoIcons.volume_off,
-                      color: CupertinoColors.white.withValues(alpha: 1),
-                    ),
-                    onPressed: () {
-                      if (_playerController.value.volume == 0) {
-                        _playerController.setVolume(1);
-                        setState(() {});
-                      } else {
-                        setState(() {});
-                        _playerController.setVolume(0);
-                      }
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+
+            /// OVERLAY
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.35),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            Container(
+              height: 450,
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: kblackColor.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: kgoldColor),
+                  ),
+                  child: const Text(
+                    "Scheduled\n12 march • 10:30 AM",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: kgoldColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -522,83 +631,83 @@ class _StarReelPostState extends State<StarReelPost>
               ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${widget.post.post.likes} Stars',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                ),
-              ),
-              RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: widget.post.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kwhiteColor
-                            : kblackColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const TextSpan(text: '  '),
-                    TextSpan(
-                      text: widget.post.post.description ?? '',
-                      style: TextStyle(
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kwhiteColor
-                            : kblackColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (widget.post.post.comments != null) ...[
-                const SizedBox(height: 5),
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => CommentBottomSheet(post: widget.post),
-                    );
-                  },
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         '${widget.post.post.likes} Stars',
+        //         style: TextStyle(
+        //           fontWeight: FontWeight.w600,
+        //           color: Brightness.dark == Theme.of(context).brightness
+        //               ? kwhiteColor
+        //               : kblackColor,
+        //         ),
+        //       ),
+        //       RichText(
+        //         maxLines: 1,
+        //         overflow: TextOverflow.ellipsis,
+        //         text: TextSpan(
+        //           children: [
+        //             TextSpan(
+        //               text: widget.post.name,
+        //               style: TextStyle(
+        //                 fontWeight: FontWeight.w600,
+        //                 color: Brightness.dark == Theme.of(context).brightness
+        //                     ? kwhiteColor
+        //                     : kblackColor,
+        //                 fontSize: 16,
+        //               ),
+        //             ),
+        //             const TextSpan(text: '  '),
+        //             TextSpan(
+        //               text: widget.post.post.description ?? '',
+        //               style: TextStyle(
+        //                 color: Brightness.dark == Theme.of(context).brightness
+        //                     ? kwhiteColor
+        //                     : kblackColor,
+        //                 fontSize: 16,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       if (widget.post.post.comments != null) ...[
+        //         const SizedBox(height: 5),
+        //         GestureDetector(
+        //           onTap: () {
+        //             showModalBottomSheet(
+        //               context: context,
+        //               isScrollControlled: true,
+        //               backgroundColor: Colors.transparent,
+        //               builder: (_) => CommentBottomSheet(post: widget.post),
+        //             );
+        //           },
 
-                  child: Text(
-                    'View all ${widget.post.post.comments} comments',
-                    style: TextStyle(
-                      fontFamily: "Gilroy",
-                      color: kgoldColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 5),
-              Text(
-                widget.post.post.date!,
-                style: TextStyle(
-                  color: Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-        ),
+        //           child: Text(
+        //             'View all ${widget.post.post.comments} comments',
+        //             style: TextStyle(
+        //               fontFamily: "Gilroy",
+        //               color: kgoldColor,
+        //               fontSize: 14,
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //       const SizedBox(height: 5),
+        //       Text(
+        //         widget.post.post.date!,
+        //         style: TextStyle(
+        //           color: Brightness.dark == Theme.of(context).brightness
+        //               ? kwhiteColor
+        //               : kblackColor,
+        //           fontSize: 16,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

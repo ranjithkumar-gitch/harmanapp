@@ -2,7 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,7 +12,7 @@ import 'package:share_plus/share_plus.dart';
 
 class StarTimelinePosts extends StatefulWidget {
   const StarTimelinePosts({super.key, required this.post});
-  final UserPostModel post;
+  final StarPostModel post;
   @override
   State<StarTimelinePosts> createState() => _StarTimelinePostsState();
 }
@@ -676,7 +676,7 @@ class CommentModel {
 }
 
 class CommentBottomSheet extends StatefulWidget {
-  final UserPostModel post;
+  final StarPostModel post;
   const CommentBottomSheet({super.key, required this.post});
 
   @override
