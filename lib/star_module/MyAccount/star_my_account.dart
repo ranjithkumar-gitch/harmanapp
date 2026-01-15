@@ -626,149 +626,130 @@ class _StarMyAccountState extends State<StarMyAccount> {
   }) {
     const gold = kgoldColor;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
-        duration: const Duration(milliseconds: 800),
-        builder: (context, angle, child) {
-          return Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(angle),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 800),
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: isSelected
-                      ? gold
-                      : Theme.of(context).brightness == Brightness.dark
-                      ? kwhiteColor
-                      : kblackColor,
-                  width: isSelected ? 2 : 1,
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: GestureDetector(
+        onTap: onTap,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
+          duration: const Duration(milliseconds: 800),
+          builder: (context, angle, child) {
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.001)
+                ..rotateY(angle),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 800),
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isSelected
+                        ? gold
+                        : Theme.of(context).brightness == Brightness.dark
+                        ? kwhiteColor
+                        : kblackColor,
+                    width: isSelected ? 2 : 1,
+                  ),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? kblackColor
+                      : kwhiteColor,
                 ),
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? kblackColor
-                    : kwhiteColor,
-              ),
-              child: isSelected
-                  ? // Back of card - Show button (counter-rotated to appear unflipped)
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()..rotateY(3.14159),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                child: isSelected
+                    ? // Back of card - Show button (counter-rotated to appear unflipped)
+                      Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()..rotateY(3.14159),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              subtitle,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: gold,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 36,
+                              child: OutlinedButton(
+                                onPressed: onButtonPressed,
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: gold),
+                                  foregroundColor: gold,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Open",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : // Front of card - Show icon, title, subtitle
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          /// 🔘 Icon
+                          Container(
+                            height: 56,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: kgoldColor, width: 1.5),
+                            ),
+                            child: Icon(icon, size: 26, color: kgoldColor),
+                          ),
+
+                          /// 📝 Title
                           Text(
-                            subtitle,
+                            title,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: gold,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 36,
-                            child: OutlinedButton(
-                              onPressed: onButtonPressed,
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: gold),
-                                foregroundColor: gold,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              child: const Text(
-                                "Open",
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : // Front of card - Show icon, title, subtitle
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        /// 🔘 Icon
-                        Container(
-                          height: 56,
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
                               color: isSelected
                                   ? gold
                                   : Theme.of(context).brightness ==
                                         Brightness.dark
                                   ? kwhiteColor
                                   : kblackColor,
-                              width: 1.5,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          child: Icon(
-                            icon,
-                            size: 26,
-                            color: isSelected
-                                ? gold
-                                : Theme.of(context).brightness ==
+
+                          /// 📄 Subtitle
+                          Text(
+                            subtitle,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
                                       Brightness.dark
-                                ? kwhiteColor
-                                : kblackColor,
+                                  ? kwhiteColor
+                                  : kblackColor,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-
-                        const SizedBox(height: 10),
-
-                        /// 📝 Title
-                        Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: isSelected
-                                ? gold
-                                : Theme.of(context).brightness ==
-                                      Brightness.dark
-                                ? kwhiteColor
-                                : kblackColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        const SizedBox(height: 2),
-
-                        /// 📄 Subtitle
-                        Text(
-                          subtitle,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? kwhiteColor
-                                : kblackColor,
-                            fontSize: 12,
-                          ),
-                        ),
-
-                        const SizedBox(height: 3),
-                      ],
-                    ),
-            ),
-          );
-        },
+                        ],
+                      ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
