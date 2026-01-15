@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
@@ -13,10 +12,18 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
   final TextEditingController displayNameController = TextEditingController();
 
   final FocusNode usernameFocus = FocusNode();
   final FocusNode displayNameFocus = FocusNode();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode addressFocus = FocusNode();
+  final FocusNode bioFocus = FocusNode();
+  final FocusNode dobFocus = FocusNode();
 
   final ImagePicker _picker = ImagePicker();
   File? _profileImage;
@@ -43,72 +50,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final bool usernameGold =
         usernameController.text.isNotEmpty || usernameFocus.hasFocus;
 
-    final bool displayNameGold =
-        displayNameController.text.isNotEmpty || displayNameFocus.hasFocus;
+    final bool bioGold = bioController.text.isNotEmpty || bioFocus.hasFocus;
+    final bool emailGold =
+        emailController.text.isNotEmpty || emailFocus.hasFocus;
+    final bool dobGold = dobController.text.isNotEmpty || dobFocus.hasFocus;
+    final bool addressGold =
+        addressController.text.isNotEmpty || addressFocus.hasFocus;
 
     return Scaffold(
-      backgroundColor: kblackColor,
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
+      appBar: AppBar(
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// 🔙 BACK
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: const Icon(Icons.arrow_back_ios, color: kgoldColor),
-              ),
-
-              const SizedBox(height: 20),
-
-              /// 👤 PROFILE IMAGE
-              // Center(
-              //   child: Stack(
-              //     children: [
-              //       Container(
-              //         height: 130,
-              //         width: 130,
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(10),
-              //           border: Border.all(color: kgoldColor, width: 2),
-              //           image: DecorationImage(
-              //             fit: BoxFit.cover,
-              //             image: _profileImage != null
-              //                 ? FileImage(_profileImage!)
-              //                 : const AssetImage(
-              //                         'assets/sources/profiles/lucas-sankey.jpg',
-              //                       )
-              //                       as ImageProvider,
-              //           ),
-              //         ),
-              //       ),
-              //       Positioned(
-              //         bottom: -6,
-              //         right: -6,
-              //         child: GestureDetector(
-              //           onTap: _pickProfileImage,
-              //           child: Container(
-              //             padding: const EdgeInsets.all(6),
-              //             decoration: BoxDecoration(
-              //               color: Colors.black,
-              //               shape: BoxShape.circle,
-              //               border: Border.all(color: kgoldColor),
-              //             ),
-              //             child: const Icon(
-              //               Icons.camera_alt,
-              //               color: kgoldColor,
-              //               size: 18,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Center(
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -139,7 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: isDark ? kblackColor : kwhiteColor,
                             shape: BoxShape.circle,
                             border: Border.all(color: kgoldColor, width: 1.5),
                           ),
@@ -157,19 +142,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
               const SizedBox(height: 20),
 
-              Center(
-                child: Text(
-                  "Edit Profile",
-                  style: GoogleFonts.greatVibes(
-                    textStyle: const TextStyle(fontSize: 30, color: kgoldColor),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
               /// USERNAME
-              const Text("Username *", style: TextStyle(color: Colors.white)),
+              Text(
+                "Username *",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
               const SizedBox(height: 6),
               _inputField(
                 controller: usernameController,
@@ -181,55 +158,67 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 20),
 
               /// DISPLAY NAME
-              const Text("Bio", style: TextStyle(color: Colors.white)),
+              Text(
+                "Bio",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
               const SizedBox(height: 6),
               _inputField(
-                controller: displayNameController,
-                focusNode: displayNameFocus,
+                controller: bioController,
+                focusNode: bioFocus,
                 hint: "Cricketer",
-                isGold: displayNameGold,
+                isGold: bioGold,
               ),
               const SizedBox(height: 20),
 
               /// DISPLAY NAME
-              const Text("Email", style: TextStyle(color: Colors.white)),
+              Text(
+                "Email",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
               const SizedBox(height: 6),
               _inputField(
-                controller: displayNameController,
-                focusNode: displayNameFocus,
+                controller: emailController,
+                focusNode: emailFocus,
                 hint: "virat@gmail.com",
-                isGold: displayNameGold,
+                isGold: emailGold,
               ),
               const SizedBox(height: 20),
 
               /// DISPLAY NAME
-              const Text("DOB", style: TextStyle(color: Colors.white)),
+              Text(
+                "Date of Birth",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
               const SizedBox(height: 6),
               _inputField(
-                controller: displayNameController,
-                focusNode: displayNameFocus,
+                controller: dobController,
+                focusNode: dobFocus,
                 hint: "18 Feb 1990",
-                isGold: displayNameGold,
+                isGold: dobGold,
               ),
               const SizedBox(height: 20),
 
-              const Text("Address", style: TextStyle(color: Colors.white)),
+              Text(
+                "Address",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
               const SizedBox(height: 6),
               _inputField(
-                controller: displayNameController,
-                focusNode: displayNameFocus,
+                controller: addressController,
+                focusNode: addressFocus,
                 hint: "Mumbai",
-                isGold: displayNameGold,
+                isGold: addressGold,
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
               /// SAVE BUTTON
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: isDark ? kblackColor : kwhiteColor,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -250,6 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -264,20 +254,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     required String hint,
     required bool isGold,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return TextField(
       controller: controller,
       focusNode: focusNode,
       onChanged: (_) => setState(() {}),
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0xFF1C1C1E),
+        fillColor: isDark ? kblackColor : kwhiteColor,
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white38),
+        hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: isGold ? kgoldColor : Colors.white,
+            color: isGold
+                ? kgoldColor
+                : (isDark ? Colors.white54 : Colors.black54),
             width: 2,
           ),
         ),
