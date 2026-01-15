@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/star_module/MyAccount/legacy_formpage.dart';
-import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class Legacy extends StatelessWidget {
   const Legacy({super.key});

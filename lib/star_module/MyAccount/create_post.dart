@@ -1,409 +1,6 @@
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
-// import 'package:image_picker/image_picker.dart';
-
-// enum PostType { bits, stills, longVideos }
-
-// class CreatePostPage extends StatefulWidget {
-//   const CreatePostPage({super.key});
-
-//   @override
-//   State<CreatePostPage> createState() => _CreatePostPageState();
-// }
-
-// class _CreatePostPageState extends State<CreatePostPage> {
-//   PostType _selectedType = PostType.stills;
-//   final ImagePicker _picker = ImagePicker();
-//   final TextEditingController _descriptionController = TextEditingController();
-
-//   bool mediaGold = false;
-//   bool descriptionGold = false;
-//   bool postTypeGold = false;
-
-//   final FocusNode _mediaFocus = FocusNode();
-//   final FocusNode _descriptionFocus = FocusNode();
-//   final FocusNode _postTypeFocus = FocusNode();
-
-//   bool scheduleLater = false;
-//   DateTime? scheduledDate;
-//   TimeOfDay? scheduledTime;
-
-//   List<XFile> selectedMedia = [];
-
-//   Future<void> _pickImages() async {
-//     final images = await _picker.pickMultiImage();
-//     if (images.isNotEmpty) {
-//       setState(() => selectedMedia.addAll(images));
-//     }
-//   }
-
-//   Future<void> _pickVideos() async {
-//     final videos = await _picker.pickMultipleMedia();
-//     setState(() {
-//       selectedMedia = videos
-//           .where((e) => e.mimeType?.startsWith('video') ?? false)
-//           .toList();
-//     });
-//   }
-
-//   void _onCreatePost() {
-//     debugPrint("Post Type: $_selectedType");
-//     debugPrint("Media Count: ${selectedMedia.length}");
-//     debugPrint("Description: ${_descriptionController.text}");
-//     debugPrint("Schedule Later: $scheduleLater");
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _postTypeFocus.addListener(() {
-//       setState(() {}); // forces rebuild on focus change
-//     });
-//     _descriptionFocus.addListener(() {
-//       setState(() => descriptionGold = _descriptionFocus.hasFocus);
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _mediaFocus.dispose();
-//     _descriptionFocus.dispose();
-//     _postTypeFocus.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final isDark = Theme.of(context).brightness == Brightness.dark;
-
-//     final bgColor = isDark ? kblackColor : kwhiteColor;
-//     final textColor = isDark ? kwhiteColor : kblackColor;
-//     final borderColor = isDark ? kwhiteColor : kblackColor;
-//     final Color inactiveColor = kgreyColor;
-
-//     return Scaffold(
-//       backgroundColor: bgColor,
-//       appBar: AppBar(
-//         centerTitle: true,
-//         elevation: 0,
-//         backgroundColor: bgColor,
-//         leading: IconButton(
-//           icon: Icon(Icons.arrow_back_ios, color: textColor),
-//           onPressed: () => Navigator.pop(context),
-//         ),
-//         title: Text("Create Post", style: TextStyle(color: textColor)),
-//       ),
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: const EdgeInsets.all(16),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 DropdownButtonFormField<PostType>(
-//                   value: _selectedType,
-//                   focusNode: _postTypeFocus,
-//                   dropdownColor: bgColor,
-//                   iconEnabledColor: kgoldColor,
-//                   style: TextStyle(color: textColor),
-
-//                   decoration: InputDecoration(
-//                     hintText: "Select Post Type",
-//                     hintStyle: const TextStyle(color: kgreyColor),
-//                     filled: true,
-//                     fillColor: bgColor,
-
-//                     enabledBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: BorderSide(
-//                         color:
-//                             (_postTypeFocus.hasFocus || _selectedType != null)
-//                             ? kgoldColor
-//                             : inactiveColor,
-//                         width:
-//                             (_postTypeFocus.hasFocus || _selectedType != null)
-//                             ? 2
-//                             : 1.5,
-//                       ),
-//                     ),
-
-//                     focusedBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: kgoldColor, width: 2),
-//                     ),
-//                   ),
-
-//                   items: const [
-//                     DropdownMenuItem(
-//                       value: PostType.stills,
-//                       child: Text("Stills"),
-//                     ),
-//                     DropdownMenuItem(value: PostType.bits, child: Text("Bits")),
-
-//                     DropdownMenuItem(
-//                       value: PostType.longVideos,
-//                       child: Text("Long Videos"),
-//                     ),
-//                   ],
-
-//                   onChanged: (value) {
-//                     setState(() {
-//                       _selectedType = value!;
-//                       selectedMedia.clear();
-//                     });
-//                   },
-//                 ),
-
-//                 const SizedBox(height: 16),
-
-//                 /// MEDIA PICKER
-//                 GestureDetector(
-//                   onTap: () {
-//                     _mediaFocus.requestFocus();
-//                     if (_selectedType == PostType.stills) {
-//                       _pickImages();
-//                     } else {
-//                       _pickVideos();
-//                     }
-//                   },
-//                   child: Focus(
-//                     focusNode: _mediaFocus,
-//                     onFocusChange: (hasFocus) {
-//                       setState(() => mediaGold = hasFocus);
-//                     },
-//                     child: Container(
-//                       height: 140,
-//                       decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(12),
-//                         border: Border.all(
-//                           color:
-//                               (_mediaFocus.hasFocus || selectedMedia.isNotEmpty)
-//                               ? kgoldColor
-//                               : borderColor,
-//                           width: mediaGold ? 2 : 1.5,
-//                         ),
-//                       ),
-//                       child: selectedMedia.isEmpty
-//                           ? Center(
-//                               child: Text(
-//                                 _selectedType == PostType.stills
-//                                     ? "Tap to add images"
-//                                     : "Tap to add videos",
-//                                 style: const TextStyle(color: kgreyColor),
-//                               ),
-//                             )
-//                           : ListView.builder(
-//                               scrollDirection: Axis.horizontal,
-//                               itemCount: selectedMedia.length + 1,
-//                               itemBuilder: (_, index) {
-//                                 if (index == selectedMedia.length &&
-//                                     _selectedType == PostType.stills) {
-//                                   return GestureDetector(
-//                                     onTap: _pickImages,
-//                                     child: Container(
-//                                       width: 100,
-//                                       margin: const EdgeInsets.all(8),
-//                                       decoration: BoxDecoration(
-//                                         borderRadius: BorderRadius.circular(8),
-//                                         border: Border.all(
-//                                           color: kgoldColor,
-//                                           width: 1.5,
-//                                         ),
-//                                       ),
-//                                       child: const Icon(
-//                                         Icons.add,
-//                                         color: kgoldColor,
-//                                       ),
-//                                     ),
-//                                   );
-//                                 }
-
-//                                 final file = selectedMedia[index];
-//                                 return Padding(
-//                                   padding: const EdgeInsets.all(8),
-//                                   child: ClipRRect(
-//                                     borderRadius: BorderRadius.circular(8),
-//                                     child: Image.file(
-//                                       File(file.path),
-//                                       width: 100,
-//                                       fit: BoxFit.cover,
-//                                     ),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                     ),
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 16),
-
-//                 /// DESCRIPTION
-//                 TextField(
-//                   controller: _descriptionController,
-//                   focusNode: _descriptionFocus,
-//                   maxLines: 2,
-//                   style: TextStyle(color: textColor),
-
-//                   decoration: InputDecoration(
-//                     hintText: "Description",
-//                     hintStyle: const TextStyle(color: kgreyColor),
-//                     filled: true,
-//                     fillColor: bgColor,
-//                     enabledBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: BorderSide(
-//                         color: descriptionGold ? kgoldColor : borderColor,
-//                         width: 1.5,
-//                       ),
-//                     ),
-//                     focusedBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: const BorderSide(color: kgoldColor, width: 2),
-//                     ),
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 16),
-
-//                 /// POST TIMING
-//                 Text(
-//                   "Post Timing",
-//                   style: TextStyle(
-//                     color: textColor,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-
-//                 Row(
-//                   children: [
-//                     Radio<bool>(
-//                       value: false,
-//                       groupValue: scheduleLater,
-//                       activeColor: kgoldColor,
-//                       onChanged: (v) => setState(() => scheduleLater = v!),
-//                     ),
-//                     const Text(
-//                       "Publish Now",
-//                       style: TextStyle(color: kgreyColor),
-//                     ),
-//                     Radio<bool>(
-//                       value: true,
-//                       groupValue: scheduleLater,
-//                       activeColor: kgoldColor,
-//                       onChanged: (v) => setState(() => scheduleLater = v!),
-//                     ),
-//                     const Text(
-//                       "Schedule Later",
-//                       style: TextStyle(color: kgreyColor),
-//                     ),
-//                   ],
-//                 ),
-
-//                 if (scheduleLater)
-//                   Row(
-//                     children: [
-//                       Expanded(
-//                         child: OutlinedButton(
-//                           // style: OutlinedButton.styleFrom(
-//                           //   foregroundColor: kgoldColor,
-//                           //   side: const BorderSide(color: kgoldColor, width: 2),
-//                           // ),
-//                           style: ElevatedButton.styleFrom(
-//                             backgroundColor: bgColor,
-//                             foregroundColor: kgoldColor,
-//                             side: const BorderSide(color: kgoldColor, width: 2),
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(14),
-//                             ),
-//                           ),
-//                           onPressed: () async {
-//                             final date = await showDatePicker(
-//                               context: context,
-//                               firstDate: DateTime.now(),
-//                               lastDate: DateTime(2100),
-//                               initialDate: DateTime.now(),
-//                             );
-//                             if (date != null)
-//                               setState(() => scheduledDate = date);
-//                           },
-//                           child: Text(
-//                             scheduledDate == null
-//                                 ? "Select Date"
-//                                 : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
-//                           ),
-//                         ),
-//                       ),
-//                       const SizedBox(width: 12),
-//                       Expanded(
-//                         child: OutlinedButton(
-//                           // style: OutlinedButton.styleFrom(
-//                           //   foregroundColor: kgoldColor,
-//                           //   side: const BorderSide(color: kgoldColor, width: 2),
-//                           // ),
-//                           style: ElevatedButton.styleFrom(
-//                             backgroundColor: bgColor,
-//                             foregroundColor: kgoldColor,
-//                             side: const BorderSide(color: kgoldColor, width: 2),
-//                             shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(14),
-//                             ),
-//                           ),
-//                           onPressed: () async {
-//                             final time = await showTimePicker(
-//                               context: context,
-//                               initialTime: TimeOfDay.now(),
-//                             );
-//                             if (time != null)
-//                               setState(() => scheduledTime = time);
-//                           },
-//                           child: Text(
-//                             scheduledTime == null
-//                                 ? "Select Time"
-//                                 : scheduledTime!.format(context),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-
-//                 SizedBox(height: 40),
-
-//                 /// CREATE BUTTON
-//                 SizedBox(
-//                   width: double.infinity,
-//                   height: 55,
-//                   child: ElevatedButton(
-//                     onPressed: _onCreatePost,
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: bgColor,
-//                       foregroundColor: kgoldColor,
-//                       side: const BorderSide(color: kgoldColor, width: 2),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(14),
-//                       ),
-//                     ),
-//                     child: const Text(
-//                       "Create Post",
-//                       style: TextStyle(
-//                         fontSize: 14,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum PostType { bits, stills, longVideos }
@@ -624,9 +221,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     activeColor: kgoldColor,
                     onChanged: (v) => setState(() => scheduleLater = v!),
                   ),
-                  const Text(
+                  Text(
                     "Publish Now",
-                    style: TextStyle(color: kgreyColor),
+                    style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
                   ),
                   Radio<bool>(
                     value: true,
@@ -634,9 +231,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     activeColor: kgoldColor,
                     onChanged: (v) => setState(() => scheduleLater = v!),
                   ),
-                  const Text(
+                  Text(
                     "Schedule Later",
-                    style: TextStyle(color: kgreyColor),
+                    style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
                   ),
                 ],
               ),
@@ -645,25 +242,110 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: _scheduleButton("Select Date", () async {
-                        final date = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2100),
-                          initialDate: DateTime.now(),
-                        );
-                        if (date != null) setState(() => scheduledDate = date);
-                      }),
+                      child: _scheduleButton(
+                        scheduledDate == null
+                            ? "Select Date"
+                            : '${scheduledDate!.month.toString().padLeft(2, '0')}-${scheduledDate!.day.toString().padLeft(2, '0')}-${scheduledDate!.year}',
+                        () async {
+                          final isDark =
+                              Theme.of(context).brightness == Brightness.dark;
+                          final date = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2100),
+                            initialDate: DateTime.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme(
+                                    brightness: isDark
+                                        ? Brightness.dark
+                                        : Brightness.light,
+                                    primary: kgoldColor,
+                                    onPrimary: isDark
+                                        ? kblackColor
+                                        : kwhiteColor,
+                                    secondary: kgoldColor,
+                                    onSecondary: isDark
+                                        ? kblackColor
+                                        : kwhiteColor,
+                                    error: Colors.red,
+                                    onError: kwhiteColor,
+                                    background: isDark
+                                        ? kblackColor
+                                        : kwhiteColor,
+                                    onBackground: isDark
+                                        ? kwhiteColor
+                                        : kblackColor,
+                                    surface: isDark ? kblackColor : kwhiteColor,
+                                    onSurface: isDark
+                                        ? kwhiteColor
+                                        : kblackColor,
+                                  ),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: kgoldColor,
+                                    ),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
+                          if (date != null)
+                            setState(() => scheduledDate = date);
+                        },
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: _scheduleButton("Select Time", () async {
-                        final time = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                        if (time != null) setState(() => scheduledTime = time);
-                      }),
+                      child: _scheduleButton(
+                        scheduledTime == null
+                            ? "Select Time"
+                            : '${scheduledTime!.hourOfPeriod.toString().padLeft(2, '0')}:${scheduledTime!.minute.toString().padLeft(2, '0')} ${scheduledTime!.period == DayPeriod.am ? 'AM' : 'PM'}',
+                        () async {
+                          final isDark =
+                              Theme.of(context).brightness == Brightness.dark;
+                          final time = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme(
+                                    brightness: isDark
+                                        ? Brightness.dark
+                                        : Brightness.light,
+                                    primary: kgoldColor,
+                                    onPrimary: isDark
+                                        ? kblackColor
+                                        : kwhiteColor,
+                                    secondary: kgoldColor,
+                                    onSecondary: isDark
+                                        ? kblackColor
+                                        : kwhiteColor,
+                                    error: Colors.red,
+                                    onError: kwhiteColor,
+
+                                    surface: isDark ? kblackColor : kwhiteColor,
+                                    onSurface: isDark
+                                        ? kwhiteColor
+                                        : kblackColor,
+                                  ),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: kgoldColor,
+                                    ),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
+                          if (time != null)
+                            setState(() => scheduledTime = time);
+                        },
+                      ),
                     ),
                   ],
                 ),

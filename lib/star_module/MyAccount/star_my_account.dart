@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/MyAccount/my_memberships.dart';
-import 'package:harmanapp/MyAccount/my_orders.dart';
 import 'package:harmanapp/star_module/MyAccount/create_post.dart';
 import 'package:harmanapp/star_module/MyAccount/edit_profile.dart';
 import 'package:harmanapp/star_module/MyAccount/legacy.dart';
@@ -13,7 +11,6 @@ import 'package:harmanapp/star_module/MyAccount/star_my_memberships.dart';
 import 'package:harmanapp/star_module/MyAccount/star_my_orders.dart';
 import 'package:harmanapp/star_module/MyAccount/star_my_posts.dart';
 import 'package:harmanapp/star_module/widgets/star_side_menu.dart';
-
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
@@ -380,7 +377,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
 
                       icon: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Icon(Icons.menu),
+                        child: Icon(Icons.menu, color: kgoldColor),
                       ),
                       color: kgoldColor,
                     ),
@@ -401,7 +398,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
 
             icon: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Icon(Icons.mode_edit_rounded, color: Color(0xFFDAA520)),
+              child: Icon(Icons.mode_edit_rounded, color: kgoldColor),
             ),
           ),
         ),
@@ -410,6 +407,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
   }
 
   Widget profileImage(String imagePath, String name) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       // height: 200,
       transform: Matrix4.translationValues(0.0, 170.0, 0.0),
@@ -457,7 +455,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                       child: Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: isDark ? kblackColor : kwhiteColor,
                           shape: BoxShape.circle,
                           border: Border.all(color: kgoldColor, width: 1.5),
                         ),
