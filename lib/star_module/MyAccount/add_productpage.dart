@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/star_module/widgets/star_theme_notifier.dart';
+
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -49,21 +49,26 @@ class _AddProductPageState extends State<AddProductPage> {
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Add Product",
-          style: GoogleFonts.poppins(
-            color: isDark ? kwhiteColor : kblackColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        title: Text(
+          "Add Product",
+          style: TextStyle(
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
       ),
 
       body: SingleChildScrollView(
@@ -100,7 +105,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       child: Container(
                         padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: isDark ? kblackColor : kwhiteColor,
                           shape: BoxShape.circle,
                           border: Border.all(color: kgoldColor, width: 1.5),
                         ),
@@ -117,6 +122,17 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
 
             const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                "Product Name",
+                style: GoogleFonts.poppins(
+                  // fontWeight: FontWeight.w600,
+                  color: isDark ? kwhiteColor : kblackColor,
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -128,13 +144,50 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               ),
             ),
-
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                "Price",
+                style: GoogleFonts.poppins(
+                  // fontWeight: FontWeight.w600,
+                  color: isDark ? kwhiteColor : kblackColor,
+                ),
+              ),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            //   child: TextField(
+            //     controller: priceCtrl,
+            //     keyboardType: TextInputType.number,
+            //     decoration: _inputDecoration("Price"),
+            //     style: GoogleFonts.poppins(
+            //       color: isDark ? kwhiteColor : kblackColor,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextField(
                 controller: priceCtrl,
                 keyboardType: TextInputType.number,
-                decoration: _inputDecoration("Price"),
+                decoration: _inputDecoration("Price").copyWith(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      "\$",
+                      style: GoogleFonts.poppins(
+                        color: kgoldColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  prefixIconConstraints: const BoxConstraints(
+                    minWidth: 0,
+                    minHeight: 0,
+                  ),
+                ),
                 style: GoogleFonts.poppins(
                   color: isDark ? kwhiteColor : kblackColor,
                 ),
@@ -146,7 +199,7 @@ class _AddProductPageState extends State<AddProductPage> {
               child: Text(
                 "Description",
                 style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
+                  // fontWeight: FontWeight.w600,
                   color: isDark ? kwhiteColor : kblackColor,
                 ),
               ),

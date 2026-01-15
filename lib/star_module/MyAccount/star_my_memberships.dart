@@ -11,6 +11,7 @@ class StarMembershipScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
+
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
@@ -33,7 +34,6 @@ class StarMembershipScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -138,6 +138,62 @@ class StarMembershipScreen extends StatelessWidget {
     );
   }
 
+  // Widget _membershipSummary(BuildContext context) {
+  //   final isDark = Theme.of(context).brightness == Brightness.dark;
+
+  //   return Container(
+  //     margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       color: isDark ? kblackColor : kwhiteColor,
+  //       borderRadius: BorderRadius.circular(14),
+  //       border: Border.all(color: kgoldColor, width: 2),
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const Text(
+  //           "Membership Summary",
+  //           style: TextStyle(
+  //             color: kgoldColor,
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+
+  //         const SizedBox(height: 12),
+
+  //         /// TOTAL MEMBERS (NO CONTAINER)
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Text(
+  //               "Total Members",
+  //               style: TextStyle(
+  //                 color: isDark ? kwhiteColor : kblackColor,
+  //                 fontSize: 14,
+  //               ),
+  //             ),
+  //             Text(
+  //               "3",
+  //               style: TextStyle(
+  //                 color: isDark ? kwhiteColor : kblackColor,
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+
+  //         const Divider(color: kgoldColor, height: 24),
+
+  //         _membershipItem("Monthly", "\$18.99", qty: 2),
+  //         _membershipItem("Yearly", "\$27.20", qty: 3),
+  //         _membershipItem("Weekly", "\$9.99", qty: 1),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _membershipSummary(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -163,7 +219,7 @@ class StarMembershipScreen extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          /// TOTAL MEMBERS (NO CONTAINER)
+          /// TOTAL MEMBERS
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -187,76 +243,141 @@ class StarMembershipScreen extends StatelessWidget {
 
           const Divider(color: kgoldColor, height: 24),
 
-          _membershipItem("Monthly", "\$18.99", qty: 2),
-          _membershipItem("Yearly", "\$27.20", qty: 3),
-          _membershipItem("Weekly", "\$9.99", qty: 1),
+          _membershipItem("Monthly", "\$18.99", qty: 2, isDark: isDark),
+          _membershipItem("Yearly", "\$27.20", qty: 3, isDark: isDark),
+          _membershipItem("Weekly", "\$9.99", qty: 1, isDark: isDark),
         ],
       ),
     );
   }
 
-  Widget _membershipItem(String label, String value, {int qty = 1}) {
+  // Widget _membershipItem(String label, String value, {int qty = 1}) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 6),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         /// LEFT CONTAINER (PLAN)
+  //         Row(
+  //           children: [
+  //             Container(
+  //               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(20),
+  //                 border: Border.all(color: isDark ? kblackColor : kwhiteColor),
+  //               ),
+  //               child: Row(
+  //                 children: [
+  //                   Text(
+  //                     label,
+  //                     style: const TextStyle(color: kgoldColor, fontSize: 14),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             SizedBox(width: 10),
+  //             Container(
+  //               padding: const EdgeInsets.symmetric(
+  //                 horizontal: 10,
+  //                 vertical: 4,
+  //               ),
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(16),
+  //                 border: Border.all(color: kgoldColor),
+  //               ),
+  //               child: Text(
+  //                 "qty : $qty",
+  //                 style: const TextStyle(
+  //                   color: kgoldColor,
+  //                   fontSize: 14,
+  //                   fontWeight: FontWeight.w500,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+
+  //         /// RIGHT SIDE (QTY + PRICE)
+  //         Row(
+  //           children: [
+  //             const SizedBox(width: 10),
+  //             Text(
+  //               value,
+  //               style: const TextStyle(
+  //                 color: kgoldColor,
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  Widget _membershipItem(
+    String label,
+    String value, {
+    required bool isDark,
+    int qty = 1,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          /// LEFT CONTAINER (PLAN)
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: kgoldColor),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      label,
-                      style: const TextStyle(color: kgoldColor, fontSize: 14),
+              SizedBox(
+                width: 80,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: kgoldColor),
+                  ),
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: isDark ? kwhiteColor : kblackColor,
+                      fontSize: 14,
                     ),
-                  ],
+                  ),
                 ),
               ),
-              SizedBox(width: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: kgoldColor),
-                ),
-                child: Text(
-                  "qty : $qty",
-                  style: const TextStyle(
-                    color: kgoldColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+              const SizedBox(width: 10),
+              SizedBox(
+                width: 70,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: kgoldColor),
+                  ),
+                  child: Text(
+                    "qty : $qty",
+                    style: TextStyle(
+                      color: isDark ? kwhiteColor : kblackColor,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-
-          /// RIGHT SIDE (QTY + PRICE)
-          Row(
-            children: [
-              const SizedBox(width: 10),
-              Text(
-                value,
-                style: const TextStyle(
-                  color: kgoldColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          Text(
+            value,
+            style: const TextStyle(
+              color: kgoldColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

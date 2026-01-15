@@ -84,7 +84,37 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       backgroundColor: Brightness.dark == Theme.of(context).brightness
           ? kblackColor
           : kwhiteColor,
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: Brightness.dark == Theme.of(context).brightness
+      //           ? kwhiteColor
+      //           : kblackColor,
+      //       size: 18,
+      //     ),
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //   ),
+      //   title: Text(
+      //     "My Marketplace",
+      //     style: TextStyle(
+      //       color: Brightness.dark == Theme.of(context).brightness
+      //           ? kwhiteColor
+      //           : kblackColor,
+      //       fontSize: 18,
+      //       fontWeight: FontWeight.w600,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      // ),
       appBar: AppBar(
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kblackColor
+            : kwhiteColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -107,6 +137,28 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AddProductPage()),
+                );
+              },
+              style: TextButton.styleFrom(
+                side: const BorderSide(color: kgoldColor, width: 1.5),
+                foregroundColor: kgoldColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: Icon(Icons.add, color: kgoldColor),
+              label: Text("Add New", style: TextStyle(color: kgoldColor)),
+            ),
+          ),
+        ],
         centerTitle: true,
       ),
 
@@ -157,51 +209,51 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
-            child: SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddProductPage(),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  side: const BorderSide(color: kgoldColor, width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add,
-                        color: kgoldColor,
-                        size: 16.0,
-                        semanticLabel: 'A star icon',
-                      ),
-                      Text(
-                        "Add New Product",
-                        style: GoogleFonts.poppins(
-                          color: kgoldColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
+          //   child: SizedBox(
+          //     width: double.infinity,
+          //     child: OutlinedButton(
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => const AddProductPage(),
+          //           ),
+          //         );
+          //       },
+          //       style: OutlinedButton.styleFrom(
+          //         padding: const EdgeInsets.symmetric(vertical: 10),
+          //         side: const BorderSide(color: kgoldColor, width: 1.5),
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(8),
+          //         ),
+          //       ),
+          //       child: Center(
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           crossAxisAlignment: CrossAxisAlignment.center,
+          //           children: [
+          //             Icon(
+          //               Icons.add,
+          //               color: kgoldColor,
+          //               size: 16.0,
+          //               semanticLabel: 'A star icon',
+          //             ),
+          //             Text(
+          //               "Add New Product",
+          //               style: GoogleFonts.poppins(
+          //                 color: kgoldColor,
+          //                 fontSize: 13,
+          //                 fontWeight: FontWeight.w500,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(12),
@@ -420,35 +472,78 @@ class _ProductViewPageState extends State<ProductViewPage> {
       backgroundColor: isDark ? kblackColor : kwhiteColor,
 
       /// APP BAR
+      // appBar: AppBar(
+      //   backgroundColor: isDark ? kblackColor : kwhiteColor,
+      //   elevation: 0,
+      //   centerTitle: true,
+      //   title: Text(
+      //     "Product details",
+      //     style: GoogleFonts.poppins(
+      //       color: isDark ? kwhiteColor : kblackColor,
+      //       fontWeight: FontWeight.w600,
+      //     ),
+      //   ),
+      //   leading: IconButton(
+      //     icon: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: isDark ? kwhiteColor : kblackColor,
+      //     ),
+      //     onPressed: () => Navigator.pop(context),
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(
+      //         isEditMode ? Icons.close : Icons.edit,
+      //         color: isDark ? kwhiteColor : kblackColor,
+      //       ),
+      //       onPressed: () {
+      //         setState(() => isEditMode = !isEditMode);
+      //       },
+      //     ),
+      //   ],
+      // ),
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Product details",
-          style: GoogleFonts.poppins(
-            color: isDark ? kwhiteColor : kblackColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          "Product details",
+          style: TextStyle(
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              isEditMode ? Icons.close : Icons.edit,
-              color: isDark ? kwhiteColor : kblackColor,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: TextButton.icon(
+              onPressed: () {
+                setState(() => isEditMode = !isEditMode);
+              },
+              style: TextButton.styleFrom(
+                side: const BorderSide(color: kgoldColor, width: 1.5),
+                foregroundColor: kgoldColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: Icon(Icons.edit, color: kgoldColor),
+              label: Text("Edit", style: TextStyle(color: kgoldColor)),
             ),
-            onPressed: () {
-              setState(() => isEditMode = !isEditMode);
-            },
           ),
         ],
+        centerTitle: true,
       ),
 
       /// BODY
@@ -567,57 +662,83 @@ class _ProductViewPageState extends State<ProductViewPage> {
                       ),
                     ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text('Online'),
-                    value: 'online',
-                    groupValue: status,
-                    activeColor: kgoldColor,
-                    onChanged: (value) => setState(() => status = value!),
+            if (isEditMode)
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile(
+                      title: const Text('Online'),
+                      value: 'online',
+                      groupValue: status,
+                      activeColor: kgoldColor,
+                      onChanged: (value) => setState(() => status = value!),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RadioListTile(
-                    title: const Text('Offline'),
-                    value: 'offline',
-                    groupValue: status,
-                    activeColor: kgoldColor,
+                  Expanded(
+                    child: RadioListTile(
+                      title: const Text('Offline'),
+                      value: 'offline',
+                      groupValue: status,
+                      activeColor: kgoldColor,
 
-                    onChanged: (value) => setState(() => status = value!),
+                      onChanged: (value) => setState(() => status = value!),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ],
         ),
       ),
+      bottomNavigationBar: isEditMode
+          ? Padding(
+              padding: const EdgeInsets.all(16),
+              child: SizedBox(
+                height: 50,
+                child: OutlinedButton(
+                  onPressed: _saveChanges,
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: kgoldColor, width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    "Save Changes",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: kgoldColor,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : null,
 
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SizedBox(
-          height: 50,
-          child: OutlinedButton(
-            onPressed: () {
-              isEditMode ? _saveChanges() : _confirmOrder();
-            },
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: kgoldColor, width: 1.5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(
-              isEditMode ? "Save Changes" : "Confirm Order",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600,
-                color: kgoldColor,
-              ),
-            ),
-          ),
-        ),
-      ),
+      // if (isEditMode)
+      //       bottomNavigationBar: Padding(
+      //         padding: const EdgeInsets.all(16),
+      //         child: SizedBox(
+      //           height: 50,
+      //           child: OutlinedButton(
+      //             onPressed: () {
+      //               isEditMode ? _saveChanges() : _confirmOrder();
+      //             },
+      //             style: OutlinedButton.styleFrom(
+      //               side: const BorderSide(color: kgoldColor, width: 1.5),
+      //               shape: RoundedRectangleBorder(
+      //                 borderRadius: BorderRadius.circular(12),
+      //               ),
+      //             ),
+      //             child: Text(
+      //               isEditMode ? "Save Changes" : "Confirm Order",
+      //               style: GoogleFonts.poppins(
+      //                 fontWeight: FontWeight.w600,
+      //                 color: kgoldColor,
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
     );
   }
 
