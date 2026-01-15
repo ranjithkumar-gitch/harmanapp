@@ -7,22 +7,24 @@ import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-class AllCreatorsProfile extends StatefulWidget {
-  const AllCreatorsProfile({super.key});
+class Mycreatorprofile extends StatefulWidget {
+  const Mycreatorprofile({super.key, required String usrName});
 
   @override
-  State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
+  State<Mycreatorprofile> createState() => _MycreatorprofileState();
 }
 
 enum SampleItem { itemOne }
 
-class _AllCreatorsProfileState extends State<AllCreatorsProfile>
+class _MycreatorprofileState extends State<Mycreatorprofile>
     with SingleTickerProviderStateMixin {
   bool isFollowing = false;
+  SampleItem? selectedItem;
   late TabController _tabController;
   final List<String> _icons = [
     "assets/reels.png",
@@ -32,7 +34,6 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
     "assets/gold_cart.png",
   ];
 
-  SampleItem? selectedItem;
   @override
   void initState() {
     super.initState();
@@ -41,18 +42,12 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (posts.isEmpty) {
       return Scaffold(
         backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kwhiteColor
-            : kblackColor,
+            ? kblackColor
+            : kwhiteColor,
         body: Center(child: CircularProgressIndicator(color: Colors.white)),
       );
     }
@@ -68,8 +63,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: const CustomAppBar(),
-
+        appBar: StarCustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -78,34 +72,36 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     coverImage('assets/sources/images/cover.png'),
-
                     profileImage(
                       'assets/sources/profiles/${user.profileImage}',
                       user.name,
                     ),
 
-                    AnimatedBuilder(
-                      animation: _tabController,
-                      builder: (_, __) {
-                        return TabBar(
-                          controller: _tabController,
-                          indicatorColor: kgoldColor,
-                          indicatorWeight: 4,
-                          labelPadding: EdgeInsets.zero,
-                          tabs: List.generate(_icons.length, (index) {
-                            final bool isSelected =
-                                _tabController.index == index;
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+                      child: AnimatedBuilder(
+                        animation: _tabController,
+                        builder: (_, __) {
+                          return TabBar(
+                            controller: _tabController,
+                            indicatorColor: kgoldColor,
+                            indicatorWeight: 4,
+                            labelPadding: EdgeInsets.zero,
+                            tabs: List.generate(_icons.length, (index) {
+                              final bool isSelected =
+                                  _tabController.index == index;
 
-                            return Tab(
-                              icon: Image.asset(
-                                _icons[index],
-                                height: 40,
-                                color: isSelected ? kgoldColor : Colors.grey,
-                              ),
-                            );
-                          }),
-                        );
-                      },
+                              return Tab(
+                                icon: Image.asset(
+                                  _icons[index],
+                                  height: 40,
+                                  color: isSelected ? kgoldColor : Colors.grey,
+                                ),
+                              );
+                            }),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -113,9 +109,11 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
             ];
           },
 
-          body: Expanded(
+          body: Container(
+            transform: Matrix4.translationValues(0.0, -40.0, 0.0),
             child: TabBarView(
               controller: _tabController,
+
               children: [
                 ImagesTab(),
                 // ReelsTab(),
@@ -257,20 +255,22 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                   height: 30,
                   width: 30,
 
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kblackColor
-                          : kwhiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: kgoldColor, width: 1),
+                  child: Positioned(
+                    bottom: -10,
+                    right: -10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: kgoldColor, width: 1),
+                      ),
+                      child: Icon(Icons.star, color: kgoldColor, size: 20),
                     ),
-                    child: Icon(Icons.star, color: kgoldColor, size: 20),
                   ),
                 ),
-
-                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
@@ -293,7 +293,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                     ),
                     onPressed: () {},
                     child: const Text(
-                      "Subscribe",
+                      "Unsubscribe",
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -328,6 +328,24 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                 child: SizedBox(
                   height: 40,
                   child: OutlinedButton(
+                    // style: OutlinedButton.styleFrom(
+                    //   padding: EdgeInsets.zero,
+                    //   backgroundColor: isFollowing
+                    //       ? kgoldColor
+                    //       : Colors.transparent,
+                    //   side: BorderSide(
+                    //     color: isFollowing ? kgoldColor : kgoldColor,
+                    //   ),
+                    //   foregroundColor: isFollowing
+                    //       ? Brightness.dark == Theme.of(context).brightness
+                    //             ? kwhiteColor
+                    //             : kblackColor
+                    //       : Colors.black,
+
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    // ),
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
@@ -343,6 +361,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
+
                     onPressed: () {
                       setState(() => isFollowing = !isFollowing);
                     },
@@ -354,6 +373,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                         if (isFollowing) const SizedBox(width: 4),
                         Text(
                           isFollowing ? "Stargazing" : "Stargaze",
+
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -405,11 +425,13 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                 ],
               ),
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'o',
                 style: TextStyle(
-                  color: kgoldColor,
-                  fontSize: 5,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kgoldColor,
+                  fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -441,11 +463,13 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
               ),
 
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'O',
                 style: TextStyle(
-                  color: kgoldColor,
-                  fontSize: 5,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kgoldColor
+                      : kgoldColor,
+                  fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -475,10 +499,18 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   SizedBox(width: 8),
-                  Text('|', style: TextStyle(color: Colors.grey, fontSize: 20)),
+                  Text(
+                    '|',
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
+                      fontSize: 20,
+                    ),
+                  ),
                 ],
               ),
               Expanded(
@@ -642,7 +674,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.45),
+                  color: Colors.black.withValues(alpha: .45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -852,7 +884,7 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: .25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],
@@ -900,7 +932,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 18,
                 ),
               ],

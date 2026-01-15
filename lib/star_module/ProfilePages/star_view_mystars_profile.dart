@@ -861,7 +861,7 @@ class EmptyTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Colors.orange,
+                  color: kgoldColor,
                 ),
               ),
               const SizedBox(height: 8),

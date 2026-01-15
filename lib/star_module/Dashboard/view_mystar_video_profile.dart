@@ -1,28 +1,30 @@
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/app_bar.dart.dart';
-import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
-import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-class AllCreatorsProfile extends StatefulWidget {
-  const AllCreatorsProfile({super.key});
+class MyCreatorVideoCover extends StatefulWidget {
+  final String usrName;
+
+  const MyCreatorVideoCover({super.key, required this.usrName});
 
   @override
-  State<AllCreatorsProfile> createState() => _AllCreatorsProfileState();
+  State<MyCreatorVideoCover> createState() => _MyCreatorVideoCoverState();
 }
 
-enum SampleItem { itemOne }
-
-class _AllCreatorsProfileState extends State<AllCreatorsProfile>
+class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
     with SingleTickerProviderStateMixin {
+  late VideoPlayerController _videoController;
+  bool isVideoReady = false;
   bool isFollowing = false;
+  bool _isMuted = true;
   late TabController _tabController;
   final List<String> _icons = [
     "assets/reels.png",
@@ -32,117 +34,132 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
     "assets/gold_cart.png",
   ];
 
-  SampleItem? selectedItem;
   @override
   void initState() {
     super.initState();
-    posts.shuffle();
+
+    _videoController =
+        VideoPlayerController.asset('assets/sources/videos/7.mp4')
+          ..initialize().then((_) {
+            setState(() => isVideoReady = true);
+            _videoController
+              ..setLooping(true)
+              ..setVolume(0.0)
+              ..play();
+          });
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     _tabController = TabController(length: _icons.length, vsync: this);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (posts.isEmpty) {
-      return Scaffold(
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kwhiteColor
-            : kblackColor,
-        body: Center(child: CircularProgressIndicator(color: Colors.white)),
-      );
-    }
-
-    final user = posts.firstWhere(
-      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
-      orElse: () => posts.first,
-    );
-
     return DefaultTabController(
       length: 5,
       child: Scaffold(
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: const CustomAppBar(),
-
+        appBar: StarCustomAppBar(),
         body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    coverImage('assets/sources/images/cover.png'),
+          headerSliverBuilder: (_, __) => [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _videoCover(),
+                  profileImage(
+                    'assets/sources/profiles/deepika.jpg',
+                    widget.usrName,
+                  ),
 
-                    profileImage(
-                      'assets/sources/profiles/${user.profileImage}',
-                      user.name,
-                    ),
+                  // const TabBar(
+                  //   indicatorColor: kgoldColor,
+                  //   indicatorWeight: 4,
+                  //   labelColor: kgoldColor,
+                  //   unselectedLabelColor: Colors.white54,
+                  //   tabs: [
+                  //     Tab(icon: Icon(Icons.apps)),
+                  //     Tab(icon: Icon(Icons.live_tv)),
+                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
 
-                    AnimatedBuilder(
-                      animation: _tabController,
-                      builder: (_, __) {
-                        return TabBar(
-                          controller: _tabController,
-                          indicatorColor: kgoldColor,
-                          indicatorWeight: 4,
-                          labelPadding: EdgeInsets.zero,
-                          tabs: List.generate(_icons.length, (index) {
-                            final bool isSelected =
-                                _tabController.index == index;
+                  //     Tab(icon: Icon(Icons.person_outline)),
+                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
+                  //   ],
+                  // ),
+                  AnimatedBuilder(
+                    animation: _tabController,
+                    builder: (_, __) {
+                      return TabBar(
+                        controller: _tabController,
+                        indicatorColor: kgoldColor,
+                        indicatorWeight: 4,
+                        labelPadding: EdgeInsets.zero,
+                        tabs: List.generate(_icons.length, (index) {
+                          final bool isSelected = _tabController.index == index;
 
-                            return Tab(
-                              icon: Image.asset(
-                                _icons[index],
-                                height: 40,
-                                color: isSelected ? kgoldColor : Colors.grey,
-                              ),
-                            );
-                          }),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                          return Tab(
+                            icon: Image.asset(
+                              _icons[index],
+                              height: 40,
+                              color: isSelected ? kgoldColor : Colors.grey,
+                            ),
+                          );
+                        }),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ];
-          },
-
-          body: Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ImagesTab(),
-                // ReelsTab(),
-                // ImagesTab(),
-                LiveTab(),
-                LegacyTab(),
-
-                EmptyTab(),
-                Mycreatorsmarketplace(),
-              ],
             ),
+          ],
+          body: TabBarView(
+            controller: _tabController,
+
+            children: [
+              ImagesTab(),
+
+              LiveTab(),
+              LegacyTab(),
+
+              EmptyTab(),
+              Mycreatorsmarketplace(),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget coverImage(String imagePath) {
+  Widget _videoCover() {
     return SizedBox(
       height: 220,
       width: double.infinity,
       child: Stack(
         children: [
-          SizedBox(
-            height: 220,
-            child: Image.asset(imagePath, fit: BoxFit.fill),
-          ),
+          /// 🎬 Video
+          if (isVideoReady && _videoController.value.isInitialized)
+            Positioned.fill(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _videoController.value.size.width,
+                  height: _videoController.value.size.height,
+                  child: VideoPlayer(_videoController),
+                ),
+              ),
+            )
+          else
+            Container(color: Colors.black),
 
           /// 🔙 Back Button (Top Left)
           Positioned(
@@ -167,6 +184,55 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                 ),
                 icon: const Icon(Icons.arrow_back_ios),
                 color: Colors.white,
+              ),
+            ),
+          ),
+
+          /// 🔊 Mute Button (Top Right)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
+                    ),
+                    icon: Icon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMuted = !_isMuted;
+                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  /// ▶️ Play / Pause (Below Mute)
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
+                    ),
+                    icon: Icon(
+                      _videoController.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _videoController.value.isPlaying
+                            ? _videoController.pause()
+                            : _videoController.play();
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
           ),
@@ -196,6 +262,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                         colors: [kgoldColor, Colors.white],
                       ),
                     ),
+
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       child: Container(
@@ -209,7 +276,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 15),
                   Row(
                     children: [
                       Row(
@@ -250,31 +317,42 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                   ),
                 ],
               ),
+              // Positioned(
+              //   bottom: 0,
+              //   left: 80,
+              //   child: Image.asset("assets/screenshots/gold.png", scale: 12),
+              // ),
               Positioned(
                 bottom: -5,
                 left: 85,
                 child: SizedBox(
                   height: 30,
                   width: 30,
-
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kblackColor
-                          : kwhiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: kgoldColor, width: 1),
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(36),
+                  //   gradient: const LinearGradient(
+                  //     colors: [CupertinoColors.white, CupertinoColors.white],
+                  //   ),
+                  // ),
+                  child: Positioned(
+                    bottom: -10,
+                    right: -10,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kblackColor
+                            : kwhiteColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: kgoldColor, width: 1),
+                      ),
+                      child: Icon(Icons.star, color: kgoldColor, size: 20),
                     ),
-                    child: Icon(Icons.star, color: kgoldColor, size: 20),
                   ),
                 ),
-
-                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
-
           SizedBox(height: 16),
 
           Row(
@@ -286,14 +364,17 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: kgoldColor,
-                      foregroundColor: Colors.black,
+                      foregroundColor:
+                          Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     onPressed: () {},
                     child: const Text(
-                      "Subscribe",
+                      "Unsubscribe",
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -392,6 +473,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                     ),
                   ),
                   SizedBox(width: 5),
+
                   Text(
                     'Stills',
                     style: TextStyle(
@@ -409,7 +491,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                 'o',
                 style: TextStyle(
                   color: kgoldColor,
-                  fontSize: 5,
+                  fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -445,7 +527,7 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                 'O',
                 style: TextStyle(
                   color: kgoldColor,
-                  fontSize: 5,
+                  fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -525,6 +607,8 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
     );
   }
 }
+
+/* -------------------- TABS -------------------- */
 
 final sampleLives = [
   {
@@ -642,7 +726,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.45),
+                  color: Colors.black.withValues(alpha: .45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -812,7 +896,7 @@ class EmptyTab extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.08),
+                      color: Colors.black.withValues(alpha: .08),
                       blurRadius: 18,
                     ),
                   ],
@@ -852,7 +936,7 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: .25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],
