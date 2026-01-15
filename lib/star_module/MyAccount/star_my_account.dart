@@ -193,8 +193,11 @@ class _StarMyAccountState extends State<StarMyAccount> {
                           title: 'Create Post',
                           subtitle: 'Stills | Bits | Videos',
                           isSelected: selectedCard == "CreatePost",
-                          onTap: () =>
-                              setState(() => selectedCard = "CreatePost"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "CreatePost"
+                                ? ""
+                                : "CreatePost",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -208,9 +211,13 @@ class _StarMyAccountState extends State<StarMyAccount> {
                         _optionCard(
                           icon: Icons.history,
                           title: 'Legacy',
-                          subtitle: '',
+                          subtitle: 'Legacy management',
                           isSelected: selectedCard == "Legacy",
-                          onTap: () => setState(() => selectedCard = "Legacy"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Legacy"
+                                ? ""
+                                : "Legacy",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -225,7 +232,11 @@ class _StarMyAccountState extends State<StarMyAccount> {
                           title: 'Orders',
                           subtitle: 'Checkout all my orders',
                           isSelected: selectedCard == "Orders",
-                          onTap: () => setState(() => selectedCard = "Orders"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Orders"
+                                ? ""
+                                : "Orders",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -239,10 +250,13 @@ class _StarMyAccountState extends State<StarMyAccount> {
                         _optionCard(
                           icon: Icons.card_membership_outlined,
                           title: 'Memberships',
-                          subtitle: '',
+                          subtitle: 'Subscription management',
                           isSelected: selectedCard == "Memberships",
-                          onTap: () =>
-                              setState(() => selectedCard = "Memberships"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Memberships"
+                                ? ""
+                                : "Memberships",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -259,7 +273,11 @@ class _StarMyAccountState extends State<StarMyAccount> {
                           title: 'My Posts',
                           subtitle: 'View all my posts',
                           isSelected: selectedCard == "MyPosts",
-                          onTap: () => setState(() => selectedCard = "MyPosts"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "MyPosts"
+                                ? ""
+                                : "MyPosts",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -276,8 +294,11 @@ class _StarMyAccountState extends State<StarMyAccount> {
                           title: 'My Marketplace',
                           subtitle: 'My listed products',
                           isSelected: selectedCard == "Marketplace",
-                          onTap: () =>
-                              setState(() => selectedCard = "Marketplace"),
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Marketplace"
+                                ? ""
+                                : "Marketplace",
+                          ),
                           onButtonPressed: () {
                             Navigator.push(
                               context,
@@ -463,57 +484,6 @@ class _StarMyAccountState extends State<StarMyAccount> {
     );
   }
 
-  // Widget _editDropdownmenu() {
-  //   return Column(
-  //     children: <Widget>[
-  //       PopupMenuButton<Menu>(
-  //         color: Theme.of(context).brightness == Brightness.dark
-  //             ? kblackColor
-  //             : kwhiteColor,
-  //         popUpAnimationStyle: AnimationStyle(
-  //           curve: Easing.emphasizedDecelerate,
-  //           duration: Duration(seconds: 2),
-  //         ),
-  //         icon: const Icon(Icons.more_vert, color: kgoldColor),
-  //         onSelected: (Menu item) {},
-  //         itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
-  //           PopupMenuItem<Menu>(
-  //             value: Menu.preview,
-  //             child: ListTile(
-  //               leading: Icon(Icons.edit, color: kgoldColor),
-  //               title: Text(
-  //                 'Edit Profile',
-  //                 style: GoogleFonts.poppins(color: kgoldColor),
-  //               ),
-  //             ),
-  //           ),
-  //           PopupMenuItem<Menu>(
-  //             value: Menu.share,
-  //             child: ListTile(
-  //               leading: Icon(Icons.share_outlined, color: kgoldColor),
-  //               title: Text(
-  //                 'Share Profile',
-  //                 style: GoogleFonts.poppins(color: kgoldColor),
-  //               ),
-  //             ),
-  //           ),
-
-  //           const PopupMenuDivider(),
-  //           PopupMenuItem<Menu>(
-  //             value: Menu.remove,
-  //             child: ListTile(
-  //               leading: Icon(Icons.delete_outline, color: kgoldColor),
-  //               title: Text(
-  //                 'Delete account',
-  //                 style: GoogleFonts.poppins(color: kgoldColor),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
   Widget _editDropdownmenu() {
     return Column(
       children: <Widget>[
@@ -539,12 +509,6 @@ class _StarMyAccountState extends State<StarMyAccount> {
                 break;
 
               case Menu.share:
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => const ShareProfileScreen(),
-                //   ),
-                // );
                 SharePlus.instance.share(ShareParams(text: 'Check this out!'));
                 break;
 
@@ -641,106 +605,147 @@ class _StarMyAccountState extends State<StarMyAccount> {
 
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: isSelected
-                ? gold
-                : Theme.of(context).brightness == Brightness.dark
-                ? kwhiteColor
-                : kblackColor,
-            width: isSelected ? 2 : 1,
-          ),
-          color: Theme.of(context).brightness == Brightness.dark
-              ? kblackColor
-              : kwhiteColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            /// 🔘 Icon
-            Container(
-              padding: const EdgeInsets.all(12),
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
+        duration: const Duration(milliseconds: 800),
+        builder: (context, angle, child) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(angle),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 800),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                borderRadius: BorderRadius.circular(14),
                 border: Border.all(
                   color: isSelected
                       ? gold
                       : Theme.of(context).brightness == Brightness.dark
                       ? kwhiteColor
                       : kblackColor,
-                  width: 1.5,
+                  width: isSelected ? 2 : 1,
                 ),
-              ),
-              child: Icon(
-                icon,
-                size: 26,
-                color: isSelected
-                    ? gold
-                    : Theme.of(context).brightness == Brightness.dark
-                    ? kwhiteColor
-                    : kblackColor,
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            /// 📝 Title
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: isSelected
-                    ? gold
-                    : Theme.of(context).brightness == Brightness.dark
-                    ? kwhiteColor
-                    : kblackColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 2),
-
-            /// 📄 Subtitle
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? kwhiteColor
-                    : kblackColor,
-                fontSize: 12,
+                    ? kblackColor
+                    : kwhiteColor,
               ),
-            ),
-
-            const SizedBox(height: 3),
-
-            /// ✅ FIXED HEIGHT BUTTON SLOT
-            SizedBox(
-              width: double.infinity,
-              height: 36,
               child: isSelected
-                  ? OutlinedButton(
-                      onPressed: onButtonPressed,
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: gold),
-                        foregroundColor: gold,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                  ? // Back of card - Show button (counter-rotated to appear unflipped)
+                    Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..rotateY(3.14159),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            subtitle,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: gold,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 36,
+                            child: OutlinedButton(
+                              onPressed: onButtonPressed,
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: gold),
+                                foregroundColor: gold,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: const Text(
+                                "Open",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: const Text("Open", style: TextStyle(fontSize: 13)),
                     )
-                  : const SizedBox.shrink(),
+                  : // Front of card - Show icon, title, subtitle
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        /// 🔘 Icon
+                        Container(
+                          height: 56,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: isSelected
+                                  ? gold
+                                  : Theme.of(context).brightness ==
+                                        Brightness.dark
+                                  ? kwhiteColor
+                                  : kblackColor,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Icon(
+                            icon,
+                            size: 26,
+                            color: isSelected
+                                ? gold
+                                : Theme.of(context).brightness ==
+                                      Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        /// 📝 Title
+                        Text(
+                          title,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: isSelected
+                                ? gold
+                                : Theme.of(context).brightness ==
+                                      Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 2),
+
+                        /// 📄 Subtitle
+                        Text(
+                          subtitle,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
+                            fontSize: 12,
+                          ),
+                        ),
+
+                        const SizedBox(height: 3),
+                      ],
+                    ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
