@@ -139,8 +139,7 @@ class StarMembershipScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// TITLE
-          Text(
+          const Text(
             "Membership Summary",
             style: TextStyle(
               color: kgoldColor,
@@ -151,57 +150,106 @@ class StarMembershipScreen extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          /// TOTAL MEMBERS
-          _summaryRow("Total Members", "3"),
+          /// TOTAL MEMBERS (NO CONTAINER)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total Members",
+                style: TextStyle(
+                  color: isDark ? kwhiteColor : kblackColor,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                "3",
+                style: TextStyle(
+                  color: isDark ? kwhiteColor : kblackColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
 
-          const Divider(color: kgoldColor, height: 20),
+          const Divider(color: kgoldColor, height: 24),
 
-          /// BREAKDOWN
-          _summaryRow("Monthly", "\$18.99", qty: 2),
-          _summaryRow("Yearly", "\$27.20", qty: 3),
-          _summaryRow("Weekly", "\$9.99", qty: 1),
-
-          // const Divider(color: kgoldColor, height: 20),
-
-          /// QTY
-          // _summaryRow("Total Quantity", "3", isBold: true),
+          _membershipItem("Monthly", "\$18.99", qty: 2),
+          _membershipItem("Yearly", "\$27.20", qty: 3),
+          _membershipItem("Weekly", "\$9.99", qty: 1),
         ],
       ),
     );
   }
 
-  // Widget _summaryRow(String label, String value, {bool isBold = false}) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 4),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Container(
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(20),
-  //             border: Border.all(color: kgoldColor),
-  //           ),
-  //           child: Text(
-  //             label,
-  //             style: TextStyle(
-  //               color: Colors.white70,
-  //               fontSize: 14,
-  //               fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
-  //             ),
-  //           ),
-  //         ),
-  //         Text(
-  //           value,
-  //           style: TextStyle(
-  //             color: kgoldColor,
-  //             fontSize: 14,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _membershipItem(String label, String value, {int qty = 1}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          /// LEFT CONTAINER (PLAN)
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: kgoldColor),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      label,
+                      style: const TextStyle(color: kgoldColor, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: kgoldColor),
+                ),
+                child: Text(
+                  "qty : $qty",
+                  style: const TextStyle(
+                    color: kgoldColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          /// RIGHT SIDE (QTY + PRICE)
+          Row(
+            children: [
+              const SizedBox(width: 10),
+              Text(
+                value,
+                style: const TextStyle(
+                  color: kgoldColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _summaryRow(
     String label,
     String value, {

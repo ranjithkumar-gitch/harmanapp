@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:harmanapp/Cart/cart_manager.dart';
-import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
+import 'package:harmanapp/star_module/MyAccount/add_productpage.dart';
+
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lottie/lottie.dart';
 
 class StarMarketPlace extends StatefulWidget {
   const StarMarketPlace({super.key});
@@ -86,15 +86,23 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
           : kwhiteColor,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: kwhiteColor, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
+            size: 18,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "My Marketplace",
           style: TextStyle(
-            color: kwhiteColor,
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kwhiteColor
+                : kblackColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -155,17 +163,12 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) => ProductViewPage(
-                  //       product: item,
-                  //       onCartUpdated: () {
-                  //         setState(() {});
-                  //       },
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddProductPage(),
+                    ),
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -351,7 +354,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
                   ),
                 ),
                 child: Text(
-                  "Edit Product",
+                  "View Product",
                   style: GoogleFonts.poppins(
                     color: kgoldColor,
                     fontSize: 13,
@@ -367,293 +370,6 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
   }
 }
 
-// class ProductViewPage extends StatefulWidget {
-//   final Map<String, dynamic> product;
-//   final VoidCallback? onCartUpdated;
-
-//   const ProductViewPage({super.key, required this.product, this.onCartUpdated});
-
-//   @override
-//   State<ProductViewPage> createState() => _ProductViewPageState();
-// }
-
-// class _ProductViewPageState extends State<ProductViewPage> {
-//   int quantity = 1;
-//   int selectedColor = 0;
-//   int selectedSize = 0;
-
-//   final colors = [
-//     Colors.black,
-//     Colors.grey,
-//     const Color.fromARGB(255, 147, 43, 5),
-//   ];
-//   final sizes = ["S", "M", "L", "XL", "XXL"];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // bool isFashion = widget.product["type"] == "fashion";
-
-//     return Scaffold(
-//       backgroundColor: Brightness.dark == Theme.of(context).brightness
-//           ? kblackColor
-//           : kwhiteColor,
-
-//       appBar: AppBar(
-//         backgroundColor: Brightness.dark == Theme.of(context).brightness
-//             ? kblackColor
-//             : kwhiteColor,
-//         elevation: 0,
-//         foregroundColor: Brightness.dark == Theme.of(context).brightness
-//             ? kblackColor
-//             : kwhiteColor,
-//         title: Text(
-//           "Shop from ${widget.product["creator"]}",
-//           style: GoogleFonts.poppins(
-//             color: Brightness.dark == Theme.of(context).brightness
-//                 ? kwhiteColor
-//                 : kblackColor,
-//             fontSize: 18,
-//             fontWeight: FontWeight.w600,
-//           ),
-//         ),
-//         leading: IconButton(
-//           icon: Icon(
-//             Icons.arrow_back_ios,
-//             color: Brightness.dark == Theme.of(context).brightness
-//                 ? kwhiteColor
-//                 : kblackColor,
-//           ),
-//           onPressed: () => Navigator.of(context).pop(),
-//         ),
-//       ),
-
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.only(left: 10, right: 10),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Center(
-//                 child: Container(
-//                   padding: const EdgeInsets.all(6),
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(14),
-//                     border: Border.all(color: Colors.grey.shade300, width: 1),
-//                   ),
-//                   child: ClipRRect(
-//                     borderRadius: BorderRadius.circular(10),
-//                     child: AspectRatio(
-//                       aspectRatio: 1,
-//                       child: AnimatedSwitcher(
-//                         duration: const Duration(milliseconds: 300),
-//                         child: AnimatedSwitcher(
-//                           duration: const Duration(milliseconds: 300),
-//                           child: Image.asset(
-//                             widget.product["image"][0],
-//                             // height: 140,
-//                             width: double.infinity,
-//                             fit: BoxFit.fitHeight,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-
-//               const SizedBox(height: 15),
-
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 16),
-//                 child: Text(
-//                   widget.product["name"],
-//                   style: GoogleFonts.poppins(
-//                     color: Brightness.dark == Theme.of(context).brightness
-//                         ? kwhiteColor
-//                         : kblackColor,
-//                     fontSize: 20,
-//                     fontWeight: FontWeight.w700,
-//                   ),
-//                 ),
-//               ),
-
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(
-//                   horizontal: 16,
-//                   vertical: 8,
-//                 ),
-//                 child: Text(
-//                   widget.product["price"],
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 18,
-//                     fontWeight: FontWeight.w700,
-//                     color: kgoldColor,
-//                   ),
-//                 ),
-//               ),
-
-//               Divider(color: CupertinoColors.opaqueSeparator),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 10),
-//                 child: Text(
-//                   'Description',
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 14,
-//                     fontWeight: FontWeight.w600,
-//                     color: Brightness.dark == Theme.of(context).brightness
-//                         ? kwhiteColor
-//                         : kblackColor,
-//                   ),
-//                 ),
-//               ),
-
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(
-//                   horizontal: 16,
-//                   vertical: 8,
-//                 ),
-//                 child: Text(
-//                   widget.product["description"],
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 13,
-//                     fontWeight: FontWeight.w500,
-//                     color: Brightness.dark == Theme.of(context).brightness
-//                         ? kwhiteColor
-//                         : kblackColor,
-//                   ),
-//                 ),
-//               ),
-
-//               // Divider(color: CupertinoColors.opaqueSeparator),
-//               const SizedBox(height: 10),
-//             ],
-//           ),
-//         ),
-//       ),
-
-//       bottomNavigationBar: Container(
-//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//         height: 70,
-//         color: Brightness.dark == Theme.of(context).brightness
-//             ? kblackColor
-//             : kwhiteColor,
-//         child: Row(
-//           children: [
-//             // Container(
-//             //   height: 40,
-//             //   decoration: BoxDecoration(
-//             //     border: Border.all(color: Color(0xFFDAA520)),
-//             //     borderRadius: BorderRadius.circular(10),
-//             //   ),
-//             //   child: Row(
-//             //     children: [
-//             //       IconButton(
-//             //         onPressed: () {
-//             //           if (quantity > 1) setState(() => quantity--);
-//             //         },
-//             //         icon: const Icon(Icons.remove, color: Color(0xFFDAA520)),
-//             //       ),
-//             //       Text(
-//             //         quantity.toString(),
-//             //         style: GoogleFonts.poppins(
-//             //           fontSize: 16,
-//             //           color: kgoldColor,
-//             //           fontWeight: FontWeight.w600,
-//             //         ),
-//             //       ),
-//             //       IconButton(
-//             //         onPressed: () => setState(() => quantity++),
-//             //         icon: const Icon(Icons.add, color: Color(0xFFDAA520)),
-//             //       ),
-//             //     ],
-//             //   ),
-//             // ),
-//             const SizedBox(width: 12),
-
-//             Expanded(
-//               child: OutlinedButton(
-//                 onPressed: () {
-//                   CartManager.addToCart(widget.product, quantity);
-
-//                   showDialog(
-//                     context: context,
-//                     barrierDismissible: false,
-//                     builder: (context) {
-//                       return Dialog(
-//                         backgroundColor:
-//                             Brightness.dark == Theme.of(context).brightness
-//                             ? kblackColor
-//                             : kwhiteColor,
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(15),
-//                         ),
-//                         child: Padding(
-//                           padding: const EdgeInsets.all(20),
-//                           child: Column(
-//                             mainAxisSize: MainAxisSize.min,
-//                             children: [
-//                               SizedBox(
-//                                 width: 180,
-//                                 height: 180,
-//                                 child: Lottie.asset(
-//                                   "assets/congratulations.json",
-//                                 ),
-//                               ),
-//                               const SizedBox(height: 10),
-//                               Text(
-//                                 "Item added to cart!",
-//                                 style: GoogleFonts.poppins(
-//                                   fontSize: 16,
-//                                   color: kgoldColor,
-//                                   fontWeight: FontWeight.w600,
-//                                 ),
-//                               ),
-//                               const SizedBox(height: 15),
-//                               OutlinedButton(
-//                                 onPressed: () {
-//                                   widget.onCartUpdated?.call();
-//                                   Navigator.pop(context);
-//                                   Navigator.pop(context);
-//                                 },
-//                                 style: OutlinedButton.styleFrom(
-//                                   side: const BorderSide(color: kgoldColor),
-//                                 ),
-//                                 child: Text(
-//                                   "OK",
-//                                   style: GoogleFonts.poppins(color: kgoldColor),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       );
-//                     },
-//                   );
-//                 },
-//                 style: OutlinedButton.styleFrom(
-//                   side: const BorderSide(color: kgoldColor, width: 1.5),
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(10),
-//                   ),
-//                   padding: const EdgeInsets.symmetric(vertical: 10),
-//                 ),
-//                 child: Text(
-//                   "Confirm Order",
-//                   style: GoogleFonts.poppins(
-//                     fontSize: 15,
-//                     fontWeight: FontWeight.w600,
-//                     color: kgoldColor,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class ProductViewPage extends StatefulWidget {
   final Map<String, dynamic> product;
   final VoidCallback? onCartUpdated;
@@ -667,6 +383,7 @@ class ProductViewPage extends StatefulWidget {
 class _ProductViewPageState extends State<ProductViewPage> {
   bool isEditMode = false;
   int quantity = 1;
+  String status = 'online';
 
   late TextEditingController nameCtrl;
   late TextEditingController descCtrl;
@@ -708,7 +425,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "Shop from ${widget.product["creator"]}",
+          "Product details",
           style: GoogleFonts.poppins(
             color: isDark ? kwhiteColor : kblackColor,
             fontWeight: FontWeight.w600,
@@ -850,11 +567,33 @@ class _ProductViewPageState extends State<ProductViewPage> {
                       ),
                     ),
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text('Online'),
+                    value: 'online',
+                    groupValue: status,
+                    activeColor: kgoldColor,
+                    onChanged: (value) => setState(() => status = value!),
+                  ),
+                ),
+                Expanded(
+                  child: RadioListTile(
+                    title: const Text('Offline'),
+                    value: 'offline',
+                    groupValue: status,
+                    activeColor: kgoldColor,
+
+                    onChanged: (value) => setState(() => status = value!),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
 
-      /// BOTTOM BUTTON
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: SizedBox(

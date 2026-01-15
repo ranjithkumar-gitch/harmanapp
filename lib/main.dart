@@ -3,9 +3,6 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:harmanapp/splashScreen/splash_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
-// Wrap the app with a ValueListenableBuilder so the ThemeMode can be
-// changed at runtime by updating `themeNotifier.value`.
-
 void main() {
   runApp(const MyApp());
 }
