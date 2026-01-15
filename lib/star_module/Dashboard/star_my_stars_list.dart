@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
+
 import 'package:harmanapp/ProfilePages/view_mystar_profile_videocover.dart';
 
 import 'package:harmanapp/ProfilePages/view_mystars_profile.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
@@ -67,7 +68,7 @@ class _StarMyCreatorsScreenState extends State<StarMyCreatorsScreen>
       backgroundColor: Brightness.dark == Theme.of(context).brightness
           ? kblackColor
           : kwhiteColor,
-      appBar: CustomAppBar(),
+      appBar: StarCustomAppBar(),
       body: isPlaying
           ? Stack(
               children: [

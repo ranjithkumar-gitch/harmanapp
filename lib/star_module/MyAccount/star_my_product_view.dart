@@ -47,7 +47,7 @@ class _StarMyProductViewState extends State<StarMyProductView> {
           top: false,
           child: SizedBox(
             height: 50,
-            child: actionButton(context, "Buy it again"),
+            child: actionButton(context, "Confirm Order"),
           ),
         ),
       ),
@@ -186,11 +186,11 @@ class _StarMyProductViewState extends State<StarMyProductView> {
         ),
         child: CupertinoAlertDialog(
           title: const Text(
-            "Buy it again",
+            "Confirm Order",
             style: TextStyle(color: kgoldColor),
           ),
           content: Text(
-            "Are you sure you want to buy it again?",
+            "Are you sure you want to confirm order?",
             style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
           ),
           actions: [

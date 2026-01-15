@@ -26,7 +26,10 @@ class StarMembershipScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView(
+        padding: EdgeInsets.zero,
         children: [
+          _membershipSummary(context),
+
           membershipCard(
             context: context,
             image: "assets/sources/profiles/averie-woodard.jpg",
@@ -38,8 +41,35 @@ class StarMembershipScreen extends StatelessWidget {
           ),
           membershipCard(
             context: context,
+            image: "assets/sources/profiles/bhatia.jpg",
+            creatorName: "Bhatia",
+            plan: "Monthly",
+            price: "\$9.99",
+            tierColor: kgoldColor,
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
+          ),
+          membershipCard(
+            context: context,
             image: "assets/sources/profiles/aiony-haust.jpg",
             creatorName: "Sophia Ray",
+            plan: "Yearly",
+            price: "\$99.99",
+            tierColor: CupertinoColors.systemGrey,
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
+          ),
+          membershipCard(
+            context: context,
+            image: "assets/sources/profiles/deco-dev.png",
+            creatorName: "Deco dev",
+            plan: "Yearly",
+            price: "\$99.99",
+            tierColor: CupertinoColors.systemGrey,
+            onUnsubscribe: () => _showUnsubscribeDialog(context),
+          ),
+          membershipCard(
+            context: context,
+            image: "assets/sources/profiles/dion.jpg",
+            creatorName: "Dion",
             plan: "Yearly",
             price: "\$99.99",
             tierColor: CupertinoColors.systemGrey,
@@ -91,6 +121,135 @@ class StarMembershipScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _membershipSummary(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? kblackColor : kwhiteColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: kgoldColor, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// TITLE
+          Text(
+            "Membership Summary",
+            style: TextStyle(
+              color: kgoldColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          /// TOTAL MEMBERS
+          _summaryRow("Total Members", "3"),
+
+          const Divider(color: kgoldColor, height: 20),
+
+          /// BREAKDOWN
+          _summaryRow("Monthly", "\$18.99", qty: 2),
+          _summaryRow("Yearly", "\$27.20", qty: 3),
+          _summaryRow("Weekly", "\$9.99", qty: 1),
+
+          // const Divider(color: kgoldColor, height: 20),
+
+          /// QTY
+          // _summaryRow("Total Quantity", "3", isBold: true),
+        ],
+      ),
+    );
+  }
+
+  // Widget _summaryRow(String label, String value, {bool isBold = false}) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 4),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(20),
+  //             border: Border.all(color: kgoldColor),
+  //           ),
+  //           child: Text(
+  //             label,
+  //             style: TextStyle(
+  //               color: Colors.white70,
+  //               fontSize: 14,
+  //               fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
+  //             ),
+  //           ),
+  //         ),
+  //         Text(
+  //           value,
+  //           style: TextStyle(
+  //             color: kgoldColor,
+  //             fontSize: 14,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  Widget _summaryRow(
+    String label,
+    String value, {
+    int qty = 1,
+    bool isBold = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: kgoldColor),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  "qty : $qty",
+                  style: const TextStyle(
+                    color: kgoldColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              color: kgoldColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -172,19 +331,6 @@ Widget membershipCard({
               ),
             ],
           ),
-        ),
-
-        /// 🚫 Unsubscribe
-        OutlinedButton(
-          onPressed: onUnsubscribe,
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(color: tierColor),
-            foregroundColor: tierColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: const Text("Unsubscribe", style: TextStyle(fontSize: 12)),
         ),
       ],
     ),

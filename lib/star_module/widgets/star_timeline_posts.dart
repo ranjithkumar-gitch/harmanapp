@@ -10,14 +10,14 @@ import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 
-class StarImagePost extends StatefulWidget {
-  const StarImagePost({super.key, required this.post});
+class StarTimelinePosts extends StatefulWidget {
+  const StarTimelinePosts({super.key, required this.post});
   final UserPostModel post;
   @override
-  State<StarImagePost> createState() => _StarImagePostState();
+  State<StarTimelinePosts> createState() => _StarTimelinePostsState();
 }
 
-class _StarImagePostState extends State<StarImagePost>
+class _StarTimelinePostsState extends State<StarTimelinePosts>
     with SingleTickerProviderStateMixin {
   late PageController _pageController;
   int _currentImage = 0;

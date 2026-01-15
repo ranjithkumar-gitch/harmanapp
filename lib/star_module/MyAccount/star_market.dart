@@ -7,14 +7,14 @@ import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
-class StarMarketplaceScreen extends StatefulWidget {
-  const StarMarketplaceScreen({super.key});
+class StarMarketPlace extends StatefulWidget {
+  const StarMarketPlace({super.key});
 
   @override
-  State<StarMarketplaceScreen> createState() => _StarMarketplaceScreenState();
+  State<StarMarketPlace> createState() => _StarMarketPlaceState();
 }
 
-class _StarMarketplaceScreenState extends State<StarMarketplaceScreen> {
+class _StarMarketPlaceState extends State<StarMarketPlace> {
   String searchText = "";
 
   final products = [
@@ -81,7 +81,23 @@ class _StarMarketplaceScreenState extends State<StarMarketplaceScreen> {
       backgroundColor: Brightness.dark == Theme.of(context).brightness
           ? kblackColor
           : kwhiteColor,
-      appBar: StarCustomAppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: kwhiteColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text(
+          "My Marketplace",
+          style: TextStyle(
+            color: kwhiteColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
 
       body: Column(
         children: [
@@ -130,7 +146,56 @@ class _StarMarketplaceScreenState extends State<StarMarketplaceScreen> {
               ),
             ),
           ),
-
+          Padding(
+            padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (_) => ProductViewPage(
+                  //       product: item,
+                  //       onCartUpdated: () {
+                  //         setState(() {});
+                  //       },
+                  //     ),
+                  //   ),
+                  // );
+                },
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  side: const BorderSide(color: kgoldColor, width: 1.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: kgoldColor,
+                        size: 16.0,
+                        semanticLabel: 'A star icon',
+                      ),
+                      Text(
+                        "Add New Product",
+                        style: GoogleFonts.poppins(
+                          color: kgoldColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(12),
@@ -283,7 +348,7 @@ class _StarMarketplaceScreenState extends State<StarMarketplaceScreen> {
                   ),
                 ),
                 child: Text(
-                  "Buy Now",
+                  "Edit Product",
                   style: GoogleFonts.poppins(
                     color: kgoldColor,
                     fontSize: 13,
@@ -471,36 +536,35 @@ class _ProductViewPageState extends State<ProductViewPage> {
             : kwhiteColor,
         child: Row(
           children: [
-            Container(
-              height: 40,
-              decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFFDAA520)),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      if (quantity > 1) setState(() => quantity--);
-                    },
-                    icon: const Icon(Icons.remove, color: Color(0xFFDAA520)),
-                  ),
-                  Text(
-                    quantity.toString(),
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: kgoldColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () => setState(() => quantity++),
-                    icon: const Icon(Icons.add, color: Color(0xFFDAA520)),
-                  ),
-                ],
-              ),
-            ),
-
+            // Container(
+            //   height: 40,
+            //   decoration: BoxDecoration(
+            //     border: Border.all(color: Color(0xFFDAA520)),
+            //     borderRadius: BorderRadius.circular(10),
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       IconButton(
+            //         onPressed: () {
+            //           if (quantity > 1) setState(() => quantity--);
+            //         },
+            //         icon: const Icon(Icons.remove, color: Color(0xFFDAA520)),
+            //       ),
+            //       Text(
+            //         quantity.toString(),
+            //         style: GoogleFonts.poppins(
+            //           fontSize: 16,
+            //           color: kgoldColor,
+            //           fontWeight: FontWeight.w600,
+            //         ),
+            //       ),
+            //       IconButton(
+            //         onPressed: () => setState(() => quantity++),
+            //         icon: const Icon(Icons.add, color: Color(0xFFDAA520)),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(width: 12),
 
             Expanded(
@@ -571,7 +635,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 child: Text(
-                  "Add to cart",
+                  "Confirm Order",
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

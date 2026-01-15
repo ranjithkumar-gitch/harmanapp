@@ -309,7 +309,7 @@ class _MyAccountState extends State<MyAccount> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: const LinearGradient(
-                    colors: [kgoldColor, CupertinoColors.systemRed],
+                    colors: [kgoldColor, kgoldColor],
                   ),
                 ),
                 padding: const EdgeInsets.all(2),

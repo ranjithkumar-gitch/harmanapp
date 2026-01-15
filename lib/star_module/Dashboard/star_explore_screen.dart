@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
+
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -26,7 +27,7 @@ class StarExploreScreen extends StatelessWidget {
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: CustomAppBar(),
+        appBar: StarCustomAppBar(),
         body: Column(
           children: [
             const SizedBox(height: 8),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
+
 import 'package:harmanapp/models/post_model.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/timeline_images.dart';
 import 'package:harmanapp/widgets/timeline_reels.dart';
 
@@ -17,7 +18,7 @@ class _StarTimelineHomescreenState extends State<StarTimelineHomescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: CustomAppBar(),
+      appBar: StarCustomAppBar(),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
