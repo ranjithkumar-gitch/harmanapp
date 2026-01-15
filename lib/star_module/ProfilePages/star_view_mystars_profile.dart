@@ -7,6 +7,7 @@ import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -62,7 +63,7 @@ class _StarMycreatorprofileState extends State<StarMycreatorprofile>
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: const CustomAppBar(),
+        appBar: const StarCustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [

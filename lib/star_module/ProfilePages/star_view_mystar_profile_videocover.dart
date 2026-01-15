@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
+import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -69,7 +70,7 @@ class _StarMyCreatorVideoCoverState extends State<StarMyCreatorVideoCover>
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: CustomAppBar(),
+        appBar: StarCustomAppBar(),
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
             SliverToBoxAdapter(
