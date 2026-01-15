@@ -44,20 +44,15 @@ class Legacy extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const LegacyFormPage()),
               );
             },
-            icon: Icon(
-              Icons.add,
-              color: Brightness.dark == Theme.of(context).brightness
-                  ? kwhiteColor
-                  : kblackColor,
-            ),
-            label: Text(
-              "Add New",
-              style: TextStyle(
-                color: Brightness.dark == Theme.of(context).brightness
-                    ? kwhiteColor
-                    : kblackColor,
+            style: TextButton.styleFrom(
+              side: const BorderSide(color: kgoldColor, width: 1.5),
+              foregroundColor: kgoldColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
+            icon: Icon(Icons.add, color: kgoldColor),
+            label: Text("Add New", style: TextStyle(color: kgoldColor)),
           ),
         ],
         centerTitle: true,

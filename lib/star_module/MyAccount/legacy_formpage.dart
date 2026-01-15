@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
 class LegacyFormPage extends StatefulWidget {
@@ -13,7 +14,6 @@ class LegacyFormPage extends StatefulWidget {
 class _LegacyFormPageState extends State<LegacyFormPage> {
   final TextEditingController achievementCtrl = TextEditingController();
   final TextEditingController descCtrl = TextEditingController();
-
   final FocusNode achievementFocus = FocusNode();
   final FocusNode descFocus = FocusNode();
 
@@ -46,6 +46,8 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -97,6 +99,35 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2100),
                         initialDate: DateTime.now(),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme(
+                                brightness: isDark
+                                    ? Brightness.dark
+                                    : Brightness.light,
+                                primary: kgoldColor,
+                                onPrimary: isDark ? kblackColor : kwhiteColor,
+                                secondary: kgoldColor,
+                                onSecondary: isDark ? kblackColor : kwhiteColor,
+                                error: Colors.red,
+                                onError: kwhiteColor,
+                                background: isDark ? kblackColor : kwhiteColor,
+                                onBackground: isDark
+                                    ? kwhiteColor
+                                    : kblackColor,
+                                surface: isDark ? kblackColor : kwhiteColor,
+                                onSurface: isDark ? kwhiteColor : kblackColor,
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: kgoldColor,
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
                       );
                       if (d != null) setState(() => selectedDate = d);
                     },
@@ -238,43 +269,104 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                 children: [
                   Expanded(
                     child: _scheduleButton(
-                      text: scheduledDate == null
+                      scheduledDate == null
                           ? "Select Date"
-                          : "${scheduledDate!.day}/${scheduledDate!.month}/${scheduledDate!.year}",
-                      onTap: () async {
+                          : '${scheduledDate!.month.toString().padLeft(2, '0')}-${scheduledDate!.day.toString().padLeft(2, '0')}-${scheduledDate!.year}',
+                      () async {
+                        final isDark =
+                            Theme.of(context).brightness == Brightness.dark;
                         final date = await showDatePicker(
                           context: context,
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2100),
                           initialDate: DateTime.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: ColorScheme(
+                                  brightness: isDark
+                                      ? Brightness.dark
+                                      : Brightness.light,
+                                  primary: kgoldColor,
+                                  onPrimary: isDark ? kblackColor : kwhiteColor,
+                                  secondary: kgoldColor,
+                                  onSecondary: isDark
+                                      ? kblackColor
+                                      : kwhiteColor,
+                                  error: Colors.red,
+                                  onError: kwhiteColor,
+                                  background: isDark
+                                      ? kblackColor
+                                      : kwhiteColor,
+                                  onBackground: isDark
+                                      ? kwhiteColor
+                                      : kblackColor,
+                                  surface: isDark ? kblackColor : kwhiteColor,
+                                  onSurface: isDark ? kwhiteColor : kblackColor,
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: kgoldColor,
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
                         );
-                        if (date != null) {
-                          setState(() => scheduledDate = date);
-                        }
+                        if (date != null) setState(() => scheduledDate = date);
                       },
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _scheduleButton(
-                      text: scheduledTime == null
+                      scheduledTime == null
                           ? "Select Time"
-                          : scheduledTime!.format(context),
-                      onTap: () async {
+                          : '${scheduledTime!.hourOfPeriod.toString().padLeft(2, '0')}:${scheduledTime!.minute.toString().padLeft(2, '0')} ${scheduledTime!.period == DayPeriod.am ? 'AM' : 'PM'}',
+                      () async {
+                        final isDark =
+                            Theme.of(context).brightness == Brightness.dark;
                         final time = await showTimePicker(
                           context: context,
                           initialTime: TimeOfDay.now(),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: ColorScheme(
+                                  brightness: isDark
+                                      ? Brightness.dark
+                                      : Brightness.light,
+                                  primary: kgoldColor,
+                                  onPrimary: isDark ? kblackColor : kwhiteColor,
+                                  secondary: kgoldColor,
+                                  onSecondary: isDark
+                                      ? kblackColor
+                                      : kwhiteColor,
+                                  error: Colors.red,
+                                  onError: kwhiteColor,
+
+                                  surface: isDark ? kblackColor : kwhiteColor,
+                                  onSurface: isDark ? kwhiteColor : kblackColor,
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: kgoldColor,
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
                         );
-                        if (time != null) {
-                          setState(() => scheduledTime = time);
-                        }
+                        if (time != null) setState(() => scheduledTime = time);
                       },
                     ),
                   ),
                 ],
               ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
             SizedBox(
               width: double.infinity,
@@ -297,6 +389,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -312,6 +405,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     required bool isGold,
     int maxLines = 1,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -334,7 +428,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
             hintText: hint,
             hintStyle: TextStyle(color: hintColor),
             filled: true,
-            fillColor: cardColor,
+            fillColor: isDark ? kblackColor : kwhiteColor,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
@@ -354,9 +448,10 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
   /// BORDER BOX
   Widget _box({required Widget child, required bool isGold}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: cardColor,
+        color: isDark ? kblackColor : kwhiteColor,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isGold ? kgoldColor : borderColor,
@@ -368,15 +463,14 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
   }
 
   /// SCHEDULE BUTTON
-  Widget _scheduleButton({required String text, required VoidCallback onTap}) {
+  Widget _scheduleButton(String text, VoidCallback onTap) {
     return OutlinedButton(
+      onPressed: onTap,
       style: OutlinedButton.styleFrom(
         side: const BorderSide(color: kgoldColor, width: 2),
         foregroundColor: kgoldColor,
-        padding: const EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
-      onPressed: onTap,
       child: Text(text),
     );
   }
