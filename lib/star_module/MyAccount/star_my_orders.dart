@@ -77,8 +77,26 @@ class _StarMyOrdersState extends State<StarMyOrders> {
             labelColor: gold,
             unselectedLabelColor: Colors.grey,
             tabs: [
-              Tab(text: "My Orders"),
-              Tab(text: "Received Orders"),
+              Tab(
+                child: Text(
+                  "My Orders",
+                  style: TextStyle(
+                    color: gold,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  "Received Orders",
+                  style: TextStyle(
+                    color: gold,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ],
           ),
           centerTitle: true,
