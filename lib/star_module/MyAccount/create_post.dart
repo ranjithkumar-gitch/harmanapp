@@ -60,16 +60,30 @@ class _CreatePostPageState extends State<CreatePostPage> {
     final borderColor = isDark ? kwhiteColor : kblackColor;
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        centerTitle: true,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        backgroundColor: bgColor,
+        scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: textColor),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        title: Text("Create Post", style: TextStyle(color: textColor)),
+        title: Text(
+          "Create Post",
+          style: TextStyle(
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

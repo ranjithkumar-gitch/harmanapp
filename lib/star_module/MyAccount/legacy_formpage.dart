@@ -49,17 +49,30 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: textColor),
-        title: Text("Add Legacy", style: TextStyle(color: textColor)),
-        centerTitle: true,
+        scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: textColor),
-          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        title: Text(
+          "Add Legacy",
+          style: TextStyle(
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

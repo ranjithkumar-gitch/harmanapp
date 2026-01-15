@@ -7,22 +7,18 @@ class Legacy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Brightness.dark == Theme.of(context).brightness
-          ? kblackColor
-          : kwhiteColor,
-
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kblackColor
-            : kwhiteColor,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
+        scrolledUnderElevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+            color: isDark ? kwhiteColor : kblackColor,
+            size: 18,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -31,28 +27,31 @@ class Legacy extends StatelessWidget {
         title: Text(
           "Legacy",
           style: TextStyle(
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+            color: isDark ? kwhiteColor : kblackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
-          TextButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const LegacyFormPage()),
-              );
-            },
-            style: TextButton.styleFrom(
-              side: const BorderSide(color: kgoldColor, width: 1.5),
-              foregroundColor: kgoldColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LegacyFormPage()),
+                );
+              },
+              style: TextButton.styleFrom(
+                side: const BorderSide(color: kgoldColor, width: 1.5),
+                foregroundColor: kgoldColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
+              icon: Icon(Icons.add, color: kgoldColor),
+              label: Text("Add New", style: TextStyle(color: kgoldColor)),
             ),
-            icon: Icon(Icons.add, color: kgoldColor),
-            label: Text("Add New", style: TextStyle(color: kgoldColor)),
           ),
         ],
         centerTitle: true,
