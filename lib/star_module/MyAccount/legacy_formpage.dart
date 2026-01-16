@@ -83,7 +83,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Select Date",
+                  "Achievement Date",
                   style: TextStyle(
                     color: selectedMedia.isNotEmpty
                         ? kgoldColor
@@ -153,10 +153,10 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
             /// ACHIEVEMENT
             _labeledInput(
-              label: "Achievement",
+              label: "Achievement Title",
               controller: achievementCtrl,
               focusNode: achievementFocus,
-              hint: "Enter achievement",
+              hint: "Enter achievement title",
               isGold: isGold(achievementFocus, achievementCtrl),
             ),
 
@@ -180,9 +180,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                 Text(
                   "Upload Media",
                   style: TextStyle(
-                    color: selectedMedia.isNotEmpty
-                        ? kgoldColor
-                        : textColor.withOpacity(0.7),
+                    color: isDark ? kwhiteColor : kblackColor,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -425,7 +423,9 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
         Text(
           label,
           style: TextStyle(
-            color: isGold ? kgoldColor : textColor.withOpacity(0.7),
+            color: isDark ? kwhiteColor : kblackColor,
+
+            // isGold ? kgoldColor : textColor.withOpacity(0.7),
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),

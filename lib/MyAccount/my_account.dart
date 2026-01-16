@@ -215,6 +215,7 @@ class _MyAccountState extends State<MyAccount> {
   }
 
   Widget coverImage(String imagePath, String name) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Stack(
       children: [
         Container(

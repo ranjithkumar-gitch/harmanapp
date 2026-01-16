@@ -285,7 +285,7 @@ class _StarViewProductState extends State<StarViewProduct> {
             style: TextStyle(color: kgoldColor),
           ),
           content: Text(
-            "This item has been added to your cart.?",
+            "This item will be added to your cart?",
             style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
           ),
           actions: [

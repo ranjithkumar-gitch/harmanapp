@@ -75,6 +75,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
 
             _title("Gold", kgoldColor),
             _creatorCarousel(
+              color: kgoldColor,
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 3,
               tiername: "Gold",
@@ -84,6 +85,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
 
             _title("Silver", Colors.grey),
             _creatorCarousel(
+              color: ksilverColor,
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 6,
               tiername: "Silver",
@@ -93,6 +95,7 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
 
             _title("Bronze", CupertinoColors.systemBrown),
             _creatorCarousel(
+              color: kbronzeColor,
               posts.where((p) => p.hasStory).toList(),
               autoPlayInterval: 5,
               tiername: "Bronze",
@@ -126,7 +129,9 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
     List<UserPostModel> list, {
     required int autoPlayInterval,
     required String tiername,
+    required Color color,
   }) {
+    final isDark = Brightness.dark == Theme.of(context).brightness;
     return SizedBox(
       height: 140,
       child: CarouselSlider(
@@ -145,20 +150,30 @@ class _AllCreatorsScreenState extends State<AllCreatorsScreen> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            'assets/sources/profiles/${user.profileImage}',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color:
+                                Brightness.dark == Theme.of(context).brightness
+                                ? kblackColor
+                                : kwhiteColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: color, width: 1.8),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              'assets/sources/profiles/${user.profileImage}',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Text(
                       user.name,
-                      style: const TextStyle(
-                        color: CupertinoColors.white,
+                      style: TextStyle(
+                        color: isDark ? kwhiteColor : kblackColor,
                         fontSize: 12,
                       ),
                       overflow: TextOverflow.ellipsis,
