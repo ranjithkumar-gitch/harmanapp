@@ -99,7 +99,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                     title: Text(
                       selectedDate == null
                           ? "Select Date"
-                          : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
+                          : '${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}-${selectedDate!.year}',
                       style: TextStyle(color: textColor),
                     ),
                     trailing: const Icon(

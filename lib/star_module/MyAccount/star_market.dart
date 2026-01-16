@@ -159,7 +159,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
             ),
           ),
         ],
-        centerTitle: true,
+        // centerTitle: true,
       ),
 
       body: Column(

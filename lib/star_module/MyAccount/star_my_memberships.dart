@@ -65,7 +65,7 @@ class StarMembershipScreen extends StatelessWidget {
               creatorName: "Sophia Ray",
               plan: "Yearly",
               price: "\$99.99",
-              tierColor: CupertinoColors.systemGrey,
+              tierColor: kgoldColor,
               onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
@@ -74,7 +74,7 @@ class StarMembershipScreen extends StatelessWidget {
               creatorName: "Deco dev",
               plan: "Yearly",
               price: "\$99.99",
-              tierColor: CupertinoColors.systemGrey,
+              tierColor: kgoldColor,
               onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
@@ -83,7 +83,7 @@ class StarMembershipScreen extends StatelessWidget {
               creatorName: "Dion",
               plan: "Yearly",
               price: "\$99.99",
-              tierColor: CupertinoColors.systemGrey,
+              tierColor: kgoldColor,
               onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
@@ -92,7 +92,7 @@ class StarMembershipScreen extends StatelessWidget {
               creatorName: "Mark Vibe",
               plan: "Weekly",
               price: "\$4.99",
-              tierColor: CupertinoColors.systemBrown,
+              tierColor: kgoldColor,
               onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             SizedBox(height: 20),
@@ -216,7 +216,7 @@ class StarMembershipScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Membership Summary",
+            "Membership Summary - GOLD Tier",
             style: TextStyle(
               color: kgoldColor,
               fontSize: 16,
@@ -231,14 +231,14 @@ class StarMembershipScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Total Members",
+                "Total Memberships",
                 style: TextStyle(
                   color: isDark ? kwhiteColor : kblackColor,
                   fontSize: 14,
                 ),
               ),
               Text(
-                "3",
+                "6",
                 style: TextStyle(
                   color: isDark ? kwhiteColor : kblackColor,
                   fontSize: 14,
