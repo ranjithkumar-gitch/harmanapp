@@ -23,28 +23,6 @@ class _StarViewProductState extends State<StarViewProduct> {
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
 
-      // appBar: AppBar(
-      //   backgroundColor: isDark ? kblackColor : kwhiteColor,
-      //   elevation: 0,
-      //   foregroundColor: isDark ? kwhiteColor : kblackColor,
-      //   centerTitle: true,
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back_ios_new,
-      //       color: isDark ? kwhiteColor : kblackColor,
-      //       size: 20,
-      //     ),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   title: Text(
-      //     "View Order Details",
-      //     style: GoogleFonts.poppins(
-      //       color: isDark ? kwhiteColor : kblackColor,
-      //       fontSize: 18,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
@@ -90,9 +68,9 @@ class _StarViewProductState extends State<StarViewProduct> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            productCard(context, image: "assets/shirt.jpg"),
+            productCard(context, image: "assets/huddie.png"),
             const SizedBox(height: 30),
-            productCard(context, image: "assets/jersey5.avif"),
+            productCard(context, image: "assets/signature2.png"),
             const SizedBox(height: 30),
           ],
         ),
@@ -314,7 +292,10 @@ class _StarViewProductState extends State<StarViewProduct> {
                 actions: [
                   CupertinoDialogAction(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("Cancel"),
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(color: kwhiteColor),
+                    ),
                   ),
                   CupertinoDialogAction(
                     onPressed: () {

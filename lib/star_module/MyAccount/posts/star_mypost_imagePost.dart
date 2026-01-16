@@ -263,7 +263,7 @@ class _StarImagePostState extends State<StarImagePost>
                               ),
                             ),
                             content: Text(
-                              "Are you sure you want to Block this account?",
+                              "Are you sure you want to Block this publication?",
                               style: TextStyle(
                                 color: isDark ? Colors.white70 : Colors.black54,
                               ),

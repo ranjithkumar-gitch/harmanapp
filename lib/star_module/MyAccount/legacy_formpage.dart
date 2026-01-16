@@ -200,6 +200,9 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                         : SizedBox(
                             height: 110,
                             child: ReorderableListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              buildDefaultDragHandles: false,
                               scrollDirection: Axis.horizontal,
                               itemCount: selectedMedia.length + 1,
                               onReorder: (oldIndex, newIndex) {
@@ -211,13 +214,18 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                                   }
 
                                   if (newIndex > oldIndex) newIndex--;
+                                  setState(() {
+                                    final item = selectedMedia.removeAt(
+                                      oldIndex,
+                                    );
+                                    selectedMedia.insert(newIndex, item);
+                                  });
 
-                                  final item = selectedMedia.removeAt(oldIndex);
-                                  selectedMedia.insert(newIndex, item);
+                                  // final item = selectedMedia.removeAt(oldIndex);
+                                  // selectedMedia.insert(newIndex, item);
                                 });
                               },
                               itemBuilder: (context, index) {
-                                // ADD BUTTON (not draggable)
                                 if (index == selectedMedia.length) {
                                   return Container(
                                     key: const ValueKey("add"),
@@ -247,19 +255,22 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                                   );
                                 }
 
-                                // MEDIA ITEM (draggable)
                                 final file = selectedMedia[index];
-                                return Container(
-                                  key: ValueKey(file.path), // 👈 REQUIRED
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.file(
-                                      File(file.path),
-                                      width: 90,
-                                      fit: BoxFit.cover,
+
+                                return ReorderableDragStartListener(
+                                  key: ValueKey(file.path),
+                                  index: index,
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.file(
+                                        File(file.path),
+                                        width: 90,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -567,16 +578,19 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
   /// BORDER BOX
   Widget _box({required Widget child, required bool isGold}) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? kblackColor : kwhiteColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isGold ? kgoldColor : borderColor,
-          width: isGold ? 2 : 1.5,
+    return SizedBox(
+      width: double.infinity,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDark ? kblackColor : kwhiteColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isGold ? kgoldColor : borderColor,
+            width: isGold ? 2 : 1.5,
+          ),
         ),
+        child: child,
       ),
-      child: child,
     );
   }
 

@@ -25,6 +25,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Signed Cricket Bat",
       "creator": "Virat Kohli",
       "price": "\$39.99",
+      "available": "6",
       "type": "default",
       "description":
           "Own a piece of cricketing history with this authentic Virat Kohli signed bat. Perfect for passionate fans and collectors, this exclusive memorabilia captures the spirit of one of the greatest batsmen of all time.",
@@ -34,6 +35,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Best Actor Replica",
       "creator": "Deepika padukone",
       "price": "\$59.99",
+      "available": "6",
       "type": "default",
       "description":
           "Celebrate cinematic excellence with this Best Actor Award Replica—a stunning keepsake inspired by the iconic trophies of the film industry. Crafted with a polished golden finish and mounted on a sleek base, it’s perfect for movie lovers, aspiring actors, or as a fun gift for friends.",
@@ -44,6 +46,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Signed Hoodie",
       "creator": "Oprah Winfrey",
       "price": "\$20.99",
+      "available": "6",
       "type": "default",
       "description":
           "Step into style and fandom with this exclusive signed hoodie. Featuring a sleek design and the authentic autograph of your favorite star, it’s more than just apparel",
@@ -53,6 +56,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Digital Signature",
       "creator": "Elon Musk",
       "price": "\$30.99",
+      "available": "6",
       "type": "default",
       'description':
           'Own a piece of digital authenticity with this exclusive Digital Signature collectible. Each signature is securely created and verified, giving fans a unique way to connect with their favorite star in the digital world.',
@@ -62,6 +66,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Exclusive Signature",
       "creator": "Elon Musk",
       "price": "\$18.99",
+      "available": "6",
       "type": "default",
       'description':
           'Own a piece of digital authenticity with this exclusive Digital Signature collectible. Each signature is securely created and verified, giving fans a unique way to connect with their favorite star in the digital world.',
@@ -71,6 +76,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       "name": "Signed Jersey",
       "creator": "Lionel Messi",
       "price": "\$59.99",
+      "available": "6",
       "type": "default",
       "description":
           "Show your passion for the game with this exclusive signed sports T-shirt. Autographed by a celebrated athlete, this collectible blends everyday comfort with iconic memorabilia. ",
@@ -118,9 +124,10 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+            color: kgoldColor,
+            // Brightness.dark == Theme.of(context).brightness
+            //     ? kwhiteColor
+            //     : kblackColor,
             size: 18,
           ),
           onPressed: () {
@@ -130,9 +137,10 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
         title: Text(
           "My Marketplace",
           style: TextStyle(
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+            color: kgoldColor,
+            // Brightness.dark == Theme.of(context).brightness
+            //     ? kwhiteColor
+            //     : kblackColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -209,51 +217,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
-          //   child: SizedBox(
-          //     width: double.infinity,
-          //     child: OutlinedButton(
-          //       onPressed: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //             builder: (context) => const AddProductPage(),
-          //           ),
-          //         );
-          //       },
-          //       style: OutlinedButton.styleFrom(
-          //         padding: const EdgeInsets.symmetric(vertical: 10),
-          //         side: const BorderSide(color: kgoldColor, width: 1.5),
-          //         shape: RoundedRectangleBorder(
-          //           borderRadius: BorderRadius.circular(8),
-          //         ),
-          //       ),
-          //       child: Center(
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           crossAxisAlignment: CrossAxisAlignment.center,
-          //           children: [
-          //             Icon(
-          //               Icons.add,
-          //               color: kgoldColor,
-          //               size: 16.0,
-          //               semanticLabel: 'A star icon',
-          //             ),
-          //             Text(
-          //               "Add New Product",
-          //               style: GoogleFonts.poppins(
-          //                 color: kgoldColor,
-          //                 fontSize: 13,
-          //                 fontWeight: FontWeight.w500,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(12),
@@ -439,6 +403,8 @@ class _ProductViewPageState extends State<ProductViewPage> {
 
   late TextEditingController nameCtrl;
   late TextEditingController descCtrl;
+  late TextEditingController priceCtrl;
+  late TextEditingController availableCtrl;
 
   final ImagePicker _picker = ImagePicker();
   File? editedImage;
@@ -448,12 +414,18 @@ class _ProductViewPageState extends State<ProductViewPage> {
     super.initState();
     nameCtrl = TextEditingController(text: widget.product["name"]);
     descCtrl = TextEditingController(text: widget.product["description"]);
+    priceCtrl = TextEditingController(text: widget.product["price"]);
+    availableCtrl = TextEditingController(
+      text: widget.product["available"].toString(),
+    );
   }
 
   @override
   void dispose() {
     nameCtrl.dispose();
     descCtrl.dispose();
+    priceCtrl.dispose();
+    availableCtrl.dispose();
     super.dispose();
   }
 
@@ -471,37 +443,6 @@ class _ProductViewPageState extends State<ProductViewPage> {
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
 
-      /// APP BAR
-      // appBar: AppBar(
-      //   backgroundColor: isDark ? kblackColor : kwhiteColor,
-      //   elevation: 0,
-      //   centerTitle: true,
-      //   title: Text(
-      //     "Product details",
-      //     style: GoogleFonts.poppins(
-      //       color: isDark ? kwhiteColor : kblackColor,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: isDark ? kwhiteColor : kblackColor,
-      //     ),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(
-      //         isEditMode ? Icons.close : Icons.edit,
-      //         color: isDark ? kwhiteColor : kblackColor,
-      //       ),
-      //       onPressed: () {
-      //         setState(() => isEditMode = !isEditMode);
-      //       },
-      //     ),
-      //   ],
-      // ),
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
@@ -616,14 +557,25 @@ class _ProductViewPageState extends State<ProductViewPage> {
             /// PRICE (Not editable)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
-                widget.product["price"],
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: kgoldColor,
-                ),
-              ),
+              child: isEditMode
+                  ? TextField(
+                      controller: priceCtrl,
+                      keyboardType: TextInputType.number,
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: kgoldColor,
+                      ),
+                      decoration: _inputDecoration("Price"),
+                    )
+                  : Text(
+                      priceCtrl.text,
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: kgoldColor,
+                      ),
+                    ),
             ),
 
             Divider(color: CupertinoColors.opaqueSeparator),
@@ -662,13 +614,33 @@ class _ProductViewPageState extends State<ProductViewPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Available : 6",
+                "Available",
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
                   color: isDark ? kwhiteColor : kblackColor,
                 ),
               ),
             ),
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: isEditMode
+                  ? TextField(
+                      controller: availableCtrl,
+                      keyboardType: TextInputType.number,
+                      style: GoogleFonts.poppins(
+                        color: isDark ? kwhiteColor : kblackColor,
+                      ),
+                      decoration: _inputDecoration("Available Quantity"),
+                    )
+                  : Text(
+                      availableCtrl.text,
+                      style: GoogleFonts.poppins(
+                        color: isDark ? kwhiteColor : kblackColor,
+                      ),
+                    ),
+            ),
+
             if (isEditMode)
               Row(
                 children: [
@@ -764,7 +736,12 @@ class _ProductViewPageState extends State<ProductViewPage> {
   }
 
   void _saveChanges() {
-    setState(() => isEditMode = false);
+    setState(() {
+      isEditMode = false;
+
+      widget.product["price"] = priceCtrl.text;
+      widget.product["available"] = int.tryParse(availableCtrl.text) ?? 0;
+    });
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -772,11 +749,5 @@ class _ProductViewPageState extends State<ProductViewPage> {
         backgroundColor: kgoldColor,
       ),
     );
-  }
-
-  void _confirmOrder() {
-    CartManager.addToCart(widget.product, quantity);
-    widget.onCartUpdated?.call();
-    Navigator.pop(context);
   }
 }

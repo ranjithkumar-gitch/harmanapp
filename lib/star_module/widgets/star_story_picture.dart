@@ -32,10 +32,7 @@ class StarStoryPicture extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(borderRadius + 2),
                 gradient: const LinearGradient(
-                  colors: [
-                    CupertinoColors.systemOrange,
-                    CupertinoColors.systemRed,
-                  ],
+                  colors: [kgoldColor, kgoldColor],
                 ),
               ),
               padding: const EdgeInsets.all(2),

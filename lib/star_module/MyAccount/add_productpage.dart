@@ -17,6 +17,7 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController nameCtrl = TextEditingController();
   final TextEditingController descCtrl = TextEditingController();
   final TextEditingController priceCtrl = TextEditingController();
+  final TextEditingController avblCtrl = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
   File? productImage;
@@ -86,7 +87,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         fit: BoxFit.cover,
                         image: productImage != null
                             ? FileImage(productImage!)
-                            : const AssetImage('assets/jersey5.avif')
+                            : const AssetImage('assets/productimg.png')
                                   as ImageProvider,
                       ),
                     ),
@@ -226,8 +227,9 @@ class _AddProductPageState extends State<AddProductPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: TextField(
-                controller: nameCtrl,
+                controller: avblCtrl,
                 decoration: _inputDecoration("Available Products"),
+                keyboardType: TextInputType.number,
                 style: GoogleFonts.poppins(
                   color: isDark ? kwhiteColor : kblackColor,
                 ),

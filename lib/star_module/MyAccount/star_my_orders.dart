@@ -107,7 +107,6 @@ class _StarMyOrdersState extends State<StarMyOrders> {
     );
   }
 
-  /// ORDERS LIST
   Widget _ordersList({required bool isReceived}) {
     return ListView.builder(
       itemCount: orders.length,
@@ -122,7 +121,6 @@ class _StarMyOrdersState extends State<StarMyOrders> {
     );
   }
 
-  /// ORDER CARD
   Widget orderCard({
     required BuildContext context,
     required Map<String, dynamic> order,
@@ -164,21 +162,7 @@ class _StarMyOrdersState extends State<StarMyOrders> {
                       isDark,
                     ),
                   ),
-                  // Expanded(
-                  //   child: actionButton(
-                  //     "View Order",
-                  //     onPressed: () {
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (_) => index == 0
-                  //               ? const StarViewProduct()
-                  //               : const StarMyProductView(),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+
                   Expanded(
                     child: actionButton(
                       "View Order",

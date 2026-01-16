@@ -597,11 +597,12 @@ class _StarMyAccountState extends State<StarMyAccount> {
                 break;
 
               case Menu.remove:
+                final isDark = Theme.of(context).brightness == Brightness.dark;
                 showCupertinoDialog(
                   context: context,
                   builder: (_) => CupertinoTheme(
                     data: CupertinoThemeData(
-                      // brightness: kblackColor,
+                      brightness: isDark ? Brightness.dark : Brightness.light,
                       primaryColor: kgoldColor,
                     ),
                     child: CupertinoAlertDialog(
@@ -612,13 +613,16 @@ class _StarMyAccountState extends State<StarMyAccount> {
                       content: Text(
                         "Are you sure you want to Delete?",
                         style: TextStyle(
-                          // color: isDark ? Colors.white70 : Colors.black54,
+                          color: isDark ? Colors.white70 : Colors.black54,
                         ),
                       ),
                       actions: [
                         CupertinoDialogAction(
                           onPressed: () => Navigator.pop(context),
-                          child: const Text("Cancel"),
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(color: kwhiteColor),
+                          ),
                         ),
                         CupertinoDialogAction(
                           isDestructiveAction: true,
