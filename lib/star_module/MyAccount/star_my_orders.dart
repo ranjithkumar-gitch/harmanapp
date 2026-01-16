@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:harmanapp/star_module/MyAccount/star_my_product_view.dart';
 import 'package:harmanapp/star_module/MyAccount/star_view_product.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 

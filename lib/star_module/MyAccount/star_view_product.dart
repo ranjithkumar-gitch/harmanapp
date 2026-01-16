@@ -83,7 +83,7 @@ class _StarViewProductState extends State<StarViewProduct> {
           child: SizedBox(
             height: 50,
             child: widget.isReceivedOrder
-                ? actionButton(context, "Confirm Order", _showOrderStatusDialog)
+                ? actionButton(context, "Update Status", _showOrderStatusDialog)
                 : actionButton(context, "Buy It Again", _buyItAgain),
           ),
         ),
@@ -210,51 +210,117 @@ class _StarViewProductState extends State<StarViewProduct> {
     );
   }
 
-  void _showOrderStatusDialog() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  // void _showOrderStatusDialog() {
+  //   final isDark = Theme.of(context).brightness == Brightness.dark;
 
+  //   String selectedStatus = "New";
+
+  //   showDialog(
+  //     context: context,
+  //     builder: (_) => AlertDialog(
+  //       title: const Text(
+  //         "Update Order Status",
+  //         style: TextStyle(color: kgoldColor),
+  //       ),
+  //       content: StatefulBuilder(
+  //         builder: (context, setState) {
+  //           return Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               _statusRadio("New", selectedStatus, setState),
+  //               _statusRadio("Shipping", selectedStatus, setState),
+  //               _statusRadio("Delivered", selectedStatus, setState),
+  //               _statusRadio("Cancelled", selectedStatus, setState),
+  //             ],
+  //           );
+  //         },
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text("Cancel"),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //           },
+  //           child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  void _showOrderStatusDialog() {
     String selectedStatus = "New";
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text(
-          "Update Order Status",
-          style: TextStyle(color: kgoldColor),
-        ),
-        content: StatefulBuilder(
-          builder: (context, setState) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _statusRadio("New", selectedStatus, setState),
-                _statusRadio("Shipping", selectedStatus, setState),
-                _statusRadio("Delivered", selectedStatus, setState),
-                _statusRadio("Cancelled", selectedStatus, setState),
-              ],
-            );
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "Update Order Status",
+            style: TextStyle(color: kgoldColor),
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
+          content: StatefulBuilder(
+            builder: (context, setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _statusRadio("New", selectedStatus, (val) {
+                    setState(() => selectedStatus = val);
+                  }),
+                  _statusRadio("Shipping", selectedStatus, (val) {
+                    setState(() => selectedStatus = val);
+                  }),
+                  _statusRadio("Delivered", selectedStatus, (val) {
+                    setState(() => selectedStatus = val);
+                  }),
+                  _statusRadio("Cancelled", selectedStatus, (val) {
+                    setState(() => selectedStatus = val);
+                  }),
+                ],
+              );
             },
-            child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
           ),
-        ],
-      ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                // selectedStatus is correct here
+                Navigator.pop(context);
+              },
+              child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
+            ),
+          ],
+        );
+      },
     );
   }
 
+  // Widget _statusRadio(
+  //   String value,
+  //   String groupValue,
+  //   void Function(void Function()) setState,
+  // ) {
+  //   return RadioListTile<String>(
+  //     value: value,
+  //     groupValue: groupValue,
+  //     activeColor: kgoldColor,
+  //     title: Text(value),
+  //     onChanged: (val) {
+  //       setState(() {
+  //         groupValue = val!;
+  //       });
+  //     },
+  //   );
+  // }
   Widget _statusRadio(
     String value,
     String groupValue,
-    void Function(void Function()) setState,
+    ValueChanged<String> onChanged,
   ) {
     return RadioListTile<String>(
       value: value,
@@ -262,9 +328,9 @@ class _StarViewProductState extends State<StarViewProduct> {
       activeColor: kgoldColor,
       title: Text(value),
       onChanged: (val) {
-        setState(() {
-          groupValue = val!;
-        });
+        if (val != null) {
+          onChanged(val);
+        }
       },
     );
   }
