@@ -792,49 +792,77 @@ class _ReelPlayerState extends State<ReelPlayer> {
   }
 }
 
-class EmptyTab extends StatelessWidget {
+class EmptyTab extends StatefulWidget {
   const EmptyTab({super.key});
+
+  @override
+  State<EmptyTab> createState() => _EmptyTabState();
+}
+
+class _EmptyTabState extends State<EmptyTab> {
+  int selectedAvatarIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         /// Main content (center)
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 145,
-                height: 145,
-                decoration: BoxDecoration(
-                  gradient: ExploreScreen.accentGradient,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.08),
-                      blurRadius: 18,
+        SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                // Placeholder for 3 containers in row
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: _buildAvatarContainer(context, 0, 'Avatar 1'),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _buildAvatarContainer(context, 1, 'Avatar 2'),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _buildAvatarContainer(context, 2, 'Avatar 3'),
                     ),
                   ],
                 ),
-                child: const Icon(
-                  Icons.construction,
-                  size: 65,
-                  color: Colors.white,
+                SizedBox(height: 50),
+                //
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    gradient: ExploreScreen.accentGradient,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 18,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.construction,
+                    size: 65,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              const Text(
-                'AI Avatar feature coming soon ✨',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: kgoldColor,
+                const Text(
+                  'AI Avatar feature coming soon ✨',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: kgoldColor,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-            ],
+                const SizedBox(height: 8),
+              ],
+            ),
           ),
         ),
 
@@ -852,7 +880,7 @@ class EmptyTab extends StatelessWidget {
                 gradient: ExploreScreen.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: .25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 12,
                   ),
                 ],
@@ -865,6 +893,52 @@ class EmptyTab extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAvatarContainer(BuildContext context, int index, String label) {
+    final isDark = Brightness.dark == Theme.of(context).brightness;
+    final isSelected = selectedAvatarIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedAvatarIndex = index;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? kgoldColor
+              : (isDark ? Colors.grey.shade900 : Colors.grey.shade100),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.fromBorderSide(
+            BorderSide(color: kgoldColor, width: 2),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isSelected)
+              const Icon(Icons.done_all, size: 16, color: kblackColor),
+            if (isSelected) const SizedBox(width: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected
+                    ? kblackColor
+                    : (isDark ? kwhiteColor : kblackColor),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
