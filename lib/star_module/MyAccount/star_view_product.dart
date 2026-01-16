@@ -259,7 +259,7 @@ class _StarViewProductState extends State<StarViewProduct> {
         return AlertDialog(
           title: const Text(
             "Update Order Status",
-            style: TextStyle(color: kgoldColor),
+            style: TextStyle(color: kgoldColor, fontSize: 16),
           ),
           content: StatefulBuilder(
             builder: (context, setState) {
@@ -285,7 +285,14 @@ class _StarViewProductState extends State<StarViewProduct> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -326,7 +333,7 @@ class _StarViewProductState extends State<StarViewProduct> {
       value: value,
       groupValue: groupValue,
       activeColor: kgoldColor,
-      title: Text(value),
+      title: Text(value, style: const TextStyle(fontSize: 14)),
       onChanged: (val) {
         if (val != null) {
           onChanged(val);

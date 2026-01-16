@@ -291,7 +291,46 @@ class _StarMycreatorprofileState extends State<StarMycreatorprofile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness:
+                                Brightness.dark == Theme.of(context).brightness
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: const Text(
+                              "Delete Account",
+                              style: TextStyle(color: kgoldColor),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Unsubscribe?",
+                              style: TextStyle(
+                                // color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Cancel"),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Unsubscribe",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Unsubscribe",
                       overflow: TextOverflow.ellipsis,

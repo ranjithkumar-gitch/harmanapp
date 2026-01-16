@@ -110,14 +110,21 @@ class StarMembershipScreen extends StatelessWidget {
       context: context,
       builder: (_) => CupertinoTheme(
         data: CupertinoThemeData(
-          brightness: isDark ? Brightness.dark : Brightness.light,
+          brightness: Brightness.dark == Theme.of(context).brightness
+              ? Brightness.dark
+              : Brightness.light,
           primaryColor: kgoldColor,
         ),
         child: CupertinoAlertDialog(
-          title: const Text("Unsubscribe", style: TextStyle(color: kgoldColor)),
+          title: const Text(
+            "Delete Account",
+            style: TextStyle(color: kgoldColor),
+          ),
           content: Text(
-            "Are you sure you want to unsubscribe?",
-            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+            "Are you sure you want to Unsubscribe?",
+            style: TextStyle(
+              // color: isDark ? Colors.white70 : Colors.black54,
+            ),
           ),
           actions: [
             CupertinoDialogAction(
