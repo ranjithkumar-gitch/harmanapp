@@ -372,66 +372,66 @@ class _StarImagePostState extends State<StarImagePost>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    _showRatingBar = !_showRatingBar;
-                  });
-                },
-                child: AnimatedScale(
-                  scale: _starScale,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.elasticOut,
-                  child: _useLottieStar
-                      ? Lottie.asset(
-                          'assets/Star.json',
-                          width: 40,
-                          height: 40,
-                          repeat: false,
-                          controller: _lottieController,
-                          onLoaded: (composition) {
-                            // Set controller duration to match Lottie file or override
-                            _lottieController.duration = const Duration(
-                              seconds: 5,
-                            );
-                            // _controller.setSpeed(2.0);
-                          },
-                          delegates: LottieDelegates(
-                            values: [
-                              ValueDelegate.color(['**'], value: _ratingColor),
-                            ],
-                          ),
-                        )
-                      : Icon(
-                          CupertinoIcons.star_fill,
-                          color: Brightness.dark == Theme.of(context).brightness
-                              ? kwhiteColor
-                              : kblackColor,
-                          size: 18,
-                        ),
-                ),
-              ),
+              // CupertinoButton(
+              //   padding: EdgeInsets.zero,
+              //   onPressed: () {
+              //     setState(() {
+              //       _showRatingBar = !_showRatingBar;
+              //     });
+              //   },
+              //   child: AnimatedScale(
+              //     scale: _starScale,
+              //     duration: const Duration(milliseconds: 300),
+              //     curve: Curves.elasticOut,
+              //     child: _useLottieStar
+              //         ? Lottie.asset(
+              //             'assets/Star.json',
+              //             width: 40,
+              //             height: 40,
+              //             repeat: false,
+              //             controller: _lottieController,
+              //             onLoaded: (composition) {
+              //               // Set controller duration to match Lottie file or override
+              //               _lottieController.duration = const Duration(
+              //                 seconds: 5,
+              //               );
+              //               // _controller.setSpeed(2.0);
+              //             },
+              //             delegates: LottieDelegates(
+              //               values: [
+              //                 ValueDelegate.color(['**'], value: _ratingColor),
+              //               ],
+              //             ),
+              //           )
+              //         : Icon(
+              //             CupertinoIcons.star_fill,
+              //             color: Brightness.dark == Theme.of(context).brightness
+              //                 ? kwhiteColor
+              //                 : kblackColor,
+              //             size: 18,
+              //           ),
+              //   ),
+              // ),
 
-              CupertinoButton(
-                onPressed: () {
-                  setState(() {
-                    _showCommentBox = !_showCommentBox;
-                    _showRatingBar = false;
-                  });
-                },
-                padding: EdgeInsets.zero,
-                child: Icon(
-                  CupertinoIcons.text_bubble,
-                  color: _showCommentBox
-                      ? kgoldColor
-                      : Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                ),
-              ),
-
+              // CupertinoButton(
+              //   onPressed: () {
+              //     setState(() {
+              //       _showCommentBox = !_showCommentBox;
+              //       _showRatingBar = false;
+              //     });
+              //   },
+              //   padding: EdgeInsets.zero,
+              //   child: Icon(
+              //     CupertinoIcons.text_bubble,
+              //     color: _showCommentBox
+              //         ? kgoldColor
+              //         : Brightness.dark == Theme.of(context).brightness
+              //         ? kwhiteColor
+              //         : kblackColor,
+              //   ),
+              // ),
               CupertinoButton(
                 onPressed: () {
                   SharePlus.instance.share(
@@ -446,7 +446,7 @@ class _StarImagePostState extends State<StarImagePost>
                       : kblackColor,
                 ),
               ),
-              const Spacer(),
+              // const Spacer(),
               if (widget.post.post.images!.length != 1)
                 DotsIndicator(
                   dotsCount: 2,
@@ -458,7 +458,7 @@ class _StarImagePostState extends State<StarImagePost>
                     activeColor: kgoldColor,
                   ),
                 ),
-              const Spacer(flex: 3),
+              // const Spacer(flex: 3),
               CupertinoButton(
                 onPressed: () {
                   setState(() {
@@ -621,94 +621,94 @@ class _StarImagePostState extends State<StarImagePost>
             ),
           ),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${widget.post.post.likes} Stars',
-                style: TextStyle(
-                  color: Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "Gilroy",
-                ),
-              ),
-              RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: widget.post.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kwhiteColor
-                            : kblackColor,
-                        fontSize: 16,
-                        fontFamily: "Gilroy",
-                      ),
-                    ),
-                    const TextSpan(text: '  '),
-                    TextSpan(
-                      text: widget.post.post.description ?? '',
-                      style: TextStyle(
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kwhiteColor
-                            : kblackColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (widget.post.post.comments != null) ...[
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => CommentBottomSheet(post: widget.post),
-                    );
-                  },
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         '${widget.post.post.likes} Stars',
+        //         style: TextStyle(
+        //           color: Brightness.dark == Theme.of(context).brightness
+        //               ? kwhiteColor
+        //               : kblackColor,
+        //           fontWeight: FontWeight.w600,
+        //           fontFamily: "Gilroy",
+        //         ),
+        //       ),
+        //       RichText(
+        //         maxLines: 1,
+        //         overflow: TextOverflow.ellipsis,
+        //         text: TextSpan(
+        //           children: [
+        //             TextSpan(
+        //               text: widget.post.name,
+        //               style: TextStyle(
+        //                 fontWeight: FontWeight.w600,
+        //                 color: Brightness.dark == Theme.of(context).brightness
+        //                     ? kwhiteColor
+        //                     : kblackColor,
+        //                 fontSize: 16,
+        //                 fontFamily: "Gilroy",
+        //               ),
+        //             ),
+        //             const TextSpan(text: '  '),
+        //             TextSpan(
+        //               text: widget.post.post.description ?? '',
+        //               style: TextStyle(
+        //                 color: Brightness.dark == Theme.of(context).brightness
+        //                     ? kwhiteColor
+        //                     : kblackColor,
+        //                 fontSize: 16,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       if (widget.post.post.comments != null) ...[
+        //         GestureDetector(
+        //           onTap: () {
+        //             showModalBottomSheet(
+        //               context: context,
+        //               isScrollControlled: true,
+        //               backgroundColor: Colors.transparent,
+        //               builder: (_) => CommentBottomSheet(post: widget.post),
+        //             );
+        //           },
 
-                  child: Text(
-                    'View all ${widget.post.post.comments} comments',
-                    style: TextStyle(
-                      fontFamily: "Gilroy",
-                      color: kgoldColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                if (showComments) ...[
-                  const SizedBox(height: 6),
+        //           child: Text(
+        //             'View all ${widget.post.post.comments} comments',
+        //             style: TextStyle(
+        //               fontFamily: "Gilroy",
+        //               color: kgoldColor,
+        //               fontSize: 14,
+        //             ),
+        //           ),
+        //         ),
+        //         if (showComments) ...[
+        //           const SizedBox(height: 6),
 
-                  _comment("john_doe", "This looks amazing 🔥"),
-                  _comment("alex_99", "Pure elegance ✨"),
-                  _comment("maria_k", "Luxury vibes only 💫"),
-                  _comment("rohit.dev", "Nice shot 📸"),
-                  _comment("sophia_l", "Absolutely stunning ❤️"),
-                ],
-              ],
+        //           _comment("john_doe", "This looks amazing 🔥"),
+        //           _comment("alex_99", "Pure elegance ✨"),
+        //           _comment("maria_k", "Luxury vibes only 💫"),
+        //           _comment("rohit.dev", "Nice shot 📸"),
+        //           _comment("sophia_l", "Absolutely stunning ❤️"),
+        //         ],
+        //       ],
 
-              Text(
-                widget.post.post.date!,
-                style: TextStyle(
-                  fontFamily: "Gilroy",
-                  color: Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-        ),
+        //       Text(
+        //         widget.post.post.date!,
+        //         style: TextStyle(
+        //           fontFamily: "Gilroy",
+        //           color: Brightness.dark == Theme.of(context).brightness
+        //               ? kwhiteColor
+        //               : kblackColor,
+        //           fontSize: 14,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

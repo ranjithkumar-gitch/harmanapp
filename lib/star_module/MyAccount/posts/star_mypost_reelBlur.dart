@@ -390,64 +390,64 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  setState(() {
-                    _showRatingBar = !_showRatingBar;
-                  });
-                },
-                child: AnimatedScale(
-                  scale: _starScale,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.elasticOut,
-                  child: _useLottieStar
-                      ? Lottie.asset(
-                          'assets/Star.json',
-                          width: 40,
-                          height: 40,
-                          repeat: false,
-                          controller: _lottieController,
-                          onLoaded: (composition) {
-                            _lottieController.duration = const Duration(
-                              seconds: 5,
-                            );
-                          },
-                          delegates: LottieDelegates(
-                            values: [
-                              ValueDelegate.color(['**'], value: _ratingColor),
-                            ],
-                          ),
-                        )
-                      : Icon(
-                          CupertinoIcons.star_fill,
-                          color: Brightness.dark == Theme.of(context).brightness
-                              ? kwhiteColor
-                              : kblackColor,
-                          size: 18,
-                        ),
-                ),
-              ),
+              // CupertinoButton(
+              //   padding: EdgeInsets.zero,
+              //   onPressed: () {
+              //     setState(() {
+              //       _showRatingBar = !_showRatingBar;
+              //     });
+              //   },
+              //   child: AnimatedScale(
+              //     scale: _starScale,
+              //     duration: const Duration(milliseconds: 300),
+              //     curve: Curves.elasticOut,
+              //     child: _useLottieStar
+              //         ? Lottie.asset(
+              //             'assets/Star.json',
+              //             width: 40,
+              //             height: 40,
+              //             repeat: false,
+              //             controller: _lottieController,
+              //             onLoaded: (composition) {
+              //               _lottieController.duration = const Duration(
+              //                 seconds: 5,
+              //               );
+              //             },
+              //             delegates: LottieDelegates(
+              //               values: [
+              //                 ValueDelegate.color(['**'], value: _ratingColor),
+              //               ],
+              //             ),
+              //           )
+              //         : Icon(
+              //             CupertinoIcons.star_fill,
+              //             color: Brightness.dark == Theme.of(context).brightness
+              //                 ? kwhiteColor
+              //                 : kblackColor,
+              //             size: 18,
+              //           ),
+              //   ),
+              // ),
 
-              CupertinoButton(
-                onPressed: () {
-                  setState(() {
-                    _showCommentBox = !_showCommentBox;
-                    _showRatingBar = false;
-                  });
-                },
-                padding: EdgeInsets.zero,
-                child: Icon(
-                  CupertinoIcons.text_bubble,
-                  color: _showCommentBox
-                      ? kgoldColor
-                      : Brightness.dark == Theme.of(context).brightness
-                      ? kwhiteColor
-                      : kblackColor,
-                ),
-              ),
-
+              // CupertinoButton(
+              //   onPressed: () {
+              //     setState(() {
+              //       _showCommentBox = !_showCommentBox;
+              //       _showRatingBar = false;
+              //     });
+              //   },
+              //   padding: EdgeInsets.zero,
+              //   child: Icon(
+              //     CupertinoIcons.text_bubble,
+              //     color: _showCommentBox
+              //         ? kgoldColor
+              //         : Brightness.dark == Theme.of(context).brightness
+              //         ? kwhiteColor
+              //         : kblackColor,
+              //   ),
+              // ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () async {
@@ -475,7 +475,7 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
                 ),
               ),
 
-              const Spacer(),
+              // const Spacer(),
               CupertinoButton(
                 onPressed: () {
                   setState(() {
