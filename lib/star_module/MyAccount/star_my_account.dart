@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/star_module/MyAccount/create_post.dart';
 import 'package:harmanapp/star_module/MyAccount/edit_profile.dart';
 import 'package:harmanapp/star_module/MyAccount/legacy.dart';
+import 'package:harmanapp/star_module/MyAccount/my_avatar.dart';
+import 'package:harmanapp/star_module/MyAccount/my_biography.dart';
+import 'package:harmanapp/star_module/MyAccount/my_transitions.dart';
 import 'package:harmanapp/star_module/MyAccount/star_market.dart';
 import 'package:harmanapp/star_module/MyAccount/star_my_memberships.dart';
 import 'package:harmanapp/star_module/MyAccount/star_my_orders.dart';
@@ -269,7 +272,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                           icon: Icons.article_outlined,
                           title: 'Publications',
                           subtitle: 'View my Publications',
-                          isSelected: selectedCard == "MyPublications",
+                          isSelected: selectedCard == "Publications",
                           onTap: () => setState(
                             () => selectedCard = selectedCard == "Publications"
                                 ? ""
@@ -319,7 +322,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const StarMarketPlace(),
+                                builder: (_) => const StarMyTransitions(),
                               ),
                             );
                           },
@@ -339,7 +342,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const StarMarketPlace(),
+                                builder: (_) => const StarMyAvatar(),
                               ),
                             );
                           },
@@ -358,7 +361,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const StarMarketPlace(),
+                                builder: (_) => const StarMyBiography(),
                               ),
                             );
                           },
