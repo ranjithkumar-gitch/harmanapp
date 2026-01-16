@@ -177,7 +177,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                     SizedBox(height: 12),
 
                     GridView.count(
-                      crossAxisCount: 2,
+                      crossAxisCount: 3,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 12,
@@ -288,13 +288,71 @@ class _StarMyAccountState extends State<StarMyAccount> {
                         /// 6️⃣ My Marketplace
                         _optionCard(
                           icon: Icons.storefront_outlined,
-                          title: 'My Marketplace',
+                          title: 'Marketplace',
                           subtitle: 'My listed products',
                           isSelected: selectedCard == "Marketplace",
                           onTap: () => setState(
                             () => selectedCard = selectedCard == "Marketplace"
                                 ? ""
                                 : "Marketplace",
+                          ),
+                          onButtonPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StarMarketPlace(),
+                              ),
+                            );
+                          },
+                        ),
+                        _optionCard(
+                          icon: Icons.storefront_outlined,
+                          title: 'Transition',
+                          subtitle: 'Transition',
+                          isSelected: selectedCard == "Transition",
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Transition"
+                                ? ""
+                                : "Transition",
+                          ),
+                          onButtonPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StarMarketPlace(),
+                              ),
+                            );
+                          },
+                        ),
+                        _optionCard(
+                          icon: Icons.storefront_outlined,
+                          title: 'Avathar',
+                          subtitle: 'Digital Avathar',
+                          isSelected: selectedCard == "Digital Avathar",
+                          onTap: () => setState(
+                            () =>
+                                selectedCard = selectedCard == "Digital Avathar"
+                                ? ""
+                                : "Digital Avathar",
+                          ),
+                          onButtonPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StarMarketPlace(),
+                              ),
+                            );
+                          },
+                        ),
+                        _optionCard(
+                          icon: Icons.storefront_outlined,
+                          title: 'Biography',
+                          subtitle: 'Biography',
+                          isSelected: selectedCard == "Biography",
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Biographyr"
+                                ? ""
+                                : "Biography",
                           ),
                           onButtonPressed: () {
                             Navigator.push(
@@ -616,6 +674,143 @@ class _StarMyAccountState extends State<StarMyAccount> {
     );
   }
 
+  // Widget _optionCard({
+  //   required String title,
+  //   required String subtitle,
+  //   required IconData icon,
+  //   required bool isSelected,
+  //   required VoidCallback onTap,
+  //   required VoidCallback onButtonPressed,
+  // }) {
+  //   const gold = kgoldColor;
+
+  //   return Padding(
+  //     padding: const EdgeInsets.all(6.0),
+  //     child: GestureDetector(
+  //       onTap: onTap,
+  //       child: TweenAnimationBuilder<double>(
+  //         tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
+  //         duration: const Duration(milliseconds: 800),
+  //         builder: (context, angle, child) {
+  //           return Transform(
+  //             alignment: Alignment.center,
+  //             transform: Matrix4.identity()
+  //               ..setEntry(3, 2, 0.001)
+  //               ..rotateY(angle),
+  //             child: AnimatedContainer(
+  //               duration: const Duration(milliseconds: 800),
+  //               padding: const EdgeInsets.all(14),
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(14),
+  //                 border: Border.all(
+  //                   color: isSelected
+  //                       ? gold
+  //                       : Theme.of(context).brightness == Brightness.dark
+  //                       ? kwhiteColor
+  //                       : kblackColor,
+  //                   width: isSelected ? 2 : 1,
+  //                 ),
+  //                 color: Theme.of(context).brightness == Brightness.dark
+  //                     ? kblackColor
+  //                     : kwhiteColor,
+  //               ),
+  //               child: isSelected
+  //                   ? // Back of card - Show button (counter-rotated to appear unflipped)
+  //                     Transform(
+  //                       alignment: Alignment.center,
+  //                       transform: Matrix4.identity()..rotateY(3.14159),
+  //                       child: Column(
+  //                         mainAxisAlignment: MainAxisAlignment.center,
+  //                         children: [
+  //                           Text(
+  //                             subtitle,
+  //                             textAlign: TextAlign.center,
+  //                             style: TextStyle(
+  //                               color: gold,
+  //                               fontSize: 14,
+  //                               fontWeight: FontWeight.w600,
+  //                             ),
+  //                           ),
+  //                           const SizedBox(height: 12),
+  //                           SizedBox(
+  //                             width: double.infinity,
+  //                             height: 36,
+  //                             child: OutlinedButton(
+  //                               onPressed: onButtonPressed,
+  //                               style: OutlinedButton.styleFrom(
+  //                                 side: const BorderSide(color: gold),
+  //                                 foregroundColor: gold,
+  //                                 shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(10),
+  //                                 ),
+  //                               ),
+  //                               child: const Text(
+  //                                 "Open",
+  //                                 style: TextStyle(
+  //                                   fontSize: 13,
+  //                                   fontWeight: FontWeight.w600,
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     )
+  //                   : // Front of card - Show icon, title, subtitle
+  //                     Column(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         /// 🔘 Icon
+  //                         Container(
+  //                           height: 56,
+  //                           padding: const EdgeInsets.all(12),
+  //                           decoration: BoxDecoration(
+  //                             shape: BoxShape.circle,
+  //                             border: Border.all(color: kgoldColor, width: 1.5),
+  //                           ),
+  //                           child: Icon(icon, size: 26, color: kgoldColor),
+  //                         ),
+
+  //                         /// 📝 Title
+  //                         Text(
+  //                           title,
+  //                           textAlign: TextAlign.center,
+  //                           style: TextStyle(
+  //                             color: isSelected
+  //                                 ? gold
+  //                                 : Theme.of(context).brightness ==
+  //                                       Brightness.dark
+  //                                 ? kwhiteColor
+  //                                 : kblackColor,
+  //                             fontSize: 15,
+  //                             fontWeight: FontWeight.bold,
+  //                           ),
+  //                         ),
+
+  //                         /// 📄 Subtitle
+  //                         Text(
+  //                           subtitle,
+  //                           textAlign: TextAlign.center,
+  //                           maxLines: 2,
+  //                           overflow: TextOverflow.ellipsis,
+  //                           style: TextStyle(
+  //                             color:
+  //                                 Theme.of(context).brightness ==
+  //                                     Brightness.dark
+  //                                 ? kwhiteColor
+  //                                 : kblackColor,
+  //                             fontSize: 12,
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget _optionCard({
     required String title,
     required String subtitle,
@@ -626,130 +821,144 @@ class _StarMyAccountState extends State<StarMyAccount> {
   }) {
     const gold = kgoldColor;
 
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: GestureDetector(
-        onTap: onTap,
-        child: TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
-          duration: const Duration(milliseconds: 800),
-          builder: (context, angle, child) {
-            return Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..rotateY(angle),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 800),
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: isSelected
-                        ? gold
-                        : Theme.of(context).brightness == Brightness.dark
-                        ? kwhiteColor
-                        : kblackColor,
-                    width: isSelected ? 2 : 1,
-                  ),
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? kblackColor
-                      : kwhiteColor,
+    return GestureDetector(
+      onTap: onTap,
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
+        duration: const Duration(milliseconds: 800),
+        builder: (context, angle, child) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(angle),
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isSelected
+                      ? gold
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? kwhiteColor
+                      : kblackColor,
+                  width: isSelected ? 2 : 1,
                 ),
-                child: isSelected
-                    ? // Back of card - Show button (counter-rotated to appear unflipped)
-                      Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()..rotateY(3.14159),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              subtitle,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: gold,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            SizedBox(
-                              width: double.infinity,
-                              height: 36,
-                              child: OutlinedButton(
-                                onPressed: onButtonPressed,
-                                style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(color: gold),
-                                  foregroundColor: gold,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                child: const Text(
-                                  "Open",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : // Front of card - Show icon, title, subtitle
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          /// 🔘 Icon
-                          Container(
-                            height: 56,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: kgoldColor, width: 1.5),
-                            ),
-                            child: Icon(icon, size: 26, color: kgoldColor),
-                          ),
-
-                          /// 📝 Title
-                          Text(
-                            title,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: isSelected
-                                  ? gold
-                                  : Theme.of(context).brightness ==
-                                        Brightness.dark
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          /// 📄 Subtitle
-                          Text(
-                            subtitle,
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color:
-                                  Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? kblackColor
+                    : kwhiteColor,
               ),
-            );
-          },
-        ),
+
+              // 🔑 LayoutBuilder makes card obey grid height
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return isSelected
+                      // 🔄 BACK SIDE
+                      ? Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.identity()..rotateY(3.14159),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    subtitle,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: gold,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 36,
+                                width: double.infinity,
+                                child: OutlinedButton(
+                                  onPressed: onButtonPressed,
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: gold),
+                                    foregroundColor: gold,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Open",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      // 🔘 FRONT SIDE
+                      : Column(
+                          children: [
+                            const SizedBox(height: 6),
+                            Container(
+                              height: 50,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: kgoldColor,
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: Icon(icon, size: 22, color: kgoldColor),
+                            ),
+                            const SizedBox(height: 5),
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  title,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? kwhiteColor
+                                        : kblackColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Expanded(
+                            //   child: Center(
+                            //     child: Text(
+                            //       subtitle,
+                            //       textAlign: TextAlign.center,
+                            //       maxLines: 2,
+                            //       overflow: TextOverflow.ellipsis,
+                            //       style: TextStyle(
+                            //         color:
+                            //             Theme.of(context).brightness ==
+                            //                 Brightness.dark
+                            //             ? kwhiteColor
+                            //             : kblackColor,
+                            //         fontSize: 12,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
+                        );
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }
