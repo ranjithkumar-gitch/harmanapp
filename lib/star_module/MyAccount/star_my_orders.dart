@@ -19,8 +19,8 @@ class _StarMyOrdersState extends State<StarMyOrders> {
       "total": "\$340.80",
       "status": "New",
       "products": [
-        {"image": "assets/shirt.jpg", "name": "Gold Membership T-shirt"},
-        {"image": "assets/jersey5.avif", "name": "Exclusive Creator Jersey"},
+        {"image": "assets/huddie.png", "name": "Signed Hoodie"},
+        {"image": "assets/signature2.png", "name": "Exclusive Signature"},
       ],
     },
     {
@@ -28,7 +28,7 @@ class _StarMyOrdersState extends State<StarMyOrders> {
       "total": "\$199.00",
       "status": "Shipping",
       "products": [
-        {"image": "assets/jersey10.jpg", "name": "Signed Poster"},
+        {"image": "assets/award.png", "name": "Best Actor Replica"},
       ],
     },
     {
@@ -36,7 +36,7 @@ class _StarMyOrdersState extends State<StarMyOrders> {
       "total": "\$167.00",
       "status": "Cancelled",
       "products": [
-        {"image": "assets/jersey5.avif", "name": "Signed Poster"},
+        {"image": "assets/signature.png", "name": "Digtal Signature"},
       ],
     },
   ];
@@ -54,11 +54,7 @@ class _StarMyOrdersState extends State<StarMyOrders> {
           elevation: 0,
           scrolledUnderElevation: 0,
           leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: isDark ? kwhiteColor : kblackColor,
-              size: 18,
-            ),
+            icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -66,7 +62,7 @@ class _StarMyOrdersState extends State<StarMyOrders> {
           title: Text(
             "Orders",
             style: TextStyle(
-              color: isDark ? kwhiteColor : kblackColor,
+              color: kgoldColor,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),

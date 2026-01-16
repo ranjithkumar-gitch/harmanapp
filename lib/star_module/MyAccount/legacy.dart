@@ -15,11 +15,7 @@ class Legacy extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -27,7 +23,7 @@ class Legacy extends StatelessWidget {
         title: Text(
           "Legacy",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),

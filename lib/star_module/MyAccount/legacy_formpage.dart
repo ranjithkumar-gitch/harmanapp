@@ -55,11 +55,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -67,7 +63,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
         title: Text(
           "Add Legacy",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -182,7 +178,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                   style: TextStyle(
                     color: isDark ? kwhiteColor : kblackColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -204,37 +199,59 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                           )
                         : SizedBox(
                             height: 110,
-                            child: ListView.builder(
+                            child: ReorderableListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: selectedMedia.length + 1,
+                              onReorder: (oldIndex, newIndex) {
+                                setState(() {
+                                  // prevent dragging the "add" button
+                                  if (oldIndex == selectedMedia.length ||
+                                      newIndex == selectedMedia.length) {
+                                    return;
+                                  }
+
+                                  if (newIndex > oldIndex) newIndex--;
+
+                                  final item = selectedMedia.removeAt(oldIndex);
+                                  selectedMedia.insert(newIndex, item);
+                                });
+                              },
                               itemBuilder: (context, index) {
+                                // ADD BUTTON (not draggable)
                                 if (index == selectedMedia.length) {
-                                  return GestureDetector(
-                                    onTap: _uploadMedia,
-                                    child: Container(
-                                      width: 90,
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 6,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          color: kgoldColor,
-                                          width: 1.5,
+                                  return Container(
+                                    key: const ValueKey("add"),
+                                    width: 90,
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: _uploadMedia,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          border: Border.all(
+                                            color: kgoldColor,
+                                            width: 1.5,
+                                          ),
                                         ),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: kgoldColor,
-                                        size: 32,
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: kgoldColor,
+                                          size: 32,
+                                        ),
                                       ),
                                     ),
                                   );
                                 }
 
+                                // MEDIA ITEM (draggable)
                                 final file = selectedMedia[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                return Container(
+                                  key: ValueKey(file.path), // 👈 REQUIRED
+                                  margin: const EdgeInsets.symmetric(
                                     horizontal: 6,
                                   ),
                                   child: ClipRRect(
@@ -249,6 +266,54 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                               },
                             ),
                           ),
+
+                    // : SizedBox(
+                    //     height: 110,
+                    //     child: ListView.builder(
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemCount: selectedMedia.length + 1,
+                    //       itemBuilder: (context, index) {
+                    //         if (index == selectedMedia.length) {
+                    //           return GestureDetector(
+                    //             onTap: _uploadMedia,
+                    //             child: Container(
+                    //               width: 90,
+                    //               margin: const EdgeInsets.symmetric(
+                    //                 horizontal: 6,
+                    //               ),
+                    //               decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(10),
+                    //                 border: Border.all(
+                    //                   color: kgoldColor,
+                    //                   width: 1.5,
+                    //                 ),
+                    //               ),
+                    //               child: const Icon(
+                    //                 Icons.add,
+                    //                 color: kgoldColor,
+                    //                 size: 32,
+                    //               ),
+                    //             ),
+                    //           );
+                    //         }
+
+                    //         final file = selectedMedia[index];
+                    //         return Padding(
+                    //           padding: const EdgeInsets.symmetric(
+                    //             horizontal: 6,
+                    //           ),
+                    //           child: ClipRRect(
+                    //             borderRadius: BorderRadius.circular(10),
+                    //             child: Image.file(
+                    //               File(file.path),
+                    //               width: 90,
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //           ),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
                   ),
                 ),
               ],
@@ -256,6 +321,29 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
             const SizedBox(height: 24),
 
+            // Row(
+            //   children: [
+            //     Radio<bool>(
+            //       value: false,
+            //       groupValue: scheduleLater,
+            //       activeColor: kgoldColor,
+            //       onChanged: (v) => setState(() => scheduleLater = v!),
+            //     ),
+            //     Text(
+            //       "Publish Now",
+            //       style: TextStyle(
+            //         color: scheduleLater ? kgoldColor : textColor,
+            //       ),
+            //     ),
+            //     Radio<bool>(
+            //       value: true,
+            //       groupValue: scheduleLater,
+            //       activeColor: kgoldColor,
+            //       onChanged: (v) => setState(() => scheduleLater = v!),
+            //     ),
+            //     Text("Schedule Later", style: TextStyle(color: textColor)),
+            //   ],
+            // ),
             Row(
               children: [
                 Radio<bool>(
@@ -264,14 +352,31 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                   activeColor: kgoldColor,
                   onChanged: (v) => setState(() => scheduleLater = v!),
                 ),
-                Text("Publish Now", style: TextStyle(color: textColor)),
+                Text(
+                  "Publish Now",
+                  style: TextStyle(
+                    color: scheduleLater == false
+                        ? kgoldColor // 👈 selected
+                        : textColor,
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
                 Radio<bool>(
                   value: true,
                   groupValue: scheduleLater,
                   activeColor: kgoldColor,
                   onChanged: (v) => setState(() => scheduleLater = v!),
                 ),
-                Text("Schedule Later", style: TextStyle(color: textColor)),
+                Text(
+                  "Schedule Later",
+                  style: TextStyle(
+                    color: scheduleLater == true
+                        ? kgoldColor // 👈 selected
+                        : textColor,
+                  ),
+                ),
               ],
             ),
 
@@ -427,7 +532,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
             // isGold ? kgoldColor : textColor.withOpacity(0.7),
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            // fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 8),

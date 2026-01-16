@@ -27,6 +27,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
   TimeOfDay? scheduledTime;
 
   List<XFile> selectedMedia = [];
+  String _postTypeLabel(PostType type) {
+    switch (type) {
+      case PostType.stills:
+        return "Stills";
+      case PostType.bits:
+        return "Bits";
+      case PostType.longVideos:
+        return "Long Videos";
+    }
+  }
 
   Future<void> _pickImages() async {
     final images = await _picker.pickMultiImage();
@@ -66,19 +76,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         title: Text(
-          "Create Post",
+          "Publish",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -103,7 +109,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 style: TextStyle(color: textColor),
                 decoration: _inputDecoration(
                   bgColor,
-                  borderColor,
+                  kgoldColor,
                   _postTypeFocus.hasFocus,
                 ),
                 items: const [
@@ -127,12 +133,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
               const SizedBox(height: 20),
 
-              /// MEDIA LABEL
-              _label(
-                "Media",
-                _mediaFocus.hasFocus || selectedMedia.isNotEmpty,
-                textColor,
-              ),
+              _label("Media", _postTypeFocus.hasFocus, textColor),
+
               const SizedBox(height: 8),
 
               GestureDetector(
@@ -197,13 +199,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
               const SizedBox(height: 20),
 
-              /// DESCRIPTION LABEL
-              _label(
-                "Description",
-                _descriptionFocus.hasFocus ||
-                    _descriptionController.text.isNotEmpty,
-                textColor,
-              ),
+              _label("Description", _postTypeFocus.hasFocus, textColor),
               const SizedBox(height: 8),
 
               TextField(
@@ -222,10 +218,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
               const SizedBox(height: 24),
 
               /// POST TIMING
-              Text(
-                "Post Timing",
-                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-              ),
+              Text("Post Timing", style: TextStyle(color: textColor)),
 
               Row(
                 children: [
@@ -237,7 +230,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                   Text(
                     "Publish Now",
-                    style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+                    style: TextStyle(
+                      color: scheduleLater == false
+                          ? kgoldColor
+                          : (isDark ? kwhiteColor : kblackColor),
+                    ),
                   ),
                   Radio<bool>(
                     value: true,
@@ -247,7 +244,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                   Text(
                     "Schedule Later",
-                    style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+                    style: TextStyle(
+                      color: scheduleLater == true
+                          ? kgoldColor // 👈 selected
+                          : (isDark ? kwhiteColor : kblackColor),
+                    ),
                   ),
                 ],
               ),
@@ -380,9 +381,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: const Text(
-                    "Create Post",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+
+                  child: Text(
+                    "Publish ${_postTypeLabel(_selectedType)}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -398,9 +400,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
     return Text(
       text,
       style: TextStyle(
-        color: isActive ? kgoldColor : textColor.withOpacity(0.7),
+        // color: isActive ? kgoldColor : textColor.withOpacity(0.7),
+        color: kwhiteColor,
         fontSize: 14,
-        fontWeight: FontWeight.w600,
       ),
     );
   }

@@ -216,14 +216,14 @@ class _StarReelPostState extends State<StarReelPost>
                           ),
                           child: CupertinoAlertDialog(
                             title: Text(
-                              "Hide Post",
+                              "Hide Publication",
                               style: TextStyle(
                                 color: kgoldColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             content: Text(
-                              "Are you sure you want to Hide this post?",
+                              "Are you sure you want to Hide this Publication?",
                               style: TextStyle(
                                 color: isDark ? Colors.white70 : Colors.black54,
                               ),
@@ -314,14 +314,14 @@ class _StarReelPostState extends State<StarReelPost>
                           ),
                           child: CupertinoAlertDialog(
                             title: Text(
-                              "Delete Post",
+                              "Delete Publication",
                               style: TextStyle(
                                 color: kgoldColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             content: Text(
-                              "Are you sure you want to Delete this post?",
+                              "Are you sure you want to Delete this Publication?",
                               style: TextStyle(
                                 color: isDark ? Colors.white70 : Colors.black54,
                               ),

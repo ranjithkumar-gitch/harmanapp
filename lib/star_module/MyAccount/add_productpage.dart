@@ -51,11 +51,7 @@ class _AddProductPageState extends State<AddProductPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -63,7 +59,7 @@ class _AddProductPageState extends State<AddProductPage> {
         title: Text(
           "Add Product",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -210,6 +206,28 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: descCtrl,
                 maxLines: 4,
                 decoration: _inputDecoration("Description"),
+                style: GoogleFonts.poppins(
+                  color: isDark ? kwhiteColor : kblackColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                "Available Products",
+                style: GoogleFonts.poppins(
+                  // fontWeight: FontWeight.w600,
+                  color: isDark ? kwhiteColor : kblackColor,
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: TextField(
+                controller: nameCtrl,
+                decoration: _inputDecoration("Available Products"),
                 style: GoogleFonts.poppins(
                   color: isDark ? kwhiteColor : kblackColor,
                 ),

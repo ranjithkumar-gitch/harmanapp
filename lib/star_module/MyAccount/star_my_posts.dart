@@ -43,19 +43,15 @@ class _StarMyPostsState extends State<StarMyPosts>
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         title: Text(
-          "My Posts",
+          "My Publications",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),

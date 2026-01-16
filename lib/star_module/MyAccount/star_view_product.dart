@@ -50,11 +50,7 @@ class _StarViewProductState extends State<StarViewProduct> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -62,7 +58,7 @@ class _StarViewProductState extends State<StarViewProduct> {
         title: Text(
           "View Order Details",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -211,97 +207,129 @@ class _StarViewProductState extends State<StarViewProduct> {
   }
 
   // void _showOrderStatusDialog() {
-  //   final isDark = Theme.of(context).brightness == Brightness.dark;
-
   //   String selectedStatus = "New";
 
   //   showDialog(
   //     context: context,
-  //     builder: (_) => AlertDialog(
-  //       title: const Text(
-  //         "Update Order Status",
-  //         style: TextStyle(color: kgoldColor),
-  //       ),
-  //       content: StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               _statusRadio("New", selectedStatus, setState),
-  //               _statusRadio("Shipping", selectedStatus, setState),
-  //               _statusRadio("Delivered", selectedStatus, setState),
-  //               _statusRadio("Cancelled", selectedStatus, setState),
-  //             ],
-  //           );
-  //         },
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text("Cancel"),
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: const Text(
+  //           "Update Order Status",
+  //           style: TextStyle(color: kgoldColor, fontSize: 16),
   //         ),
-  //         TextButton(
-  //           onPressed: () {
-  //             Navigator.pop(context);
+  //         content: StatefulBuilder(
+  //           builder: (context, setState) {
+  //             return Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 _statusRadio("New", selectedStatus, (val) {
+  //                   setState(() => selectedStatus = val);
+  //                 }),
+  //                 _statusRadio("Shipping", selectedStatus, (val) {
+  //                   setState(() => selectedStatus = val);
+  //                 }),
+  //                 _statusRadio("Delivered", selectedStatus, (val) {
+  //                   setState(() => selectedStatus = val);
+  //                 }),
+  //                 _statusRadio("Cancelled", selectedStatus, (val) {
+  //                   setState(() => selectedStatus = val);
+  //                 }),
+  //               ],
+  //             );
   //           },
-  //           child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
   //         ),
-  //       ],
-  //     ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context),
+  //             child: Text(
+  //               "Cancel",
+  //               style: TextStyle(
+  //                 color: Theme.of(context).brightness == Brightness.dark
+  //                     ? Colors.white
+  //                     : Colors.black,
+  //               ),
+  //             ),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               // selectedStatus is correct here
+  //               Navigator.pop(context);
+  //             },
+  //             child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
+  //           ),
+  //         ],
+  //       );
+  //     },
   //   );
   // }
   void _showOrderStatusDialog() {
     String selectedStatus = "New";
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            "Update Order Status",
-            style: TextStyle(color: kgoldColor, fontSize: 16),
+        return CupertinoTheme(
+          data: CupertinoThemeData(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+            primaryColor: kgoldColor,
           ),
-          content: StatefulBuilder(
+          child: StatefulBuilder(
             builder: (context, setState) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _statusRadio("New", selectedStatus, (val) {
-                    setState(() => selectedStatus = val);
-                  }),
-                  _statusRadio("Shipping", selectedStatus, (val) {
-                    setState(() => selectedStatus = val);
-                  }),
-                  _statusRadio("Delivered", selectedStatus, (val) {
-                    setState(() => selectedStatus = val);
-                  }),
-                  _statusRadio("Cancelled", selectedStatus, (val) {
-                    setState(() => selectedStatus = val);
-                  }),
+              return CupertinoAlertDialog(
+                title: const Text(
+                  "Update Order Status",
+                  style: TextStyle(color: kgoldColor, fontSize: 16),
+                ),
+                content: Column(
+                  children: [
+                    const SizedBox(height: 12),
+
+                    _cupertinoStatusItem(
+                      "New",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Shipping",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Delivered",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Cancelled",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                  ],
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Cancel"),
+                  ),
+                  CupertinoDialogAction(
+                    onPressed: () {
+                      // selectedStatus is correct here
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Confirm",
+                      style: TextStyle(color: kgoldColor),
+                    ),
+                  ),
                 ],
               );
             },
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                "Cancel",
-                style: TextStyle(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                // selectedStatus is correct here
-                Navigator.pop(context);
-              },
-              child: const Text("Confirm", style: TextStyle(color: kgoldColor)),
-            ),
-          ],
         );
       },
     );
@@ -370,6 +398,43 @@ class _StarViewProductState extends State<StarViewProduct> {
               isDestructiveAction: true,
               onPressed: () => Navigator.pop(context),
               child: const Text("OK", style: TextStyle(color: kgoldColor)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _cupertinoStatusItem(
+    String title,
+    String selected,
+    ValueChanged<String> onChanged,
+    bool isDark,
+  ) {
+    final isSelected = title == selected;
+
+    return GestureDetector(
+      onTap: () => onChanged(title),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Icon(
+              isSelected
+                  ? CupertinoIcons.check_mark_circled_solid
+                  : CupertinoIcons.circle,
+              color: isSelected ? kgoldColor : CupertinoColors.systemGrey,
+              size: 22,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected
+                    ? kgoldColor
+                    : (isDark ? Colors.white70 : Colors.black54),
+                fontSize: 14,
+              ),
             ),
           ],
         ),

@@ -17,11 +17,7 @@ class StarMembershipScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -29,7 +25,7 @@ class StarMembershipScreen extends StatelessWidget {
         title: Text(
           "My Memberships",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -249,9 +245,9 @@ class StarMembershipScreen extends StatelessWidget {
           ),
 
           const Divider(color: kgoldColor, height: 24),
-
-          _membershipItem("Monthly", "\$18.99", qty: 2, isDark: isDark),
           _membershipItem("Yearly", "\$27.20", qty: 3, isDark: isDark),
+          _membershipItem("Monthly", "\$18.99", qty: 2, isDark: isDark),
+
           _membershipItem("Weekly", "\$9.99", qty: 1, isDark: isDark),
         ],
       ),
@@ -336,7 +332,7 @@ class StarMembershipScreen extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 80,
+                width: 110,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -346,33 +342,23 @@ class StarMembershipScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: kgoldColor),
                   ),
-                  child: Text(
-                    label,
-                    style: TextStyle(
-                      color: isDark ? kwhiteColor : kblackColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              SizedBox(
-                width: 70,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: kgoldColor),
-                  ),
-                  child: Text(
-                    "qty : $qty",
-                    style: TextStyle(
-                      color: isDark ? kwhiteColor : kblackColor,
-                      fontSize: 14,
-                    ),
+                  child: Row(
+                    children: [
+                      Text(
+                        label,
+                        style: TextStyle(
+                          color: isDark ? kwhiteColor : kblackColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        " x $qty",
+                        style: TextStyle(
+                          color: isDark ? kwhiteColor : kblackColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

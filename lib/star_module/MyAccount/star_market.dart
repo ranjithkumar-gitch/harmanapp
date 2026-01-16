@@ -507,11 +507,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: isDark ? kwhiteColor : kblackColor,
-            size: 18,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -519,7 +515,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
         title: Text(
           "Product details",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -661,6 +657,17 @@ class _ProductViewPageState extends State<ProductViewPage> {
                         color: isDark ? Colors.white70 : Colors.black54,
                       ),
                     ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Available : 6",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? kwhiteColor : kblackColor,
+                ),
+              ),
             ),
             if (isEditMode)
               Row(
