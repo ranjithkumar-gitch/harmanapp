@@ -12,12 +12,18 @@ class MembershipScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
         title: Text(
           "My Memberships",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontFamily: "Gilroy",
             fontWeight: FontWeight.bold,
           ),
@@ -79,7 +85,10 @@ class MembershipScreen extends StatelessWidget {
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,

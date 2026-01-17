@@ -90,31 +90,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
       backgroundColor: Brightness.dark == Theme.of(context).brightness
           ? kblackColor
           : kwhiteColor,
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: Brightness.dark == Theme.of(context).brightness
-      //           ? kwhiteColor
-      //           : kblackColor,
-      //       size: 18,
-      //     ),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      //   title: Text(
-      //     "My Marketplace",
-      //     style: TextStyle(
-      //       color: Brightness.dark == Theme.of(context).brightness
-      //           ? kwhiteColor
-      //           : kblackColor,
-      //       fontSize: 18,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      // ),
+
       appBar: AppBar(
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor

@@ -401,7 +401,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
       text,
       style: TextStyle(
         // color: isActive ? kgoldColor : textColor.withOpacity(0.7),
-        color: kwhiteColor,
+        color: textColor,
         fontSize: 14,
       ),
     );

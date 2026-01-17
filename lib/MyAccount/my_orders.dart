@@ -17,10 +17,10 @@ class _MyOrdersState extends State<MyOrders> {
     {
       "orderDate": "29 December 2025",
       "total": "\$340.80",
-      "status": "Delivered",
+      "status": "New",
       "products": [
-        {"image": "assets/shirt.jpg", "name": "Gold Membership T-shirt"},
-        {"image": "assets/jersey5.avif", "name": "Exclusive Creator Jersey"},
+        {"image": "assets/huddie.png", "name": "Signed Hoodie"},
+        {"image": "assets/signature2.png", "name": "Exclusive Signature"},
       ],
     },
     {
@@ -28,7 +28,7 @@ class _MyOrdersState extends State<MyOrders> {
       "total": "\$199.00",
       "status": "Shipping",
       "products": [
-        {"image": "assets/jersey10.jpg", "name": "Signed Poster"},
+        {"image": "assets/award.png", "name": "Best Actor Replica"},
       ],
     },
     {
@@ -36,7 +36,7 @@ class _MyOrdersState extends State<MyOrders> {
       "total": "\$167.00",
       "status": "Cancelled",
       "products": [
-        {"image": "assets/jersey5.avif", "name": "Signed Poster"},
+        {"image": "assets/signature.png", "name": "Digtal Signature"},
       ],
     },
   ];
@@ -48,18 +48,24 @@ class _MyOrdersState extends State<MyOrders> {
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        centerTitle: true,
-        iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
         title: Text(
           "My Orders",
           style: TextStyle(
-            color: isDark ? kwhiteColor : kblackColor,
+            color: kgoldColor,
             fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: orders.length,

@@ -1,10 +1,15 @@
+import 'dart:io' show File;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/MyAccount/edit_profile.dart';
 import 'package:harmanapp/MyAccount/my_memberships.dart';
 import 'package:harmanapp/MyAccount/my_orders.dart';
 import 'package:harmanapp/widgets/side_menu.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -17,6 +22,9 @@ enum Menu { preview, share, remove }
 
 class _MyAccountState extends State<MyAccount> {
   String selectedCard = "";
+  File? _coverImageFile;
+
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -215,18 +223,26 @@ class _MyAccountState extends State<MyAccount> {
   }
 
   Widget coverImage(String imagePath, String name) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Stack(
       children: [
         Container(
           height: 200,
           width: double.infinity,
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     image: AssetImage(imagePath),
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(imagePath), // AssetImage(imagePath),
+              image: _coverImageFile != null
+                  ? FileImage(_coverImageFile!)
+                  : AssetImage(imagePath) as ImageProvider,
               fit: BoxFit.cover,
             ),
           ),
+
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -236,20 +252,23 @@ class _MyAccountState extends State<MyAccount> {
                   children: [
                     IconButton(
                       style: ButtonStyle(
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                         backgroundColor: WidgetStateProperty.all(
                           Colors.black54,
                         ),
                       ),
                       onPressed: () => Navigator.pop(context),
-                      icon: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 0.0,
-                          top: 2.0,
-                          bottom: 2.0,
-                        ),
-                        child: const Icon(Icons.arrow_back_ios),
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 0.0,
+                        top: 2.0,
+                        bottom: 2.0,
                       ),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                     IconButton(
@@ -265,7 +284,7 @@ class _MyAccountState extends State<MyAccount> {
 
                       icon: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Icon(Icons.menu),
+                        child: Icon(Icons.menu, color: kgoldColor),
                       ),
                       color: kgoldColor,
                     ),
@@ -282,10 +301,11 @@ class _MyAccountState extends State<MyAccount> {
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(Colors.black54),
             ),
-            onPressed: () {},
+            onPressed: _pickCoverImage,
+
             icon: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Icon(Icons.mode_edit_rounded, color: Color(0xFFDAA520)),
+              child: Icon(Icons.mode_edit_rounded, color: kgoldColor),
             ),
           ),
         ),
@@ -376,27 +396,91 @@ class _MyAccountState extends State<MyAccount> {
           color: Theme.of(context).brightness == Brightness.dark
               ? kblackColor
               : kwhiteColor,
-          popUpAnimationStyle: AnimationStyle(
+
+          popUpAnimationStyle: const AnimationStyle(
             curve: Easing.emphasizedDecelerate,
-            duration: Duration(seconds: 2),
+            duration: Duration(milliseconds: 300),
           ),
+
           icon: const Icon(Icons.more_vert, color: kgoldColor),
-          onSelected: (Menu item) {},
+
+          onSelected: (Menu item) {
+            switch (item) {
+              case Menu.preview:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const StargazerEditProfileScreen(),
+                  ),
+                );
+                break;
+
+              case Menu.share:
+                SharePlus.instance.share(ShareParams(text: 'Check this out!'));
+                break;
+
+              case Menu.remove:
+                final isDark = Theme.of(context).brightness == Brightness.dark;
+                showCupertinoDialog(
+                  context: context,
+                  builder: (_) => CupertinoTheme(
+                    data: CupertinoThemeData(
+                      brightness: isDark ? Brightness.dark : Brightness.light,
+                      primaryColor: kgoldColor,
+                    ),
+                    child: CupertinoAlertDialog(
+                      title: const Text(
+                        "Delete Account",
+                        style: TextStyle(color: kgoldColor),
+                      ),
+                      content: Text(
+                        "Are you sure you want to Delete?",
+                        style: TextStyle(
+                          color: isDark ? Colors.white70 : Colors.black54,
+                        ),
+                      ),
+                      actions: [
+                        CupertinoDialogAction(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                              color: isDark ? kwhiteColor : kblackColor,
+                            ),
+                          ),
+                        ),
+                        CupertinoDialogAction(
+                          isDestructiveAction: true,
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "Delete",
+                            style: TextStyle(color: kgoldColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+                break;
+            }
+          },
+
           itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
             PopupMenuItem<Menu>(
               value: Menu.preview,
               child: ListTile(
-                leading: Icon(Icons.edit, color: kgoldColor),
+                leading: const Icon(Icons.edit, color: kgoldColor),
                 title: Text(
                   'Edit Profile',
                   style: GoogleFonts.poppins(color: kgoldColor),
                 ),
               ),
             ),
+
             PopupMenuItem<Menu>(
               value: Menu.share,
               child: ListTile(
-                leading: Icon(Icons.share_outlined, color: kgoldColor),
+                leading: const Icon(Icons.share_outlined, color: kgoldColor),
                 title: Text(
                   'Share Profile',
                   style: GoogleFonts.poppins(color: kgoldColor),
@@ -405,10 +489,11 @@ class _MyAccountState extends State<MyAccount> {
             ),
 
             const PopupMenuDivider(),
+
             PopupMenuItem<Menu>(
               value: Menu.remove,
               child: ListTile(
-                leading: Icon(Icons.delete_outline, color: kgoldColor),
+                leading: const Icon(Icons.delete_outline, color: kgoldColor),
                 title: Text(
                   'Delete account',
                   style: GoogleFonts.poppins(color: kgoldColor),
@@ -536,5 +621,18 @@ class _MyAccountState extends State<MyAccount> {
         ),
       ),
     );
+  }
+
+  Future<void> _pickCoverImage() async {
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+
+    if (image != null) {
+      setState(() {
+        _coverImageFile = File(image.path);
+      });
+    }
   }
 }

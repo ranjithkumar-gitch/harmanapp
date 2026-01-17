@@ -256,14 +256,14 @@ class _StarImagePostState extends State<StarImagePost>
                           ),
                           child: CupertinoAlertDialog(
                             title: Text(
-                              "Block Account",
+                              "Block Publication",
                               style: TextStyle(
                                 color: kgoldColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             content: Text(
-                              "Are you sure you want to Block this publication?",
+                              "Are you sure you want to Block this Publication?",
                               style: TextStyle(
                                 color: isDark ? Colors.white70 : Colors.black54,
                               ),

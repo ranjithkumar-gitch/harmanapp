@@ -20,18 +20,24 @@ class _MyProductViewState extends State<MyProductView> {
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        foregroundColor: isDark ? kwhiteColor : kblackColor,
-        centerTitle: true,
         title: Text(
-          "Shop from Lymio",
-          style: GoogleFonts.poppins(
-            color: isDark ? kwhiteColor : kblackColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+          "View Order Details",
+          style: TextStyle(
+            color: kgoldColor,
+            fontFamily: "Gilroy",
+            fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
+        centerTitle: true,
       ),
 
       /// BOTTOM BUTTON
@@ -75,10 +81,7 @@ class _MyProductViewState extends State<MyProductView> {
                     borderRadius: BorderRadius.circular(10),
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: Image.asset(
-                        "assets/jersey10.jpg",
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.asset("assets/award.png", fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -90,7 +93,7 @@ class _MyProductViewState extends State<MyProductView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  "Lymio",
+                  "Best Actor Replica",
                   style: GoogleFonts.poppins(
                     color: isDark ? kwhiteColor : kblackColor,
                     fontSize: 20,
@@ -196,7 +199,10 @@ class _MyProductViewState extends State<MyProductView> {
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,

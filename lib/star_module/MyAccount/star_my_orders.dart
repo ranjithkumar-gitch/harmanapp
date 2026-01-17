@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/star_module/MyAccount/star_view_mayproduct.dart';
 
 import 'package:harmanapp/star_module/MyAccount/star_view_product.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
@@ -170,8 +171,11 @@ class _StarMyOrdersState extends State<StarMyOrders> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) =>
-                                StarViewProduct(isReceivedOrder: isReceived),
+                            builder: (_) => index == 0
+                                ? StarViewProduct(isReceivedOrder: isReceived)
+                                : StarViewMyProduct(
+                                    isReceivedOrder: isReceived,
+                                  ),
                           ),
                         );
                       },

@@ -22,18 +22,24 @@ class _ViewProductState extends State<ViewProduct> {
 
       /// APP BAR
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        foregroundColor: isDark ? kwhiteColor : kblackColor,
-        centerTitle: true,
         title: Text(
-          "Shop from Lymio",
-          style: GoogleFonts.poppins(
-            color: isDark ? kwhiteColor : kblackColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+          "View Order Details",
+          style: TextStyle(
+            color: kgoldColor,
+            fontFamily: "Gilroy",
+            fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(color: isDark ? kwhiteColor : kblackColor),
+        centerTitle: true,
       ),
 
       /// BOTTOM CTA
@@ -59,9 +65,9 @@ class _ViewProductState extends State<ViewProduct> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            productCard(context, image: "assets/shirt.jpg"),
+            productCard(context, image: "assets/huddie.png"),
             const SizedBox(height: 30),
-            productCard(context, image: "assets/jersey5.avif"),
+            productCard(context, image: "assets/signature2.png"),
             const SizedBox(height: 30),
           ],
         ),
@@ -107,7 +113,7 @@ class _ViewProductState extends State<ViewProduct> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Lymio",
+              "Signed Hoodie",
               style: GoogleFonts.poppins(
                 color: isDark ? kwhiteColor : kblackColor,
                 fontSize: 20,

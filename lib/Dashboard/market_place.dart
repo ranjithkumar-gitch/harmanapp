@@ -338,24 +338,18 @@ class _ProductViewPageState extends State<ProductViewPage> {
             ? kblackColor
             : kwhiteColor,
         title: Text(
-          "Shop from ${widget.product["creator"]}",
+          "View Product Details",
           style: GoogleFonts.poppins(
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        centerTitle: true,
       ),
 
       body: SingleChildScrollView(
@@ -457,6 +451,19 @@ class _ProductViewPageState extends State<ProductViewPage> {
 
               // Divider(color: CupertinoColors.opaqueSeparator),
               const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Available : 6',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

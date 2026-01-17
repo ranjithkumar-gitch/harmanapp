@@ -85,7 +85,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                         ? kgoldColor
                         : textColor.withOpacity(0.7),
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 8),

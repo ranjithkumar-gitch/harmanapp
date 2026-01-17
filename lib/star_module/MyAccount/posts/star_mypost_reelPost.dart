@@ -265,7 +265,7 @@ class _StarReelPostState extends State<StarReelPost>
                           ),
                           child: CupertinoAlertDialog(
                             title: Text(
-                              "Block Account",
+                              "Block Publication",
                               style: TextStyle(
                                 color: kgoldColor,
                                 fontWeight: FontWeight.bold,

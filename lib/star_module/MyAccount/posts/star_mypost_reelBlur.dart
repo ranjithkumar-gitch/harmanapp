@@ -369,7 +369,9 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: kblackColor.withOpacity(0.8),
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: kgoldColor),
                   ),

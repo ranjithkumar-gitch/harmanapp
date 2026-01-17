@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/login_screen.dart';
@@ -65,9 +66,55 @@ Widget starendDrawer(BuildContext context) {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Loginscreen()),
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+
+              showCupertinoDialog(
+                context: context,
+                builder: (_) => CupertinoTheme(
+                  data: CupertinoThemeData(
+                    brightness: isDark ? Brightness.dark : Brightness.light,
+                    primaryColor: kgoldColor,
+                  ),
+                  child: CupertinoAlertDialog(
+                    title: const Text(
+                      "Logout",
+                      style: TextStyle(color: kgoldColor),
+                    ),
+                    content: Text(
+                      "Are you sure you want to logout?",
+                      style: TextStyle(
+                        color: isDark ? Colors.white70 : Colors.black54,
+                      ),
+                    ),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(
+                            color: isDark ? kwhiteColor : kblackColor,
+                          ),
+                        ),
+                      ),
+                      CupertinoDialogAction(
+                        isDestructiveAction: true,
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Loginscreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Logout",
+                          style: TextStyle(color: kgoldColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
             child: ListTile(
@@ -82,6 +129,7 @@ Widget starendDrawer(BuildContext context) {
               ),
             ),
           ),
+
           Divider(
             color: Theme.of(context).brightness == Brightness.dark
                 ? kgreyColor

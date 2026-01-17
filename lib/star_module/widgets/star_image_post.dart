@@ -159,21 +159,6 @@ class _StarImagePostState extends State<StarImagePost>
                             ),
                           ),
                         ),
-                        PopupMenuItem(
-                          value: 'Report',
-                          child: Text(
-                            'Report',
-                            style: TextStyle(
-                              color:
-                                  Brightness.dark ==
-                                      Theme.of(context).brightness
-                                  ? kwhiteColor
-                                  : kblackColor,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Gilroy",
-                            ),
-                          ),
-                        ),
 
                         PopupMenuItem(
                           value: 'Block',
@@ -191,9 +176,9 @@ class _StarImagePostState extends State<StarImagePost>
                           ),
                         ),
                         PopupMenuItem(
-                          value: 'Cancel',
+                          value: 'Report',
                           child: Text(
-                            'Cancel',
+                            'Report',
                             style: TextStyle(
                               color:
                                   Brightness.dark ==
@@ -208,9 +193,152 @@ class _StarImagePostState extends State<StarImagePost>
                       ],
                     );
 
-                    if (value == 'edit') {
+                    if (value == 'Restrict') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Restrict Publication",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Restrict this Publication?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Restrict",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                       // handle edit
-                    } else if (value == 'delete') {
+                    } else if (value == 'Block') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Block Publication",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Block this Publication?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Block",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                      // handle block
+                    } else if (value == 'Report') {
+                      final isDark =
+                          Theme.of(context).brightness == Brightness.dark;
+                      showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness: isDark
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
+                          ),
+                          child: CupertinoAlertDialog(
+                            title: Text(
+                              "Report Publication",
+                              style: TextStyle(
+                                color: kgoldColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            content: Text(
+                              "Are you sure you want to Report this Publication?",
+                              style: TextStyle(
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? Colors.white : Colors.black,
+                                  ),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Report",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                       // handle delete
                     }
                   },

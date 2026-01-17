@@ -409,20 +409,23 @@ class _StarMyAccountState extends State<StarMyAccount> {
                   children: [
                     IconButton(
                       style: ButtonStyle(
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                         backgroundColor: WidgetStateProperty.all(
                           Colors.black54,
                         ),
                       ),
                       onPressed: () => Navigator.pop(context),
-                      icon: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 0.0,
-                          top: 2.0,
-                          bottom: 2.0,
-                        ),
-                        child: const Icon(Icons.arrow_back_ios),
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 0.0,
+                        top: 2.0,
+                        bottom: 2.0,
                       ),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                     IconButton(
@@ -619,9 +622,11 @@ class _StarMyAccountState extends State<StarMyAccount> {
                       actions: [
                         CupertinoDialogAction(
                           onPressed: () => Navigator.pop(context),
-                          child: const Text(
+                          child: Text(
                             "Cancel",
-                            style: TextStyle(color: kwhiteColor),
+                            style: TextStyle(
+                              color: isDark ? kwhiteColor : kblackColor,
+                            ),
                           ),
                         ),
                         CupertinoDialogAction(
