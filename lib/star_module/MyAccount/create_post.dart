@@ -170,29 +170,198 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               style: const TextStyle(color: kgreyColor),
                             ),
                           )
-                        : ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: selectedMedia.length + 1,
-                            itemBuilder: (_, index) {
-                              if (index == selectedMedia.length &&
-                                  _selectedType == PostType.stills) {
-                                return _addMediaButton(_pickImages);
-                              }
+                        : SizedBox(
+                            height: 110,
+                            width: double.infinity,
+                            child: ReorderableListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              buildDefaultDragHandles: false,
+                              itemCount: selectedMedia.length + 1,
+                              onReorder: (oldIndex, newIndex) {
+                                // prevent dragging the "add" button
+                                if (oldIndex == selectedMedia.length ||
+                                    newIndex == selectedMedia.length) {
+                                  return;
+                                }
 
-                              final file = selectedMedia[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.file(
-                                    File(file.path),
+                                if (newIndex > oldIndex) newIndex--;
+
+                                setState(() {
+                                  final item = selectedMedia.removeAt(oldIndex);
+                                  selectedMedia.insert(newIndex, item);
+                                });
+                              },
+                              itemBuilder: (context, index) {
+                                /// ➕ Add media button (last item)
+                                if (index == selectedMedia.length &&
+                                    _selectedType == PostType.stills) {
+                                  return Container(
+                                    key: const ValueKey("add"),
                                     width: 100,
-                                    fit: BoxFit.cover,
+                                    margin: const EdgeInsets.all(8),
+                                    child: GestureDetector(
+                                      onTap: _pickImages,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          border: Border.all(
+                                            color: kgoldColor,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: kgoldColor,
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                final file = selectedMedia[index];
+
+                                return ReorderableDragStartListener(
+                                  key: ValueKey(file.path),
+                                  index: index,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.file(
+                                            File(file.path),
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+
+                                        Positioned(
+                                          top: 4,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedMedia.removeAt(index);
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                color: isDark
+                                                    ? Colors.grey.shade900
+                                                    : Colors.grey.shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border:
+                                                    const Border.fromBorderSide(
+                                                      BorderSide(
+                                                        color: kgoldColor,
+                                                        width: 1.5,
+                                                      ),
+                                                    ),
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.delete_outline_outlined,
+                                                  color: kgoldColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
+
+                    // : ListView.builder(
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemCount: selectedMedia.length + 1,
+                    //     itemBuilder: (_, index) {
+                    //       if (index == selectedMedia.length &&
+                    //           _selectedType == PostType.stills) {
+                    //         return _addMediaButton(_pickImages);
+                    //       }
+
+                    //       final file = selectedMedia[index];
+                    //       // return Padding(
+                    //       //   padding: const EdgeInsets.all(8),
+                    //       //   child: ClipRRect(
+                    //       //     borderRadius: BorderRadius.circular(8),
+                    //       //     child: Image.file(
+                    //       //       File(file.path),
+                    //       //       width: 100,
+                    //       //       fit: BoxFit.cover,
+                    //       //     ),
+                    //       //   ),
+                    //       // );
+                    //       return Padding(
+                    //         padding: const EdgeInsets.all(8),
+                    //         child: Stack(
+                    //           children: [
+                    //             ClipRRect(
+                    //               borderRadius: BorderRadius.circular(8),
+                    //               child: Image.file(
+                    //                 File(file.path),
+                    //                 width: 100,
+                    //                 height: 100,
+                    //                 fit: BoxFit.cover,
+                    //               ),
+                    //             ),
+
+                    //             Positioned(
+                    //               top: 4,
+                    //               right: 4,
+                    //               child: GestureDetector(
+                    //                 onTap: () {
+                    //                   setState(() {
+                    //                     selectedMedia.removeAt(index);
+                    //                   });
+                    //                 },
+                    //                 child: Container(
+                    //                   padding: const EdgeInsets.all(4),
+                    //                   // decoration: const BoxDecoration(
+                    //                   //   color: Colors.black54,
+                    //                   //   shape: BoxShape.circle,
+                    //                   // ),
+                    //                   decoration: BoxDecoration(
+                    //                     color:
+                    //                         Brightness.dark ==
+                    //                             Theme.of(context).brightness
+                    //                         ? kblackColor
+                    //                         : kwhiteColor,
+                    //                     shape: BoxShape.circle,
+                    //                     border: Border.all(
+                    //                       color: kgoldColor,
+                    //                       width: 1,
+                    //                     ),
+                    //                   ),
+                    //                   child: const Icon(
+                    //                     Icons.delete,
+                    //                     size: 14,
+                    //                     color: kgoldColor,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
                   ),
                 ),
               ),

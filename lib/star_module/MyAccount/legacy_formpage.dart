@@ -185,16 +185,18 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: selectedMedia.isEmpty
-                        ? ListTile(
-                            leading: const Icon(
-                              Icons.upload,
-                              color: kgoldColor,
+                        ? Center(
+                            child: ListTile(
+                              leading: const Icon(
+                                Icons.upload,
+                                color: kgoldColor,
+                              ),
+                              title: Text(
+                                "Upload Media",
+                                style: TextStyle(color: textColor),
+                              ),
+                              onTap: _uploadMedia,
                             ),
-                            title: Text(
-                              "Upload Media",
-                              style: TextStyle(color: textColor),
-                            ),
-                            onTap: _uploadMedia,
                           )
                         : SizedBox(
                             height: 110,
@@ -259,17 +261,58 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                                 return ReorderableDragStartListener(
                                   key: ValueKey(file.path),
                                   index: index,
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.file(
-                                        File(file.path),
-                                        width: 90,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.file(
+                                            File(file.path),
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+
+                                        Positioned(
+                                          top: 4,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedMedia.removeAt(index);
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                color: isDark
+                                                    ? Colors.grey.shade900
+                                                    : Colors.grey.shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border:
+                                                    const Border.fromBorderSide(
+                                                      BorderSide(
+                                                        color: kgoldColor,
+                                                        width: 1.5,
+                                                      ),
+                                                    ),
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.delete_outline_outlined,
+                                                  color: kgoldColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 );
@@ -579,6 +622,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       width: double.infinity,
+      height: 110,
       child: Container(
         decoration: BoxDecoration(
           color: isDark ? kblackColor : kwhiteColor,
