@@ -22,16 +22,22 @@ class _StarMyProductViewState extends State<StarMyProductView> {
       appBar: AppBar(
         backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        foregroundColor: isDark ? kwhiteColor : kblackColor,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Shop from Lymio",
-          style: GoogleFonts.poppins(
-            color: isDark ? kwhiteColor : kblackColor,
+          "View Product",
+          style: TextStyle(
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
+        centerTitle: true,
       ),
 
       /// BOTTOM BUTTON

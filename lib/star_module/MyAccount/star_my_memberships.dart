@@ -125,7 +125,10 @@ class StarMembershipScreen extends StatelessWidget {
           actions: [
             CupertinoDialogAction(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
+              ),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,

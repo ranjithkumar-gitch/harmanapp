@@ -1,30 +1,28 @@
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
+import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-class MyCreatorVideoCover extends StatefulWidget {
-  final String usrName;
-
-  const MyCreatorVideoCover({super.key, required this.usrName});
+class StarAllCreatorsProfile extends StatefulWidget {
+  const StarAllCreatorsProfile({super.key});
 
   @override
-  State<MyCreatorVideoCover> createState() => _MyCreatorVideoCoverState();
+  State<StarAllCreatorsProfile> createState() => _StarAllCreatorsProfileState();
 }
 
-class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
+enum SampleItem { itemOne }
+
+class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
     with SingleTickerProviderStateMixin {
-  late VideoPlayerController _videoController;
-  bool isVideoReady = false;
   bool isFollowing = false;
-  bool _isMuted = true;
   late TabController _tabController;
   final List<String> _icons = [
     "assets/reels.png",
@@ -34,132 +32,117 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
     "assets/gold_cart.png",
   ];
 
+  SampleItem? selectedItem;
   @override
   void initState() {
     super.initState();
-
-    _videoController =
-        VideoPlayerController.asset('assets/sources/videos/7.mp4')
-          ..initialize().then((_) {
-            setState(() => isVideoReady = true);
-            _videoController
-              ..setLooping(true)
-              ..setVolume(0.0)
-              ..play();
-          });
-    _videoController.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    posts.shuffle();
     _tabController = TabController(length: _icons.length, vsync: this);
   }
 
   @override
   void dispose() {
-    _videoController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (posts.isEmpty) {
+      return Scaffold(
+        backgroundColor: Brightness.dark == Theme.of(context).brightness
+            ? kwhiteColor
+            : kblackColor,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      );
+    }
+
+    final user = posts.firstWhere(
+      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
+      orElse: () => posts.first,
+    );
+
     return DefaultTabController(
       length: 5,
       child: Scaffold(
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: StarCustomAppBar(),
+        appBar: const StarCustomAppBar(),
+
         body: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _videoCover(),
-                  profileImage(
-                    'assets/sources/profiles/deepika.jpg',
-                    widget.usrName,
-                  ),
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    coverImage('assets/sources/images/cover.png'),
 
-                  // const TabBar(
-                  //   indicatorColor: kgoldColor,
-                  //   indicatorWeight: 4,
-                  //   labelColor: kgoldColor,
-                  //   unselectedLabelColor: Colors.white54,
-                  //   tabs: [
-                  //     Tab(icon: Icon(Icons.apps)),
-                  //     Tab(icon: Icon(Icons.live_tv)),
-                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
+                    profileImage(
+                      'assets/sources/profiles/${user.profileImage}',
+                      user.name,
+                    ),
 
-                  //     Tab(icon: Icon(Icons.person_outline)),
-                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
-                  //   ],
-                  // ),
-                  AnimatedBuilder(
-                    animation: _tabController,
-                    builder: (_, __) {
-                      return TabBar(
-                        controller: _tabController,
-                        indicatorColor: kgoldColor,
-                        indicatorWeight: 4,
-                        labelPadding: EdgeInsets.zero,
-                        tabs: List.generate(_icons.length, (index) {
-                          final bool isSelected = _tabController.index == index;
+                    AnimatedBuilder(
+                      animation: _tabController,
+                      builder: (_, __) {
+                        return TabBar(
+                          controller: _tabController,
+                          indicatorColor: kgoldColor,
+                          indicatorWeight: 4,
+                          labelPadding: EdgeInsets.zero,
+                          tabs: List.generate(_icons.length, (index) {
+                            final bool isSelected =
+                                _tabController.index == index;
 
-                          return Tab(
-                            icon: Image.asset(
-                              _icons[index],
-                              height: 40,
-                              color: isSelected ? kgoldColor : Colors.grey,
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  ),
-                ],
+                            return Tab(
+                              icon: Image.asset(
+                                _icons[index],
+                                height: 40,
+                                color: isSelected ? kgoldColor : Colors.grey,
+                              ),
+                            );
+                          }),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
+            ];
+          },
+
+          body: Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ImagesTab(),
+                // ReelsTab(),
+                // ImagesTab(),
+                LiveTab(),
+                LegacyTab(),
+
+                EmptyTab(),
+                Mycreatorsmarketplace(),
+              ],
             ),
-          ],
-          body: TabBarView(
-            controller: _tabController,
-
-            children: [
-              ImagesTab(),
-
-              LiveTab(),
-              LegacyTab(),
-
-              EmptyTab(),
-              Mycreatorsmarketplace(),
-            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _videoCover() {
+  Widget coverImage(String imagePath) {
     return SizedBox(
       height: 220,
       width: double.infinity,
       child: Stack(
         children: [
-          /// 🎬 Video
-          if (isVideoReady && _videoController.value.isInitialized)
-            Positioned.fill(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: _videoController.value.size.width,
-                  height: _videoController.value.size.height,
-                  child: VideoPlayer(_videoController),
-                ),
-              ),
-            )
-          else
-            Container(color: Colors.black),
+          SizedBox(
+            height: 220,
+            child: Image.asset(imagePath, fit: BoxFit.fill),
+          ),
 
           /// 🔙 Back Button (Top Left)
           Positioned(
@@ -187,62 +170,12 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
               ),
             ),
           ),
-
-          /// 🔊 Mute Button (Top Right)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isMuted = !_isMuted;
-                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
-                      });
-                    },
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  /// ▶️ Play / Pause (Below Mute)
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _videoController.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _videoController.value.isPlaying
-                            ? _videoController.pause()
-                            : _videoController.play();
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 
   Widget profileImage(String imagePath, String name) {
-    final isDark = Brightness.dark == Theme.of(context).brightness;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -263,7 +196,6 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                         colors: [kgoldColor, Colors.white],
                       ),
                     ),
-
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       child: Container(
@@ -277,7 +209,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 20),
                   Row(
                     children: [
                       Row(
@@ -318,42 +250,31 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                   ),
                 ],
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   left: 80,
-              //   child: Image.asset("assets/screenshots/gold.png", scale: 12),
-              // ),
               Positioned(
                 bottom: -5,
                 left: 85,
                 child: SizedBox(
                   height: 30,
                   width: 30,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(36),
-                  //   gradient: const LinearGradient(
-                  //     colors: [CupertinoColors.white, CupertinoColors.white],
-                  //   ),
-                  // ),
-                  child: Positioned(
-                    bottom: -10,
-                    right: -10,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kblackColor
-                            : kwhiteColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: kgoldColor, width: 1),
-                      ),
-                      child: Icon(Icons.star, color: kgoldColor, size: 20),
+
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kblackColor
+                          : kwhiteColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: kgoldColor, width: 1),
                     ),
+                    child: Icon(Icons.star, color: kgoldColor, size: 20),
                   ),
                 ),
+
+                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
+
           SizedBox(height: 16),
 
           Row(
@@ -365,61 +286,16 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: kgoldColor,
-                      foregroundColor:
-                          Brightness.dark == Theme.of(context).brightness
-                          ? kwhiteColor
-                          : kblackColor,
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     onPressed: () {
-                      showCupertinoDialog(
-                        context: context,
-                        builder: (_) => CupertinoTheme(
-                          data: CupertinoThemeData(
-                            brightness:
-                                Brightness.dark == Theme.of(context).brightness
-                                ? Brightness.dark
-                                : Brightness.light,
-                            primaryColor: kgoldColor,
-                          ),
-                          child: CupertinoAlertDialog(
-                            title: const Text(
-                              "Delete Account",
-                              style: TextStyle(color: kgoldColor),
-                            ),
-                            content: Text(
-                              "Are you sure you want to Unsubscribe?",
-                              style: TextStyle(
-                                // color: isDark ? Colors.white70 : Colors.black54,
-                              ),
-                            ),
-                            actions: [
-                              CupertinoDialogAction(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                    color: isDark ? kwhiteColor : kblackColor,
-                                  ),
-                                ),
-                              ),
-                              CupertinoDialogAction(
-                                isDestructiveAction: true,
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text(
-                                  "Unsubscribe",
-                                  style: TextStyle(color: kgoldColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      _showOrderStatusDialog();
                     },
                     child: const Text(
-                      "Unsubscribe",
+                      "Subscribe",
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -518,7 +394,6 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                     ),
                   ),
                   SizedBox(width: 5),
-
                   Text(
                     'Stills',
                     style: TextStyle(
@@ -536,7 +411,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                 'o',
                 style: TextStyle(
                   color: kgoldColor,
-                  fontSize: 3,
+                  fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -572,7 +447,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                 'O',
                 style: TextStyle(
                   color: kgoldColor,
-                  fontSize: 3,
+                  fontSize: 5,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -651,9 +526,118 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
       ),
     );
   }
-}
 
-/* -------------------- TABS -------------------- */
+  Widget _cupertinoStatusItem(
+    String title,
+    String selected,
+    ValueChanged<String> onChanged,
+    bool isDark,
+  ) {
+    final isSelected = title == selected;
+
+    return GestureDetector(
+      onTap: () => onChanged(title),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Icon(
+              isSelected
+                  ? CupertinoIcons.check_mark_circled_solid
+                  : CupertinoIcons.circle,
+              color: isSelected ? kgoldColor : CupertinoColors.systemGrey,
+              size: 22,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected
+                    ? kgoldColor
+                    : (isDark ? Colors.white70 : Colors.black54),
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _showOrderStatusDialog() {
+    String selectedStatus = "New";
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoTheme(
+          data: CupertinoThemeData(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+            primaryColor: kgoldColor,
+          ),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return CupertinoAlertDialog(
+                title: const Text(
+                  "Gold Tier Subscription",
+
+                  style: TextStyle(color: kgoldColor, fontSize: 16),
+                ),
+
+                content: Column(
+                  children: [
+                    const SizedBox(height: 12),
+
+                    _cupertinoStatusItem(
+                      "Weekly 9.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Monthly 29.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Annually 99.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                  ],
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: isDark ? kwhiteColor : kblackColor,
+                      ),
+                    ),
+                  ),
+                  CupertinoDialogAction(
+                    onPressed: () {
+                      // selectedStatus is correct here
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Confirm",
+                      style: TextStyle(color: kgoldColor),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}
 
 final sampleLives = [
   {
@@ -771,7 +755,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: .45),
+                  color: Colors.black.withValues(alpha: 0.45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(

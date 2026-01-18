@@ -115,10 +115,12 @@ class _LoginscreenState extends State<Loginscreen> {
                                   : null,
                             ),
                             const SizedBox(width: 12),
-                            const Text(
+                            Text(
                               'Stargazer',
                               style: TextStyle(
-                                color: kwhiteColor,
+                                color: _selectedRole == 'Stargazer'
+                                    ? kgoldColor
+                                    : kwhiteColor,
                                 fontSize: 16,
                               ),
                             ),
@@ -168,10 +170,12 @@ class _LoginscreenState extends State<Loginscreen> {
                                   : null,
                             ),
                             const SizedBox(width: 12),
-                            const Text(
+                            Text(
                               'Star',
                               style: TextStyle(
-                                color: kwhiteColor,
+                                color: _selectedRole == 'Star'
+                                    ? kgoldColor
+                                    : kwhiteColor,
                                 fontSize: 16,
                               ),
                             ),

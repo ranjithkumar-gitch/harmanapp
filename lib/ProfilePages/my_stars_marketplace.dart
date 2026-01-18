@@ -277,30 +277,29 @@ class _ProductViewPageState extends State<ProductViewPage> {
   @override
   Widget build(BuildContext context) {
     bool isFashion = widget.product["type"] == "fashion";
+    final isDark = Brightness.dark == Theme.of(context).brightness;
 
     return Scaffold(
-      backgroundColor: Brightness.dark == Theme.of(context).brightness
-          ? kblackColor
-          : kwhiteColor,
-
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kblackColor
-            : kwhiteColor,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
         elevation: 0,
-        foregroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kwhiteColor
-            : kblackColor,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          "Shop from ${widget.product["creator"]}",
-          style: GoogleFonts.poppins(
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
+          "Product Details",
+          style: TextStyle(
+            color: kgoldColor,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
+        centerTitle: true,
       ),
 
       body: SingleChildScrollView(

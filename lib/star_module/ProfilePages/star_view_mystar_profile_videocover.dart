@@ -243,6 +243,7 @@ class _StarMyCreatorVideoCoverState extends State<StarMyCreatorVideoCover>
   }
 
   Widget profileImage(String imagePath, String name) {
+    final isDark = Brightness.dark == Theme.of(context).brightness;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -395,7 +396,12 @@ class _StarMyCreatorVideoCoverState extends State<StarMyCreatorVideoCover>
                             actions: [
                               CupertinoDialogAction(
                                 onPressed: () => Navigator.pop(context),
-                                child: const Text("Cancel"),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? kwhiteColor : kblackColor,
+                                  ),
+                                ),
                               ),
                               CupertinoDialogAction(
                                 isDestructiveAction: true,

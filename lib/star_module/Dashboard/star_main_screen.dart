@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:harmanapp/star_module/Dashboard/star_all_stars_list.dart';
 import 'package:harmanapp/star_module/Dashboard/star_explore_screen.dart';
 import 'package:harmanapp/star_module/Dashboard/star_home_screen.dart';

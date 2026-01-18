@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:harmanapp/ProfilePages/view_all_stars_profile.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/ProfilePages/star_view_all_stars_profile.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
@@ -138,7 +139,9 @@ class _StarAllCreatorsScreenState extends State<StarAllCreatorsScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (_) => AllCreatorsProfile()),
+                    CupertinoPageRoute(
+                      builder: (_) => StarAllCreatorsProfile(),
+                    ),
                   );
                 },
                 child: Column(

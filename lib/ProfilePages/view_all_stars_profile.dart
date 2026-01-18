@@ -291,7 +291,9 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _showOrderStatusDialog();
+                    },
                     child: const Text(
                       "Subscribe",
                       overflow: TextOverflow.ellipsis,
@@ -522,6 +524,117 @@ class _AllCreatorsProfileState extends State<AllCreatorsProfile>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _cupertinoStatusItem(
+    String title,
+    String selected,
+    ValueChanged<String> onChanged,
+    bool isDark,
+  ) {
+    final isSelected = title == selected;
+
+    return GestureDetector(
+      onTap: () => onChanged(title),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Icon(
+              isSelected
+                  ? CupertinoIcons.check_mark_circled_solid
+                  : CupertinoIcons.circle,
+              color: isSelected ? kgoldColor : CupertinoColors.systemGrey,
+              size: 22,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected
+                    ? kgoldColor
+                    : (isDark ? Colors.white70 : Colors.black54),
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _showOrderStatusDialog() {
+    String selectedStatus = "New";
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoTheme(
+          data: CupertinoThemeData(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+            primaryColor: kgoldColor,
+          ),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return CupertinoAlertDialog(
+                title: const Text(
+                  "Gold Tier Subscription",
+
+                  style: TextStyle(color: kgoldColor, fontSize: 16),
+                ),
+
+                content: Column(
+                  children: [
+                    const SizedBox(height: 12),
+
+                    _cupertinoStatusItem(
+                      "Weekly 9.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Monthly 29.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                    _cupertinoStatusItem(
+                      "Annually 99.99 USD",
+                      selectedStatus,
+                      (val) => setState(() => selectedStatus = val),
+                      isDark,
+                    ),
+                  ],
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: isDark ? kwhiteColor : kblackColor,
+                      ),
+                    ),
+                  ),
+                  CupertinoDialogAction(
+                    onPressed: () {
+                      // selectedStatus is correct here
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Confirm",
+                      style: TextStyle(color: kgoldColor),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

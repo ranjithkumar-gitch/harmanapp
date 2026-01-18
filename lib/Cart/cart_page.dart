@@ -29,34 +29,29 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Brightness.dark == Theme.of(context).brightness
-          ? kblackColor
-          : kwhiteColor,
+      backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kblackColor
-            : kwhiteColor,
+        backgroundColor: isDark ? kblackColor : kwhiteColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: kgoldColor, size: 18),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Your Cart",
-          style: GoogleFonts.poppins(
-            fontSize: 20,
+          style: TextStyle(
+            color: kgoldColor,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
           ),
         ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Brightness.dark == Theme.of(context).brightness
-                ? kwhiteColor
-                : kblackColor,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        centerTitle: true,
       ),
 
       body: CartManager.cartItems.isEmpty
