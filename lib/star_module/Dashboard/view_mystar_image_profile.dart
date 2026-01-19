@@ -1,31 +1,29 @@
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
-import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Mycreatorprofile extends StatefulWidget {
-  const Mycreatorprofile({super.key, required String usrName});
+  final String usrName;
+
+  const Mycreatorprofile({super.key, required this.usrName});
 
   @override
   State<Mycreatorprofile> createState() => _MycreatorprofileState();
 }
 
-enum SampleItem { itemOne }
-
 class _MycreatorprofileState extends State<Mycreatorprofile>
     with SingleTickerProviderStateMixin {
+  late VideoPlayerController _videoController;
+  bool isVideoReady = false;
   bool isFollowing = false;
-
-  SampleItem? selectedItem;
+  bool _isMuted = true;
   late TabController _tabController;
   final List<String> _icons = [
     "assets/reels.png",
@@ -38,26 +36,32 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
   @override
   void initState() {
     super.initState();
-    posts.shuffle();
+
+    _videoController =
+        VideoPlayerController.asset('assets/sources/videos/7.mp4')
+          ..initialize().then((_) {
+            setState(() => isVideoReady = true);
+            _videoController
+              ..setLooping(true)
+              ..setVolume(0.0)
+              ..play();
+          });
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     _tabController = TabController(length: _icons.length, vsync: this);
   }
 
   @override
+  void dispose() {
+    _videoController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (posts.isEmpty) {
-      return Scaffold(
-        backgroundColor: Brightness.dark == Theme.of(context).brightness
-            ? kblackColor
-            : kwhiteColor,
-        body: Center(child: CircularProgressIndicator(color: Colors.white)),
-      );
-    }
-
-    final user = posts.firstWhere(
-      (p) => p.name == "Srikanth Natarajan" || p.name == "Devi S Prasad",
-      orElse: () => posts.first,
-    );
-
     return DefaultTabController(
       length: 5,
       child: Scaffold(
@@ -66,82 +70,95 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
             : kwhiteColor,
         appBar: StarCustomAppBar(),
         body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    coverImage('assets/sources/images/cover.png'),
-                    profileImage(
-                      'assets/sources/profiles/${user.profileImage}',
-                      user.name,
-                    ),
+          headerSliverBuilder: (_, __) => [
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  coverImage('assets/sources/images/cover.png', context),
+                  profileImage(
+                    'assets/sources/profiles/Virat_Kohli.jpg',
+                    widget.usrName,
+                  ),
 
-                    Container(
-                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-                      child: AnimatedBuilder(
-                        animation: _tabController,
-                        builder: (_, __) {
-                          return TabBar(
-                            controller: _tabController,
-                            indicatorColor: kgoldColor,
-                            indicatorWeight: 4,
-                            labelPadding: EdgeInsets.zero,
-                            tabs: List.generate(_icons.length, (index) {
-                              final bool isSelected =
-                                  _tabController.index == index;
+                  // const TabBar(
+                  //   indicatorColor: kgoldColor,
+                  //   indicatorWeight: 4,
+                  //   labelColor: kgoldColor,
+                  //   unselectedLabelColor: Colors.white54,
+                  //   tabs: [
+                  //     Tab(icon: Icon(Icons.apps)),
+                  //     Tab(icon: Icon(Icons.live_tv)),
+                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
 
-                              return Tab(
-                                icon: Image.asset(
-                                  _icons[index],
-                                  height: 40,
-                                  color: isSelected ? kgoldColor : Colors.grey,
-                                ),
-                              );
-                            }),
+                  //     Tab(icon: Icon(Icons.person_outline)),
+                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
+                  //   ],
+                  // ),
+                  AnimatedBuilder(
+                    animation: _tabController,
+                    builder: (_, __) {
+                      return TabBar(
+                        controller: _tabController,
+                        indicatorColor: kgoldColor,
+                        indicatorWeight: 4,
+                        labelPadding: EdgeInsets.zero,
+                        tabs: List.generate(_icons.length, (index) {
+                          final bool isSelected = _tabController.index == index;
+
+                          return Tab(
+                            icon: Image.asset(
+                              _icons[index],
+                              height: 40,
+                              color: isSelected ? kgoldColor : Colors.grey,
+                            ),
                           );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                        }),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ];
-          },
-
-          body: Container(
-            transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-            child: TabBarView(
-              controller: _tabController,
-
-              children: [
-                ImagesTab(),
-                // ReelsTab(),
-                // ImagesTab(),
-                LiveTab(),
-                LegacyTab(),
-
-                EmptyTab(),
-                Mycreatorsmarketplace(),
-              ],
             ),
+          ],
+          body: TabBarView(
+            controller: _tabController,
+
+            children: [
+              ImagesTab(),
+
+              LiveTab(),
+              LegacyTab(),
+
+              EmptyTab(),
+              Mycreatorsmarketplace(),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget coverImage(String imagePath) {
+  Widget _videoCover() {
     return SizedBox(
       height: 220,
       width: double.infinity,
       child: Stack(
         children: [
-          SizedBox(
-            height: 220,
-            child: Image.asset(imagePath, fit: BoxFit.fill),
-          ),
+          /// 🎬 Video
+          if (isVideoReady && _videoController.value.isInitialized)
+            Positioned.fill(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _videoController.value.size.width,
+                  height: _videoController.value.size.height,
+                  child: VideoPlayer(_videoController),
+                ),
+              ),
+            )
+          else
+            Container(color: Colors.black),
 
           /// 🔙 Back Button (Top Left)
           Positioned(
@@ -166,6 +183,55 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                 ),
                 icon: const Icon(Icons.arrow_back_ios),
                 color: Colors.white,
+              ),
+            ),
+          ),
+
+          /// 🔊 Mute Button (Top Right)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: SafeArea(
+              child: Column(
+                children: [
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
+                    ),
+                    icon: Icon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMuted = !_isMuted;
+                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  /// ▶️ Play / Pause (Below Mute)
+                  IconButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.black54),
+                    ),
+                    icon: Icon(
+                      _videoController.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _videoController.value.isPlaying
+                            ? _videoController.pause()
+                            : _videoController.play();
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
           ),
@@ -440,7 +506,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
               fontSize: 13,
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 10),
 
           Row(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -603,6 +669,47 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
     );
   }
 }
+
+Widget coverImage(String imagePath, BuildContext context) {
+  return SizedBox(
+    height: 220,
+    width: double.infinity,
+    child: Stack(
+      children: [
+        SizedBox(height: 220, child: Image.asset(imagePath, fit: BoxFit.fill)),
+
+        /// 🔙 Back Button (Top Left)
+        Positioned(
+          top: 0,
+          left: 0,
+          child: SafeArea(
+            child: IconButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                backgroundColor: WidgetStateProperty.all(Colors.black54),
+              ),
+              onPressed: () => Navigator.pop(context),
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                right: 0.0,
+                top: 2.0,
+                bottom: 2.0,
+              ),
+              icon: const Icon(Icons.arrow_back_ios),
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/* -------------------- TABS -------------------- */
 
 final sampleLives = [
   {
@@ -1052,7 +1159,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.08),
+                  color: Colors.black.withValues(alpha: .08),
                   blurRadius: 18,
                 ),
               ],
