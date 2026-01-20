@@ -319,54 +319,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                               },
                             ),
                           ),
-
-                    // : SizedBox(
-                    //     height: 110,
-                    //     child: ListView.builder(
-                    //       scrollDirection: Axis.horizontal,
-                    //       itemCount: selectedMedia.length + 1,
-                    //       itemBuilder: (context, index) {
-                    //         if (index == selectedMedia.length) {
-                    //           return GestureDetector(
-                    //             onTap: _uploadMedia,
-                    //             child: Container(
-                    //               width: 90,
-                    //               margin: const EdgeInsets.symmetric(
-                    //                 horizontal: 6,
-                    //               ),
-                    //               decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(10),
-                    //                 border: Border.all(
-                    //                   color: kgoldColor,
-                    //                   width: 1.5,
-                    //                 ),
-                    //               ),
-                    //               child: const Icon(
-                    //                 Icons.add,
-                    //                 color: kgoldColor,
-                    //                 size: 32,
-                    //               ),
-                    //             ),
-                    //           );
-                    //         }
-
-                    //         final file = selectedMedia[index];
-                    //         return Padding(
-                    //           padding: const EdgeInsets.symmetric(
-                    //             horizontal: 6,
-                    //           ),
-                    //           child: ClipRRect(
-                    //             borderRadius: BorderRadius.circular(10),
-                    //             child: Image.file(
-                    //               File(file.path),
-                    //               width: 90,
-                    //               fit: BoxFit.cover,
-                    //             ),
-                    //           ),
-                    //         );
-                    //       },
-                    //     ),
-                    //   ),
                   ),
                 ),
               ],
@@ -374,29 +326,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
 
             const SizedBox(height: 24),
 
-            // Row(
-            //   children: [
-            //     Radio<bool>(
-            //       value: false,
-            //       groupValue: scheduleLater,
-            //       activeColor: kgoldColor,
-            //       onChanged: (v) => setState(() => scheduleLater = v!),
-            //     ),
-            //     Text(
-            //       "Publish Now",
-            //       style: TextStyle(
-            //         color: scheduleLater ? kgoldColor : textColor,
-            //       ),
-            //     ),
-            //     Radio<bool>(
-            //       value: true,
-            //       groupValue: scheduleLater,
-            //       activeColor: kgoldColor,
-            //       onChanged: (v) => setState(() => scheduleLater = v!),
-            //     ),
-            //     Text("Schedule Later", style: TextStyle(color: textColor)),
-            //   ],
-            // ),
             Row(
               children: [
                 Radio<bool>(
@@ -408,9 +337,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                 Text(
                   "Publish Now",
                   style: TextStyle(
-                    color: scheduleLater == false
-                        ? kgoldColor // 👈 selected
-                        : textColor,
+                    color: scheduleLater == false ? kgoldColor : textColor,
                   ),
                 ),
 
@@ -425,9 +352,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                 Text(
                   "Schedule Later",
                   style: TextStyle(
-                    color: scheduleLater == true
-                        ? kgoldColor // 👈 selected
-                        : textColor,
+                    color: scheduleLater == true ? kgoldColor : textColor,
                   ),
                 ),
               ],

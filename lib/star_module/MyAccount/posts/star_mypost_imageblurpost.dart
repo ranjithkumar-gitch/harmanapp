@@ -7,7 +7,7 @@ import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
-import 'package:lottie/lottie.dart';
+
 import 'package:share_plus/share_plus.dart';
 
 class StarImageBlurPost extends StatefulWidget {
@@ -320,7 +320,7 @@ class _StarImageBlurPostState extends State<StarImageBlurPost>
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 450,
               child: Center(
                 child: Container(

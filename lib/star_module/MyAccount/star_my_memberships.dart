@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
@@ -35,6 +34,7 @@ class StarMembershipScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            _editablePackages(context),
             _membershipSummary(context),
 
             membershipCard(
@@ -44,7 +44,6 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Monthly",
               price: "\$9.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
               context: context,
@@ -53,7 +52,6 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Monthly",
               price: "\$9.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
               context: context,
@@ -62,7 +60,6 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
               context: context,
@@ -71,7 +68,6 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
               context: context,
@@ -80,7 +76,6 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             membershipCard(
               context: context,
@@ -89,55 +84,8 @@ class StarMembershipScreen extends StatelessWidget {
               plan: "Weekly",
               price: "\$4.99",
               tierColor: kgoldColor,
-              onUnsubscribe: () => _showUnsubscribeDialog(context),
             ),
             SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// 🔔 Confirmation dialog
-  void _showUnsubscribeDialog(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    showCupertinoDialog(
-      context: context,
-      builder: (_) => CupertinoTheme(
-        data: CupertinoThemeData(
-          brightness: Brightness.dark == Theme.of(context).brightness
-              ? Brightness.dark
-              : Brightness.light,
-          primaryColor: kgoldColor,
-        ),
-        child: CupertinoAlertDialog(
-          title: const Text(
-            "Delete Account",
-            style: TextStyle(color: kgoldColor),
-          ),
-          content: Text(
-            "Are you sure you want to Unsubscribe?",
-            style: TextStyle(
-              // color: isDark ? Colors.white70 : Colors.black54,
-            ),
-          ),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
-              ),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              onPressed: () => Navigator.pop(context),
-              child: const Text(
-                "Unsubscribe",
-                style: TextStyle(color: kgoldColor),
-              ),
-            ),
           ],
         ),
       ),
@@ -169,7 +117,6 @@ class StarMembershipScreen extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          /// TOTAL MEMBERS
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -260,54 +207,83 @@ class StarMembershipScreen extends StatelessWidget {
     );
   }
 
-  Widget _summaryRow(
-    String label,
-    String value, {
-    int qty = 1,
-    bool isBold = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _editablePackages(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? kblackColor : kwhiteColor,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: kgoldColor, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: kgoldColor),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  "qty : $qty",
-                  style: const TextStyle(
-                    color: kgoldColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            value,
-            style: const TextStyle(
+          const Text(
+            "Manage Packages",
+            style: TextStyle(
               color: kgoldColor,
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
+
+          const SizedBox(height: 12),
+
+          _editablePackageRow(context, label: "Yearly", price: "\$99.99"),
+          _editablePackageRow(context, label: "Monthly", price: "\$9.99"),
+          _editablePackageRow(context, label: "Weekly", price: "\$4.99"),
         ],
+      ),
+    );
+  }
+
+  Widget _editablePackageRow(
+    BuildContext context, {
+    required String label,
+    required String price,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: kgoldColor),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: isDark ? kwhiteColor : kblackColor,
+                fontSize: 14,
+              ),
+            ),
+            Row(
+              children: [
+                Text(
+                  price,
+                  style: const TextStyle(
+                    color: kgoldColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                IconButton(
+                  icon: const Icon(Icons.edit, size: 18, color: kgoldColor),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -320,7 +296,6 @@ Widget membershipCard({
   required String plan,
   required String price,
   required Color tierColor,
-  required VoidCallback onUnsubscribe,
 }) {
   final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -334,7 +309,6 @@ Widget membershipCard({
     ),
     child: Row(
       children: [
-        /// 📸 Image
         Stack(
           clipBehavior: Clip.none,
           children: [
@@ -365,7 +339,6 @@ Widget membershipCard({
 
         const SizedBox(width: 14),
 
-        /// 📝 Info
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

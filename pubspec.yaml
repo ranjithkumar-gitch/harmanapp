@@ -65,7 +65,7 @@ flutter:
     - assets/
    
     - assets/screenshots/
-    - assets/sources/logo/
+   
     - assets/sources/images/
     - assets/sources/videos/
     - assets/sources/profiles/

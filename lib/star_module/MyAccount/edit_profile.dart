@@ -222,7 +222,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   onPressed: () {
-                    // TODO: Save profile logic
                     Navigator.pop(context);
                   },
                   child: const Text(

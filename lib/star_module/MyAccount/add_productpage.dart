@@ -296,7 +296,6 @@ class _AddProductPageState extends State<AddProductPage> {
       "image": productImage!.path,
     };
 
-    // TODO: Save to database / API
     Navigator.pop(context, newProduct);
   }
 }

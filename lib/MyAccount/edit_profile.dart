@@ -224,7 +224,6 @@ class _StargazerEditProfileScreenState
                     ),
                   ),
                   onPressed: () {
-                    // TODO: Save profile logic
                     Navigator.pop(context);
                   },
                   child: const Text(

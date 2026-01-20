@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
+
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';

@@ -286,82 +286,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
                               },
                             ),
                           ),
-
-                    // : ListView.builder(
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemCount: selectedMedia.length + 1,
-                    //     itemBuilder: (_, index) {
-                    //       if (index == selectedMedia.length &&
-                    //           _selectedType == PostType.stills) {
-                    //         return _addMediaButton(_pickImages);
-                    //       }
-
-                    //       final file = selectedMedia[index];
-                    //       // return Padding(
-                    //       //   padding: const EdgeInsets.all(8),
-                    //       //   child: ClipRRect(
-                    //       //     borderRadius: BorderRadius.circular(8),
-                    //       //     child: Image.file(
-                    //       //       File(file.path),
-                    //       //       width: 100,
-                    //       //       fit: BoxFit.cover,
-                    //       //     ),
-                    //       //   ),
-                    //       // );
-                    //       return Padding(
-                    //         padding: const EdgeInsets.all(8),
-                    //         child: Stack(
-                    //           children: [
-                    //             ClipRRect(
-                    //               borderRadius: BorderRadius.circular(8),
-                    //               child: Image.file(
-                    //                 File(file.path),
-                    //                 width: 100,
-                    //                 height: 100,
-                    //                 fit: BoxFit.cover,
-                    //               ),
-                    //             ),
-
-                    //             Positioned(
-                    //               top: 4,
-                    //               right: 4,
-                    //               child: GestureDetector(
-                    //                 onTap: () {
-                    //                   setState(() {
-                    //                     selectedMedia.removeAt(index);
-                    //                   });
-                    //                 },
-                    //                 child: Container(
-                    //                   padding: const EdgeInsets.all(4),
-                    //                   // decoration: const BoxDecoration(
-                    //                   //   color: Colors.black54,
-                    //                   //   shape: BoxShape.circle,
-                    //                   // ),
-                    //                   decoration: BoxDecoration(
-                    //                     color:
-                    //                         Brightness.dark ==
-                    //                             Theme.of(context).brightness
-                    //                         ? kblackColor
-                    //                         : kwhiteColor,
-                    //                     shape: BoxShape.circle,
-                    //                     border: Border.all(
-                    //                       color: kgoldColor,
-                    //                       width: 1,
-                    //                     ),
-                    //                   ),
-                    //                   child: const Icon(
-                    //                     Icons.delete,
-                    //                     size: 14,
-                    //                     color: kgoldColor,
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
                   ),
                 ),
               ),
@@ -602,21 +526,21 @@ class _CreatePostPageState extends State<CreatePostPage> {
     );
   }
 
-  /// ADD MEDIA BUTTON
-  Widget _addMediaButton(VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 100,
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: kgoldColor, width: 1.5),
-        ),
-        child: const Icon(Icons.add, color: kgoldColor),
-      ),
-    );
-  }
+  // /// ADD MEDIA BUTTON
+  // Widget _addMediaButton(VoidCallback onTap) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: Container(
+  //       width: 100,
+  //       margin: const EdgeInsets.all(8),
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(8),
+  //         border: Border.all(color: kgoldColor, width: 1.5),
+  //       ),
+  //       child: const Icon(Icons.add, color: kgoldColor),
+  //     ),
+  //   );
+  // }
 
   /// SCHEDULE BUTTON
   Widget _scheduleButton(String text, VoidCallback onTap) {
