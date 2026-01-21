@@ -547,7 +547,7 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       width: double.infinity,
-      height: 110,
+
       child: Container(
         decoration: BoxDecoration(
           color: isDark ? kblackColor : kwhiteColor,
