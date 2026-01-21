@@ -39,8 +39,8 @@ class StarMembershipScreen extends StatelessWidget {
 
             membershipCard(
               context: context,
-              image: "assets/sources/profiles/averie-woodard.jpg",
-              creatorName: "Alex Star",
+              image: "assets/sources/profiles/deepika.jpg",
+              creatorName: "Deepika Padukone",
               plan: "Monthly",
               price: "\$9.99",
               tierColor: kgoldColor,
@@ -48,23 +48,23 @@ class StarMembershipScreen extends StatelessWidget {
             membershipCard(
               context: context,
               image: "assets/sources/profiles/bhatia.jpg",
-              creatorName: "Bhatia",
+              creatorName: "Nav Bhatia",
               plan: "Monthly",
               price: "\$9.99",
               tierColor: kgoldColor,
             ),
             membershipCard(
               context: context,
-              image: "assets/sources/profiles/aiony-haust.jpg",
-              creatorName: "Sophia Ray",
+              image: "assets/sources/profiles/murthy.jpg",
+              creatorName: "Narayana Murty",
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
             ),
             membershipCard(
               context: context,
-              image: "assets/sources/profiles/deco-dev.png",
-              creatorName: "Deco dev",
+              image: "assets/sources/profiles/messi.jpg",
+              creatorName: "Lionel Messy",
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
@@ -72,15 +72,15 @@ class StarMembershipScreen extends StatelessWidget {
             membershipCard(
               context: context,
               image: "assets/sources/profiles/dion.jpg",
-              creatorName: "Dion",
+              creatorName: "Celine Dion",
               plan: "Yearly",
               price: "\$99.99",
               tierColor: kgoldColor,
             ),
             membershipCard(
               context: context,
-              image: "assets/sources/profiles/azamat-zhanisov-.jpg",
-              creatorName: "Mark Vibe",
+              image: "assets/sources/profiles/swift.jpg",
+              creatorName: "Tylor Swift",
               plan: "Weekly",
               price: "\$4.99",
               tierColor: kgoldColor,
@@ -139,10 +139,10 @@ class StarMembershipScreen extends StatelessWidget {
           ),
 
           const Divider(color: kgoldColor, height: 24),
-          _membershipItem("Yearly", "\$27.20", qty: 3, isDark: isDark),
+          _membershipItem("Weekly", "\$9.99", qty: 1, isDark: isDark),
           _membershipItem("Monthly", "\$18.99", qty: 2, isDark: isDark),
 
-          _membershipItem("Weekly", "\$9.99", qty: 1, isDark: isDark),
+          _membershipItem("Yearly", "\$27.20", qty: 3, isDark: isDark),
         ],
       ),
     );
@@ -231,10 +231,10 @@ class StarMembershipScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 12),
+          _editablePackageRow(context, label: "Weekly", price: "\$4.99"),
+          _editablePackageRow(context, label: "Monthly", price: "\$9.99"),
 
           _editablePackageRow(context, label: "Yearly", price: "\$99.99"),
-          _editablePackageRow(context, label: "Monthly", price: "\$9.99"),
-          _editablePackageRow(context, label: "Weekly", price: "\$4.99"),
         ],
       ),
     );
