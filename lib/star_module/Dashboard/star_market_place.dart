@@ -164,137 +164,292 @@ class _StarMarketplaceScreenState extends State<StarMarketplaceScreen> {
     );
   }
 
+  // Widget productCard(Map<String, dynamic> item) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       color: Brightness.dark == Theme.of(context).brightness
+  //           ? kblackColor
+  //           : kwhiteColor,
+  //       borderRadius: BorderRadius.circular(14),
+  //       border: Border.all(color: kgoldColor),
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Stack(
+  //           children: [
+  //             ClipRRect(
+  //               borderRadius: const BorderRadius.only(
+  //                 topLeft: Radius.circular(14),
+  //                 topRight: Radius.circular(14),
+  //               ),
+  //               child: Image.asset(
+  //                 item["image"][0],
+  //                 height: 120,
+  //                 width: double.infinity,
+  //                 fit: BoxFit.fitHeight,
+  //               ),
+  //             ),
+  //             Positioned(
+  //               top: 8,
+  //               right: 8,
+  //               child: Container(
+  //                 decoration: BoxDecoration(
+  //                   color: Brightness.dark == Theme.of(context).brightness
+  //                       ? kblackColor
+  //                       : kwhiteColor,
+  //                   borderRadius: BorderRadius.circular(10),
+  //                   border: Border.all(color: kgoldColor),
+  //                 ),
+  //                 padding: const EdgeInsets.symmetric(
+  //                   horizontal: 10,
+  //                   vertical: 5,
+  //                 ),
+  //                 // decoration: BoxDecoration(
+  //                 //   color: Colors.white.withOpacity(0.85),
+  //                 //   borderRadius: BorderRadius.circular(8),
+  //                 // ),
+  //                 child: Text(
+  //                   item["price"],
+  //                   style: GoogleFonts.poppins(
+  //                     color: Brightness.dark == Theme.of(context).brightness
+  //                         ? kwhiteColor
+  //                         : kblackColor,
+  //                     fontSize: 12,
+  //                     fontWeight: FontWeight.w400,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+
+  //         const SizedBox(height: 8),
+
+  //         Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 8),
+  //           child: Text(
+  //             item["name"],
+  //             maxLines: 2,
+  //             overflow: TextOverflow.ellipsis,
+  //             style: GoogleFonts.poppins(
+  //               color: Brightness.dark == Theme.of(context).brightness
+  //                   ? kwhiteColor
+  //                   : kblackColor,
+  //               fontSize: 12,
+  //               fontWeight: FontWeight.w500,
+  //             ),
+  //           ),
+  //         ),
+
+  //         const SizedBox(height: 3),
+
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 8),
+  //           child: Text(
+  //             "By ${item["creator"]}",
+  //             style: GoogleFonts.poppins(
+  //               color: Colors.grey.shade700,
+  //               fontSize: 13,
+  //               fontWeight: FontWeight.w500,
+  //             ),
+  //           ),
+  //         ),
+  //         // SizedBox(height: 20),
+  //         Padding(
+  //           padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
+  //           child: SizedBox(
+  //             width: double.infinity,
+
+  //             child: OutlinedButton(
+  //               onPressed: () {
+  //                 Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                     builder: (_) => ProductViewPage(
+  //                       product: item,
+  //                       onCartUpdated: () {
+  //                         setState(() {});
+  //                       },
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //               style: OutlinedButton.styleFrom(
+  //                 padding: const EdgeInsets.symmetric(vertical: 10),
+  //                 side: const BorderSide(color: kgoldColor, width: 1.5),
+  //                 shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.circular(8),
+  //                 ),
+  //               ),
+  //               child: Text(
+  //                 "Buy Now",
+  //                 style: GoogleFonts.poppins(
+  //                   color: kgoldColor,
+  //                   fontSize: 13,
+  //                   fontWeight: FontWeight.w500,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget productCard(Map<String, dynamic> item) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Brightness.dark == Theme.of(context).brightness
-            ? kblackColor
-            : kwhiteColor,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: kgoldColor),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final h = constraints.maxHeight;
+
+        final nameSize = (h * 0.06).clamp(11.0, 14.0);
+        final creatorSize = (h * 0.055).clamp(10.0, 13.0);
+        final priceSize = (h * 0.055).clamp(10.0, 13.0);
+        final buttonTextSize = (h * 0.06).clamp(11.0, 14.0);
+
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? kblackColor
+                : kwhiteColor,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: kgoldColor),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(14),
-                  topRight: Radius.circular(14),
-                ),
-                child: Image.asset(
-                  item["image"][0],
-                  height: 140,
-                  width: double.infinity,
-                  fit: BoxFit.fitHeight,
+              // 🖼 Responsive Image
+              AspectRatio(
+                aspectRatio: 1.3,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14),
+                      ),
+                      child: Image.asset(
+                        item["image"][0],
+                        width: double.infinity,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? kblackColor
+                              : kwhiteColor,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: kgoldColor),
+                        ),
+                        child: Text(
+                          item["price"],
+                          style: GoogleFonts.poppins(
+                            fontSize: priceSize,
+                            fontWeight: FontWeight.w400,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? kwhiteColor
+                                : kblackColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Brightness.dark == Theme.of(context).brightness
-                        ? kblackColor
-                        : kwhiteColor,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: kgoldColor),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  // decoration: BoxDecoration(
-                  //   color: Colors.white.withOpacity(0.85),
-                  //   borderRadius: BorderRadius.circular(8),
-                  // ),
-                  child: Text(
-                    item["price"],
-                    style: GoogleFonts.poppins(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kwhiteColor
-                          : kblackColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
+
+              const SizedBox(height: 6),
+
+              // 📦 Content area
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 🏷 Product name
+                      Text(
+                        item["name"],
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          fontSize: nameSize,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? kwhiteColor
+                              : kblackColor,
+                        ),
+                      ),
+
+                      const SizedBox(height: 3),
+
+                      // 👤 Creator
+                      Text(
+                        "By ${item["creator"]}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          fontSize: creatorSize,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+
+                      const Spacer(),
+
+                      // 🛒 Button
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ProductViewPage(
+                                  product: item,
+                                  onCartUpdated: () {
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            side: const BorderSide(
+                              color: kgoldColor,
+                              width: 1.5,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            "Buy Now",
+                            style: GoogleFonts.poppins(
+                              color: kgoldColor,
+                              fontSize: buttonTextSize,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
-
-          const SizedBox(height: 8),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              item["name"],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(
-                color: Brightness.dark == Theme.of(context).brightness
-                    ? kwhiteColor
-                    : kblackColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 3),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              "By ${item["creator"]}",
-              style: GoogleFonts.poppins(
-                color: Colors.grey.shade700,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(top: 3, left: 10, right: 10),
-            child: SizedBox(
-              width: double.infinity,
-
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ProductViewPage(
-                        product: item,
-                        onCartUpdated: () {
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  side: const BorderSide(color: kgoldColor, width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  "Buy Now",
-                  style: GoogleFonts.poppins(
-                    color: kgoldColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

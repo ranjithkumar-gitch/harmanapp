@@ -9,22 +9,27 @@ import 'package:harmanapp/btm_nav/curved_navbar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int initialIndex;
+  const MainScreen({super.key, this.initialIndex = 0});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final _pageController = PageController(initialPage: 0);
+  // final _pageController = PageController(initialPage: 0);
 
-  int currentpage = 0;
+  late int currentpage;
 
   int maxCount = 5;
   @override
-  void dispose() {
-    _pageController.dispose();
+  void initState() {
+    super.initState();
+    currentpage = widget.initialIndex;
+  }
 
+  @override
+  void dispose() {
     super.dispose();
   }
 

@@ -294,10 +294,7 @@ class _CartPageState extends State<CartPage> {
 
               const SizedBox(height: 20),
 
-              paymentOption(
-                "UPI (Google Pay / PhonePe / Paytm)",
-                Icons.payment,
-              ),
+              paymentOption("UPI", Icons.payment),
               const SizedBox(height: 15),
               paymentOption("Credit / Debit Card", Icons.credit_card),
               const SizedBox(height: 15),

@@ -686,6 +686,138 @@ class _StarMyAccountState extends State<StarMyAccount> {
     );
   }
 
+  // Widget _optionCard({
+  //   required String title,
+  //   required String subtitle,
+  //   required IconData icon,
+  //   required bool isSelected,
+  //   required VoidCallback onTap,
+  //   required VoidCallback onButtonPressed,
+  // }) {
+  //   const gold = kgoldColor;
+
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: TweenAnimationBuilder<double>(
+  //       tween: Tween<double>(begin: 0, end: isSelected ? 3.14159 : 0),
+  //       duration: const Duration(milliseconds: 800),
+  //       builder: (context, angle, child) {
+  //         return Transform(
+  //           alignment: Alignment.center,
+  //           transform: Matrix4.identity()
+  //             ..setEntry(3, 2, 0.001)
+  //             ..rotateY(angle),
+  //           child: Container(
+  //             padding: const EdgeInsets.all(14),
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.circular(14),
+  //               border: Border.all(
+  //                 color: isSelected
+  //                     ? gold
+  //                     : Theme.of(context).brightness == Brightness.dark
+  //                     ? kwhiteColor
+  //                     : kblackColor,
+  //                 width: isSelected ? 2 : 1,
+  //               ),
+  //               color: Theme.of(context).brightness == Brightness.dark
+  //                   ? kblackColor
+  //                   : kwhiteColor,
+  //             ),
+
+  //             // 🔑 LayoutBuilder makes card obey grid height
+  //             child: LayoutBuilder(
+  //               builder: (context, constraints) {
+  //                 return isSelected
+  //                     // 🔄 BACK SIDE
+  //                     ? Transform(
+  //                         alignment: Alignment.center,
+  //                         transform: Matrix4.identity()..rotateY(3.14159),
+  //                         child: Column(
+  //                           children: [
+  //                             Expanded(
+  //                               child: Center(
+  //                                 child: Text(
+  //                                   subtitle,
+  //                                   textAlign: TextAlign.center,
+  //                                   maxLines: 3,
+  //                                   overflow: TextOverflow.ellipsis,
+  //                                   style: const TextStyle(
+  //                                     color: gold,
+  //                                     fontSize: 12,
+  //                                   ),
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                             SizedBox(
+  //                               height: 36,
+  //                               width: double.infinity,
+  //                               child: OutlinedButton(
+  //                                 onPressed: onButtonPressed,
+  //                                 style: OutlinedButton.styleFrom(
+  //                                   side: const BorderSide(color: gold),
+  //                                   foregroundColor: gold,
+  //                                   shape: RoundedRectangleBorder(
+  //                                     borderRadius: BorderRadius.circular(10),
+  //                                   ),
+  //                                 ),
+  //                                 child: const Text(
+  //                                   "Open",
+  //                                   style: TextStyle(
+  //                                     fontSize: 13,
+  //                                     fontWeight: FontWeight.w600,
+  //                                   ),
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       )
+  //                     // 🔘 FRONT SIDE
+  //                     : Column(
+  //                         children: [
+  //                           const SizedBox(height: 6),
+  //                           Container(
+  //                             height: 45,
+  //                             padding: const EdgeInsets.all(12),
+  //                             decoration: BoxDecoration(
+  //                               shape: BoxShape.circle,
+  //                               border: Border.all(
+  //                                 color: kgoldColor,
+  //                                 width: 1.5,
+  //                               ),
+  //                             ),
+  //                             child: Icon(icon, size: 22, color: kgoldColor),
+  //                           ),
+  //                           const SizedBox(height: 5),
+  //                           Expanded(
+  //                             child: Center(
+  //                               child: Text(
+  //                                 title,
+  //                                 textAlign: TextAlign.center,
+  //                                 maxLines: 2,
+  //                                 overflow: TextOverflow.ellipsis,
+  //                                 style: TextStyle(
+  //                                   color:
+  //                                       Theme.of(context).brightness ==
+  //                                           Brightness.dark
+  //                                       ? kwhiteColor
+  //                                       : kblackColor,
+  //                                   fontSize: 12,
+  //                                   fontWeight: FontWeight.bold,
+  //                                 ),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       );
+  //               },
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
   Widget _optionCard({
     required String title,
     required String subtitle,
@@ -724,9 +856,18 @@ class _StarMyAccountState extends State<StarMyAccount> {
                     : kwhiteColor,
               ),
 
-              // 🔑 LayoutBuilder makes card obey grid height
+              // 🔑 LayoutBuilder makes everything responsive
               child: LayoutBuilder(
                 builder: (context, constraints) {
+                  final h = constraints.maxHeight;
+
+                  // 🎯 Responsive sizes
+                  final titleSize = (h * 0.12).clamp(11.0, 16.0);
+                  final subtitleSize = (h * 0.10).clamp(10.0, 14.0);
+                  final buttonTextSize = (h * 0.11).clamp(11.0, 15.0);
+                  final iconSize = (h * 0.18).clamp(18.0, 26.0);
+                  final iconBoxSize = (h * 0.30).clamp(38.0, 50.0);
+
                   return isSelected
                       // 🔄 BACK SIDE
                       ? Transform(
@@ -741,9 +882,9 @@ class _StarMyAccountState extends State<StarMyAccount> {
                                     textAlign: TextAlign.center,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: gold,
-                                      fontSize: 12,
+                                      fontSize: subtitleSize,
                                     ),
                                   ),
                                 ),
@@ -760,10 +901,10 @@ class _StarMyAccountState extends State<StarMyAccount> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "Open",
                                     style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: buttonTextSize,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -775,20 +916,18 @@ class _StarMyAccountState extends State<StarMyAccount> {
                       // 🔘 FRONT SIDE
                       : Column(
                           children: [
-                            const SizedBox(height: 6),
+                            SizedBox(height: h * 0.05),
                             Container(
-                              height: 45,
-                              padding: const EdgeInsets.all(12),
+                              height: iconBoxSize,
+                              width: iconBoxSize,
+                              padding: EdgeInsets.all(iconBoxSize * 0.25),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: kgoldColor,
-                                  width: 1.5,
-                                ),
+                                border: Border.all(color: gold, width: 1.5),
                               ),
-                              child: Icon(icon, size: 22, color: kgoldColor),
+                              child: Icon(icon, size: iconSize, color: gold),
                             ),
-                            const SizedBox(height: 5),
+                            SizedBox(height: h * 0.06),
                             Expanded(
                               child: Center(
                                 child: Text(
@@ -802,7 +941,7 @@ class _StarMyAccountState extends State<StarMyAccount> {
                                             Brightness.dark
                                         ? kwhiteColor
                                         : kblackColor,
-                                    fontSize: 12,
+                                    fontSize: titleSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

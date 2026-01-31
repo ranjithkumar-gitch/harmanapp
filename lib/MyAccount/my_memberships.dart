@@ -35,7 +35,7 @@ class MembershipScreen extends StatelessWidget {
         children: [
           membershipCard(
             context: context,
-            image: "assets/sources/profiles/averie-woodard.jpg",
+            image: "assets/sources/profiles/bhatia.jpg",
             creatorName: "Alex Star",
             plan: "Monthly",
             price: "\$9.99",
@@ -44,7 +44,7 @@ class MembershipScreen extends StatelessWidget {
           ),
           membershipCard(
             context: context,
-            image: "assets/sources/profiles/aiony-haust.jpg",
+            image: "assets/sources/profiles/deepika.jpg",
             creatorName: "Sophia Ray",
             plan: "Yearly",
             price: "\$99.99",
@@ -53,7 +53,7 @@ class MembershipScreen extends StatelessWidget {
           ),
           membershipCard(
             context: context,
-            image: "assets/sources/profiles/azamat-zhanisov-.jpg",
+            image: "assets/sources/profiles/elon.jpeg",
             creatorName: "Mark Vibe",
             plan: "Weekly",
             price: "\$4.99",
@@ -116,111 +116,146 @@ Widget membershipCard({
 }) {
   final isDark = Theme.of(context).brightness == Brightness.dark;
 
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    padding: const EdgeInsets.all(12),
-    decoration: BoxDecoration(
-      color: isDark ? kblackColor : kwhiteColor,
-      borderRadius: BorderRadius.circular(14),
-      border: Border.all(color: tierColor, width: 1.8),
-    ),
-    child: Row(
-      children: [
-        /// 📸 Image
-        Stack(
-          clipBehavior: Clip.none,
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      final isSmall = constraints.maxWidth < 360;
+
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isDark ? kblackColor : kwhiteColor,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: tierColor, width: 1.8),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                image,
-                height: 70,
-                width: 70,
-                fit: BoxFit.cover,
+            /// 📸 Image
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    image,
+                    height: isSmall ? 60 : 70,
+                    width: isSmall ? 60 : 70,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  bottom: -6,
+                  right: -6,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: isDark ? kblackColor : kwhiteColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: tierColor),
+                    ),
+                    child: Icon(Icons.star, size: 12, color: tierColor),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(width: 12),
+
+            /// 📝 Info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    creatorName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: isDark ? kwhiteColor : kblackColor,
+                      fontSize: isSmall ? 14 : 16,
+                      fontFamily: "Gilroy",
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+
+                  /// ✅ Wrap instead of Row
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children: [
+                      _badge(plan, tierColor, isSmall),
+                      _priceBadge(price, tierColor, isSmall),
+                    ],
+                  ),
+                ],
               ),
             ),
-            Positioned(
-              bottom: -8,
-              right: -8,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: isDark ? kblackColor : kwhiteColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: tierColor),
+
+            const SizedBox(width: 8),
+
+            /// 🚫 Unsubscribe
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: isSmall ? 80 : 100),
+              child: OutlinedButton(
+                onPressed: onUnsubscribe,
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isSmall ? 10 : 14,
+                    vertical: 8,
+                  ),
+                  side: BorderSide(color: tierColor),
+                  foregroundColor: tierColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                child: Icon(Icons.star, size: 14, color: tierColor),
+                child: FittedBox(
+                  child: const Text(
+                    "Unsubscribe",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-
-        const SizedBox(width: 14),
-
-        /// 📝 Info
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                creatorName,
-                style: TextStyle(
-                  color: isDark ? kwhiteColor : kblackColor,
-                  fontSize: 16,
-                  fontFamily: "Gilroy",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  _badge(plan, tierColor),
-                  const SizedBox(width: 8),
-                  _priceBadge(price, tierColor),
-                ],
-              ),
-            ],
-          ),
-        ),
-
-        /// 🚫 Unsubscribe
-        OutlinedButton(
-          onPressed: onUnsubscribe,
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(color: tierColor),
-            foregroundColor: tierColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: const Text("Unsubscribe", style: TextStyle(fontSize: 12)),
-        ),
-      ],
-    ),
+      );
+    },
   );
 }
 
-Widget _badge(String text, Color color) => Container(
-  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+Widget _badge(String text, Color color, bool isSmall) => Container(
+  padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 10, vertical: 4),
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
     border: Border.all(color: color),
   ),
   child: Text(
     text,
-    style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
+    style: TextStyle(
+      color: color,
+      fontSize: isSmall ? 11 : 12,
+      fontWeight: FontWeight.w600,
+    ),
   ),
 );
 
-Widget _priceBadge(String text, Color color) => Container(
-  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+Widget _priceBadge(String text, Color color, bool isSmall) => Container(
+  padding: EdgeInsets.symmetric(horizontal: isSmall ? 8 : 10, vertical: 4),
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(20),
-    color: color.withValues(alpha: 0.15),
+    color: color.withOpacity(0.15),
     border: Border.all(color: color),
   ),
   child: Text(
     text,
-    style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold),
+    style: TextStyle(
+      color: color,
+      fontSize: isSmall ? 11 : 12,
+      fontWeight: FontWeight.bold,
+    ),
   ),
 );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/app_bar.dart.dart';
@@ -6,6 +8,7 @@ import 'package:harmanapp/ProfilePages/view_mystar_profile_videocover.dart';
 import 'package:harmanapp/ProfilePages/view_mystars_profile.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
+import 'package:video_player/video_player.dart';
 
 class MyCreatorsScreen extends StatefulWidget {
   const MyCreatorsScreen({super.key});
@@ -21,6 +24,8 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
   String imageUrl = "";
   String strName = "";
   int tappedIndex = -1;
+  late VideoPlayerController _circleVideoController;
+  Timer? _navigationTimer;
 
   @override
   void initState() {
@@ -31,31 +36,51 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
       duration: const Duration(seconds: 5),
     );
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() => isPlaying = false);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => tappedIndex == 0
-                ? Mycreatorprofile(usrName: strName)
-                : MyCreatorVideoCover(usrName: strName),
-          ),
-        );
-      }
-    });
+    _circleVideoController =
+        VideoPlayerController.asset("assets/sources/videos/sharuk.mp4")
+          ..initialize().then((_) {
+            setState(() {});
+          });
   }
 
   @override
   void dispose() {
+    _navigationTimer?.cancel();
+    _circleVideoController.pause();
+    _circleVideoController.dispose();
     _controller.dispose();
     super.dispose();
   }
 
-  void _playAnimation() {
+  void _playAnimation() async {
     setState(() => isPlaying = true);
-    _controller.forward(from: 0);
+
+    // reset video
+    await _circleVideoController.seekTo(Duration.zero);
+
+    // play once
+    _circleVideoController.play();
+
+    // cancel old timer
+    _navigationTimer?.cancel();
+
+    // ⏱ navigate after video finishes (or fixed time)
+    _navigationTimer = Timer(const Duration(seconds: 10), () async {
+      if (!mounted) return;
+
+      // stop video before navigation
+      await _circleVideoController.pause();
+      await _circleVideoController.seekTo(Duration.zero);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => tappedIndex == 0
+              ? Mycreatorprofile(usrName: strName)
+              : MyCreatorVideoCover(usrName: strName),
+        ),
+      );
+    });
   }
 
   @override
@@ -72,19 +97,10 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           ? Stack(
               children: [
                 Center(
-                  child: Lottie.asset(
-                    'assets/dots.json',
-                    controller: _controller,
-                  ),
-                ),
-                Center(
-                  child: ClipOval(
-                    child: Image.asset(
-                      imageUrl,
-                      height: width * 0.45,
-                      width: width * 0.45,
-                      fit: BoxFit.cover,
-                    ),
+                  child: SizedBox(
+                    child: _circleVideoController.value.isInitialized
+                        ? VideoPlayer(_circleVideoController)
+                        : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
               ],
@@ -272,9 +288,9 @@ class UserPostModel {
 
 final List<UserPostModel> creators = [
   UserPostModel(
-    name: "Virat Kohli",
-    category: "Cricketer & youth icon",
-    profileImage: "Virat_Kohli.jpg",
+    name: "Tom Cruise",
+    category: "Film actor",
+    profileImage: "tom.jpg",
   ),
   UserPostModel(
     name: "Ratan Tata",

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
+import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
+import 'package:harmanapp/star_module/Dashboard/star_my_stars_list.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
@@ -175,7 +177,15 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                   ),
                   backgroundColor: WidgetStateProperty.all(Colors.black54),
                 ),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const StarMainScreen(initialIndex: 2),
+                    ),
+                    (route) => false,
+                  );
+                },
                 padding: const EdgeInsets.only(
                   left: 8.0,
                   right: 0.0,

@@ -8,7 +8,8 @@ import 'package:harmanapp/star_module/star_btm_nav/star_curved_navbar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class StarMainScreen extends StatefulWidget {
-  const StarMainScreen({super.key});
+  final int initialIndex;
+  const StarMainScreen({super.key, this.initialIndex = 0});
 
   @override
   State<StarMainScreen> createState() => _MainScreenState();
@@ -17,9 +18,15 @@ class StarMainScreen extends StatefulWidget {
 class _MainScreenState extends State<StarMainScreen> {
   final _pageController = PageController(initialPage: 0);
 
-  int currentpage = 0;
+  late int currentpage = 0;
 
   int maxCount = 5;
+  @override
+  void initState() {
+    super.initState();
+    currentpage = widget.initialIndex;
+  }
+
   @override
   void dispose() {
     _pageController.dispose();

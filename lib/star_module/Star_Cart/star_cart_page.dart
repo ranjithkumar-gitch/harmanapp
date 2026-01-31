@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Cart/cart_manager.dart';
 
 import 'package:harmanapp/Dashboard/main_screen.dart';
+import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
@@ -293,10 +294,7 @@ class _StarCartPageState extends State<StarCartPage> {
 
               const SizedBox(height: 20),
 
-              paymentOption(
-                "UPI (Google Pay / PhonePe / Paytm)",
-                Icons.payment,
-              ),
+              paymentOption("UPI", Icons.payment),
               const SizedBox(height: 15),
               paymentOption("Credit / Debit Card", Icons.credit_card),
               const SizedBox(height: 15),
@@ -455,7 +453,7 @@ class _StarCartPageState extends State<StarCartPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const MainScreen()),
+                      MaterialPageRoute(builder: (_) => const StarMainScreen()),
                     );
                   },
                   style: OutlinedButton.styleFrom(
