@@ -325,38 +325,19 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                   ),
                 ],
               ),
-              // Positioned(
-              //   bottom: 0,
-              //   left: 80,
-              //   child: Image.asset("assets/screenshots/gold.png", scale: 12),
-              // ),
               Positioned(
                 bottom: -5,
                 left: 85,
-                child: SizedBox(
-                  height: 30,
-                  width: 30,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(36),
-                  //   gradient: const LinearGradient(
-                  //     colors: [CupertinoColors.white, CupertinoColors.white],
-                  //   ),
-                  // ),
-                  child: Positioned(
-                    bottom: -10,
-                    right: -10,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kblackColor
-                            : kwhiteColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: kgoldColor, width: 1),
-                      ),
-                      child: Icon(Icons.star, color: kgoldColor, size: 20),
-                    ),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: kgoldColor, width: 1),
                   ),
+                  child: Icon(Icons.star, color: kgoldColor, size: 20),
                 ),
               ),
             ],
@@ -372,10 +353,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: kgoldColor,
-                      foregroundColor:
-                          Brightness.dark == Theme.of(context).brightness
-                          ? kwhiteColor
-                          : kblackColor,
+                      foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -1110,7 +1088,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 18,
                 ),
               ],

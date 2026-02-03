@@ -234,44 +234,47 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                       ),
                     ),
                     onPressed: () {
-                      showDialog(
+                      showCupertinoDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                          backgroundColor:
-                              Brightness.dark == Theme.of(context).brightness
-                              ? kblackColor
-                              : kwhiteColor,
-                          title: const Text(
-                            "Unsubscribe",
-                            style: TextStyle(
-                              color: kgoldColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        builder: (_) => CupertinoTheme(
+                          data: CupertinoThemeData(
+                            brightness:
+                                Brightness.dark == Theme.of(context).brightness
+                                ? Brightness.dark
+                                : Brightness.light,
+                            primaryColor: kgoldColor,
                           ),
-                          content: Text(
-                            "Are you sure you want to Unsubscribe?",
-                            style: TextStyle(
-                              color: isDark ? kwhiteColor : kblackColor,
+                          child: CupertinoAlertDialog(
+                            title: const Text(
+                              "Delete Account",
+                              style: TextStyle(color: kgoldColor),
                             ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(
-                                  color: isDark ? kwhiteColor : kblackColor,
+                            content: Text(
+                              "Are you sure you want to Unsubscribe?",
+                              style: TextStyle(
+                                // color: isDark ? Colors.white70 : Colors.black54,
+                              ),
+                            ),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                    color: isDark ? kwhiteColor : kblackColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text(
-                                "Unsubscribe",
-                                style: TextStyle(color: Colors.red),
+                              CupertinoDialogAction(
+                                isDestructiveAction: true,
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text(
+                                  "Unsubscribe",
+                                  style: TextStyle(color: kgoldColor),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
