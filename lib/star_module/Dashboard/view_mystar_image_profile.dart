@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
-import 'package:harmanapp/star_module/Dashboard/star_my_stars_list.dart';
+
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
@@ -72,69 +72,47 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
             ? kblackColor
             : kwhiteColor,
         appBar: StarCustomAppBar(),
-        body: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  coverImage('assets/sources/images/cover.png', context),
-                  profileImage(
-                    'assets/sources/profiles/tom.jpg',
-                    widget.usrName,
-                  ),
 
-                  // const TabBar(
-                  //   indicatorColor: kgoldColor,
-                  //   indicatorWeight: 4,
-                  //   labelColor: kgoldColor,
-                  //   unselectedLabelColor: Colors.white54,
-                  //   tabs: [
-                  //     Tab(icon: Icon(Icons.apps)),
-                  //     Tab(icon: Icon(Icons.live_tv)),
-                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
-
-                  //     Tab(icon: Icon(Icons.person_outline)),
-                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
-                  //   ],
-                  // ),
-                  AnimatedBuilder(
-                    animation: _tabController,
-                    builder: (_, __) {
-                      return TabBar(
-                        controller: _tabController,
-                        indicatorColor: kgoldColor,
-                        indicatorWeight: 4,
-                        labelPadding: EdgeInsets.zero,
-                        tabs: List.generate(_icons.length, (index) {
-                          final bool isSelected = _tabController.index == index;
-
-                          return Tab(
-                            icon: Image.asset(
-                              _icons[index],
-                              height: 40,
-                              color: isSelected ? kgoldColor : Colors.grey,
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-          body: TabBarView(
-            controller: _tabController,
-
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              ImagesTab(),
-
-              LiveTab(),
-              LegacyTab(),
-
-              EmptyTab(),
-              Mycreatorsmarketplace(),
+              coverImage('assets/sources/images/cover.png', context),
+              Transform.translate(
+                offset: const Offset(0, -40),
+                child: profileImage(
+                  'assets/sources/profiles/tom.jpg',
+                  widget.usrName,
+                ),
+              ),
+              const SizedBox(height: 40),
+              TabBar(
+                controller: _tabController,
+                indicatorColor: kgoldColor,
+                indicatorWeight: 4,
+                tabs: List.generate(_icons.length, (index) {
+                  final isSelected = _tabController.index == index;
+                  return Tab(
+                    icon: Image.asset(
+                      _icons[index],
+                      height: 40,
+                      color: isSelected ? kgoldColor : Colors.grey,
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    ImagesTab(),
+                    LiveTab(),
+                    LegacyTab(),
+                    EmptyTab(),
+                    Mycreatorsmarketplace(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -142,111 +120,9 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
     );
   }
 
-  Widget _videoCover() {
-    return SizedBox(
-      height: 220,
-      width: double.infinity,
-      child: Stack(
-        children: [
-          /// 🎬 Video
-          if (isVideoReady && _videoController.value.isInitialized)
-            Positioned.fill(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: _videoController.value.size.width,
-                  height: _videoController.value.size.height,
-                  child: VideoPlayer(_videoController),
-                ),
-              ),
-            )
-          else
-            Container(color: Colors.black),
-
-          /// 🔙 Back Button (Top Left)
-          Positioned(
-            top: 0,
-            left: 0,
-            child: SafeArea(
-              child: IconButton(
-                style: ButtonStyle(
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  backgroundColor: WidgetStateProperty.all(Colors.black54),
-                ),
-                onPressed: () => Navigator.pop(context),
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                  right: 0.0,
-                  top: 2.0,
-                  bottom: 2.0,
-                ),
-                icon: const Icon(Icons.arrow_back_ios),
-                color: Colors.white,
-              ),
-            ),
-          ),
-
-          /// 🔊 Mute Button (Top Right)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isMuted = !_isMuted;
-                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
-                      });
-                    },
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  /// ▶️ Play / Pause (Below Mute)
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _videoController.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _videoController.value.isPlaying
-                            ? _videoController.pause()
-                            : _videoController.play();
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget profileImage(String imagePath, String name) {
     final isDark = Brightness.dark == Theme.of(context).brightness;
     return Container(
-      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,31 +198,22 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
               Positioned(
                 bottom: -5,
                 left: 85,
-                child: SizedBox(
-                  height: 30,
-                  width: 30,
-
-                  child: Positioned(
-                    bottom: -10,
-                    right: -10,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kblackColor
-                            : kwhiteColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: kgoldColor, width: 1),
-                      ),
-                      child: Icon(Icons.star, color: kgoldColor, size: 20),
-                    ),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: kgoldColor, width: 1),
                   ),
+                  child: Icon(Icons.star, color: kgoldColor, size: 20),
                 ),
               ),
             ],
           ),
 
-          SizedBox(height: 16),
+          SizedBox(height: 20),
 
           Row(
             children: [
@@ -363,47 +230,44 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                       ),
                     ),
                     onPressed: () {
-                      showCupertinoDialog(
+                      showDialog(
                         context: context,
-                        builder: (_) => CupertinoTheme(
-                          data: CupertinoThemeData(
-                            brightness:
-                                Brightness.dark == Theme.of(context).brightness
-                                ? Brightness.dark
-                                : Brightness.light,
-                            primaryColor: kgoldColor,
+                        builder: (context) => AlertDialog(
+                          backgroundColor:
+                              Brightness.dark == Theme.of(context).brightness
+                              ? kblackColor
+                              : kwhiteColor,
+                          title: const Text(
+                            "Unsubscribe",
+                            style: TextStyle(
+                              color: kgoldColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          child: CupertinoAlertDialog(
-                            title: const Text(
-                              "Delete Account",
-                              style: TextStyle(color: kgoldColor),
+                          content: Text(
+                            "Are you sure you want to Unsubscribe?",
+                            style: TextStyle(
+                              color: isDark ? kwhiteColor : kblackColor,
                             ),
-                            content: Text(
-                              "Are you sure you want to Unsubscribe?",
-                              style: TextStyle(
-                                // color: isDark ? Colors.white70 : Colors.black54,
-                              ),
-                            ),
-                            actions: [
-                              CupertinoDialogAction(
-                                onPressed: () => Navigator.pop(context),
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                    color: isDark ? kwhiteColor : kblackColor,
-                                  ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(
+                                  color: isDark ? kwhiteColor : kblackColor,
                                 ),
                               ),
-                              CupertinoDialogAction(
-                                isDestructiveAction: true,
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text(
-                                  "Unsubscribe",
-                                  style: TextStyle(color: kgoldColor),
-                                ),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text(
+                                "Unsubscribe",
+                                style: TextStyle(color: Colors.red),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -480,18 +344,23 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                     onPressed: () {
                       setState(() => isFollowing = !isFollowing);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (isFollowing) const Icon(Icons.done_all, size: 16),
-                        if (isFollowing) const SizedBox(width: 4),
-                        Text(
-                          isFollowing ? "Stargazing" : "Stargaze",
-
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (isFollowing) const Icon(Icons.done_all, size: 14),
+                          if (isFollowing) const SizedBox(width: 2),
+                          Flexible(
+                            child: Text(
+                              isFollowing ? "Stargazing" : "Stargaze",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -679,7 +548,12 @@ Widget coverImage(String imagePath, BuildContext context) {
     width: double.infinity,
     child: Stack(
       children: [
-        SizedBox(height: 220, child: Image.asset(imagePath, fit: BoxFit.fill)),
+        Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 220,
+        ),
 
         /// 🔙 Back Button (Top Left)
         Positioned(
@@ -1156,12 +1030,27 @@ class _EmptyTabState extends State<EmptyTab> {
 
     _videoController =
         VideoPlayerController.asset('assets/sources/videos/tom.mp4')
-          ..initialize().then((_) {
-            setState(() {});
-            _videoController
-              ..setLooping(true)
-              ..play();
-          });
+          ..initialize()
+              .then((_) {
+                if (mounted) {
+                  setState(() {});
+                  _videoController
+                    ..setLooping(true)
+                    ..play();
+                }
+              })
+              .catchError((error) {
+                print('Video loading error: $error');
+                if (mounted) {
+                  setState(() {});
+                }
+              });
+
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -1248,9 +1137,28 @@ class _EmptyTabState extends State<EmptyTab> {
                     ),
                   )
                 else
-                  const SizedBox(
-                    height: 180,
-                    child: Center(child: CircularProgressIndicator()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade900,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text(
+                              'Loading video...',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
 
                 const SizedBox(height: 50),

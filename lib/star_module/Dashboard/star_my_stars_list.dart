@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:harmanapp/ProfilePages/view_all_stars_profile.dart';
 import 'package:harmanapp/star_module/Dashboard/view_mystar_image_profile.dart';
 import 'package:harmanapp/star_module/Dashboard/view_mystar_video_profile.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';

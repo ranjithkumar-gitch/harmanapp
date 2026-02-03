@@ -147,21 +147,18 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
       height: 220,
       width: double.infinity,
       child: Stack(
+        fit: StackFit.expand,
         children: [
           /// 🎬 Video
           if (isVideoReady && _videoController.value.isInitialized)
-            Positioned.fill(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: _videoController.value.size.width,
-                  height: _videoController.value.size.height,
-                  child: VideoPlayer(_videoController),
-                ),
-              ),
-            )
+            VideoPlayer(_videoController)
           else
-            Container(color: Colors.black),
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: isVideoReady ? null : const CircularProgressIndicator(),
+              ),
+            ),
 
           /// 🔙 Back Button (Top Left)
           Positioned(
@@ -781,7 +778,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: .45),
+                  color: Colors.black.withValues(alpha: 0.45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
