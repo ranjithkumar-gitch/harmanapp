@@ -55,10 +55,14 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
       }
     });
     _tabController = TabController(length: _icons.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
+    _tabController.dispose();
     _videoController.dispose();
     super.dispose();
   }
@@ -84,7 +88,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                   widget.usrName,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 0),
               TabBar(
                 controller: _tabController,
                 indicatorColor: kgoldColor,
