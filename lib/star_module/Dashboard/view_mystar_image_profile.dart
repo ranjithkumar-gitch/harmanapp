@@ -78,46 +78,47 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
             : kwhiteColor,
         appBar: StarCustomAppBar(),
 
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              coverImage('assets/sources/images/cover.png', context),
-              Transform.translate(
-                offset: const Offset(0, -40),
-                child: profileImage(
-                  'assets/sources/profiles/tom.jpg',
-                  widget.usrName,
-                ),
-              ),
-              const SizedBox(height: 0),
-              TabBar(
-                controller: _tabController,
-                indicatorColor: kgoldColor,
-                indicatorWeight: 4,
-                tabs: List.generate(_icons.length, (index) {
-                  final isSelected = _tabController.index == index;
-                  return Tab(
-                    icon: Image.asset(
-                      _icons[index],
-                      height: 40,
-                      color: isSelected ? kgoldColor : Colors.grey,
+        body: NestedScrollView(
+          headerSliverBuilder: (_, __) => [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  coverImage('assets/sources/images/cover.png', context),
+                  Transform.translate(
+                    offset: const Offset(0, -40),
+                    child: profileImage(
+                      'assets/sources/profiles/tom.jpg',
+                      widget.usrName,
                     ),
-                  );
-                }),
+                  ),
+                  const SizedBox(height: 0),
+                  TabBar(
+                    controller: _tabController,
+                    indicatorColor: kgoldColor,
+                    indicatorWeight: 4,
+                    tabs: List.generate(_icons.length, (index) {
+                      final isSelected = _tabController.index == index;
+                      return Tab(
+                        icon: Image.asset(
+                          _icons[index],
+                          height: 40,
+                          color: isSelected ? kgoldColor : Colors.grey,
+                        ),
+                      );
+                    }),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    ImagesTab(),
-                    LiveTab(),
-                    LegacyTab(),
-                    EmptyTab(),
-                    StarMycreatorsmarketplace(),
-                  ],
-                ),
-              ),
+            ),
+          ],
+          body: TabBarView(
+            controller: _tabController,
+            children: const [
+              ImagesTab(),
+              LiveTab(),
+              LegacyTab(),
+              EmptyTab(),
+              StarMycreatorsmarketplace(),
             ],
           ),
         ),

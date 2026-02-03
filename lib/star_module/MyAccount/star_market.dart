@@ -496,7 +496,7 @@ class _StarMarketPlaceState extends State<StarMarketPlace> {
                             ),
                           ),
                           child: Text(
-                            "Buy Now",
+                            "View Product",
                             style: GoogleFonts.poppins(
                               color: kgoldColor,
                               fontSize: buttonTextSize,

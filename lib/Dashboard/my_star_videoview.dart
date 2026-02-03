@@ -373,7 +373,7 @@ class _MyStarVideoviewState extends State<MyStarVideoview>
                           ),
                           child: CupertinoAlertDialog(
                             title: const Text(
-                              "Delete Account",
+                              "Unsubscribe",
                               style: TextStyle(color: kgoldColor),
                             ),
                             content: Text(
@@ -917,20 +917,66 @@ class EmptyTab extends StatefulWidget {
 
 class _EmptyTabState extends State<EmptyTab> {
   int selectedAvatarIndex = 0;
+  late VideoPlayerController _videoController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _videoController =
+        VideoPlayerController.asset('assets/sources/videos/tom.mp4')
+          ..initialize()
+              .then((_) {
+                if (mounted) {
+                  setState(() {});
+                  _videoController
+                    ..setLooping(true)
+                    ..play();
+                }
+              })
+              .catchError((error) {
+                print('Video loading error: $error');
+                if (mounted) {
+                  setState(() {});
+                }
+              });
+
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    super.dispose();
+  }
+
+  void _togglePlayPause() {
+    setState(() {
+      if (_videoController.value.isPlaying) {
+        _videoController.pause();
+      } else {
+        _videoController.play();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// Main content (center)
+        /// Main content
         SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                // Placeholder for 3 containers in row
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
+
+                /// Avatar buttons
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: _buildAvatarContainer(context, 0, 'Avatar 1'),
@@ -945,44 +991,80 @@ class _EmptyTabState extends State<EmptyTab> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
-                //
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    gradient: ExploreScreen.accentGradient,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 18,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.construction,
-                    size: 65,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 20),
 
-                const Text(
-                  'AI Avatar feature coming soon ✨',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: kgoldColor,
+                const SizedBox(height: 16),
+
+                /// 🎥 Video with play/pause button
+                if (_videoController.value.isInitialized)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: _videoController.value.aspectRatio,
+                            child: VideoPlayer(_videoController),
+                          ),
+
+                          /// Play / Pause button
+                          GestureDetector(
+                            onTap: _togglePlayPause,
+                            child: Container(
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withValues(alpha: 0.4),
+                              ),
+                              child: Icon(
+                                _videoController.value.isPlaying
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                color: Colors.white,
+                                size: 36,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade900,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text(
+                              'Loading video...',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
+
+                const SizedBox(height: 50),
+
+                /// Coming soon
               ],
             ),
           ),
         ),
 
-        /// Mic button at bottom
+        /// Mic button
         Positioned(
           bottom: 30,
           left: 0,
@@ -1013,7 +1095,7 @@ class _EmptyTabState extends State<EmptyTab> {
   }
 
   Widget _buildAvatarContainer(BuildContext context, int index, String label) {
-    final isDark = Brightness.dark == Theme.of(context).brightness;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isSelected = selectedAvatarIndex == index;
 
     return GestureDetector(
@@ -1029,13 +1111,10 @@ class _EmptyTabState extends State<EmptyTab> {
               ? kgoldColor
               : (isDark ? Colors.grey.shade900 : Colors.grey.shade100),
           borderRadius: BorderRadius.circular(12),
-          border: Border.fromBorderSide(
-            BorderSide(color: kgoldColor, width: 2),
-          ),
+          border: Border.all(color: kgoldColor, width: 2),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             if (isSelected)
               const Icon(Icons.done_all, size: 16, color: kblackColor),
@@ -1043,11 +1122,11 @@ class _EmptyTabState extends State<EmptyTab> {
             Text(
               label,
               style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
                 color: isSelected
                     ? kblackColor
                     : (isDark ? kwhiteColor : kblackColor),
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
