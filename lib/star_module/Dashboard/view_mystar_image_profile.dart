@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
+import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
 
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
@@ -113,7 +114,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                     LiveTab(),
                     LegacyTab(),
                     EmptyTab(),
-                    Mycreatorsmarketplace(),
+                    StarMycreatorsmarketplace(),
                   ],
                 ),
               ),
@@ -246,7 +247,7 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                           ),
                           child: CupertinoAlertDialog(
                             title: const Text(
-                              "Delete Account",
+                              "Unsubscribe",
                               style: TextStyle(color: kgoldColor),
                             ),
                             content: Text(

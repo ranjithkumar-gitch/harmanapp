@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
@@ -11,16 +12,16 @@ import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-class StarAllCreatorsProfile extends StatefulWidget {
-  const StarAllCreatorsProfile({super.key});
+class AllstarsProfileview extends StatefulWidget {
+  const AllstarsProfileview({super.key});
 
   @override
-  State<StarAllCreatorsProfile> createState() => _StarAllCreatorsProfileState();
+  State<AllstarsProfileview> createState() => _AllstarsProfileviewState();
 }
 
 enum SampleItem { itemOne }
 
-class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
+class _AllstarsProfileviewState extends State<AllstarsProfileview>
     with SingleTickerProviderStateMixin {
   bool isFollowing = false;
   late TabController _tabController;
@@ -68,7 +69,7 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
         backgroundColor: Brightness.dark == Theme.of(context).brightness
             ? kblackColor
             : kwhiteColor,
-        appBar: const StarCustomAppBar(),
+        appBar: const CustomAppBar(),
 
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -113,20 +114,18 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
             ];
           },
 
-          body: Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ImagesTab(),
-                // ReelsTab(),
-                // ImagesTab(),
-                LiveTab(),
-                LegacyTab(),
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              ImagesTab(),
+              // ReelsTab(),
+              // ImagesTab(),
+              LiveTab(),
+              LegacyTab(),
 
-                EmptyTab(),
-                Mycreatorsmarketplace(),
-              ],
-            ),
+              EmptyTab(),
+              Mycreatorsmarketplace(),
+            ],
           ),
         ),
       ),
@@ -253,24 +252,17 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
               Positioned(
                 bottom: -5,
                 left: 85,
-                child: SizedBox(
-                  height: 30,
-                  width: 30,
-
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kblackColor
-                          : kwhiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: kgoldColor, width: 1),
-                    ),
-                    child: Icon(Icons.star, color: kgoldColor, size: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: kgoldColor, width: 1),
                   ),
+                  child: Icon(Icons.star, color: kgoldColor, size: 20),
                 ),
-
-                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
@@ -527,43 +519,6 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
     );
   }
 
-  Widget _cupertinoStatusItem(
-    String title,
-    String selected,
-    ValueChanged<String> onChanged,
-    bool isDark,
-  ) {
-    final isSelected = title == selected;
-
-    return GestureDetector(
-      onTap: () => onChanged(title),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          children: [
-            Icon(
-              isSelected
-                  ? CupertinoIcons.check_mark_circled_solid
-                  : CupertinoIcons.circle,
-              color: isSelected ? kgoldColor : CupertinoColors.systemGrey,
-              size: 22,
-            ),
-            const SizedBox(width: 12),
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected
-                    ? kgoldColor
-                    : (isDark ? Colors.white70 : Colors.black54),
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   _showOrderStatusDialog() {
     String selectedStatus = "New";
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -635,6 +590,43 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
           ),
         );
       },
+    );
+  }
+
+  Widget _cupertinoStatusItem(
+    String title,
+    String selected,
+    ValueChanged<String> onChanged,
+    bool isDark,
+  ) {
+    final isSelected = title == selected;
+
+    return GestureDetector(
+      onTap: () => onChanged(title),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Icon(
+              isSelected
+                  ? CupertinoIcons.check_mark_circled_solid
+                  : CupertinoIcons.circle,
+              color: isSelected ? kgoldColor : CupertinoColors.systemGrey,
+              size: 22,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected
+                    ? kgoldColor
+                    : (isDark ? Colors.white70 : Colors.black54),
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -1087,7 +1079,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 18,
                 ),
               ],

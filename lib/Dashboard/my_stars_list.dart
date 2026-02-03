@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/app_bar.dart.dart';
+import 'package:harmanapp/Dashboard/my_star_profileview.dart';
+import 'package:harmanapp/Dashboard/my_star_videoview.dart';
 
 import 'package:harmanapp/star_module/Dashboard/view_mystar_image_profile.dart';
 import 'package:harmanapp/star_module/Dashboard/view_mystar_video_profile.dart';
@@ -76,8 +78,8 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
         context,
         MaterialPageRoute(
           builder: (_) => tappedIndex == 0
-              ? Mycreatorprofile(usrName: strName)
-              : MyCreatorVideoCover(usrName: strName),
+              ? MyStarProfileview(usrName: strName)
+              : MyStarVideoview(usrName: strName),
         ),
       );
     });

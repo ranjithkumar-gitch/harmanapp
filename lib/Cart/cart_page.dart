@@ -199,65 +199,71 @@ class _CartPageState extends State<CartPage> {
 
       bottomNavigationBar: CartManager.cartItems.isEmpty
           ? null
-          : Container(
-              height: 80,
-              padding: const EdgeInsets.all(16),
-              // decoration: const BoxDecoration(
-              //   color: Colors.black,
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.black12,
-              //       blurRadius: 5,
-              //       spreadRadius: 2,
-              //     ),
-              //   ],
-              // ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kwhiteColor
-                          : kblackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                height: 80,
+                padding: const EdgeInsets.all(12),
+                // decoration: const BoxDecoration(
+                //   color: Colors.black,
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: Colors.black12,
+                //       blurRadius: 5,
+                //       spreadRadius: 2,
+                //     ),
+                //   ],
+                // ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xFFD4AF37),
+                    width: 1.5,
                   ),
+                ),
 
-                  OutlinedButton(
-                    onPressed: () {
-                      showPaymentMethods(context);
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 20,
-                      ),
-                      side: const BorderSide(
-                        color: Color(0xFFD4AF37), // gold outline
-                        width: 1.5,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      "Buy Now",
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFFD4AF37), // text matches border
+                        fontSize: 18,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+
+                    OutlinedButton(
+                      onPressed: () {
+                        showPaymentMethods(context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 20,
+                        ),
+                        side: const BorderSide(
+                          color: Color(0xFFD4AF37), // gold outline
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        "Buy Now",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFFD4AF37), // text matches border
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
     );
@@ -315,10 +321,7 @@ class _CartPageState extends State<CartPage> {
 
       child: Container(
         padding: const EdgeInsets.all(14),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(12),
-        //   color: Colors.grey.shade200,
-        // ),
+
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: const Color(0xFFD4AF37), width: 1),

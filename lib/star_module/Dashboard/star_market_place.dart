@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:harmanapp/Cart/cart_manager.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
+import 'package:harmanapp/star_module/Star_Cart/star_cart_manager.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 
@@ -651,7 +652,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
-                  CartManager.addToCart(widget.product, quantity);
+                  StarCartManager.addToCart(widget.product, quantity);
 
                   showDialog(
                     context: context,

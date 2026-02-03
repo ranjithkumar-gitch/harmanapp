@@ -137,7 +137,7 @@ Widget endDrawer(BuildContext context) {
           ),
           ListTile(
             title: Text(
-              'Dark Mode',
+              'Light Mode',
               style: GoogleFonts.poppins(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? kwhiteColor

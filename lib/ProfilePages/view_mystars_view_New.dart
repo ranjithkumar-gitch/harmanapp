@@ -2,33 +2,33 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
-import 'package:harmanapp/star_module/Dashboard/star_my_stars_list.dart';
-import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
+import 'package:harmanapp/star_module/Dashboard/star_market_place.dart';
+
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:harmanapp/Dashboard/explore_screen.dart';
 
-class MyCreatorVideoCover extends StatefulWidget {
+class ViewMystarsViewNew extends StatefulWidget {
   final String usrName;
 
-  const MyCreatorVideoCover({super.key, required this.usrName});
+  const ViewMystarsViewNew({super.key, required this.usrName});
 
   @override
-  State<MyCreatorVideoCover> createState() => _MyCreatorVideoCoverState();
+  State<ViewMystarsViewNew> createState() => _ViewMystarsViewNewState();
 }
 
-class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
+class _ViewMystarsViewNewState extends State<ViewMystarsViewNew>
     with SingleTickerProviderStateMixin {
   late VideoPlayerController _videoController;
   bool isVideoReady = false;
   bool isFollowing = false;
   bool _isMuted = true;
   late TabController _tabController;
+
   final List<String> _icons = [
     "assets/reels.png",
     "assets/livestream.png",
@@ -56,10 +56,14 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
       }
     });
     _tabController = TabController(length: _icons.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
+    _tabController.dispose();
     _videoController.dispose();
     super.dispose();
   }
@@ -73,69 +77,47 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
             ? kblackColor
             : kwhiteColor,
         appBar: StarCustomAppBar(),
-        body: NestedScrollView(
-          headerSliverBuilder: (_, __) => [
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _videoCover(),
-                  profileImage(
-                    'assets/sources/profiles/deepika.jpg',
-                    widget.usrName,
-                  ),
 
-                  // const TabBar(
-                  //   indicatorColor: kgoldColor,
-                  //   indicatorWeight: 4,
-                  //   labelColor: kgoldColor,
-                  //   unselectedLabelColor: Colors.white54,
-                  //   tabs: [
-                  //     Tab(icon: Icon(Icons.apps)),
-                  //     Tab(icon: Icon(Icons.live_tv)),
-                  //     Tab(icon: Icon(Icons.emoji_events_outlined)),
-
-                  //     Tab(icon: Icon(Icons.person_outline)),
-                  //     Tab(icon: Icon(Icons.shopping_bag_outlined)),
-                  //   ],
-                  // ),
-                  AnimatedBuilder(
-                    animation: _tabController,
-                    builder: (_, __) {
-                      return TabBar(
-                        controller: _tabController,
-                        indicatorColor: kgoldColor,
-                        indicatorWeight: 4,
-                        labelPadding: EdgeInsets.zero,
-                        tabs: List.generate(_icons.length, (index) {
-                          final bool isSelected = _tabController.index == index;
-
-                          return Tab(
-                            icon: Image.asset(
-                              _icons[index],
-                              height: 40,
-                              color: isSelected ? kgoldColor : Colors.grey,
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-          body: TabBarView(
-            controller: _tabController,
-
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              ImagesTab(),
-
-              LiveTab(),
-              LegacyTab(),
-
-              EmptyTab(),
-              StarMycreatorsmarketplace(),
+              coverImage('assets/sources/images/cover.png', context),
+              Transform.translate(
+                offset: const Offset(0, -40),
+                child: profileImage(
+                  'assets/sources/profiles/tom.jpg',
+                  widget.usrName,
+                ),
+              ),
+              const SizedBox(height: 0),
+              TabBar(
+                controller: _tabController,
+                indicatorColor: kgoldColor,
+                indicatorWeight: 4,
+                tabs: List.generate(_icons.length, (index) {
+                  final isSelected = _tabController.index == index;
+                  return Tab(
+                    icon: Image.asset(
+                      _icons[index],
+                      height: 40,
+                      color: isSelected ? kgoldColor : Colors.grey,
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    ImagesTab(),
+                    LiveTab(),
+                    LegacyTab(),
+                    EmptyTab(),
+                    StarMarketplaceScreen(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -143,116 +125,9 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
     );
   }
 
-  Widget _videoCover() {
-    return SizedBox(
-      height: 220,
-      width: double.infinity,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          /// 🎬 Video
-          if (isVideoReady && _videoController.value.isInitialized)
-            VideoPlayer(_videoController)
-          else
-            Container(
-              color: Colors.black,
-              child: Center(
-                child: isVideoReady ? null : const CircularProgressIndicator(),
-              ),
-            ),
-
-          /// 🔙 Back Button (Top Left)
-          Positioned(
-            top: 0,
-            left: 0,
-            child: SafeArea(
-              child: IconButton(
-                style: ButtonStyle(
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  backgroundColor: WidgetStateProperty.all(Colors.black54),
-                ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const StarMainScreen(initialIndex: 2),
-                    ),
-                    (route) => false,
-                  );
-                },
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                  right: 0.0,
-                  top: 2.0,
-                  bottom: 2.0,
-                ),
-                icon: const Icon(Icons.arrow_back_ios),
-                color: Colors.white,
-              ),
-            ),
-          ),
-
-          /// 🔊 Mute Button (Top Right)
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _isMuted ? Icons.volume_off : Icons.volume_up,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isMuted = !_isMuted;
-                        _videoController.setVolume(_isMuted ? 0.0 : 1.0);
-                      });
-                    },
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  /// ▶️ Play / Pause (Below Mute)
-                  IconButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.black54),
-                    ),
-                    icon: Icon(
-                      _videoController.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _videoController.value.isPlaying
-                            ? _videoController.pause()
-                            : _videoController.play();
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget profileImage(String imagePath, String name) {
     final isDark = Brightness.dark == Theme.of(context).brightness;
     return Container(
-      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,7 +146,6 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                         colors: [kgoldColor, Colors.white],
                       ),
                     ),
-
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       child: Container(
@@ -285,7 +159,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 20),
                   Row(
                     children: [
                       Row(
@@ -343,7 +217,8 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
               ),
             ],
           ),
-          SizedBox(height: 16),
+
+          SizedBox(height: 20),
 
           Row(
             children: [
@@ -372,7 +247,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                           ),
                           child: CupertinoAlertDialog(
                             title: const Text(
-                              "Unsubscribe",
+                              "Delete Account",
                               style: TextStyle(color: kgoldColor),
                             ),
                             content: Text(
@@ -440,6 +315,24 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                 child: SizedBox(
                   height: 40,
                   child: OutlinedButton(
+                    // style: OutlinedButton.styleFrom(
+                    //   padding: EdgeInsets.zero,
+                    //   backgroundColor: isFollowing
+                    //       ? kgoldColor
+                    //       : Colors.transparent,
+                    //   side: BorderSide(
+                    //     color: isFollowing ? kgoldColor : kgoldColor,
+                    //   ),
+                    //   foregroundColor: isFollowing
+                    //       ? Brightness.dark == Theme.of(context).brightness
+                    //             ? kwhiteColor
+                    //             : kblackColor
+                    //       : Colors.black,
+
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    // ),
                     style: OutlinedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: isFollowing
@@ -455,20 +348,27 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
+
                     onPressed: () {
                       setState(() => isFollowing = !isFollowing);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (isFollowing) const Icon(Icons.done_all, size: 16),
-                        if (isFollowing) const SizedBox(width: 4),
-                        Text(
-                          isFollowing ? "Stargazing" : "Stargaze",
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (isFollowing) const Icon(Icons.done_all, size: 14),
+                          if (isFollowing) const SizedBox(width: 2),
+                          Flexible(
+                            child: Text(
+                              isFollowing ? "Stargazing" : "Stargaze",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -504,7 +404,6 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                     ),
                   ),
                   SizedBox(width: 5),
-
                   Text(
                     'Stills',
                     style: TextStyle(
@@ -518,10 +417,12 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                 ],
               ),
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'o',
                 style: TextStyle(
-                  color: kgoldColor,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -554,10 +455,12 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
               ),
 
               const SizedBox(width: 5),
-              const Text(
+              Text(
                 'O',
                 style: TextStyle(
-                  color: kgoldColor,
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kgoldColor
+                      : kgoldColor,
                   fontSize: 3,
                   fontWeight: FontWeight.w900,
                 ),
@@ -588,10 +491,18 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                   ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
                   SizedBox(width: 8),
-                  Text('|', style: TextStyle(color: Colors.grey, fontSize: 20)),
+                  Text(
+                    '|',
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? kwhiteColor
+                          : kblackColor,
+                      fontSize: 20,
+                    ),
+                  ),
                 ],
               ),
               Expanded(
@@ -637,6 +548,58 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
       ),
     );
   }
+}
+
+Widget coverImage(String imagePath, BuildContext context) {
+  return SizedBox(
+    height: 220,
+    width: double.infinity,
+    child: Stack(
+      children: [
+        Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 220,
+        ),
+
+        /// 🔙 Back Button (Top Left)
+        Positioned(
+          top: 0,
+          left: 0,
+          child: SafeArea(
+            child: IconButton(
+              style: ButtonStyle(
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                backgroundColor: WidgetStateProperty.all(Colors.black54),
+              ),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const StarMainScreen(initialIndex: 2),
+                  ),
+                  (route) => false,
+                );
+              },
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                right: 0.0,
+                top: 2.0,
+                bottom: 2.0,
+              ),
+              icon: const Icon(Icons.arrow_back_ios),
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 /* -------------------- TABS -------------------- */
@@ -757,7 +720,7 @@ class _LiveCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.45),
+                  color: Colors.black.withValues(alpha: .45),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -907,6 +870,157 @@ class _ReelPlayerState extends State<ReelPlayer> {
   }
 }
 
+// class EmptyTab extends StatefulWidget {
+//   const EmptyTab({super.key});
+
+//   @override
+//   State<EmptyTab> createState() => _EmptyTabState();
+// }
+
+// class _EmptyTabState extends State<EmptyTab> {
+//   int selectedAvatarIndex = 0;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         /// Main content (center)
+//         SingleChildScrollView(
+//           child: Center(
+//             child: Column(
+//               children: [
+//                 // Placeholder for 3 containers in row
+//                 SizedBox(height: 5),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Expanded(
+//                       child: _buildAvatarContainer(context, 0, 'Avatar 1'),
+//                     ),
+//                     const SizedBox(width: 8),
+//                     Expanded(
+//                       child: _buildAvatarContainer(context, 1, 'Avatar 2'),
+//                     ),
+//                     const SizedBox(width: 8),
+//                     Expanded(
+//                       child: _buildAvatarContainer(context, 2, 'Avatar 3'),
+//                     ),
+//                   ],
+//                 ),
+//                 SizedBox(height: 50),
+//                 //
+//                 Container(
+//                   width: 100,
+//                   height: 100,
+//                   decoration: BoxDecoration(
+//                     gradient: ExploreScreen.accentGradient,
+//                     borderRadius: BorderRadius.circular(20),
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: Colors.black.withValues(alpha: 0.08),
+//                         blurRadius: 18,
+//                       ),
+//                     ],
+//                   ),
+//                   child: const Icon(
+//                     Icons.construction,
+//                     size: 65,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//                 const SizedBox(height: 20),
+
+//                 const Text(
+//                   'AI Avatar feature coming soon ✨',
+//                   style: TextStyle(
+//                     fontSize: 16,
+//                     fontWeight: FontWeight.w600,
+//                     color: kgoldColor,
+//                   ),
+//                 ),
+//                 const SizedBox(height: 8),
+//               ],
+//             ),
+//           ),
+//         ),
+
+//         /// Mic button at bottom
+//         Positioned(
+//           bottom: 30,
+//           left: 0,
+//           right: 0,
+//           child: Center(
+//             child: Container(
+//               width: 64,
+//               height: 64,
+//               decoration: BoxDecoration(
+//                 shape: BoxShape.circle,
+//                 gradient: ExploreScreen.accentGradient,
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Colors.black.withValues(alpha: 0.25),
+//                     blurRadius: 12,
+//                   ),
+//                 ],
+//               ),
+//               child: IconButton(
+//                 icon: const Icon(Icons.mic, color: Colors.white, size: 32),
+//                 onPressed: () {},
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+//   Widget _buildAvatarContainer(BuildContext context, int index, String label) {
+//     final isDark = Brightness.dark == Theme.of(context).brightness;
+//     final isSelected = selectedAvatarIndex == index;
+
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           selectedAvatarIndex = index;
+//         });
+//       },
+//       child: Container(
+//         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+//         decoration: BoxDecoration(
+//           color: isSelected
+//               ? kgoldColor
+//               : (isDark ? Colors.grey.shade900 : Colors.grey.shade100),
+//           borderRadius: BorderRadius.circular(12),
+//           border: Border.fromBorderSide(
+//             BorderSide(color: kgoldColor, width: 2),
+//           ),
+//         ),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             if (isSelected)
+//               const Icon(Icons.done_all, size: 16, color: kblackColor),
+//             if (isSelected) const SizedBox(width: 4),
+//             Text(
+//               label,
+//               style: TextStyle(
+//                 color: isSelected
+//                     ? kblackColor
+//                     : (isDark ? kwhiteColor : kblackColor),
+//                 fontSize: 13,
+//                 fontWeight: FontWeight.w600,
+//               ),
+//               maxLines: 1,
+//               overflow: TextOverflow.ellipsis,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class EmptyTab extends StatefulWidget {
   const EmptyTab({super.key});
 
@@ -916,20 +1030,66 @@ class EmptyTab extends StatefulWidget {
 
 class _EmptyTabState extends State<EmptyTab> {
   int selectedAvatarIndex = 0;
+  late VideoPlayerController _videoController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _videoController =
+        VideoPlayerController.asset('assets/sources/videos/tom.mp4')
+          ..initialize()
+              .then((_) {
+                if (mounted) {
+                  setState(() {});
+                  _videoController
+                    ..setLooping(true)
+                    ..play();
+                }
+              })
+              .catchError((error) {
+                print('Video loading error: $error');
+                if (mounted) {
+                  setState(() {});
+                }
+              });
+
+    _videoController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    super.dispose();
+  }
+
+  void _togglePlayPause() {
+    setState(() {
+      if (_videoController.value.isPlaying) {
+        _videoController.pause();
+      } else {
+        _videoController.play();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// Main content (center)
+        /// Main content
         SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                // Placeholder for 3 containers in row
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
+
+                /// Avatar buttons
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: _buildAvatarContainer(context, 0, 'Avatar 1'),
@@ -944,44 +1104,80 @@ class _EmptyTabState extends State<EmptyTab> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
-                //
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    gradient: ExploreScreen.accentGradient,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 18,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.construction,
-                    size: 65,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 20),
 
-                const Text(
-                  'AI Avatar feature coming soon ✨',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: kgoldColor,
+                const SizedBox(height: 16),
+
+                /// 🎥 Video with play/pause button
+                if (_videoController.value.isInitialized)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: _videoController.value.aspectRatio,
+                            child: VideoPlayer(_videoController),
+                          ),
+
+                          /// Play / Pause button
+                          GestureDetector(
+                            onTap: _togglePlayPause,
+                            child: Container(
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withValues(alpha: 0.4),
+                              ),
+                              child: Icon(
+                                _videoController.value.isPlaying
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                color: Colors.white,
+                                size: 36,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade900,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text(
+                              'Loading video...',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
+
+                const SizedBox(height: 50),
+
+                /// Coming soon
               ],
             ),
           ),
         ),
 
-        /// Mic button at bottom
+        /// Mic button
         Positioned(
           bottom: 30,
           left: 0,
@@ -1012,7 +1208,7 @@ class _EmptyTabState extends State<EmptyTab> {
   }
 
   Widget _buildAvatarContainer(BuildContext context, int index, String label) {
-    final isDark = Brightness.dark == Theme.of(context).brightness;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isSelected = selectedAvatarIndex == index;
 
     return GestureDetector(
@@ -1028,13 +1224,10 @@ class _EmptyTabState extends State<EmptyTab> {
               ? kgoldColor
               : (isDark ? Colors.grey.shade900 : Colors.grey.shade100),
           borderRadius: BorderRadius.circular(12),
-          border: Border.fromBorderSide(
-            BorderSide(color: kgoldColor, width: 2),
-          ),
+          border: Border.all(color: kgoldColor, width: 2),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             if (isSelected)
               const Icon(Icons.done_all, size: 16, color: kblackColor),
@@ -1042,11 +1235,11 @@ class _EmptyTabState extends State<EmptyTab> {
             Text(
               label,
               style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
                 color: isSelected
                     ? kblackColor
                     : (isDark ? kwhiteColor : kblackColor),
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -1089,7 +1282,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.08),
+                  color: Colors.black.withValues(alpha: .08),
                   blurRadius: 18,
                 ),
               ],

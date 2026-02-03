@@ -7,7 +7,7 @@ class UserPostModel {
   String profileImage;
   String category;
   PostModel post;
-  double? rating; // 4.0, 4.5, 5.0
+  double? rating;
   String? badge;
   bool hasStory;
   UserPostModel({

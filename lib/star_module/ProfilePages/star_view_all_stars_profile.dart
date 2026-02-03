@@ -7,6 +7,7 @@ import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
@@ -114,20 +115,18 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
             ];
           },
 
-          body: Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                ImagesTab(),
-                // ReelsTab(),
-                // ImagesTab(),
-                LiveTab(),
-                LegacyTab(),
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              ImagesTab(),
+              // ReelsTab(),
+              // ImagesTab(),
+              LiveTab(),
+              LegacyTab(),
 
-                EmptyTab(),
-                Mycreatorsmarketplace(),
-              ],
-            ),
+              EmptyTab(),
+              StarMycreatorsmarketplace(),
+            ],
           ),
         ),
       ),
@@ -254,24 +253,17 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
               Positioned(
                 bottom: -5,
                 left: 85,
-                child: SizedBox(
-                  height: 30,
-                  width: 30,
-
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kblackColor
-                          : kwhiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: kgoldColor, width: 1),
-                    ),
-                    child: Icon(Icons.star, color: kgoldColor, size: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kblackColor
+                        : kwhiteColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: kgoldColor, width: 1),
                   ),
+                  child: Icon(Icons.star, color: kgoldColor, size: 20),
                 ),
-
-                // Image.asset("assets/screenshots/gold.png", scale: 12),
               ),
             ],
           ),
@@ -1088,7 +1080,7 @@ class FreshTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 18,
                 ),
               ],

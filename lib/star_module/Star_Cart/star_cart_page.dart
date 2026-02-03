@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/cart_manager.dart';
+import 'package:harmanapp/star_module/Star_Cart/star_cart_manager.dart';
 
 import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
@@ -18,7 +18,7 @@ class _StarCartPageState extends State<StarCartPage> {
   double calculateTotalPrice() {
     double total = 0;
 
-    for (var item in CartManager.cartItems) {
+    for (var item in StarCartManager.cartItems) {
       String priceString = item["product"]["price"].replaceAll('\$', '');
       double price = double.tryParse(priceString) ?? 0;
 
@@ -31,6 +31,7 @@ class _StarCartPageState extends State<StarCartPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: isDark ? kblackColor : kwhiteColor,
       appBar: AppBar(
@@ -54,7 +55,7 @@ class _StarCartPageState extends State<StarCartPage> {
         centerTitle: true,
       ),
 
-      body: CartManager.cartItems.isEmpty
+      body: StarCartManager.cartItems.isEmpty
           ? Center(
               child: Text(
                 "No items in cart",
@@ -68,9 +69,9 @@ class _StarCartPageState extends State<StarCartPage> {
             )
           : ListView.builder(
               padding: const EdgeInsets.only(bottom: 80),
-              itemCount: CartManager.cartItems.length,
+              itemCount: StarCartManager.cartItems.length,
               itemBuilder: (context, index) {
-                final cartItem = CartManager.cartItems[index];
+                final cartItem = StarCartManager.cartItems[index];
                 final product = cartItem["product"];
                 final quantity = cartItem["quantity"];
 
@@ -112,8 +113,8 @@ class _StarCartPageState extends State<StarCartPage> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              // CartManager.cartItems.removeAt(index);
-                              CartManager.removeFromCart(index);
+                              // StarCartManager.cartItems.removeAt(index);
+                              StarCartManager.removeFromCart(index);
                             });
                           },
                           icon: Icon(
@@ -142,8 +143,8 @@ class _StarCartPageState extends State<StarCartPage> {
                                     if (cartItem["quantity"] > 1) {
                                       cartItem["quantity"]--;
                                     } else {
-                                      // CartManager.cartItems.removeAt(index);
-                                      CartManager.removeFromCart(index);
+                                      // StarCartManager.cartItems.removeAt(index);
+                                      StarCartManager.removeFromCart(index);
                                     }
                                   });
                                 },
@@ -197,67 +198,73 @@ class _StarCartPageState extends State<StarCartPage> {
               },
             ),
 
-      bottomNavigationBar: CartManager.cartItems.isEmpty
+      bottomNavigationBar: StarCartManager.cartItems.isEmpty
           ? null
-          : Container(
-              height: 80,
-              padding: const EdgeInsets.all(16),
-              // decoration: const BoxDecoration(
-              //   color: Colors.black,
-              //   boxShadow: [
-              //     BoxShadow(
-              //       color: Colors.black12,
-              //       blurRadius: 5,
-              //       spreadRadius: 2,
-              //     ),
-              //   ],
-              // ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFD4AF37), width: 1.5),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? kwhiteColor
-                          : kblackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                height: 80,
+                padding: const EdgeInsets.all(16),
+                // decoration: const BoxDecoration(
+                //   color: Colors.black,
+                //   boxShadow: [
+                //     BoxShadow(
+                //       color: Colors.black12,
+                //       blurRadius: 5,
+                //       spreadRadius: 2,
+                //     ),
+                //   ],
+                // ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xFFD4AF37),
+                    width: 1.5,
                   ),
+                ),
 
-                  OutlinedButton(
-                    onPressed: () {
-                      showPaymentMethods(context);
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 20,
-                      ),
-                      side: const BorderSide(
-                        color: Color(0xFFD4AF37), // gold outline
-                        width: 1.5,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      "Buy Now",
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total: \$${calculateTotalPrice().toStringAsFixed(2)}",
                       style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFFD4AF37), // text matches border
+                        fontSize: 18,
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? kwhiteColor
+                            : kblackColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+
+                    OutlinedButton(
+                      onPressed: () {
+                        showPaymentMethods(context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 20,
+                        ),
+                        side: const BorderSide(
+                          color: Color(0xFFD4AF37), // gold outline
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                        "Buy Now",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFFD4AF37), // text matches border
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
     );
@@ -405,13 +412,13 @@ class _StarCartPageState extends State<StarCartPage> {
   //     ),
   //   );
 
-  //   // CartManager.cartItems.clear();
-  //     CartManager.clearCart();
+  //   // StarCartManager.cartItems.clear();
+  //     StarCartManager.clearCart();
   //   setState(() {});
   // }
   void paymentSuccessScreen() {
     // ✅ Clear cart FIRST
-    CartManager.clearCart();
+    StarCartManager.clearCart();
 
     // ✅ Then navigate
     Navigator.push(
