@@ -37,7 +37,7 @@ class _StarMyCreatorsScreenState extends State<StarMyCreatorsScreen>
     );
 
     _circleVideoController =
-        VideoPlayerController.asset("assets/sources/videos/sharuk.mp4")
+        VideoPlayerController.asset("assets/sources/videos/sharuk2.mp4")
           ..initialize().then((_) {
             setState(() {});
           });
