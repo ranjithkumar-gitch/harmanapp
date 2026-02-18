@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/ProfilePages/view_all_stars_profile.dart';
+import 'package:harmanapp/star_module/Dashboard/sharukh_profile.dart';
 import 'package:harmanapp/star_module/Dashboard/view_mystar_image_profile.dart';
 import 'package:harmanapp/star_module/Dashboard/view_mystar_video_profile.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
@@ -80,7 +81,7 @@ class _StarMyCreatorsScreenState extends State<StarMyCreatorsScreen>
         context,
         MaterialPageRoute(
           builder: (_) => tappedIndex == 0
-              ? Mycreatorprofile(usrName: strName)
+              ? SharukhProfile(usrName: strName)
               : MyCreatorVideoCover(usrName: strName),
         ),
       );
@@ -292,30 +293,26 @@ class UserPostModel {
 
 final List<UserPostModel> creators = [
   UserPostModel(
+    name: "Sharukh Khan",
+    category: "Film actor",
+    profileImage: "sharuk.jpg",
+  ),
+  UserPostModel(
     name: "Tom Cruise",
     category: "Film actor",
     profileImage: "tom.jpg",
   ),
   UserPostModel(
-    name: "Ratan Tata",
-    category: "Business icon & philanthropist",
-    profileImage: "Ratan_Tata.jpg",
+    name: "Lionel Messi",
+    category: "Football icon",
+    profileImage: "messi.jpg",
   ),
   UserPostModel(
-    name: "Deepika Padukone",
-    category: "Actress & mental health advocate",
-    profileImage: "deepika.jpg",
+    name: "Jack Ma",
+    category: "Alibaba founder",
+    profileImage: "jack.jpg",
   ),
-  UserPostModel(
-    name: "Narayana Murthy",
-    category: "Infosys founder",
-    profileImage: "murthy.jpg",
-  ),
-  UserPostModel(
-    name: "Falguni Nayar",
-    category: "Nykaa founder",
-    profileImage: "nayar.jpeg",
-  ),
+
   UserPostModel(
     name: "Oprah Winfrey",
     category: "Media mogul",
@@ -340,6 +337,17 @@ final List<UserPostModel> creators = [
     name: "Taylor Swift",
     category: "Global cultural icon",
     profileImage: "swift.jpg",
+  ),
+  UserPostModel(
+    name: "Ratan Tata",
+    category: "Business icon & philanthropist",
+    profileImage: "Ratan_Tata.jpg",
+  ),
+
+  UserPostModel(
+    name: "Narayana Murthy",
+    category: "Infosys founder",
+    profileImage: "murthy.jpg",
   ),
   UserPostModel(
     name: "Céline Dion",
@@ -367,6 +375,11 @@ final List<UserPostModel> creators = [
     profileImage: "bhatia.jpg",
   ),
   UserPostModel(
+    name: "Deepika Padukone",
+    category: "Actress & mental health advocate",
+    profileImage: "deepika.jpg",
+  ),
+  UserPostModel(
     name: "Malala Yousafzai",
     category: "Nobel laureate",
     profileImage: "malala.jpg",
@@ -376,19 +389,15 @@ final List<UserPostModel> creators = [
     category: "Climate activist",
     profileImage: "greta.jpeg",
   ),
-  UserPostModel(
-    name: "Lionel Messi",
-    category: "Football icon",
-    profileImage: "messi.jpg",
-  ),
-  UserPostModel(
-    name: "Jack Ma",
-    category: "Alibaba founder",
-    profileImage: "jack.jpg",
-  ),
+
   UserPostModel(
     name: "Richard Branson",
     category: "Virgin Group founder",
     profileImage: "richard.jpeg",
+  ),
+  UserPostModel(
+    name: "Falguni Nayar",
+    category: "Nykaa founder",
+    profileImage: "nayar.jpeg",
   ),
 ];

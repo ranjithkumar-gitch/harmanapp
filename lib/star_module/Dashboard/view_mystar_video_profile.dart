@@ -81,7 +81,7 @@ class _MyCreatorVideoCoverState extends State<MyCreatorVideoCover>
                 children: [
                   _videoCover(),
                   profileImage(
-                    'assets/sources/profiles/deepika.jpg',
+                    'assets/sources/profiles/tom.jpg',
                     widget.usrName,
                   ),
 
