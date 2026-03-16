@@ -1,4 +1,4 @@
-package com.example.harmanapp
+package com.hvrlab.myautobiography
 
 import io.flutter.embedding.android.FlutterActivity
 
