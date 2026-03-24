@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
-import 'package:harmanapp/star_module/widgets/star_timeline_posts.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
-import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -23,13 +21,11 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
   // late UserPostModel post;
   double _rating = 0.0;
   bool _showRatingBar = false;
-  Color _ratingColor = CupertinoColors.white;
   // _ReelPostState(this.post);
-  double _starScale = 1.0;
-  bool _useLottieStar = false;
   late final AnimationController _lottieController;
   bool isPlaying = false;
   bool _showCommentBox = false;
+  bool _commentsEnabled = true;
   bool _isSharing = false;
 
   final TextEditingController _commentController = TextEditingController();
@@ -169,6 +165,23 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
                           ),
                         ),
                         PopupMenuItem(
+                          value: 'toggleComments',
+                          child: Text(
+                            _commentsEnabled
+                                ? 'Disable Comment Box'
+                                : 'Enable Comment Box',
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem(
                           value: 'Delete',
                           child: Text(
                             'Delete',
@@ -235,6 +248,14 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
                         ),
                       );
                       // handle block
+                    } else if (value == 'toggleComments') {
+                      setState(() {
+                        _commentsEnabled = !_commentsEnabled;
+                        if (!_commentsEnabled) {
+                          _showCommentBox = false;
+                          _commentController.clear();
+                        }
+                      });
                     } else if (value == 'Delete') {
                       final isDark =
                           Theme.of(context).brightness == Brightness.dark;
@@ -360,7 +381,7 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 450,
               child: Center(
                 child: Container(
@@ -544,22 +565,9 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
 
                           onPressed: () {
                             setState(() {
-                              _ratingColor = _getRatingColor(_rating);
                               _showRatingBar = false;
-                              _useLottieStar = true;
                               _playAnimation();
-                              _starScale = 1.4;
                             });
-
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () {
-                                if (!mounted) return;
-                                setState(() {
-                                  _starScale = 1.0;
-                                });
-                              },
-                            );
                           },
                         ),
                       ),
@@ -569,7 +577,7 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
               ),
             ),
           ),
-        if (_showCommentBox)
+        if (_showCommentBox && _commentsEnabled)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
@@ -719,17 +727,6 @@ class _StarReelBlurPostState extends State<StarReelBlurPost>
     if (rating >= 4.5) return "Silver";
     if (rating >= 4.0) return "Bronze";
     return "None";
-  }
-
-  Color _getRatingColor(double rating) {
-    if (rating == 5.0) {
-      return kgoldColor; // Gold
-    } else if (rating >= 4.5) {
-      return const Color(0xFFC0C0C0); // Silver
-    } else if (rating >= 0.0) {
-      return const Color(0xFFCD7F32); // Bronze
-    }
-    return CupertinoColors.white;
   }
 }
 

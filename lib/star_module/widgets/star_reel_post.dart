@@ -30,6 +30,7 @@ class _StarReelPostState extends State<StarReelPost>
   late final AnimationController _lottieController;
   bool isPlaying = false;
   bool _showCommentBox = false;
+  bool _commentsEnabled = true;
   bool _isSharing = false;
 
   final TextEditingController _commentController = TextEditingController();
@@ -170,6 +171,24 @@ class _StarReelPostState extends State<StarReelPost>
                         ),
 
                         PopupMenuItem(
+                          value: 'toggleComments',
+                          child: Text(
+                            _commentsEnabled
+                                ? 'Disable Comment Box'
+                                : 'Enable Comment Box',
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
+
+                        PopupMenuItem(
                           value: 'Block',
                           child: Text(
                             'Block',
@@ -251,6 +270,14 @@ class _StarReelPostState extends State<StarReelPost>
                         ),
                       );
                       // handle edit
+                    } else if (value == 'toggleComments') {
+                      setState(() {
+                        _commentsEnabled = !_commentsEnabled;
+                        if (!_commentsEnabled) {
+                          _showCommentBox = false;
+                          _commentController.clear();
+                        }
+                      });
                     } else if (value == 'Block') {
                       final isDark =
                           Theme.of(context).brightness == Brightness.dark;
@@ -454,16 +481,20 @@ class _StarReelPostState extends State<StarReelPost>
               ),
 
               CupertinoButton(
-                onPressed: () {
-                  setState(() {
-                    _showCommentBox = !_showCommentBox;
-                    _showRatingBar = false;
-                  });
-                },
+                onPressed: _commentsEnabled
+                    ? () {
+                        setState(() {
+                          _showCommentBox = !_showCommentBox;
+                          _showRatingBar = false;
+                        });
+                      }
+                    : null,
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
-                  color: _showCommentBox
+                  color: !_commentsEnabled
+                      ? CupertinoColors.systemGrey
+                      : _showCommentBox
                       ? kgoldColor
                       : Brightness.dark == Theme.of(context).brightness
                       ? kwhiteColor
@@ -590,7 +621,7 @@ class _StarReelPostState extends State<StarReelPost>
               ),
             ),
           ),
-        if (_showCommentBox)
+        if (_showCommentBox && _commentsEnabled)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
@@ -704,7 +735,10 @@ class _StarReelPostState extends State<StarReelPost>
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
-                      builder: (_) => CommentBottomSheet(post: widget.post),
+                      builder: (_) => CommentBottomSheet(
+                        post: widget.post,
+                        commentsEnabled: _commentsEnabled,
+                      ),
                     );
                   },
 
@@ -717,6 +751,18 @@ class _StarReelPostState extends State<StarReelPost>
                     ),
                   ),
                 ),
+                if (!_commentsEnabled)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 6),
+                    child: Text(
+                      'Comment box disabled for this post',
+                      style: TextStyle(
+                        fontFamily: "Gilroy",
+                        color: kgreyColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
               ],
               const SizedBox(height: 5),
               Text(

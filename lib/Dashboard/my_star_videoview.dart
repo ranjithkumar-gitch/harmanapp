@@ -6,9 +6,7 @@ import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/main_screen.dart';
 
 import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
-import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
-import 'package:harmanapp/star_module/Dashboard/star_my_stars_list.dart';
-import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
+import 'package:harmanapp/widgets/chat_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -428,7 +426,15 @@ class _MyStarVideoviewState extends State<MyStarVideoview>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ChatScreen(receiverName: widget.usrName),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Message",
                       overflow: TextOverflow.ellipsis,

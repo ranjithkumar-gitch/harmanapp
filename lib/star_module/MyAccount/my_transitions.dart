@@ -13,7 +13,7 @@ class StarMyTransitions extends StatefulWidget {
 class _StarMyTransitionsState extends State<StarMyTransitions>
     with TickerProviderStateMixin {
   String? _selectedDefault = 'fade';
-  List<String> _selectedCustomAnimations = [];
+  final List<String> _selectedCustomAnimations = [];
   bool _isAnimationPlaying = false;
   bool _handAnimationPlaying = false;
   bool _loopAnimationPlaying = false;

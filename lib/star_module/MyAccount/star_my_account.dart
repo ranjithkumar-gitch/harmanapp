@@ -41,7 +41,6 @@ class _StarMyAccountState extends State<StarMyAccount> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,

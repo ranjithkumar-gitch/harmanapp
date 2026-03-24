@@ -3,12 +3,11 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/models/user_post_model.dart';
 import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
+import 'package:harmanapp/widgets/chat_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -310,7 +309,14 @@ class _StarAllCreatorsProfileState extends State<StarAllCreatorsProfile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChatScreen(receiverName: name),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Message",
                       overflow: TextOverflow.ellipsis,

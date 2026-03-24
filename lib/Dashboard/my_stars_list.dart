@@ -3,14 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/AppBar/app_bar.dart.dart';
-import 'package:harmanapp/Dashboard/my_star_profileview.dart';
 import 'package:harmanapp/Dashboard/my_star_videoview.dart';
 import 'package:harmanapp/Dashboard/stargazer_sharuk_profile.dart';
 
-import 'package:harmanapp/star_module/Dashboard/view_mystar_image_profile.dart';
-import 'package:harmanapp/star_module/Dashboard/view_mystar_video_profile.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
-import 'package:lottie/lottie.dart';
 import 'package:video_player/video_player.dart';
 
 class MyCreatorsScreen extends StatefulWidget {
@@ -96,44 +92,47 @@ class _MyCreatorsScreenState extends State<MyCreatorsScreen>
           ? kblackColor
           : kwhiteColor,
       appBar: CustomAppBar(),
-      body: isPlaying
-          ? Stack(
-              children: [
-                Center(
-                  child: SizedBox(
-                    child: _circleVideoController.value.isInitialized
-                        ? VideoPlayer(_circleVideoController)
-                        : const Center(child: CircularProgressIndicator()),
+      body: SizedBox(
+        width: width,
+        child: isPlaying
+            ? Stack(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      child: _circleVideoController.value.isInitialized
+                          ? VideoPlayer(_circleVideoController)
+                          : const Center(child: CircularProgressIndicator()),
+                    ),
                   ),
-                ),
-              ],
-            )
-          : ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                _searchBar(),
-                _subscriberList(
-                  context,
-                  creators.take(7).toList(),
-                  tier: "Gold",
-                  color: kgoldColor,
-                ),
+                ],
+              )
+            : ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _searchBar(),
+                  _subscriberList(
+                    context,
+                    creators.take(7).toList(),
+                    tier: "Gold",
+                    color: kgoldColor,
+                  ),
 
-                _subscriberList(
-                  context,
-                  creators.skip(7).take(7).toList(),
-                  tier: "Silver",
-                  color: CupertinoColors.systemGrey,
-                ),
-                _subscriberList(
-                  context,
-                  creators.skip(14).toList(),
-                  tier: "Bronze",
-                  color: CupertinoColors.systemBrown,
-                ),
-                const SizedBox(height: 80),
-              ],
-            ),
+                  _subscriberList(
+                    context,
+                    creators.skip(7).take(7).toList(),
+                    tier: "Silver",
+                    color: CupertinoColors.systemGrey,
+                  ),
+                  _subscriberList(
+                    context,
+                    creators.skip(14).toList(),
+                    tier: "Bronze",
+                    color: CupertinoColors.systemBrown,
+                  ),
+                  const SizedBox(height: 80),
+                ],
+              ),
+      ),
     );
   }
 

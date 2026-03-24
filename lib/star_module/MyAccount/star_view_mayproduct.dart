@@ -184,47 +184,6 @@ class _StarViewMyProductState extends State<StarViewMyProduct> {
     );
   }
 
-  void _showBuyItAgainDialog(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    showCupertinoDialog(
-      context: context,
-      builder: (_) => CupertinoTheme(
-        data: CupertinoThemeData(
-          brightness: isDark ? Brightness.dark : Brightness.light,
-          primaryColor: gold,
-        ),
-        child: CupertinoAlertDialog(
-          title: const Text(
-            "Buy it again",
-            style: TextStyle(color: kgoldColor),
-          ),
-          content: Text(
-            "Are you sure you want to buy it again?",
-            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
-          ),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: isDark ? kwhiteColor : kblackColor),
-              ),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text("Yes", style: TextStyle(color: kgoldColor)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _showOrderStatusDialog() {
     String selectedStatus = "New";
     final isDark = Theme.of(context).brightness == Brightness.dark;

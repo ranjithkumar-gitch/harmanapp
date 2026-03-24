@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/star_module/Star_Cart/star_cart_manager.dart';
 
-import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';

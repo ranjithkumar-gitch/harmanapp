@@ -120,10 +120,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                                 onSecondary: isDark ? kblackColor : kwhiteColor,
                                 error: Colors.red,
                                 onError: kwhiteColor,
-                                background: isDark ? kblackColor : kwhiteColor,
-                                onBackground: isDark
-                                    ? kwhiteColor
-                                    : kblackColor,
                                 surface: isDark ? kblackColor : kwhiteColor,
                                 onSurface: isDark ? kwhiteColor : kblackColor,
                               ),
@@ -389,12 +385,6 @@ class _LegacyFormPageState extends State<LegacyFormPage> {
                                       : kwhiteColor,
                                   error: Colors.red,
                                   onError: kwhiteColor,
-                                  background: isDark
-                                      ? kblackColor
-                                      : kwhiteColor,
-                                  onBackground: isDark
-                                      ? kwhiteColor
-                                      : kblackColor,
                                   surface: isDark ? kblackColor : kwhiteColor,
                                   onSurface: isDark ? kwhiteColor : kblackColor,
                                 ),

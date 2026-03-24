@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
-import 'package:harmanapp/ProfilePages/my_stars_marketplace.dart';
 import 'package:harmanapp/star_module/Dashboard/star_main_screen.dart';
 import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
 
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
+import 'package:harmanapp/widgets/chat_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -26,7 +26,6 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
   late VideoPlayerController _videoController;
   bool isVideoReady = false;
   bool isFollowing = false;
-  bool _isMuted = true;
   late TabController _tabController;
 
   final List<String> _icons = [
@@ -303,7 +302,14 @@ class _MycreatorprofileState extends State<Mycreatorprofile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChatScreen(receiverName: name),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Message",
                       overflow: TextOverflow.ellipsis,

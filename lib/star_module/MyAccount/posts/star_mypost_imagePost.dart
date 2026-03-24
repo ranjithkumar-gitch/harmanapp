@@ -7,7 +7,6 @@ import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
-import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 
 class StarImagePost extends StatefulWidget {
@@ -23,15 +22,12 @@ class _StarImagePostState extends State<StarImagePost>
   int _currentImage = 0;
   double _rating = 0.0;
   bool _showRatingBar = false;
-  Color _ratingColor = CupertinoColors.white;
-  double _starScale = 1.0;
   late final AnimationController _lottieController;
   bool isPlaying = false;
   bool _showCommentBox = false;
+  bool _commentsEnabled = true;
   final TextEditingController _commentController = TextEditingController();
   bool showComments = false;
-
-  bool _useLottieStar = false;
   @override
   void initState() {
     _pageController = PageController(initialPage: 0)
@@ -190,6 +186,23 @@ class _StarImagePostState extends State<StarImagePost>
                             ),
                           ),
                         ),
+                        PopupMenuItem(
+                          value: 'toggleComments',
+                          child: Text(
+                            _commentsEnabled
+                                ? 'Disable Comment Box'
+                                : 'Enable Comment Box',
+                            style: TextStyle(
+                              color:
+                                  Brightness.dark ==
+                                      Theme.of(context).brightness
+                                  ? kwhiteColor
+                                  : kblackColor,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gilroy",
+                            ),
+                          ),
+                        ),
                       ],
                     );
 
@@ -242,6 +255,14 @@ class _StarImagePostState extends State<StarImagePost>
                         ),
                       );
                       // handle edit
+                    } else if (value == 'toggleComments') {
+                      setState(() {
+                        _commentsEnabled = !_commentsEnabled;
+                        if (!_commentsEnabled) {
+                          _showCommentBox = false;
+                          _commentController.clear();
+                        }
+                      });
                     } else if (value == 'Block') {
                       final isDark =
                           Theme.of(context).brightness == Brightness.dark;
@@ -524,22 +545,9 @@ class _StarImagePostState extends State<StarImagePost>
 
                           onPressed: () {
                             setState(() {
-                              _ratingColor = _getRatingColor(_rating);
                               _showRatingBar = false;
-                              _useLottieStar = true;
                               _playAnimation();
-                              _starScale = 1.4;
                             });
-
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () {
-                                if (!mounted) return;
-                                setState(() {
-                                  _starScale = 1.0;
-                                });
-                              },
-                            );
                           },
                         ),
                       ),
@@ -551,7 +559,7 @@ class _StarImagePostState extends State<StarImagePost>
               ),
             ),
           ),
-        if (_showCommentBox)
+        if (_showCommentBox && _commentsEnabled)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Container(
@@ -712,48 +720,6 @@ class _StarImagePostState extends State<StarImagePost>
       ],
     );
   }
-
-  Color _getRatingColor(double rating) {
-    if (rating == 5.0) {
-      return kgoldColor; // Gold
-    } else if (rating >= 4.5) {
-      return const Color(0xFFC0C0C0); // Silver
-    } else if (rating >= 0.0) {
-      return const Color(0xFFCD7F32); // Bronze
-    }
-    return CupertinoColors.white;
-  }
-
-  Widget _comment(String username, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: "$username ",
-              style: const TextStyle(
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w600,
-                color: kgoldColor,
-                fontSize: 14,
-              ),
-            ),
-            TextSpan(
-              text: text,
-              style: TextStyle(
-                fontFamily: "Gilroy",
-                color: Brightness.dark == Theme.of(context).brightness
-                    ? kwhiteColor
-                    : kblackColor,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 final List<CommentModel> comments = [
@@ -805,7 +771,13 @@ class CommentModel {
 
 class CommentBottomSheet extends StatefulWidget {
   final StarPostModel post;
-  const CommentBottomSheet({super.key, required this.post});
+  final bool commentsEnabled;
+
+  const CommentBottomSheet({
+    super.key,
+    required this.post,
+    this.commentsEnabled = true,
+  });
 
   @override
   State<CommentBottomSheet> createState() => _CommentBottomSheetState();
@@ -813,6 +785,159 @@ class CommentBottomSheet extends StatefulWidget {
 
 class _CommentBottomSheetState extends State<CommentBottomSheet> {
   final TextEditingController _controller = TextEditingController();
+  late final List<CommentModel> _comments;
+  final Set<String> _blockedUsers = <String>{};
+  static const String _currentUsername = 'stargazer.you';
+  static const String _currentUserImage =
+      'assets/sources/profiles/averie-woodard.jpg';
+
+  int _myCommentIndex() {
+    return _comments.indexWhere((item) => item.username == _currentUsername);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _comments = List<CommentModel>.from(comments);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _showCommentActions(CommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (sheetContext) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoActionSheet(
+          title: Text(comment.username),
+          message: const Text('Choose an action for this comment'),
+          actions: [
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                _confirmDeleteComment(comment);
+              },
+              child: const Text('Delete'),
+            ),
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                _confirmBlockAndDeleteComment(comment);
+              },
+              child: const Text('Block and Delete'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(sheetContext),
+            child: const Text('Cancel'),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDeleteComment(CommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (_) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoAlertDialog(
+          title: const Text(
+            'Delete',
+            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Are you sure want delete this from time line?',
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _comments.remove(comment);
+                });
+              },
+              child: const Text('Delete', style: TextStyle(color: kgoldColor)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmBlockAndDeleteComment(CommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (_) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoAlertDialog(
+          title: const Text(
+            'Block and Delete',
+            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Are you sure u want block this user from this time line and delete this comment?',
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _blockedUsers.add(comment.username);
+                  _comments.removeWhere(
+                    (item) => item.username == comment.username,
+                  );
+                });
+              },
+              child: const Text(
+                'Block and Delete',
+                style: TextStyle(color: kgoldColor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -864,22 +989,25 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               Expanded(
                 child: ListView.builder(
                   controller: scrollController,
-                  itemCount: comments.length,
+                  itemCount: _comments.length,
                   itemBuilder: (_, index) {
-                    final comment = comments[index];
+                    final comment = _comments[index];
 
                     return _CommentItem(
                       image: comment.image,
                       name: comment.username,
                       date: comment.time,
                       comment: comment.message,
+                      onMorePressed: () => _showCommentActions(comment),
                     );
                   },
                 ),
               ),
 
               /// input field
-              _commentInput(),
+              widget.commentsEnabled
+                  ? _commentInput()
+                  : _commentsDisabledNote(),
             ],
           ),
         );
@@ -887,7 +1015,36 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
     );
   }
 
+  Widget _commentsDisabledNote() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
+      ),
+      child: Text(
+        'Comment box is disabled for this post',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Brightness.dark == Theme.of(context).brightness
+              ? Colors.white54
+              : Colors.black54,
+          fontSize: 13,
+          fontFamily: "Gilroy",
+        ),
+      ),
+    );
+  }
+
   Widget _commentInput() {
+    final myIndex = _myCommentIndex();
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -907,7 +1064,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               image: const DecorationImage(
-                image: AssetImage("assets/sources/profiles/averie-woodard.jpg"),
+                image: AssetImage(_currentUserImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -924,7 +1081,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                     : kblackColor,
               ),
               decoration: InputDecoration(
-                hintText: "Add a comment...",
+                hintText: myIndex == -1
+                    ? "Add a comment..."
+                    : "Edit your comment...",
                 hintStyle: TextStyle(
                   color: Brightness.dark == Theme.of(context).brightness
                       ? Colors.white54
@@ -935,6 +1094,23 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             ),
           ),
 
+          if (myIndex != -1)
+            CupertinoButton(
+              padding: const EdgeInsets.only(right: 6),
+              minimumSize: const Size(0, 0),
+              onPressed: () {
+                setState(() {
+                  _comments.removeAt(myIndex);
+                  _controller.clear();
+                });
+              },
+              child: const Icon(
+                CupertinoIcons.delete,
+                color: CupertinoColors.systemRed,
+                size: 20,
+              ),
+            ),
+
           CupertinoButton(
             padding: EdgeInsets.zero,
             child: const Icon(
@@ -943,9 +1119,25 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             ),
 
             onPressed: () {
-              if (_controller.text.trim().isNotEmpty) {
+              final text = _controller.text.trim();
+              if (text.isEmpty) return;
+
+              setState(() {
+                final updatedComment = CommentModel(
+                  username: _currentUsername,
+                  image: _currentUserImage,
+                  message: text,
+                  time: 'now',
+                );
+
+                if (myIndex == -1) {
+                  _comments.insert(0, updatedComment);
+                } else {
+                  _comments[myIndex] = updatedComment;
+                }
+
                 _controller.clear();
-              }
+              });
             },
           ),
         ],
@@ -959,12 +1151,14 @@ class _CommentItem extends StatelessWidget {
   final String name;
   final String date;
   final String comment;
+  final VoidCallback onMorePressed;
 
   const _CommentItem({
     required this.image,
     required this.name,
     required this.date,
     required this.comment,
+    required this.onMorePressed,
   });
 
   @override
@@ -996,15 +1190,17 @@ class _CommentItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: Brightness.dark == Theme.of(context).brightness
-                            ? kwhiteColor
-                            : kblackColor,
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -1016,6 +1212,16 @@ class _CommentItem extends StatelessWidget {
                             : Colors.black54,
                         fontSize: 12,
                       ),
+                    ),
+                    CupertinoButton(
+                      padding: const EdgeInsets.only(left: 8),
+                      onPressed: onMorePressed,
+                      child: const Icon(
+                        CupertinoIcons.ellipsis,
+                        color: kgoldColor,
+                        size: 18,
+                      ),
+                      minimumSize: Size(0, 0),
                     ),
                   ],
                 ),

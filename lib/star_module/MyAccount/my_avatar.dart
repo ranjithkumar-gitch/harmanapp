@@ -179,7 +179,7 @@ class _StarMyAvatarState extends State<StarMyAvatar> {
                           onChanged: (value) {
                             _showAvatarDialog(context, isDark, value, index);
                           },
-                          activeColor: kgoldColor,
+                          activeTrackColor: kgoldColor,
                         ),
                       ],
                     ),

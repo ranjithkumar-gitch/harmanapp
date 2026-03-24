@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:harmanapp/Login/login_screen.dart';
-import 'package:harmanapp/widgets/theme_notifier.dart';
 
 // class Splashscreen extends StatefulWidget {
 //   const Splashscreen({super.key});
@@ -77,10 +76,7 @@ import 'package:harmanapp/widgets/theme_notifier.dart';
 //     );
 //   }
 // }
-import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
-import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class Splashscreen extends StatefulWidget {

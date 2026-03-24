@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Cart/cart_manager.dart';
 
 import 'package:harmanapp/star_module/MyAccount/star_my_account.dart';
 import 'package:harmanapp/star_module/Star_Cart/star_cart_manager.dart';

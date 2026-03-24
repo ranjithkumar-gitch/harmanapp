@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:harmanapp/models/post_model.dart';
@@ -81,8 +79,6 @@ class _UnPublishedPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return ListView(
       padding: const EdgeInsets.only(bottom: 80),
       children: posts.map((post) {
@@ -102,8 +98,6 @@ class _PublishedPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return ListView(
       padding: const EdgeInsets.only(bottom: 80),
       children: [
