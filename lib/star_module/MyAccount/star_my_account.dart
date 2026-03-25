@@ -8,6 +8,7 @@ import 'package:harmanapp/star_module/MyAccount/edit_profile.dart';
 import 'package:harmanapp/star_module/MyAccount/legacy.dart';
 import 'package:harmanapp/star_module/MyAccount/my_avatar.dart';
 import 'package:harmanapp/star_module/MyAccount/my_biography.dart';
+import 'package:harmanapp/star_module/MyAccount/star_messages_screen.dart';
 import 'package:harmanapp/star_module/MyAccount/my_transitions.dart';
 import 'package:harmanapp/star_module/MyAccount/star_market.dart';
 import 'package:harmanapp/star_module/MyAccount/star_my_memberships.dart';
@@ -361,6 +362,25 @@ class _StarMyAccountState extends State<StarMyAccount> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) => const StarMyBiography(),
+                              ),
+                            );
+                          },
+                        ),
+                        _optionCard(
+                          icon: Icons.message_outlined,
+                          title: 'Messages',
+                          subtitle: 'Stars and Stargazers',
+                          isSelected: selectedCard == "Messages",
+                          onTap: () => setState(
+                            () => selectedCard = selectedCard == "Messages"
+                                ? ""
+                                : "Messages",
+                          ),
+                          onButtonPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StarMessagesScreen(),
                               ),
                             );
                           },

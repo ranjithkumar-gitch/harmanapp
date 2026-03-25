@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/models/user_post_model.dart';
-import 'package:harmanapp/widgets/image_post.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
@@ -19,10 +18,6 @@ class ReelPost extends StatefulWidget {
 
 class _ReelPostState extends State<ReelPost>
     with SingleTickerProviderStateMixin {
-  static const String _currentUsername = 'ranjith';
-  static const String _currentUserImage =
-      'assets/sources/profiles/averie-woodard.jpg';
-
   late VideoPlayerController _playerController;
   // late UserPostModel post;
   double _rating = 0.0;
@@ -36,7 +31,6 @@ class _ReelPostState extends State<ReelPost>
   bool _showCommentBox = false;
   bool _commentsEnabled = true;
   bool _isSharing = false;
-  String? _myComment;
 
   final TextEditingController _commentController = TextEditingController();
 
@@ -73,9 +67,7 @@ class _ReelPostState extends State<ReelPost>
 
   @override
   void dispose() {
-    _commentController.dispose();
     _lottieController.dispose();
-    _playerController.dispose();
     super.dispose();
   }
 
@@ -84,58 +76,6 @@ class _ReelPostState extends State<ReelPost>
       isPlaying = true;
     });
     _lottieController.forward(from: 0);
-  }
-
-  int get _displayCommentCount {
-    final baseCount =
-        int.tryParse(widget.post.post.comments?.toString() ?? '') ?? 0;
-    return baseCount + (_myComment == null ? 0 : 1);
-  }
-
-  void _toggleCommentComposer() {
-    setState(() {
-      _showCommentBox = !_showCommentBox;
-      _showRatingBar = false;
-      if (_showCommentBox && _myComment != null) {
-        _commentController.text = _myComment!;
-        _commentController.selection = TextSelection.fromPosition(
-          TextPosition(offset: _commentController.text.length),
-        );
-      }
-      if (!_showCommentBox && _myComment == null) {
-        _commentController.clear();
-      }
-    });
-  }
-
-  void _saveComment() {
-    final comment = _commentController.text.trim();
-    if (comment.isEmpty) return;
-
-    setState(() {
-      _myComment = comment;
-      _showCommentBox = false;
-      _commentController.clear();
-    });
-  }
-
-  void _editMyComment() {
-    setState(() {
-      _showCommentBox = true;
-      _showRatingBar = false;
-      _commentController.text = _myComment ?? '';
-      _commentController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _commentController.text.length),
-      );
-    });
-  }
-
-  void _deleteMyComment() {
-    setState(() {
-      _myComment = null;
-      _commentController.clear();
-      _showCommentBox = false;
-    });
   }
 
   @override
@@ -536,7 +476,14 @@ class _ReelPostState extends State<ReelPost>
               ),
 
               CupertinoButton(
-                onPressed: _commentsEnabled ? _toggleCommentComposer : null,
+                onPressed: _commentsEnabled
+                    ? () {
+                        setState(() {
+                          _showCommentBox = !_showCommentBox;
+                          _showRatingBar = false;
+                        });
+                      }
+                    : null,
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
@@ -689,15 +636,9 @@ class _ReelPostState extends State<ReelPost>
                   TextField(
                     controller: _commentController,
                     maxLines: 2,
-                    style: TextStyle(
-                      color: Brightness.dark == Theme.of(context).brightness
-                          ? Colors.white
-                          : Colors.black,
-                    ),
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: _myComment == null
-                          ? "Write a comment..."
-                          : "Edit your comment...",
+                      hintText: "Write a comment...",
                       hintStyle: TextStyle(
                         color: Brightness.dark == Theme.of(context).brightness
                             ? Colors.white54
@@ -718,27 +659,21 @@ class _ReelPostState extends State<ReelPost>
 
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_myComment != null)
-                          CupertinoButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: _deleteMyComment,
-                            child: const Icon(
-                              CupertinoIcons.delete,
-                              color: CupertinoColors.systemRed,
-                            ),
-                          ),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: const Icon(
-                            CupertinoIcons.paperplane_fill,
-                            color: kgoldColor,
-                          ),
-                          onPressed: _saveComment,
-                        ),
-                      ],
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Icon(
+                        CupertinoIcons.paperplane_fill,
+                        color: kgoldColor,
+                      ),
+                      onPressed: () {
+                        final comment = _commentController.text.trim();
+                        if (comment.isNotEmpty) {
+                          _commentController.clear();
+                          setState(() {
+                            _showCommentBox = false;
+                          });
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -795,7 +730,7 @@ class _ReelPostState extends State<ReelPost>
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
-                      builder: (_) => CommentBottomSheet(
+                      builder: (_) => ReelCommentBottomSheet(
                         post: widget.post,
                         commentsEnabled: _commentsEnabled,
                       ),
@@ -803,7 +738,7 @@ class _ReelPostState extends State<ReelPost>
                   },
 
                   child: Text(
-                    'View all $_displayCommentCount comments',
+                    'View all ${widget.post.post.comments} comments',
                     style: TextStyle(
                       fontFamily: "Gilroy",
                       color: kgoldColor,
@@ -824,87 +759,6 @@ class _ReelPostState extends State<ReelPost>
                     ),
                   ),
               ],
-              if (_myComment != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: GestureDetector(
-                    onTap: _editMyComment,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 34,
-                          width: 34,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: const DecorationImage(
-                              image: AssetImage(_currentUserImage),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      _currentUsername,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color:
-                                            Brightness.dark ==
-                                                Theme.of(context).brightness
-                                            ? kwhiteColor
-                                            : kblackColor,
-                                      ),
-                                    ),
-                                  ),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    minimumSize: const Size(0, 0),
-                                    onPressed: _editMyComment,
-                                    child: const Icon(
-                                      CupertinoIcons.pencil,
-                                      size: 18,
-                                      color: kgoldColor,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    minimumSize: const Size(0, 0),
-                                    onPressed: _deleteMyComment,
-                                    child: const Icon(
-                                      CupertinoIcons.delete,
-                                      size: 18,
-                                      color: CupertinoColors.systemRed,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _myComment!,
-                                style: TextStyle(
-                                  color:
-                                      Brightness.dark ==
-                                          Theme.of(context).brightness
-                                      ? kwhiteColor
-                                      : kblackColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               const SizedBox(height: 5),
               Text(
                 widget.post.post.date!,
@@ -982,6 +836,497 @@ class _RatingCardState extends State<RatingCard> {
             );
           }),
         ),
+      ),
+    );
+  }
+}
+
+final List<ReelCommentModel> _reelCommentsSeed = [
+  ReelCommentModel(
+    username: 'john_doe',
+    image: 'assets/sources/profiles/aiony-haust.jpg',
+    message: 'This looks amazing 🔥🔥',
+    time: '2d',
+  ),
+  ReelCommentModel(
+    username: 'alex_99',
+    image: 'assets/sources/profiles/deco-dev.png',
+    message: 'Pure elegance ✨',
+    time: '1d',
+  ),
+  ReelCommentModel(
+    username: 'maria_k',
+    image: 'assets/sources/profiles/aiony-haust.jpg',
+    message: 'Luxury vibes only 💫',
+    time: '5h',
+  ),
+  ReelCommentModel(
+    username: 'rohit.dev',
+    image: 'assets/sources/profiles/azamat-zhanisov-.jpg',
+    message: 'Nice shot 📸',
+    time: '3h',
+  ),
+  ReelCommentModel(
+    username: 'sophia_l',
+    image: 'assets/sources/profiles/foto-sushi.jpg',
+    message: 'Absolutely stunning ❤️',
+    time: '1h',
+  ),
+];
+
+class ReelCommentModel {
+  final String username;
+  final String image;
+  final String message;
+  final String time;
+
+  const ReelCommentModel({
+    required this.username,
+    required this.image,
+    required this.message,
+    required this.time,
+  });
+}
+
+class ReelCommentBottomSheet extends StatefulWidget {
+  final UserPostModel post;
+  final bool commentsEnabled;
+
+  const ReelCommentBottomSheet({
+    super.key,
+    required this.post,
+    required this.commentsEnabled,
+  });
+
+  @override
+  State<ReelCommentBottomSheet> createState() => _ReelCommentBottomSheetState();
+}
+
+class _ReelCommentBottomSheetState extends State<ReelCommentBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
+  late final List<ReelCommentModel> _comments;
+  bool _isEditingMyComment = false;
+  static const String _currentUsername = 'ranjith';
+  static const String _currentUserImage =
+      'assets/sources/profiles/averie-woodard.jpg';
+
+  int _myCommentIndex() {
+    return _comments.indexWhere((item) => item.username == _currentUsername);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _comments = List<ReelCommentModel>.from(_reelCommentsSeed);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _showMyCommentActions(ReelCommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (sheetContext) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoActionSheet(
+          title: const Text('Your Comment'),
+          message: const Text('Choose an action'),
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                setState(() {
+                  _isEditingMyComment = true;
+                  _controller.text = comment.message;
+                });
+              },
+              child: const Text('Edit'),
+            ),
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                _confirmDeleteMyComment(comment);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(sheetContext),
+            child: const Text('Cancel'),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDeleteMyComment(ReelCommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (_) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoAlertDialog(
+          title: const Text(
+            'Delete Comment',
+            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Are you sure you want to delete your comment?',
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _comments.remove(comment);
+                  _isEditingMyComment = false;
+                  _controller.clear();
+                });
+              },
+              child: const Text('Delete', style: TextStyle(color: kgoldColor)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.4,
+      maxChildSize: 0.95,
+      builder: (context, scrollController) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          decoration: BoxDecoration(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kblackColor
+                : kwhiteColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              Container(
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white24
+                      : Colors.black26,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Comments',
+                style: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Divider(color: Colors.white12),
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: _comments.length,
+                  itemBuilder: (_, index) {
+                    final comment = _comments[index];
+                    return _ReelCommentItem(
+                      image: comment.image,
+                      name: comment.username,
+                      date: comment.time,
+                      comment: comment.message,
+                      onMorePressed: comment.username == _currentUsername
+                          ? () => _showMyCommentActions(comment)
+                          : null,
+                    );
+                  },
+                ),
+              ),
+              widget.commentsEnabled
+                  ? _commentInput()
+                  : _commentsDisabledNote(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _commentsDisabledNote() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
+      ),
+      child: Text(
+        'Comment box is disabled for this post',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Brightness.dark == Theme.of(context).brightness
+              ? Colors.white54
+              : Colors.black54,
+          fontSize: 13,
+          fontFamily: 'Gilroy',
+        ),
+      ),
+    );
+  }
+
+  Widget _commentInput() {
+    final myIndex = _myCommentIndex();
+
+    if (myIndex != -1 && !_isEditingMyComment) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? Colors.white12
+                  : Colors.black12,
+            ),
+          ),
+        ),
+        child: Text(
+          'Tap ... on your comment to edit or delete',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white54
+                : Colors.black54,
+            fontSize: 13,
+            fontFamily: 'Gilroy',
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 36,
+            width: 36,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: AssetImage(_currentUserImage),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              style: TextStyle(
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+              ),
+              decoration: InputDecoration(
+                hintText: _isEditingMyComment
+                    ? 'Edit your comment...'
+                    : 'Add a comment...',
+                hintStyle: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white54
+                      : Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          if (_isEditingMyComment)
+            CupertinoButton(
+              padding: const EdgeInsets.only(right: 6),
+              minimumSize: const Size(0, 0),
+              onPressed: () {
+                setState(() {
+                  _isEditingMyComment = false;
+                  _controller.clear();
+                });
+              },
+              child: const Icon(
+                CupertinoIcons.xmark_circle,
+                color: CupertinoColors.systemGrey,
+                size: 20,
+              ),
+            ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              final text = _controller.text.trim();
+              if (text.isEmpty) return;
+
+              setState(() {
+                final updatedComment = ReelCommentModel(
+                  username: _currentUsername,
+                  image: _currentUserImage,
+                  message: text,
+                  time: 'now',
+                );
+
+                if (myIndex == -1) {
+                  _comments.insert(0, updatedComment);
+                } else {
+                  _comments[myIndex] = updatedComment;
+                }
+
+                _controller.clear();
+                _isEditingMyComment = false;
+              });
+            },
+            child: const Icon(
+              CupertinoIcons.paperplane_fill,
+              color: kgoldColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReelCommentItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String date;
+  final String comment;
+  final VoidCallback? onMorePressed;
+
+  const _ReelCommentItem({
+    required this.image,
+    required this.name,
+    required this.date,
+    required this.comment,
+    required this.onMorePressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
+                        fontSize: 12,
+                      ),
+                    ),
+                    if (onMorePressed != null)
+                      CupertinoButton(
+                        padding: const EdgeInsets.only(left: 8),
+                        onPressed: onMorePressed,
+                        minimumSize: const Size(0, 0),
+                        child: const Icon(
+                          CupertinoIcons.ellipsis,
+                          color: kgoldColor,
+                          size: 18,
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  comment,
+                  style: TextStyle(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

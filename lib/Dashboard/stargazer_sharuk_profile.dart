@@ -6,6 +6,7 @@ import 'package:harmanapp/AppBar/app_bar.dart.dart';
 import 'package:harmanapp/Dashboard/explore_screen.dart';
 import 'package:harmanapp/Dashboard/main_screen.dart';
 import 'package:harmanapp/star_module/ProfilePages/star_my_stars_marketplace.dart';
+import 'package:harmanapp/widgets/chat_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -302,7 +303,15 @@ class _StargazerSharukhProfileState extends State<StargazerSharukhProfile>
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ChatScreen(receiverName: widget.usrName),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Message",
                       overflow: TextOverflow.ellipsis,

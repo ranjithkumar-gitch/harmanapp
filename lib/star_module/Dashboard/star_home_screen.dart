@@ -1,16 +1,31 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harmanapp/models/post_model.dart';
-import 'package:harmanapp/models/user_post_model.dart';
+import 'package:harmanapp/models/user_post_model.dart' show UserPostModel;
+import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/Star_AppBar/star_app_bar.dart.dart';
-import 'package:harmanapp/widgets/image_post.dart';
-import 'package:harmanapp/widgets/reel_post.dart';
+import 'package:harmanapp/star_module/widgets/star_image_post.dart';
+import 'package:harmanapp/star_module/widgets/star_reel_post.dart';
 import 'package:harmanapp/widgets/story_picture.dart';
 
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class StarHomeScreen extends StatelessWidget {
   const StarHomeScreen({super.key});
+
+  UserPostModel _toUserPostModel(StarPostModel post) {
+    return UserPostModel(
+      name: post.name,
+      sname: post.sname,
+      tier: post.tier,
+      profileImage: post.profileImage,
+      category: post.category,
+      post: post.post,
+      hasStory: post.hasStory,
+      rating: post.rating,
+      badge: post.badge,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +47,7 @@ class StarHomeScreen extends StatelessWidget {
               itemBuilder: (context, index, realIndex) {
                 final usersWithStory = posts
                     .where((post) => post.hasStory)
+                    .map(_toUserPostModel)
                     .toList();
 
                 return Padding(
@@ -65,12 +81,12 @@ class StarHomeScreen extends StatelessWidget {
             if (post.post.postType == Post.picture) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: ImagePost(post: post),
+                child: StarImagePost(post: post),
               );
             }
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: ReelPost(post: post),
+              child: StarReelPost(post: post),
             );
           }),
         ],

@@ -41,11 +41,11 @@ List<StarPostModel> posts = [
     hasStory: true,
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
+    name: 'Ratan Tata',
+    sname: '@ratantata',
     tier: 'gold',
+    profileImage: 'Ratan_Tata.jpg',
+    category: 'Business icon & philanthropist',
 
     post: PostModel(
       postType: Post.picture,
@@ -58,11 +58,11 @@ List<StarPostModel> posts = [
     hasStory: true,
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
-    tier: 'gold',
+    name: 'Deepika Padukone',
+    sname: '@deepikapadukone',
+    tier: 'bronze',
+    profileImage: 'deepika.jpg',
+    category: 'Actress & mental health advocate',
 
     post: PostModel(
       postType: Post.reel,
@@ -76,11 +76,11 @@ List<StarPostModel> posts = [
     hasStory: true,
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
+    name: 'Narayana Murthy',
+    sname: '@narayanamurthy',
     tier: 'gold',
+    profileImage: 'murthy.jpg',
+    category: 'Infosys founder',
 
     post: PostModel(
       postType: Post.picture,
@@ -92,11 +92,11 @@ List<StarPostModel> posts = [
     ),
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
-    tier: 'gold',
+    name: 'Falguni Nayar',
+    sname: '@falguni_nayar',
+    tier: 'silver',
+    profileImage: 'nayar.jpeg',
+    category: 'Nykaa founder',
 
     post: PostModel(
       postType: Post.picture,
@@ -109,11 +109,11 @@ List<StarPostModel> posts = [
     hasStory: true,
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
-    tier: 'gold',
+    name: 'Oprah Winfrey',
+    sname: '@oprah',
+    tier: 'bronze',
+    profileImage: 'oprah.jpg',
+    category: 'Media mogul',
 
     post: PostModel(
       postType: Post.reel,
@@ -125,11 +125,11 @@ List<StarPostModel> posts = [
     ),
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
-    tier: 'gold',
+    name: 'Elon Musk',
+    sname: '@elonmusk',
+    tier: 'bronze',
+    profileImage: 'elon.jpeg',
+    category: 'Tesla & SpaceX founder',
 
     post: PostModel(
       postType: Post.picture,
@@ -142,11 +142,11 @@ List<StarPostModel> posts = [
     hasStory: true,
   ),
   StarPostModel(
-    name: 'Virat Kohli',
-    sname: '@ViratKohli',
-    profileImage: 'Virat_Kohli.jpg',
-    category: 'Cricketer & youth icon',
+    name: 'Barack Obama',
+    sname: '@barackobama',
     tier: 'gold',
+    profileImage: 'obama.jpg',
+    category: 'Former U.S. President',
 
     post: PostModel(
       postType: Post.reel,

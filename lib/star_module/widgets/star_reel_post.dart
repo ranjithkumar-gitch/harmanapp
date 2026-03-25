@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/star_module/MyAccount/posts/star_post_model.dart';
 import 'package:harmanapp/star_module/widgets/star_story_picture.dart';
-import 'package:harmanapp/star_module/widgets/star_timeline_posts.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,6 +18,10 @@ class StarReelPost extends StatefulWidget {
 
 class _StarReelPostState extends State<StarReelPost>
     with SingleTickerProviderStateMixin {
+  static const String _currentUsername = 'ranjith';
+  static const String _currentUserImage =
+      'assets/sources/profiles/averie-woodard.jpg';
+
   late VideoPlayerController _playerController;
   // late UserPostModel post;
   double _rating = 0.0;
@@ -32,6 +35,7 @@ class _StarReelPostState extends State<StarReelPost>
   bool _showCommentBox = false;
   bool _commentsEnabled = true;
   bool _isSharing = false;
+  String? _myComment;
 
   final TextEditingController _commentController = TextEditingController();
 
@@ -68,7 +72,9 @@ class _StarReelPostState extends State<StarReelPost>
 
   @override
   void dispose() {
+    _commentController.dispose();
     _lottieController.dispose();
+    _playerController.dispose();
     super.dispose();
   }
 
@@ -77,6 +83,58 @@ class _StarReelPostState extends State<StarReelPost>
       isPlaying = true;
     });
     _lottieController.forward(from: 0);
+  }
+
+  int get _displayCommentCount {
+    final baseCount =
+        int.tryParse(widget.post.post.comments?.toString() ?? '') ?? 0;
+    return baseCount + (_myComment == null ? 0 : 1);
+  }
+
+  void _toggleCommentComposer() {
+    setState(() {
+      _showCommentBox = !_showCommentBox;
+      _showRatingBar = false;
+      if (_showCommentBox && _myComment != null) {
+        _commentController.text = _myComment!;
+        _commentController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _commentController.text.length),
+        );
+      }
+      if (!_showCommentBox && _myComment == null) {
+        _commentController.clear();
+      }
+    });
+  }
+
+  void _saveComment() {
+    final comment = _commentController.text.trim();
+    if (comment.isEmpty) return;
+
+    setState(() {
+      _myComment = comment;
+      _showCommentBox = false;
+      _commentController.clear();
+    });
+  }
+
+  void _editMyComment() {
+    setState(() {
+      _showCommentBox = true;
+      _showRatingBar = false;
+      _commentController.text = _myComment ?? '';
+      _commentController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _commentController.text.length),
+      );
+    });
+  }
+
+  void _deleteMyComment() {
+    setState(() {
+      _myComment = null;
+      _commentController.clear();
+      _showCommentBox = false;
+    });
   }
 
   @override
@@ -481,14 +539,7 @@ class _StarReelPostState extends State<StarReelPost>
               ),
 
               CupertinoButton(
-                onPressed: _commentsEnabled
-                    ? () {
-                        setState(() {
-                          _showCommentBox = !_showCommentBox;
-                          _showRatingBar = false;
-                        });
-                      }
-                    : null,
+                onPressed: _commentsEnabled ? _toggleCommentComposer : null,
                 padding: EdgeInsets.zero,
                 child: Icon(
                   CupertinoIcons.text_bubble,
@@ -641,9 +692,15 @@ class _StarReelPostState extends State<StarReelPost>
                   TextField(
                     controller: _commentController,
                     maxLines: 2,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Brightness.dark == Theme.of(context).brightness
+                          ? Colors.white
+                          : Colors.black,
+                    ),
                     decoration: InputDecoration(
-                      hintText: "Write a comment...",
+                      hintText: _myComment == null
+                          ? "Write a comment..."
+                          : "Edit your comment...",
                       hintStyle: TextStyle(
                         color: Brightness.dark == Theme.of(context).brightness
                             ? Colors.white54
@@ -664,21 +721,27 @@ class _StarReelPostState extends State<StarReelPost>
 
                   Align(
                     alignment: Alignment.centerRight,
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: const Icon(
-                        CupertinoIcons.paperplane_fill,
-                        color: kgoldColor,
-                      ),
-                      onPressed: () {
-                        final comment = _commentController.text.trim();
-                        if (comment.isNotEmpty) {
-                          _commentController.clear();
-                          setState(() {
-                            _showCommentBox = false;
-                          });
-                        }
-                      },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_myComment != null)
+                          CupertinoButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: _deleteMyComment,
+                            child: const Icon(
+                              CupertinoIcons.delete,
+                              color: CupertinoColors.systemRed,
+                            ),
+                          ),
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          child: const Icon(
+                            CupertinoIcons.paperplane_fill,
+                            color: kgoldColor,
+                          ),
+                          onPressed: _saveComment,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -735,7 +798,7 @@ class _StarReelPostState extends State<StarReelPost>
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
-                      builder: (_) => CommentBottomSheet(
+                      builder: (_) => StarReelCommentBottomSheet(
                         post: widget.post,
                         commentsEnabled: _commentsEnabled,
                       ),
@@ -743,7 +806,7 @@ class _StarReelPostState extends State<StarReelPost>
                   },
 
                   child: Text(
-                    'View all ${widget.post.post.comments} comments',
+                    'View all $_displayCommentCount comments',
                     style: TextStyle(
                       fontFamily: "Gilroy",
                       color: kgoldColor,
@@ -764,6 +827,87 @@ class _StarReelPostState extends State<StarReelPost>
                     ),
                   ),
               ],
+              if (_myComment != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: GestureDetector(
+                    onTap: _editMyComment,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 34,
+                          width: 34,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            image: const DecorationImage(
+                              image: AssetImage(_currentUserImage),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      _currentUsername,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color:
+                                            Brightness.dark ==
+                                                Theme.of(context).brightness
+                                            ? kwhiteColor
+                                            : kblackColor,
+                                      ),
+                                    ),
+                                  ),
+                                  CupertinoButton(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: const Size(0, 0),
+                                    onPressed: _editMyComment,
+                                    child: const Icon(
+                                      CupertinoIcons.pencil,
+                                      size: 18,
+                                      color: kgoldColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  CupertinoButton(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: const Size(0, 0),
+                                    onPressed: _deleteMyComment,
+                                    child: const Icon(
+                                      CupertinoIcons.delete,
+                                      size: 18,
+                                      color: CupertinoColors.systemRed,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                _myComment!,
+                                style: TextStyle(
+                                  color:
+                                      Brightness.dark ==
+                                          Theme.of(context).brightness
+                                      ? kwhiteColor
+                                      : kblackColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               const SizedBox(height: 5),
               Text(
                 widget.post.post.date!,
@@ -841,6 +985,485 @@ class _RatingCardState extends State<RatingCard> {
             );
           }),
         ),
+      ),
+    );
+  }
+}
+
+final List<StarReelCommentModel> _starReelCommentsSeed = [
+  StarReelCommentModel(
+    username: 'john_doe',
+    image: 'assets/sources/profiles/aiony-haust.jpg',
+    message: 'This looks amazing',
+    time: '2d',
+  ),
+  StarReelCommentModel(
+    username: 'alex_99',
+    image: 'assets/sources/profiles/deco-dev.png',
+    message: 'Pure elegance',
+    time: '1d',
+  ),
+  StarReelCommentModel(
+    username: 'maria_k',
+    image: 'assets/sources/profiles/aiony-haust.jpg',
+    message: 'Luxury vibes only',
+    time: '5h',
+  ),
+  StarReelCommentModel(
+    username: 'rohit.dev',
+    image: 'assets/sources/profiles/azamat-zhanisov-.jpg',
+    message: 'Nice shot',
+    time: '3h',
+  ),
+];
+
+class StarReelCommentModel {
+  final String username;
+  final String image;
+  final String message;
+  final String time;
+
+  const StarReelCommentModel({
+    required this.username,
+    required this.image,
+    required this.message,
+    required this.time,
+  });
+}
+
+class StarReelCommentBottomSheet extends StatefulWidget {
+  final StarPostModel post;
+  final bool commentsEnabled;
+
+  const StarReelCommentBottomSheet({
+    super.key,
+    required this.post,
+    required this.commentsEnabled,
+  });
+
+  @override
+  State<StarReelCommentBottomSheet> createState() =>
+      _StarReelCommentBottomSheetState();
+}
+
+class _StarReelCommentBottomSheetState
+    extends State<StarReelCommentBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
+  late final List<StarReelCommentModel> _comments;
+  final Set<String> _blockedUsers = <String>{};
+  static const String _currentUsername = 'stargazer.you';
+  static const String _currentUserImage =
+      'assets/sources/profiles/averie-woodard.jpg';
+
+  @override
+  void initState() {
+    super.initState();
+    _comments = List<StarReelCommentModel>.from(_starReelCommentsSeed);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _showCommentActions(StarReelCommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (sheetContext) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoActionSheet(
+          title: Text(comment.username),
+          message: const Text('Choose an action for this comment'),
+          actions: [
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                _confirmDeleteComment(comment);
+              },
+              child: const Text('Delete'),
+            ),
+            CupertinoActionSheetAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(sheetContext);
+                _confirmBlockAndDeleteComment(comment);
+              },
+              child: const Text('Block and Delete'),
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(sheetContext),
+            child: const Text('Cancel'),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDeleteComment(StarReelCommentModel comment) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (_) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoAlertDialog(
+          title: const Text(
+            'Delete',
+            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Are you sure want delete this from time line?',
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _comments.remove(comment);
+                });
+              },
+              child: const Text('Delete', style: TextStyle(color: kgoldColor)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmBlockAndDeleteComment(
+    StarReelCommentModel comment,
+  ) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (_) => CupertinoTheme(
+        data: CupertinoThemeData(
+          brightness: isDark ? Brightness.dark : Brightness.light,
+          primaryColor: kgoldColor,
+        ),
+        child: CupertinoAlertDialog(
+          title: const Text(
+            'Block and Delete',
+            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
+          ),
+          content: Text(
+            'Are you sure you want block this user from this time line and delete this comment?',
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  _blockedUsers.add(comment.username);
+                  _comments.removeWhere(
+                    (item) => item.username == comment.username,
+                  );
+                });
+              },
+              child: const Text(
+                'Block and Delete',
+                style: TextStyle(color: kgoldColor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleComments = _comments
+        .where((comment) => !_blockedUsers.contains(comment.username))
+        .toList();
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.4,
+      maxChildSize: 0.95,
+      builder: (context, scrollController) {
+        return Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          decoration: BoxDecoration(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? kblackColor
+                : kwhiteColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              Container(
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white24
+                      : Colors.black26,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Comments',
+                style: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? kwhiteColor
+                      : kblackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Divider(color: Colors.white12),
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: visibleComments.length,
+                  itemBuilder: (_, index) {
+                    final comment = visibleComments[index];
+                    return _StarReelCommentItem(
+                      image: comment.image,
+                      name: comment.username,
+                      date: comment.time,
+                      comment: comment.message,
+                      onMorePressed: () => _showCommentActions(comment),
+                    );
+                  },
+                ),
+              ),
+              widget.commentsEnabled
+                  ? _commentInput()
+                  : _commentsDisabledNote(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _commentsDisabledNote() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
+      ),
+      child: Text(
+        'Comment box is disabled for this post',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Brightness.dark == Theme.of(context).brightness
+              ? Colors.white54
+              : Colors.black54,
+          fontSize: 13,
+          fontFamily: 'Gilroy',
+        ),
+      ),
+    );
+  }
+
+  Widget _commentInput() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white12
+                : Colors.black12,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 36,
+            width: 36,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: AssetImage(_currentUserImage),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              style: TextStyle(
+                color: Brightness.dark == Theme.of(context).brightness
+                    ? kwhiteColor
+                    : kblackColor,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Add a comment...',
+                hintStyle: TextStyle(
+                  color: Brightness.dark == Theme.of(context).brightness
+                      ? Colors.white54
+                      : Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              final text = _controller.text.trim();
+              if (text.isEmpty) return;
+
+              setState(() {
+                _comments.insert(
+                  0,
+                  StarReelCommentModel(
+                    username: _currentUsername,
+                    image: _currentUserImage,
+                    message: text,
+                    time: 'now',
+                  ),
+                );
+                _controller.clear();
+              });
+            },
+            child: const Icon(
+              CupertinoIcons.paperplane_fill,
+              color: kgoldColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StarReelCommentItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String date;
+  final String comment;
+  final VoidCallback onMorePressed;
+
+  const _StarReelCommentItem({
+    required this.image,
+    required this.name,
+    required this.date,
+    required this.comment,
+    required this.onMorePressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 38,
+            width: 38,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: AssetImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Brightness.dark == Theme.of(context).brightness
+                              ? kwhiteColor
+                              : kblackColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: TextStyle(
+                        color: Brightness.dark == Theme.of(context).brightness
+                            ? Colors.white54
+                            : Colors.black54,
+                        fontSize: 12,
+                      ),
+                    ),
+                    CupertinoButton(
+                      padding: const EdgeInsets.only(left: 8),
+                      onPressed: onMorePressed,
+                      minimumSize: const Size(0, 0),
+                      child: const Icon(
+                        CupertinoIcons.ellipsis,
+                        color: kgoldColor,
+                        size: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  comment,
+                  style: TextStyle(
+                    color: Brightness.dark == Theme.of(context).brightness
+                        ? kwhiteColor
+                        : kblackColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

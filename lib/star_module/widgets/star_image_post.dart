@@ -866,7 +866,7 @@ class CommentBottomSheet extends StatefulWidget {
 class _CommentBottomSheetState extends State<CommentBottomSheet> {
   final TextEditingController _controller = TextEditingController();
   late final List<CommentModel> _comments;
-  final Set<String> _blockedUsers = <String>{};
+  bool _isEditingMyComment = false;
   static const String _currentUsername = 'stargazer.you';
   static const String _currentUserImage =
       'assets/sources/profiles/averie-woodard.jpg';
@@ -887,7 +887,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
     super.dispose();
   }
 
-  Future<void> _showCommentActions(CommentModel comment) async {
+  Future<void> _showMyCommentActions(CommentModel comment) async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     await showCupertinoModalPopup<void>(
@@ -898,24 +898,26 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
           primaryColor: kgoldColor,
         ),
         child: CupertinoActionSheet(
-          title: Text(comment.username),
-          message: const Text('Choose an action for this comment'),
+          title: const Text('Your Comment'),
+          message: const Text('Choose an action'),
           actions: [
             CupertinoActionSheetAction(
-              isDestructiveAction: true,
               onPressed: () {
                 Navigator.pop(sheetContext);
-                _confirmDeleteComment(comment);
+                setState(() {
+                  _isEditingMyComment = true;
+                  _controller.text = comment.message;
+                });
               },
-              child: const Text('Delete'),
+              child: const Text('Edit'),
             ),
             CupertinoActionSheetAction(
               isDestructiveAction: true,
               onPressed: () {
                 Navigator.pop(sheetContext);
-                _confirmBlockAndDeleteComment(comment);
+                _confirmDeleteMyComment(comment);
               },
-              child: const Text('Block and Delete'),
+              child: const Text('Delete'),
             ),
           ],
           cancelButton: CupertinoActionSheetAction(
@@ -927,7 +929,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
     );
   }
 
-  Future<void> _confirmDeleteComment(CommentModel comment) async {
+  Future<void> _confirmDeleteMyComment(CommentModel comment) async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     await showCupertinoDialog<void>(
@@ -939,11 +941,11 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
         ),
         child: CupertinoAlertDialog(
           title: const Text(
-            'Delete',
+            'Delete Comment',
             style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
           ),
           content: Text(
-            'Are you sure want delete this from time line?',
+            'Are you sure you want to delete your comment?',
             style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
           ),
           actions: [
@@ -960,58 +962,11 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 Navigator.pop(context);
                 setState(() {
                   _comments.remove(comment);
+                  _isEditingMyComment = false;
+                  _controller.clear();
                 });
               },
               child: const Text('Delete', style: TextStyle(color: kgoldColor)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _confirmBlockAndDeleteComment(CommentModel comment) async {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    await showCupertinoDialog<void>(
-      context: context,
-      builder: (_) => CupertinoTheme(
-        data: CupertinoThemeData(
-          brightness: isDark ? Brightness.dark : Brightness.light,
-          primaryColor: kgoldColor,
-        ),
-        child: CupertinoAlertDialog(
-          title: const Text(
-            'Block and Delete',
-            style: TextStyle(color: kgoldColor, fontWeight: FontWeight.bold),
-          ),
-          content: Text(
-            'Are you sure u want block this user from this time line and delete this comment?',
-            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
-          ),
-          actions: [
-            CupertinoDialogAction(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
-              ),
-            ),
-            CupertinoDialogAction(
-              isDestructiveAction: true,
-              onPressed: () {
-                Navigator.pop(context);
-                setState(() {
-                  _blockedUsers.add(comment.username);
-                  _comments.removeWhere(
-                    (item) => item.username == comment.username,
-                  );
-                });
-              },
-              child: const Text(
-                'Block and Delete',
-                style: TextStyle(color: kgoldColor),
-              ),
             ),
           ],
         ),
@@ -1078,7 +1033,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                       name: comment.username,
                       date: comment.time,
                       comment: comment.message,
-                      onMorePressed: () => _showCommentActions(comment),
+                      onMorePressed: comment.username == _currentUsername
+                          ? () => _showMyCommentActions(comment)
+                          : null,
                     );
                   },
                 ),
@@ -1125,6 +1082,34 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
   Widget _commentInput() {
     final myIndex = _myCommentIndex();
 
+    // User already has a comment and is not editing: show hint
+    if (myIndex != -1 && !_isEditingMyComment) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Brightness.dark == Theme.of(context).brightness
+                  ? Colors.white12
+                  : Colors.black12,
+            ),
+          ),
+        ),
+        child: Text(
+          'Tap ... on your comment to edit or delete',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Brightness.dark == Theme.of(context).brightness
+                ? Colors.white54
+                : Colors.black54,
+            fontSize: 13,
+            fontFamily: "Gilroy",
+          ),
+        ),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -1161,9 +1146,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                     : kblackColor,
               ),
               decoration: InputDecoration(
-                hintText: myIndex == -1
-                    ? "Add a comment..."
-                    : "Edit your comment...",
+                hintText: _isEditingMyComment
+                    ? "Edit your comment..."
+                    : "Add a comment...",
                 hintStyle: TextStyle(
                   color: Brightness.dark == Theme.of(context).brightness
                       ? Colors.white54
@@ -1174,19 +1159,19 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             ),
           ),
 
-          if (myIndex != -1)
+          if (_isEditingMyComment)
             CupertinoButton(
               padding: const EdgeInsets.only(right: 6),
               minimumSize: const Size(0, 0),
               onPressed: () {
                 setState(() {
-                  _comments.removeAt(myIndex);
+                  _isEditingMyComment = false;
                   _controller.clear();
                 });
               },
               child: const Icon(
-                CupertinoIcons.delete,
-                color: CupertinoColors.systemRed,
+                CupertinoIcons.xmark_circle,
+                color: CupertinoColors.systemGrey,
                 size: 20,
               ),
             ),
@@ -1217,6 +1202,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 }
 
                 _controller.clear();
+                _isEditingMyComment = false;
               });
             },
           ),
@@ -1231,7 +1217,7 @@ class _CommentItem extends StatelessWidget {
   final String name;
   final String date;
   final String comment;
-  final VoidCallback onMorePressed;
+  final VoidCallback? onMorePressed;
 
   const _CommentItem({
     required this.image,
@@ -1293,16 +1279,17 @@ class _CommentItem extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    CupertinoButton(
-                      padding: const EdgeInsets.only(left: 8),
-                      onPressed: onMorePressed,
-                      child: const Icon(
-                        CupertinoIcons.ellipsis,
-                        color: kgoldColor,
-                        size: 18,
+                    if (onMorePressed != null)
+                      CupertinoButton(
+                        padding: const EdgeInsets.only(left: 8),
+                        onPressed: onMorePressed,
+                        minimumSize: const Size(0, 0),
+                        child: const Icon(
+                          CupertinoIcons.ellipsis,
+                          color: kgoldColor,
+                          size: 18,
+                        ),
                       ),
-                      minimumSize: Size(0, 0),
-                    ),
                   ],
                 ),
                 const SizedBox(height: 4),
