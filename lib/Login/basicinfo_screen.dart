@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harmanapp/Login/add_socialmedia.dart';
+import 'package:harmanapp/api_services/register_request.dart';
+import 'package:harmanapp/api_services/register_service.dart';
+import 'package:harmanapp/api_services/shared_pref_helper.dart';
+import 'package:harmanapp/Login/success_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class BasicInfoScreen extends StatefulWidget {
@@ -11,11 +15,20 @@ class BasicInfoScreen extends StatefulWidget {
 }
 
 class _BasicInfoScreenState extends State<BasicInfoScreen> {
-  final TextEditingController usernameController = TextEditingController();
+  CountryCode _selectedCountryCode = CountryCode.fromDialCode('+91');
+  bool _isLoading = false;
+  String? _errorMessage;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController displayNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
-  final FocusNode usernameFocus = FocusNode();
+  final FocusNode firstNameFocus = FocusNode();
+  final FocusNode lastNameFocus = FocusNode();
   final FocusNode displayNameFocus = FocusNode();
+  final FocusNode phoneFocus = FocusNode();
+  final FocusNode emailFocus = FocusNode();
 
   String? selectedMonth;
   String? selectedDay;
@@ -25,26 +38,40 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
   @override
   void initState() {
     super.initState();
-    usernameFocus.addListener(() => setState(() {}));
+    firstNameFocus.addListener(() => setState(() {}));
+    lastNameFocus.addListener(() => setState(() {}));
     displayNameFocus.addListener(() => setState(() {}));
+    phoneFocus.addListener(() => setState(() {}));
+    emailFocus.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    usernameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     displayNameController.dispose();
-    usernameFocus.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    firstNameFocus.dispose();
+    lastNameFocus.dispose();
     displayNameFocus.dispose();
+    phoneFocus.dispose();
+    emailFocus.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool usernameGold =
-        usernameController.text.isNotEmpty || usernameFocus.hasFocus;
-
+    final bool firstNameGold =
+        firstNameController.text.isNotEmpty || firstNameFocus.hasFocus;
+    final bool lastNameGold =
+        lastNameController.text.isNotEmpty || lastNameFocus.hasFocus;
     final bool displayNameGold =
         displayNameController.text.isNotEmpty || displayNameFocus.hasFocus;
+    final bool phoneGold =
+        phoneController.text.isNotEmpty || phoneFocus.hasFocus;
+    final bool emailGold =
+        emailController.text.isNotEmpty || emailFocus.hasFocus;
 
     return Scaffold(
       backgroundColor: kblackColor,
@@ -66,24 +93,9 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       size: 24,
                     ),
                   ),
-                  // Container(
-                  //   height: 35,
-                  //   width: 35,
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(color: Color(0xFFF5D778)),
-                  //     color: Colors.transparent,
-                  //     image: DecorationImage(
-                  //       image: AssetImage('assets/App_logo_2.jpeg'),
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //     borderRadius: BorderRadius.circular(8.0),
-                  //   ),
-                  // ),
                 ],
               ),
-
               const SizedBox(height: 10),
-
               Center(
                 child: Column(
                   children: [
@@ -105,7 +117,6 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 4),
               const Center(
                 child: Text(
@@ -113,81 +124,144 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
-
               const SizedBox(height: 30),
-
-              const Text("Username *", style: TextStyle(color: Colors.white)),
+              // First Name
+              const Text("First Name *", style: TextStyle(color: Colors.white)),
               const SizedBox(height: 6),
-
               customInputField(
-                controller: usernameController,
-                focusNode: usernameFocus,
-                hint: "Enter your username",
-                isGold: usernameGold,
+                controller: firstNameController,
+                focusNode: firstNameFocus,
+                hint: "Enter your first name",
+                isGold: firstNameGold,
               ),
-
               const SizedBox(height: 20),
-
+              // Last Name
+              const Text("Last Name *", style: TextStyle(color: Colors.white)),
+              const SizedBox(height: 6),
+              customInputField(
+                controller: lastNameController,
+                focusNode: lastNameFocus,
+                hint: "Enter your last name",
+                isGold: lastNameGold,
+              ),
+              const SizedBox(height: 20),
+              // Display Name
               const Text(
                 "Display Name *",
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 6),
-
               customInputField(
                 controller: displayNameController,
                 focusNode: displayNameFocus,
                 hint: "Enter your display name",
                 isGold: displayNameGold,
               ),
-
               const SizedBox(height: 20),
-
+              // Birthday
               const Text("Birthday *", style: TextStyle(color: Colors.white)),
-              const SizedBox(height: 10),
-
+              const SizedBox(height: 6),
               Row(
                 children: [
                   Expanded(
                     child: dropdownBox(
-                      label: "Month",
-                      value: selectedMonth,
-                      items: List.generate(12, (i) => "${i + 1}"),
-                      onChanged: (v) => setState(() => selectedMonth = v),
-                      isSelected: selectedMonth != null,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: dropdownBox(
                       label: "Day",
                       value: selectedDay,
-                      items: List.generate(31, (i) => "${i + 1}"),
-                      onChanged: (v) => setState(() => selectedDay = v),
+                      items: List.generate(
+                        31,
+                        (i) => (i + 1).toString().padLeft(2, '0'),
+                      ),
+                      onChanged: (val) => setState(() => selectedDay = val),
                       isSelected: selectedDay != null,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: dropdownBox(
+                      label: "Month",
+                      value: selectedMonth,
+                      items: List.generate(
+                        12,
+                        (i) => (i + 1).toString().padLeft(2, '0'),
+                      ),
+                      onChanged: (val) => setState(() => selectedMonth = val),
+                      isSelected: selectedMonth != null,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: dropdownBox(
                       label: "Year",
                       value: selectedYear,
-                      items: List.generate(100, (i) => "${2025 - i}"),
-                      onChanged: (v) => setState(() => selectedYear = v),
+                      items: List.generate(
+                        100,
+                        (i) => (DateTime.now().year - i).toString(),
+                      ),
+                      onChanged: (val) => setState(() => selectedYear = val),
                       isSelected: selectedYear != null,
                     ),
                   ),
                 ],
               ),
-
+              const SizedBox(height: 20),
+              // Phone
+              const Text("Phone *", style: TextStyle(color: Colors.white)),
               const SizedBox(height: 6),
-              const Text(
-                "Creators must be 18+. Date of birth can't be changed later.",
-                style: TextStyle(color: Colors.white60, fontSize: 12),
+              Row(
+                children: [
+                  Container(
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1C1C1E),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: phoneGold ? kgoldColor : Colors.white,
+                        width: 2,
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Center(
+                      child: CountryCodePicker(
+                        onChanged: (code) {
+                          setState(() {
+                            _selectedCountryCode = code;
+                          });
+                        },
+                        initialSelection: _selectedCountryCode.code,
+                        favorite: ['+91', 'IN'],
+                        showCountryOnly: false,
+                        showOnlyCountryWhenClosed: false,
+                        alignLeft: false,
+                        textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+                        dialogTextStyle: const TextStyle(color: Colors.black),
+                        searchStyle: const TextStyle(color: Colors.black),
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: customInputField(
+                      controller: phoneController,
+                      focusNode: phoneFocus,
+                      hint: "Enter your phone number",
+                      isGold: phoneGold,
+                    ),
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 25),
-
+              const SizedBox(height: 20),
+              // Email
+              const Text("Email *", style: TextStyle(color: Colors.white)),
+              const SizedBox(height: 6),
+              customInputField(
+                controller: emailController,
+                focusNode: emailFocus,
+                hint: "Enter your email",
+                isGold: emailGold,
+              ),
+              const SizedBox(height: 20),
+              // Terms
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -217,9 +291,15 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 40),
-
+              if (_errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(
+                    _errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -231,25 +311,28 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       side: const BorderSide(color: kgoldColor, width: 2),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SocialmediaConnect(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "Confirm and Continue",
-                    style: TextStyle(
-                      color: kgoldColor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  onPressed: _isLoading ? null : _onRegister,
+                  child: _isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              kgoldColor,
+                            ),
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : const Text(
+                          "Confirm and Continue",
+                          style: TextStyle(
+                            color: kgoldColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -257,6 +340,71 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
       ),
     );
   }
+
+  Future<void> _onRegister() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+    // Validate fields (simple)
+    if (firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        displayNameController.text.isEmpty ||
+        phoneController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        selectedDay == null ||
+        selectedMonth == null ||
+        selectedYear == null) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Please fill all fields.';
+      });
+      return;
+    }
+    final dob =
+        "${selectedYear!}-${selectedMonth!.padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}";
+    final req = RegisterRequest(
+      role: 'stargazer',
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      email: emailController.text.trim(),
+      phone: (_selectedCountryCode.dialCode ?? '') + phoneController.text.trim(),
+      dob: dob,
+      displayName: displayNameController.text.trim(),
+    );
+    try {
+      final service = RegisterService();
+      final resp = await service.registerauth(req);
+      print(
+        'Register API response: success=${resp.success}, statusCode=${resp.statusCode}, message=${resp.message}, data=${resp.data}',
+      );
+      if (resp.statusCode == 201 && resp.data != null) {
+        await SharedPrefHelper.saveName(
+          resp.data!.firstName,
+          resp.data!.lastName,
+        );
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SuccessScreen()),
+        );
+      } else {
+        setState(() {
+          _errorMessage = resp.message ?? 'Registration failed.';
+        });
+      }
+    } catch (e) {
+      print('Registration error: ' + e.toString());
+      setState(() {
+        _errorMessage = 'Error: ' + e.toString();
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+  // ...existing code...
 
   Widget customInputField({
     required TextEditingController controller,

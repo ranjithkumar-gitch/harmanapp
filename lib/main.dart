@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:harmanapp/api_services/http_override.dart';
 import 'package:harmanapp/splashScreen/splash_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
