@@ -35,7 +35,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.check_circle, color: Colors.green, size: 80),
+              Image.asset('assets/app_logo2.png', width: 280, height: 280),
               const SizedBox(height: 24),
               if (name != null && name!.trim().isNotEmpty)
                 Text(
@@ -62,18 +62,30 @@ class _SuccessScreenState extends State<SuccessScreen> {
               const SizedBox(height: 32),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 14,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(
+                      color: Color(0xFFFFD700),
+                      width: 2,
+                    ), // Gold border
                   ),
+                  elevation: 4,
                 ),
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: const Text(
                   'Close',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Color(0xFFFFD700),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

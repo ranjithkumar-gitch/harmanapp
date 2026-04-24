@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,7 +110,36 @@ class _SignupscreenState extends State<Signupscreen> {
                 subtitle: "Live a life & leave a legacy",
                 icon: Icons.star,
                 isSelected: selectedRole == "Star",
-                onTap: () => setState(() => selectedRole = "Star"),
+                onTap: () {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (_) => CupertinoTheme(
+                      data: const CupertinoThemeData(
+                        brightness: Brightness.dark,
+                        primaryColor: Color(0xFFFFD700),
+                      ),
+                      child: CupertinoAlertDialog(
+                        title: const Text(
+                          'Coming Soon',
+                          style: TextStyle(color: Color(0xFFFFD700)),
+                        ),
+                        content: const Text(
+                          'Star registrations start soon.',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        actions: [
+                          CupertinoDialogAction(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text(
+                              'OK',
+                              style: TextStyle(color: Color(0xFFFFD700)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
 
               const Spacer(),
