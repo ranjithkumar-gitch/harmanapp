@@ -49,7 +49,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 ),
               const SizedBox(height: 16),
               const Text(
-                'You have successfully registered into early access of Auto Biography.',
+                'You have successfully registered into early access of My Autobiography.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
