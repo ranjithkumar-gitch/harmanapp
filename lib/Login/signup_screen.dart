@@ -120,11 +120,11 @@ class _SignupscreenState extends State<Signupscreen> {
                       ),
                       child: CupertinoAlertDialog(
                         title: const Text(
-                          'Coming Soon',
+                          'On Invitation',
                           style: TextStyle(color: Color(0xFFFFD700)),
                         ),
                         content: const Text(
-                          'Star registrations start soon.',
+                          'Star registrations on Invitation only',
                           style: TextStyle(color: Colors.white70),
                         ),
                         actions: [

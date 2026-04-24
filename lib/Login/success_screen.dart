@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../api_services/shared_pref_helper.dart';
+import '../widgets/theme_notifier.dart';
 
 class SuccessScreen extends StatefulWidget {
   const SuccessScreen({super.key});
@@ -36,6 +38,17 @@ class _SuccessScreenState extends State<SuccessScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/app_logo2.png', width: 280, height: 280),
+              const SizedBox(height: 16),
+              Text(
+                'My Autobiography',
+                style: GoogleFonts.greatVibes(
+                  textStyle: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: kgoldColor,
+                  ),
+                ),
+              ),
               const SizedBox(height: 24),
               if (name != null && name!.trim().isNotEmpty)
                 Text(
