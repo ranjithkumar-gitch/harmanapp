@@ -96,7 +96,9 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
 
     _videoController =
-        VideoPlayerController.asset('assets/sources/videos/splashscreen.mp4')
+        VideoPlayerController.asset(
+            'assets/sources/videos/Walk_splashscreen.mp4',
+          )
           ..initialize().then((_) {
             if (!mounted) return;
             setState(() {});

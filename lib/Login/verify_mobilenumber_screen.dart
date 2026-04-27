@@ -262,7 +262,7 @@ class _VerifyphonenumberState extends State<Verifyphonenumber> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/app_logo2.png',
+                        'assets/App_logo_2.jpeg',
                         height: size.width * 0.3,
                         width: size.width * 0.3,
                         fit: BoxFit.contain,

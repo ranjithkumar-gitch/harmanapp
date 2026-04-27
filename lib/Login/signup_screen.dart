@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
+import 'package:harmanapp/star_module/star_success_screen.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -65,20 +66,20 @@ class _SignupscreenState extends State<Signupscreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 140,
-                      width: 140,
-                      child: Image(image: AssetImage('assets/app_logo2.png')),
+                      height: 180,
+                      width: 180,
+                      child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
-                    Text(
-                      'My Autobiography',
-                      style: GoogleFonts.greatVibes(
-                        textStyle: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: kgoldColor,
-                        ),
-                      ),
-                    ),
+                    // Text(
+                    //   'My Autobiography',
+                    //   style: GoogleFonts.greatVibes(
+                    //     textStyle: const TextStyle(
+                    //       fontSize: 32,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: kgoldColor,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -111,34 +112,7 @@ class _SignupscreenState extends State<Signupscreen> {
                 icon: Icons.star,
                 isSelected: selectedRole == "Star",
                 onTap: () {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: (_) => CupertinoTheme(
-                      data: const CupertinoThemeData(
-                        brightness: Brightness.dark,
-                        primaryColor: Color(0xFFFFD700),
-                      ),
-                      child: CupertinoAlertDialog(
-                        title: const Text(
-                          'On Invitation',
-                          style: TextStyle(color: Color(0xFFFFD700)),
-                        ),
-                        content: const Text(
-                          'Star registrations on Invitation only',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        actions: [
-                          CupertinoDialogAction(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text(
-                              'OK',
-                              style: TextStyle(color: Color(0xFFFFD700)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  setState(() => selectedRole = "Star");
                 },
               ),
 
@@ -157,12 +131,21 @@ class _SignupscreenState extends State<Signupscreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BasicInfoScreen(),
-                      ),
-                    );
+                    if (selectedRole == "Star") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const StarSuccessScreen(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BasicInfoScreen(),
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     "Continue",

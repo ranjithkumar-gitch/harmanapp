@@ -101,20 +101,20 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 140,
-                      width: 140,
-                      child: Image(image: AssetImage('assets/app_logo2.png')),
+                      height: 180,
+                      width: 180,
+                      child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                     ),
-                    Text(
-                      'My Autobiography',
-                      style: GoogleFonts.greatVibes(
-                        textStyle: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: kgoldColor,
-                        ),
-                      ),
-                    ),
+                    // Text(
+                    //   'My Autobiography',
+                    //   style: GoogleFonts.greatVibes(
+                    //     textStyle: const TextStyle(
+                    //       fontSize: 32,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: kgoldColor,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

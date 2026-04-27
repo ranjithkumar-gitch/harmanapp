@@ -37,18 +37,18 @@ class _SuccessScreenState extends State<SuccessScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/app_logo2.png', width: 280, height: 280),
-              const SizedBox(height: 16),
-              Text(
-                'My Autobiography',
-                style: GoogleFonts.greatVibes(
-                  textStyle: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: kgoldColor,
-                  ),
-                ),
-              ),
+              Image.asset('assets/App_logo_2.jpeg', width: 280, height: 280),
+              // const SizedBox(height: 16),
+              // Text(
+              //   'My Autobiography',
+              //   style: GoogleFonts.greatVibes(
+              //     textStyle: const TextStyle(
+              //       fontSize: 32,
+              //       fontWeight: FontWeight.bold,
+              //       color: kgoldColor,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 24),
               if (name != null && name!.trim().isNotEmpty)
                 Text(
@@ -66,7 +66,10 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 text: const TextSpan(
                   style: TextStyle(color: Colors.white, fontSize: 18),
                   children: [
-                    TextSpan(text: 'You have successfully registered to the early access of '),
+                    TextSpan(
+                      text:
+                          'You have successfully registered to the early access of ',
+                    ),
                     TextSpan(
                       text: 'My Autobiography',
                       style: TextStyle(

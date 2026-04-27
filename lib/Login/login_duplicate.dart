@@ -30,7 +30,7 @@ class LoginDuplicateScreen extends StatelessWidget {
                       SizedBox(
                         height: 140,
                         width: 140,
-                        child: Image.asset('assets/app_logo2.png'),
+                        child: Image.asset('assets/App_logo_2.jpeg'),
                       ),
                       Text(
                         'My Autobiography',

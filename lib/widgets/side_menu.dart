@@ -26,7 +26,7 @@ Widget endDrawer(BuildContext context) {
                 child: SizedBox(
                   height: 140,
                   width: 140,
-                  child: Image(image: AssetImage('assets/app_logo2.png')),
+                  child: Image(image: AssetImage('assets/App_logo_2.jpeg')),
                 ),
               ),
             ),

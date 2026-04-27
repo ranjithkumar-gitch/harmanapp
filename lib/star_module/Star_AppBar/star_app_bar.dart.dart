@@ -43,7 +43,7 @@ class StarCustomAppBar extends StatelessWidget
           SizedBox(
             height: 35,
             width: 35,
-            child: Image.asset('assets/app_logo2.png', fit: BoxFit.cover),
+            child: Image.asset('assets/App_logo_2.jpeg', fit: BoxFit.cover),
           ),
           SizedBox(width: 10),
           Text(
