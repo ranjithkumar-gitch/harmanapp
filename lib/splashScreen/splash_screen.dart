@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/Login/login_duplicate.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 
 // class Splashscreen extends StatefulWidget {
@@ -117,9 +118,13 @@ class _SplashscreenState extends State<Splashscreen> {
         value.position >= value.duration &&
         !value.isPlaying) {
       _navigated = true;
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (_) => const LoginDuplicateScreen()),
+      // );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const Loginscreen()),
+        MaterialPageRoute(builder: (_) => Loginscreen()),
       );
     }
   }
