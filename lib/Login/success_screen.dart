@@ -52,7 +52,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
               const SizedBox(height: 24),
               if (name != null && name!.trim().isNotEmpty)
                 Text(
-                  'Welcome $name!',
+                  'Hello $name!',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
@@ -61,16 +61,67 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   ),
                 ),
               const SizedBox(height: 16),
-              const Text(
-                'You have successfully registered into early access of My Autobiography.',
+              RichText(
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                text: const TextSpan(
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  children: [
+                    TextSpan(text: 'You have successfully registered to the early access of '),
+                    TextSpan(
+                      text: 'My Autobiography',
+                      style: TextStyle(
+                        color: kgoldColor,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(text: '.'),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Note: You will get notified once full access is available.\nThank you!',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white70, fontSize: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1C1C1E),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: kgoldColor.withValues(alpha: 0.5),
+                    width: 1.5,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: kgoldColor.withValues(alpha: 0.08),
+                      blurRadius: 12,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.info_outline_rounded,
+                      color: kgoldColor,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    const Expanded(
+                      child: Text(
+                        'You will get notified once full access is available.',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 14,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
@@ -83,7 +134,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                     side: const BorderSide(
-                      color: Color(0xFFFFD700),
+                      color: kgoldColor,
                       width: 2,
                     ), // Gold border
                   ),
@@ -95,7 +146,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 child: const Text(
                   'Close',
                   style: TextStyle(
-                    color: Color(0xFFFFD700),
+                    color: kgoldColor,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

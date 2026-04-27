@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/api_services/register_request.dart';
@@ -165,19 +166,6 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 children: [
                   Expanded(
                     child: dropdownBox(
-                      label: "Day",
-                      value: selectedDay,
-                      items: List.generate(
-                        31,
-                        (i) => (i + 1).toString().padLeft(2, '0'),
-                      ),
-                      onChanged: (val) => setState(() => selectedDay = val),
-                      isSelected: selectedDay != null,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: dropdownBox(
                       label: "Month",
                       value: selectedMonth,
                       items: List.generate(
@@ -189,6 +177,20 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
+                  Expanded(
+                    child: dropdownBox(
+                      label: "Day",
+                      value: selectedDay,
+                      items: List.generate(
+                        31,
+                        (i) => (i + 1).toString().padLeft(2, '0'),
+                      ),
+                      onChanged: (val) => setState(() => selectedDay = val),
+                      isSelected: selectedDay != null,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+
                   Expanded(
                     child: dropdownBox(
                       label: "Year",
@@ -232,7 +234,10 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                         showCountryOnly: false,
                         showOnlyCountryWhenClosed: false,
                         alignLeft: false,
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                         dialogTextStyle: const TextStyle(color: Colors.black),
                         searchStyle: const TextStyle(color: Colors.black),
                         padding: EdgeInsets.zero,
@@ -246,6 +251,10 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       focusNode: phoneFocus,
                       hint: "Enter your phone number",
                       isGold: phoneGold,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
                     ),
                   ),
                 ],
@@ -368,7 +377,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
       email: emailController.text.trim(),
-      phone: (_selectedCountryCode.dialCode ?? '') + phoneController.text.trim(),
+      phone:
+          (_selectedCountryCode.dialCode ?? '') + phoneController.text.trim(),
       dob: dob,
       displayName: displayNameController.text.trim(),
     );
@@ -411,11 +421,13 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     required FocusNode focusNode,
     required String hint,
     required bool isGold,
+    List<TextInputFormatter>? inputFormatters,
   }) {
     return TextField(
       controller: controller,
       focusNode: focusNode,
       onChanged: (_) => setState(() {}),
+      inputFormatters: inputFormatters,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         filled: true,
