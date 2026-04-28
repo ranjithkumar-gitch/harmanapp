@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/Login/basicinfo_screen.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
-import 'package:harmanapp/star_module/star_success_screen.dart';
+import 'package:harmanapp/Login/star_success_screen.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
