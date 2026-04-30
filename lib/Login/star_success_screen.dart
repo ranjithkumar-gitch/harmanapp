@@ -23,7 +23,7 @@ class _StarSuccessScreenState extends State<StarSuccessScreen> {
             top: 40,
             left: 16,
             child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white, size: 28),
+              icon: const Icon(Icons.close, color: kgoldColor, size: 28),
               onPressed: () {
                 Navigator.of(context).maybePop();
               },
