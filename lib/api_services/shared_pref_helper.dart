@@ -16,4 +16,23 @@ class SharedPrefHelper {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('lastName');
   }
+
+  static Future<void> saveStargazerIdAndCreatedAt(
+    String id,
+    String createdAt,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('stargazerId', id);
+    await prefs.setString('stargazerCreatedAt', createdAt);
+  }
+
+  static Future<String?> getStargazerId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('stargazerId');
+  }
+
+  static Future<String?> getStargazerCreatedAt() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('stargazerCreatedAt');
+  }
 }

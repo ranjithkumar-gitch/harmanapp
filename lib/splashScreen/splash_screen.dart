@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:harmanapp/Login/basicinfo_screen.dart';
 import 'package:harmanapp/Login/login_duplicate.dart';
 import 'package:harmanapp/Login/login_screen.dart';
+import 'package:harmanapp/Login/onboardingscreen.dart';
 
 // class Splashscreen extends StatefulWidget {
 //   const Splashscreen({super.key});
@@ -126,7 +128,7 @@ class _SplashscreenState extends State<Splashscreen> {
       // );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => Loginscreen()),
+        MaterialPageRoute(builder: (_) => OnBoardingscreen()),
       );
     }
   }

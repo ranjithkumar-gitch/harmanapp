@@ -311,11 +311,11 @@ class _LoginscreenState extends State<Loginscreen> {
                         //     ),
                         //   ),
                         // ),
-                        const SizedBox(height: 6),
-                        const Text(
-                          "Welcome back",
-                          style: TextStyle(color: kgreyColor, fontSize: 16),
-                        ),
+                        // const SizedBox(height: 6),
+                        // const Text(
+                        //   "Welcome back",
+                        //   style: TextStyle(color: kgreyColor, fontSize: 16),
+                        // ),
                       ],
                     ),
                   ),

@@ -1,0 +1,694 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:harmanapp/Login/success_screen2.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:harmanapp/api_services/register_request.dart';
+import 'package:harmanapp/api_services/register_service.dart';
+import 'package:harmanapp/api_services/shared_pref_helper.dart';
+import 'package:harmanapp/api_services/app_shared_preferences.dart';
+import 'package:harmanapp/Login/success_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  bool termsAccepted = false;
+  CountryCode selectedCountryCode = CountryCode.fromDialCode('+91');
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  String? selectedMonth;
+  String? selectedDay;
+  String? selectedYear;
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    userNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
+  void _onRegister() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+    if (firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        userNameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        phoneController.text.isEmpty ||
+        selectedDay == null ||
+        selectedMonth == null ||
+        selectedYear == null ||
+        !termsAccepted) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Please fill all fields and accept terms.';
+      });
+      return;
+    }
+    final dob =
+        "${selectedYear!}-${selectedMonth!.padLeft(2, '0')}-${selectedDay!.padLeft(2, '0')}";
+    final req = RegisterRequest(
+      role: 'stargazer',
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      email: emailController.text.trim(),
+      phone: (selectedCountryCode.dialCode ?? '') + phoneController.text.trim(),
+      dob: dob,
+      displayName: userNameController.text.trim(),
+    );
+    try {
+      final service = RegisterService();
+      final resp = await service.registerauth(req);
+      if (resp.statusCode == 201 && resp.data != null) {
+        await SharedPrefHelper.saveName(
+          resp.data!.firstName,
+          resp.data!.lastName,
+        );
+        await SharedPrefHelper.saveStargazerIdAndCreatedAt(
+          resp.data!.id,
+          resp.data!.createdAt,
+        );
+        await SharedPrefServices.setStargazerId(resp.data!.id);
+        await SharedPrefServices.setStargazerCreatedAt(resp.data!.createdAt);
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SuccessScreen2(
+              firstName: resp.data!.firstName,
+              lastName: resp.data!.lastName,
+            ),
+          ),
+        );
+      } else {
+        setState(() {
+          _errorMessage = resp.message ?? 'Registration failed.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Error: ' + e.toString();
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 32),
+                // Logo
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 280,
+                        width: 280,
+                        child: Image.asset('assets/App_logo_2.jpeg'),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+
+                Text(
+                  'Fill the Details',
+                  style: GoogleFonts.cinzel(color: kgoldColor, fontSize: 24),
+                ),
+                const SizedBox(height: 8),
+                Divider(color: kgoldColor.withOpacity(0.4)),
+                const SizedBox(height: 18),
+                // First/Last Name
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "First Name *",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                          const SizedBox(height: 6),
+                          _goldBorderFieldWithLabel(
+                            hint: 'First Name',
+                            controller: firstNameController,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Last Name *",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                          const SizedBox(height: 6),
+                          _goldBorderFieldWithLabel(
+                            hint: 'Last Name',
+                            controller: lastNameController,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "User Name *",
+                    style: GoogleFonts.poppins(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _goldBorderFieldWithLabel(
+                  hint: 'User Name',
+                  controller: userNameController,
+                ),
+                const SizedBox(height: 18),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Email Address *",
+                    style: GoogleFonts.poppins(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _goldBorderFieldWithLabel(
+                  hint: 'Enter your Email',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 18),
+                // Date of Birth
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Date of Birth *",
+                    style: GoogleFonts.poppins(color: Colors.white),
+                    // style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _DateOfBirthRow(
+                  onChanged: (m, d, y) {
+                    setState(() {
+                      selectedMonth = m;
+                      selectedDay = d;
+                      selectedYear = y;
+                    });
+                  },
+                ),
+                const SizedBox(height: 18),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Phone *",
+                    style: GoogleFonts.poppins(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                _PhoneRow(
+                  controller: phoneController,
+                  onCountryChanged: (code) =>
+                      setState(() => selectedCountryCode = code),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: termsAccepted,
+                      onChanged: (v) {
+                        setState(() {
+                          termsAccepted = v ?? false;
+                        });
+                      },
+                      activeColor: kgoldColor,
+                      checkColor: Colors.black,
+                    ),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          text:
+                              'By clicking this box, I agree to the Harman app creator ',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 13,
+                          ),
+                          // style: TextStyle(color: Colors.white, fontSize: 13),
+                          children: [
+                            TextSpan(
+                              text: 'Terms of Service',
+                              style: TextStyle(
+                                color: kgoldColor,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                if (_errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: Text(
+                      _errorMessage!,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
+                const SizedBox(height: 32),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : _onRegister,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      padding: EdgeInsets.zero,
+                      elevation: 6,
+                      backgroundColor: Colors.transparent,
+                      shadowColor: kgoldColor,
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              kgoldColor,
+                            ),
+                          )
+                        : Ink(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFFFFE082), kgoldColor],
+                              ),
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 56,
+                              child: Text(
+                                'Register Now',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                ),
+
+                                // style: TextStyle(
+                                //   color: Colors.black87,
+                                //   fontWeight: FontWeight.bold,
+                                //   fontSize: 18,
+                                // ),
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget _goldBorderFieldWithLabel({
+  required String hint,
+  TextEditingController? controller,
+  bool isPhone = false,
+}) {
+  return _GoldBorderFieldWithLabel(
+    hint: hint,
+    controller: controller,
+    isPhone: isPhone,
+  );
+}
+
+class _GoldBorderFieldWithLabel extends StatefulWidget {
+  final String hint;
+  final bool isPhone;
+  final TextEditingController? controller;
+  const _GoldBorderFieldWithLabel({
+    required this.hint,
+    this.controller,
+    this.isPhone = false,
+  });
+
+  @override
+  State<_GoldBorderFieldWithLabel> createState() =>
+      _GoldBorderFieldWithLabelState();
+}
+
+class _GoldBorderFieldWithLabelState extends State<_GoldBorderFieldWithLabel> {
+  String? value;
+  bool isGold = false;
+  late final TextEditingController controller;
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = widget.controller ?? TextEditingController();
+    controller.addListener(_updateGold);
+    focusNode.addListener(_updateGold);
+  }
+
+  void _updateGold() {
+    setState(() {
+      isGold = controller.text.isNotEmpty || focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      focusNode: focusNode,
+      style: const TextStyle(color: Colors.white),
+      keyboardType: widget.isPhone ? TextInputType.number : TextInputType.text,
+      inputFormatters: widget.isPhone
+          ? [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
+            ]
+          : null,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: const Color(0xFF1C1C1E),
+        hintText: widget.hint,
+        hintStyle: const TextStyle(color: Colors.white38),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: isGold ? kgoldColor : Colors.white38,
+            width: 2,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kgoldColor, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+      ),
+    );
+  }
+}
+
+class _DateOfBirthRow extends StatefulWidget {
+  final void Function(String? month, String? day, String? year)? onChanged;
+  const _DateOfBirthRow({this.onChanged});
+  @override
+  State<_DateOfBirthRow> createState() => _DateOfBirthRowState();
+}
+
+class _DateOfBirthRowState extends State<_DateOfBirthRow> {
+  String? selectedMonth;
+  String? selectedDay;
+  String? selectedYear;
+
+  void _notifyParent() {
+    if (widget.onChanged != null) {
+      widget.onChanged!(selectedMonth, selectedDay, selectedYear);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _dropdownBox(
+            label: "Month",
+            value: selectedMonth,
+            items: List.generate(12, (i) => (i + 1).toString().padLeft(2, '0')),
+            onChanged: (val) {
+              setState(() => selectedMonth = val);
+              _notifyParent();
+            },
+            isSelected: selectedMonth != null,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _dropdownBox(
+            label: "Day",
+            value: selectedDay,
+            items: List.generate(31, (i) => (i + 1).toString().padLeft(2, '0')),
+            onChanged: (val) {
+              setState(() => selectedDay = val);
+              _notifyParent();
+            },
+            isSelected: selectedDay != null,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _dropdownBox(
+            label: "Year",
+            value: selectedYear,
+            items: List.generate(
+              100,
+              (i) => (DateTime.now().year - i).toString(),
+            ),
+            onChanged: (val) {
+              setState(() => selectedYear = val);
+              _notifyParent();
+            },
+            isSelected: selectedYear != null,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Widget _dropdownBox({
+  required String label,
+  required String? value,
+  required List<String> items,
+  required void Function(String?) onChanged,
+  required bool isSelected,
+}) {
+  return DropdownButtonFormField<String>(
+    value: value,
+    decoration: InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(
+        color: isSelected ? kgoldColor : Colors.white38,
+        fontSize: 14,
+      ),
+      filled: true,
+      fillColor: const Color(0xFF1C1C1E),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: isSelected ? kgoldColor : Colors.white38,
+          width: 2,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: kgoldColor, width: 2),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+    ),
+    dropdownColor: const Color(0xFF232323),
+    style: const TextStyle(color: Colors.white, fontSize: 15),
+    iconEnabledColor: kgoldColor,
+    items: items
+        .map(
+          (item) => DropdownMenuItem<String>(
+            value: item,
+            child: Text(item, style: const TextStyle(color: Colors.white)),
+          ),
+        )
+        .toList(),
+    onChanged: onChanged,
+  );
+}
+
+class _PhoneRow extends StatefulWidget {
+  final TextEditingController? controller;
+  final ValueChanged<CountryCode>? onCountryChanged;
+  const _PhoneRow({this.controller, this.onCountryChanged});
+  @override
+  State<_PhoneRow> createState() => _PhoneRowState();
+}
+
+class _PhoneRowState extends State<_PhoneRow> {
+  late FocusNode _focusNode;
+  bool _hasFocus = false;
+  bool _hasValue = false;
+  late final TextEditingController _controller;
+  CountryCode _selectedCountryCode = CountryCode.fromDialCode('+91');
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+    _controller = widget.controller ?? TextEditingController();
+    _focusNode.addListener(_handleFocusChange);
+    _controller.addListener(_handleValueChange);
+  }
+
+  void _handleFocusChange() {
+    setState(() {});
+  }
+
+  void _handleValueChange() {
+    setState(() {
+      _hasValue = _controller.text.isNotEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    if (widget.controller == null) _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = (_focusNode.hasFocus || _hasValue)
+        ? kgoldColor
+        : Colors.white38;
+    return Row(
+      children: [
+        SizedBox(
+          width: 110,
+          height: 48,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: const Color(0xFF1C1C1E),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: borderColor, width: 2),
+            ),
+            child: Center(
+              child: CountryCodePicker(
+                onChanged: (code) {
+                  setState(() => _selectedCountryCode = code);
+                  if (widget.onCountryChanged != null)
+                    widget.onCountryChanged!(code);
+                },
+                initialSelection: _selectedCountryCode.code,
+                favorite: ['+91', 'IN'],
+                showCountryOnly: false,
+                showOnlyCountryWhenClosed: false,
+                alignLeft: true,
+                dialogSize: const Size(350, 500),
+                showFlagMain: true,
+                showFlagDialog: true,
+                textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+                searchStyle: const TextStyle(color: Colors.white),
+                dialogBackgroundColor: Color(0xFF232323),
+                barrierColor: Colors.black54,
+                builder: (country) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (country != null && country.flagUri != null)
+                      Image.asset(
+                        country.flagUri!,
+                        package: 'country_code_picker',
+                        width: 24,
+                        height: 18,
+                      ),
+                    const SizedBox(width: 6),
+                    Text(
+                      country != null ? country.dialCode ?? '' : '',
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            focusNode: _focusNode,
+            style: const TextStyle(color: Colors.white),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
+            ],
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xFF1C1C1E),
+              hintText: 'Enter No.',
+              hintStyle: const TextStyle(color: Colors.white38),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: (_focusNode.hasFocus || _hasValue)
+                      ? kgoldColor
+                      : Colors.white38,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: kgoldColor, width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
