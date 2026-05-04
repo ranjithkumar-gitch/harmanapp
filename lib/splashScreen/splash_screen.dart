@@ -3,6 +3,7 @@ import 'package:harmanapp/Login/basicinfo_screen.dart';
 import 'package:harmanapp/Login/login_duplicate.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/Login/onboardingscreen.dart';
+import 'package:harmanapp/Login/star_request_submitted_screen.dart';
 
 // class Splashscreen extends StatefulWidget {
 //   const Splashscreen({super.key});

@@ -118,232 +118,303 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 32),
-                // Logo
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 280,
-                        width: 280,
-                        child: Image.asset('assets/App_logo_2.jpeg'),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                  ),
-                ),
-
-                Text(
-                  'Fill the Details',
-                  style: GoogleFonts.cinzel(color: kgoldColor, fontSize: 24),
-                ),
-                const SizedBox(height: 8),
-                Divider(color: kgoldColor.withOpacity(0.4)),
-                const SizedBox(height: 18),
-                // First/Last Name
-                Row(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset('assets/bg2.PNG', fit: BoxFit.cover),
+          ),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "First Name *",
-                            style: GoogleFonts.poppins(color: Colors.white),
-                          ),
-                          const SizedBox(height: 6),
-                          _goldBorderFieldWithLabel(
-                            hint: 'First Name',
-                            controller: firstNameController,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Last Name *",
-                            style: GoogleFonts.poppins(color: Colors.white),
-                          ),
-                          const SizedBox(height: 6),
-                          _goldBorderFieldWithLabel(
-                            hint: 'Last Name',
-                            controller: lastNameController,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "User Name *",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _goldBorderFieldWithLabel(
-                  hint: 'User Name',
-                  controller: userNameController,
-                ),
-                const SizedBox(height: 18),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Email Address *",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _goldBorderFieldWithLabel(
-                  hint: 'Enter your Email',
-                  controller: emailController,
-                ),
-                const SizedBox(height: 18),
-                // Date of Birth
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Date of Birth *",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                    // style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _DateOfBirthRow(
-                  onChanged: (m, d, y) {
-                    setState(() {
-                      selectedMonth = m;
-                      selectedDay = d;
-                      selectedYear = y;
-                    });
-                  },
-                ),
-                const SizedBox(height: 18),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Phone *",
-                    style: GoogleFonts.poppins(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                _PhoneRow(
-                  controller: phoneController,
-                  onCountryChanged: (code) =>
-                      setState(() => selectedCountryCode = code),
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: termsAccepted,
-                      onChanged: (v) {
-                        setState(() {
-                          termsAccepted = v ?? false;
-                        });
-                      },
-                      activeColor: kgoldColor,
-                      checkColor: Colors.black,
-                    ),
-                    Expanded(
-                      child: Text.rich(
-                        TextSpan(
-                          text:
-                              'By clicking this box, I agree to the Harman app creator ',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 13,
-                          ),
-                          // style: TextStyle(color: Colors.white, fontSize: 13),
-                          children: [
-                            TextSpan(
-                              text: 'Terms of Service',
-                              style: TextStyle(
-                                color: kgoldColor,
-                                decoration: TextDecoration.underline,
+                    const SizedBox(height: 16),
+                    // Back Button
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(24),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.7),
+                                border: Border.all(color: kgoldColor, width: 2),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.close,
+                                  color: kgoldColor,
+                                  size: 22,
+                                ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                if (_errorMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Text(
-                      _errorMessage!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
-                const SizedBox(height: 32),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _onRegister,
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                    const SizedBox(height: 16),
+                    // Logo
+                    Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 280,
+                            width: 280,
+                            child: Image.asset('assets/logo_4k.png'),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
                       ),
-                      padding: EdgeInsets.zero,
-                      elevation: 6,
-                      backgroundColor: Colors.transparent,
-                      shadowColor: kgoldColor,
                     ),
-                    child: _isLoading
-                        ? const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              kgoldColor,
-                            ),
-                          )
-                        : Ink(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFFFFE082), kgoldColor],
-                              ),
-                              borderRadius: BorderRadius.circular(0),
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 56,
-                              child: Text(
-                                'Register Now',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                ),
 
-                                // style: TextStyle(
-                                //   color: Colors.black87,
-                                //   fontWeight: FontWeight.bold,
-                                //   fontSize: 18,
-                                // ),
+                    // Custom gold divider with star and text
+                    const SizedBox(height: 4),
+                    _GoldStarDividerWithText(),
+                    const SizedBox(height: 18),
+                    // First/Last Name
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "First Name *",
+                                style: GoogleFonts.poppins(color: kgoldColor),
                               ),
+                              const SizedBox(height: 6),
+                              _goldBorderFieldWithLabel(
+                                hint: 'First Name',
+                                controller: firstNameController,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Last Name *",
+                                style: GoogleFonts.poppins(color: kgoldColor),
+                              ),
+                              const SizedBox(height: 6),
+                              _goldBorderFieldWithLabel(
+                                hint: 'Last Name',
+                                controller: lastNameController,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "User Name *",
+                        style: GoogleFonts.poppins(color: kgoldColor),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    _goldBorderFieldWithLabel(
+                      hint: 'User Name',
+                      controller: userNameController,
+                    ),
+                    const SizedBox(height: 18),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Email Address *",
+                        style: GoogleFonts.poppins(color: kgoldColor),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    _goldBorderFieldWithLabel(
+                      hint: 'Enter your Email',
+                      controller: emailController,
+                    ),
+                    const SizedBox(height: 18),
+                    // Date of Birth
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Date of Birth *",
+                        style: GoogleFonts.poppins(color: kgoldColor),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    _DateOfBirthRow(
+                      onChanged: (m, d, y) {
+                        setState(() {
+                          selectedMonth = m;
+                          selectedDay = d;
+                          selectedYear = y;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 18),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Phone *",
+                        style: GoogleFonts.poppins(color: kgoldColor),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    _PhoneRow(
+                      controller: phoneController,
+                      onCountryChanged: (code) =>
+                          setState(() => selectedCountryCode = code),
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: termsAccepted,
+                          onChanged: (v) {
+                            setState(() {
+                              termsAccepted = v ?? false;
+                            });
+                          },
+                          activeColor: kgoldColor,
+                          checkColor: Colors.black,
+                        ),
+                        Expanded(
+                          child: Text.rich(
+                            TextSpan(
+                              text:
+                                  'By clicking this box, I agree to the Harman app creator ',
+                              style: GoogleFonts.poppins(
+                                color: kgoldColor,
+                                fontSize: 13,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Terms of Service',
+                                  style: TextStyle(
+                                    color: kgoldColor,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                  ),
+                        ),
+                      ],
+                    ),
+                    if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          _errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    const SizedBox(height: 32),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _onRegister,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.zero,
+                          elevation: 8,
+                          backgroundColor: kgoldColor,
+                        ),
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  kgoldColor,
+                                ),
+                              )
+                            : Ink(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 56,
+                                  child: Text(
+                                    'Register Now',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+
+                    // Gold divider with star and text widget
+                    const SizedBox(height: 24),
+                  ],
                 ),
-                const SizedBox(height: 24),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
+    );
+  }
+}
+
+class _GoldStarDividerWithText extends StatelessWidget {
+  const _GoldStarDividerWithText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(right: 8),
+                height: 1.5,
+                color: kgoldColor.withOpacity(0.5),
+              ),
+            ),
+            Icon(Icons.star, color: kgoldColor, size: 22),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(left: 8),
+                height: 1.5,
+                color: kgoldColor.withOpacity(0.5),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'Your Story Starts Here.',
+          style: GoogleFonts.cinzel(
+            color: kgoldColor,
+            fontSize: 22,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Container(height: 1.5, width: 80, color: kgoldColor.withOpacity(0.5)),
+      ],
     );
   }
 }
