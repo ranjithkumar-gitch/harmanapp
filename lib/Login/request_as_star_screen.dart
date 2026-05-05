@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harmanapp/Login/full_screen_video_player.dart';
 import 'package:harmanapp/Login/onboardingscreen.dart';
 import 'package:harmanapp/constants/colors.dart';
 import 'package:video_player/video_player.dart';
@@ -17,6 +18,17 @@ class RequestAsStarScreen extends StatefulWidget {
 }
 
 class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
+  void _openFullScreen() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const FullScreenVideoPlayer(
+          videoAsset: 'assets/sources/videos/legacy5.mp4',
+        ),
+      ),
+    );
+    // Optionally, resume or pause the original video here if needed
+  }
+
   late VideoPlayerController _videoController;
   bool _isVideoInitialized = false;
   bool _isPlaying = false;
@@ -25,7 +37,7 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
   void initState() {
     super.initState();
     _videoController =
-        VideoPlayerController.asset('assets/sources/videos/7.mp4')
+        VideoPlayerController.asset('assets/sources/videos/legacy5.mp4')
           ..initialize().then((_) {
             setState(() {
               _isVideoInitialized = true;
@@ -192,6 +204,26 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                                   ),
                                 ),
                         ),
+                        if (_isVideoInitialized)
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: GestureDetector(
+                              onTap: _openFullScreen,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.5),
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: const EdgeInsets.all(6),
+                                child: Icon(
+                                  Icons.fullscreen,
+                                  color: kgoldColor,
+                                  size: 28,
+                                ),
+                              ),
+                            ),
+                          ),
                         if (_isVideoInitialized)
                           Positioned(
                             bottom: 12,
