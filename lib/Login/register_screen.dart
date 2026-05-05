@@ -10,6 +10,8 @@ import 'package:harmanapp/api_services/shared_pref_helper.dart';
 import 'package:harmanapp/api_services/app_shared_preferences.dart';
 import 'package:harmanapp/Login/success_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter/gestures.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,6 +21,26 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final TapGestureRecognizer _termsTapRecognizer = TapGestureRecognizer();
+
+  @override
+  void initState() {
+    super.initState();
+    _termsTapRecognizer.onTap = _openTermsOfService;
+  }
+
+  void _openTermsOfService() async {
+    const url =
+        'https://chollettiudayteja.blogspot.com/p/my-autobiography-terms-and-conditions.html';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not open Terms of Service.')),
+      );
+    }
+  }
+
   bool termsAccepted = false;
   CountryCode selectedCountryCode = CountryCode.fromDialCode('+91');
   bool _isLoading = false;
@@ -305,10 +327,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 TextSpan(
                                   text: 'Terms of Service',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: kgoldColor,
                                     decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.bold,
                                   ),
+                                  recognizer: _termsTapRecognizer,
                                 ),
                               ],
                             ),
@@ -521,6 +545,7 @@ class _GoldBorderFieldWithLabelState extends State<_GoldBorderFieldWithLabel> {
     return TextField(
       controller: controller,
       focusNode: focusNode,
+      textInputAction: TextInputAction.next,
       style: const TextStyle(color: Colors.white),
       keyboardType: widget.isPhone ? TextInputType.number : TextInputType.text,
       inputFormatters: widget.isPhone

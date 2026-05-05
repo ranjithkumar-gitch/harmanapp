@@ -94,7 +94,7 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   late VideoPlayerController _videoController;
   bool _navigated = false;
-  bool _showLoading = false;
+  // bool _showLoading = false;
 
   @override
   void initState() {
@@ -123,11 +123,8 @@ class _SplashscreenState extends State<Splashscreen> {
     if (value.isInitialized &&
         value.duration.inMilliseconds > 0 &&
         value.position.inMilliseconds >= value.duration.inMilliseconds - 200) {
-      setState(() {
-        _showLoading = true;
-      });
       _navigated = true;
-      Future.delayed(const Duration(milliseconds: 200), () {
+      Future.delayed(const Duration(milliseconds: 10), () {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
@@ -149,9 +146,7 @@ class _SplashscreenState extends State<Splashscreen> {
     return Scaffold(
       backgroundColor: Colors.black, // hides green frame
       body: Center(
-        child: _showLoading
-            ? const CircularProgressIndicator(color: kgoldColor)
-            : _videoController.value.isInitialized
+        child: _videoController.value.isInitialized
             ? Container(
                 color: Colors.black, // extra safety
                 width: 550,
