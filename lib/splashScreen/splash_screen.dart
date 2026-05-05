@@ -4,6 +4,7 @@ import 'package:harmanapp/Login/login_duplicate.dart';
 import 'package:harmanapp/Login/login_screen.dart';
 import 'package:harmanapp/Login/onboardingscreen.dart';
 import 'package:harmanapp/Login/star_request_submitted_screen.dart';
+import 'package:harmanapp/widgets/theme_notifier.dart';
 
 // class Splashscreen extends StatefulWidget {
 //   const Splashscreen({super.key});
@@ -93,15 +94,14 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   late VideoPlayerController _videoController;
   bool _navigated = false;
+  bool _showLoading = false;
 
   @override
   void initState() {
     super.initState();
 
     _videoController =
-        VideoPlayerController.asset(
-            'assets/sources/videos/Walk_splashscreen.mp4',
-          )
+        VideoPlayerController.asset('assets/sources/videos/splash2.MP4')
           ..initialize().then((_) {
             if (!mounted) return;
             setState(() {});
@@ -119,18 +119,21 @@ class _SplashscreenState extends State<Splashscreen> {
     if (_navigated) return;
 
     final value = _videoController.value;
+    // Trigger navigation just before the video ends for a smoother transition
     if (value.isInitialized &&
-        value.position >= value.duration &&
-        !value.isPlaying) {
+        value.duration.inMilliseconds > 0 &&
+        value.position.inMilliseconds >= value.duration.inMilliseconds - 200) {
+      setState(() {
+        _showLoading = true;
+      });
       _navigated = true;
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (_) => const LoginDuplicateScreen()),
-      // );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => OnBoardingscreen()),
-      );
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => OnBoardingscreen()),
+        );
+      });
     }
   }
 
@@ -146,7 +149,9 @@ class _SplashscreenState extends State<Splashscreen> {
     return Scaffold(
       backgroundColor: Colors.black, // hides green frame
       body: Center(
-        child: _videoController.value.isInitialized
+        child: _showLoading
+            ? const CircularProgressIndicator(color: kgoldColor)
+            : _videoController.value.isInitialized
             ? Container(
                 color: Colors.black, // extra safety
                 width: 550,

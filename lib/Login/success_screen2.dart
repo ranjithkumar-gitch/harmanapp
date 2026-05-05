@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/onboardingscreen.dart';
 
 import 'package:harmanapp/Login/request_as_star_screen.dart';
+import 'package:harmanapp/constants/colors.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 
 class SuccessScreen2 extends StatelessWidget {
@@ -24,164 +25,214 @@ class SuccessScreen2 extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/bg2.PNG', fit: BoxFit.cover),
+            child: Image.asset('assets/bg_1411.PNG', fit: BoxFit.cover),
           ),
           SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 16),
-                    // Back Button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 4.0),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 16),
+                      // Back Button
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 4.0),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(24),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (context) =>
+                                        const OnBoardingscreen(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black.withOpacity(0.7),
+                                  border: Border.all(
+                                    color: kgoldColor,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.close,
+                                    color: kgoldColor,
+                                    size: 22,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Logo
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.98,
+                        width: MediaQuery.of(context).size.width * 0.98,
+                        child: Image.asset('assets/logo_4k.png'),
+                      ),
+                      const SizedBox(height: 4),
+                      // Welcome text
+                      // Text(
+                      //   "You're in, welcome to early access",
+                      //   textAlign: TextAlign.center,
+                      //   style: GoogleFonts.cinzel(
+                      //     color: kgoldColor,
+                      //     fontSize: 22,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            goldTextGradient.createShader(bounds),
+                        child: Text(
+                          "You're in, welcome to early access",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.cinzel(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      // Divider with star
+                      _GoldStarDivider(),
+                      const SizedBox(height: 18),
+                      // Welcome message
+                      Text(
+                        welcomeName.isNotEmpty
+                            ? "Welcome to $welcomeName, the world's first living legacy platform"
+                            : "Welcome to the world's first living legacy platform",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          color: kwhiteColor,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      // Stargazer message
+                      // Text(
+                      //   'You are now a Stargazer',
+                      //   textAlign: TextAlign.center,
+                      //   style: GoogleFonts.cinzel(
+                      //     color: kgoldColor,
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            goldTextGradient.createShader(bounds),
+                        child: Text(
+                          'You are now a Stargazer',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.cinzel(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      // Divider with star
+                      _GoldStarDivider(),
+                      const SizedBox(height: 18),
+                      // 90 days timer inline
+                      _InlineLegacyCountdown(),
+                      const SizedBox(height: 28),
+                      // Request to join as star button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
                                   builder: (context) =>
-                                      const OnBoardingscreen(),
+                                      const RequestAsStarScreen(),
                                 ),
                               );
                             },
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black.withOpacity(0.7),
-                                border: Border.all(color: kgoldColor, width: 2),
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.close,
+                              side: const BorderSide(
+                                color: kgoldColor,
+                                width: 2,
+                              ),
+                              padding: EdgeInsets.zero,
+                              foregroundColor: kgoldColor,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Text(
+                                //   'Request to Join as Star',
+                                //   style: GoogleFonts.poppins(
+                                //     color: kgoldColor,
+                                //     fontSize: 16,
+                                //     fontWeight: FontWeight.bold,
+                                //   ),
+                                // ),
+                                ShaderMask(
+                                  shaderCallback: (bounds) =>
+                                      goldTextGradient.createShader(bounds),
+                                  child: Text(
+                                    'Request to Join as Star',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Icon(
+                                  Icons.chevron_right,
                                   color: kgoldColor,
                                   size: 22,
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Logo
-                    SizedBox(
-                      height: 220,
-                      width: 220,
-                      child: Image.asset('assets/logo_4k.png'),
-                    ),
-                    const SizedBox(height: 24),
-                    // Welcome text
-                    Text(
-                      "You're in, welcome to early access",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.cinzel(
-                        color: kgoldColor,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    // Divider with star
-                    _GoldStarDivider(),
-                    const SizedBox(height: 18),
-                    // Welcome message
-                    Text(
-                      welcomeName.isNotEmpty
-                          ? "Welcome to $welcomeName, the world's first living\nlegacy platform"
-                          : "Welcome to the world's first living\nlegacy platform",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        color: kwhiteColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    // Stargazer message
-                    Text(
-                      'You are now a Stargazer',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.cinzel(
-                        color: kgoldColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    // Divider with star
-                    _GoldStarDivider(),
-                    const SizedBox(height: 18),
-                    // 90 days timer inline
-                    _InlineLegacyCountdown(),
-                    const SizedBox(height: 28),
-                    // Request to join as star button
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const RequestAsStarScreen(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            padding: EdgeInsets.zero,
-                            elevation: 8,
-                            backgroundColor: kgoldColor,
-                          ),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              // gradient: const LinearGradient(
-                              //   colors: [kgoldColor, Color(0xFFFFE082)],
-                              // ),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 48,
-                              child: Text(
-                                'Request to Join as Star',
-                                style: GoogleFonts.poppins(
-                                  color: kblackColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                      const SizedBox(height: 18),
+                      // Limited approvals note
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                        child: Text(
+                          'Applications are limited. Selection-based access.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: kgoldColor,
+                            fontSize: 13,
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 18),
-                    // Limited approvals note
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Text(
-                        'Applications are limited. Selection-based access.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          color: kgoldColor,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -265,12 +316,25 @@ class _InlineLegacyCountdownState extends State<_InlineLegacyCountdown> {
     final seconds = _remaining.inSeconds % 60;
     return Column(
       children: [
-        Text(
-          'Your legacy begins in:',
-          style: GoogleFonts.poppins(
-            color: kgoldColor,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+        // Text(
+        //   'Your legacy begins in:',
+        //   style: GoogleFonts.poppins(
+        //     color: kgoldColor,
+        //     fontSize: 16,
+        //     fontWeight: FontWeight.w500,
+        //   ),
+        // ),
+        ShaderMask(
+          shaderCallback: (bounds) => goldTextGradient.createShader(bounds),
+          child: Text(
+            'Your legacy begins in:',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0,
+            ),
           ),
         ),
         const SizedBox(height: 10),

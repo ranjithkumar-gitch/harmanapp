@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/onboardingscreen.dart';
+import 'package:harmanapp/constants/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:harmanapp/api_services/request_as_star_service.dart';
 import 'package:harmanapp/api_services/app_shared_preferences.dart';
@@ -85,7 +86,7 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/bg2.PNG', fit: BoxFit.cover),
+            child: Image.asset('assets/bg_1411.PNG', fit: BoxFit.cover),
           ),
           SafeArea(
             child: Padding(
@@ -140,12 +141,26 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                   // const SizedBox(height: 40),
 
                   // Top title
-                  Text(
-                    'What It Means to Be a Star',
-                    style: GoogleFonts.cinzel(
-                      color: kgoldColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  // Text(
+                  //   'What It Means to Be a Star',
+                  //   style: GoogleFonts.cinzel(
+                  //     color: kgoldColor,
+                  //     fontSize: 16,
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  // ),
+                  ShaderMask(
+                    shaderCallback: (bounds) =>
+                        goldTextGradient.createShader(bounds),
+                    child: Text(
+                      'What It Means to Be a Star',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.cinzel(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -279,17 +294,31 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 24),
                   // Main headline
-                  Text(
-                    'Turn Your Life Into\na Living Legacy.',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.cinzel(
-                      color: kgoldColor,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
+                  ShaderMask(
+                    shaderCallback: (bounds) =>
+                        goldTextGradient.createShader(bounds),
+                    child: Text(
+                      'Turn Your Life Into a Living Legacy.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.cinzel(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0,
+                      ),
                     ),
                   ),
+                  // Text(
+                  //   'Turn Your Life Into\na Living Legacy.',
+                  //   textAlign: TextAlign.center,
+                  //   style: GoogleFonts.cinzel(
+                  //     color: kgoldColor,
+                  //     fontSize: 26,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
                   const SizedBox(height: 10),
                   Text(
                     'Be remembered. Be experienced.\nBe timeless.',
@@ -300,7 +329,7 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 24),
                   // Gold star divider
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -322,7 +351,7 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 24),
                   Text(
                     'Create your digital legacy and\nshare your story with the world.',
                     textAlign: TextAlign.center,
@@ -338,39 +367,53 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 52,
-                    child: ElevatedButton(
-                      onPressed: _onRequest,
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        padding: EdgeInsets.zero,
-                        elevation: 8,
-                        backgroundColor: kgoldColor,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: goldTextGradient,
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Ink(
+                      padding: const EdgeInsets.all(2), // border thickness
+                      child: Container(
                         decoration: BoxDecoration(
-                          // gradient: const LinearGradient(
-                          //   colors: [kgoldColor, Color(0xFFFFE082)],
-                          // ),
-                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 52,
+                        child: OutlinedButton(
+                          onPressed: _onRequest,
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            side: BorderSide.none,
+                            backgroundColor: Colors.transparent,
+                            padding: EdgeInsets.zero,
+                            foregroundColor: Colors.white,
+                            shadowColor: Colors.transparent,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'Request to Join as Star',
-                                style: GoogleFonts.poppins(
-                                  color: kblackColor,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
+                              ShaderMask(
+                                shaderCallback: (bounds) =>
+                                    goldTextGradient.createShader(bounds),
+                                child: Text(
+                                  'Request to Join as Star',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 8),
-                              Icon(Icons.arrow_forward, color: kblackColor),
+                              ShaderMask(
+                                shaderCallback: (bounds) =>
+                                    goldTextGradient.createShader(bounds),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -382,7 +425,7 @@ class _RequestAsStarScreenState extends State<RequestAsStarScreen> {
                     'Applications are limited. Selection-based access.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                      color: Colors.white70,
+                      color: kgoldColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                     ),

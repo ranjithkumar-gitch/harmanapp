@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:harmanapp/Login/success_screen2.dart';
+import 'package:harmanapp/constants/colors.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:harmanapp/api_services/register_request.dart';
@@ -121,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/bg2.PNG', fit: BoxFit.cover),
+            child: Image.asset('assets/bg_1411.PNG', fit: BoxFit.cover),
           ),
           SafeArea(
             child: SingleChildScrollView(
@@ -169,11 +170,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 280,
-                            width: 280,
+                            height: MediaQuery.of(context).size.width * 0.98,
+                            width: MediaQuery.of(context).size.width * 0.98,
                             child: Image.asset('assets/logo_4k.png'),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
@@ -327,40 +328,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       width: double.infinity,
                       height: 56,
-                      child: ElevatedButton(
-                        onPressed: _isLoading ? null : _onRegister,
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          padding: EdgeInsets.zero,
-                          elevation: 8,
-                          backgroundColor: kgoldColor,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: goldTextGradient,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        child: _isLoading
-                            ? const CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  kgoldColor,
-                                ),
-                              )
-                            : Ink(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: 56,
-                                  child: Text(
-                                    'Register Now',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                ),
+                        padding: const EdgeInsets.all(2), // border thickness
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: OutlinedButton(
+                            onPressed: _isLoading ? null : _onRegister,
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
                               ),
+                              side: BorderSide.none,
+                              backgroundColor: Colors.transparent,
+                              padding: EdgeInsets.zero,
+                              foregroundColor: Colors.white,
+                              shadowColor: Colors.transparent,
+                            ),
+                            child: _isLoading
+                                ? const CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      kgoldColor,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ShaderMask(
+                                        shaderCallback: (bounds) =>
+                                            goldTextGradient.createShader(
+                                              bounds,
+                                            ),
+                                        child: Text(
+                                          'Register Now',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            letterSpacing: 1.2,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      ShaderMask(
+                                        shaderCallback: (bounds) =>
+                                            goldTextGradient.createShader(
+                                              bounds,
+                                            ),
+                                        child: Icon(
+                                          Icons.chevron_right,
+                                          size: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
                       ),
                     ),
 
@@ -404,14 +434,27 @@ class _GoldStarDividerWithText extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Text(
-          'Your Story Starts Here.',
-          style: GoogleFonts.cinzel(
-            color: kgoldColor,
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
+        ShaderMask(
+          shaderCallback: (bounds) => goldTextGradient.createShader(bounds),
+          child: Text(
+            'Your Story Starts Here.',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.cinzel(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0,
+            ),
           ),
         ),
+        // Text(
+        //   'Your Story Starts Here.',
+        //   style: GoogleFonts.cinzel(
+        //     color: kgoldColor,
+        //     fontSize: 22,
+        //     fontWeight: FontWeight.w500,
+        //   ),
+        // ),
         const SizedBox(height: 12),
         Container(height: 1.5, width: 80, color: kgoldColor.withOpacity(0.5)),
       ],

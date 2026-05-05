@@ -153,44 +153,69 @@ class OnBoardingscreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 28),
                       // Gold button
+
+                      ////////////////////////////
                       SizedBox(
                         width: double.infinity,
                         height: 56,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => RegisterScreen(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            padding: EdgeInsets.zero,
-                            elevation: 8,
-                            backgroundColor: kgoldColor,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: goldTextGradient,
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'SECURE MY SPOT',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  letterSpacing: 1.2,
+                          padding: const EdgeInsets.all(2), // border thickness
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterScreen(),
+                                  ),
+                                );
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
                                 ),
+                                side: BorderSide.none,
+                                backgroundColor: Colors.transparent,
+                                padding: EdgeInsets.zero,
+                                foregroundColor: Colors.white,
+                                shadowColor: Colors.transparent,
                               ),
-                              const SizedBox(width: 20),
-                              Icon(
-                                Icons.chevron_right,
-                                size: 25,
-                                color: Colors.black,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ShaderMask(
+                                    shaderCallback: (bounds) =>
+                                        goldTextGradient.createShader(bounds),
+                                    child: Text(
+                                      'SECURE MY SPOT',
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  ShaderMask(
+                                    shaderCallback: (bounds) =>
+                                        goldTextGradient.createShader(bounds),
+                                    child: Icon(
+                                      Icons.chevron_right,
+                                      size: 25,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
