@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harmanapp/Login/register_screen.dart';
+import 'package:harmanapp/constants/colors.dart';
 import 'package:harmanapp/widgets/theme_notifier.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,7 +15,7 @@ class OnBoardingscreen extends StatelessWidget {
         children: [
           // Responsive background image
           Positioned.fill(
-            child: Image.asset('assets/bg1.PNG', fit: BoxFit.cover),
+            child: Image.asset('assets/bg_1411.PNG', fit: BoxFit.cover),
           ),
           SafeArea(
             child: Center(
@@ -24,73 +25,77 @@ class OnBoardingscreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 15),
                       // Gold figure with concentric circles
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.8,
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery.of(context).size.width * 0.98,
+                        width: MediaQuery.of(context).size.width * 0.98,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             // Concentric circles
-                            CustomPaint(
-                              size: Size(
-                                MediaQuery.of(context).size.width * 0.8,
-                                MediaQuery.of(context).size.width * 0.8,
-                              ),
-                              // painter: _ConcentricCirclesPainter(),
-                            ),
+                            // CustomPaint(
+                            //   size: Size(
+                            //     MediaQuery.of(context).size.width * 0.9,
+                            //     MediaQuery.of(context).size.width * 0.9,
+                            //   ),
+                            //   // painter: _ConcentricCirclesPainter(),
+                            // ),
                             // Gold figure image (replace with your asset)
-                            SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.8,
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: Image.asset(
-                                'assets/logo_4k.png',
-                                fit: BoxFit.contain,
-                              ),
+                            Image.asset(
+                              'assets/logo_4k.png',
+                              fit: BoxFit.contain,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+
                       // Main headline
                       Text(
                         'A NEW ERA OF',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.cinzel(
-                          color: kgoldColor,
-                          fontSize: 22,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 20,
                           fontWeight: FontWeight.w400,
                           letterSpacing: 2,
                         ),
                       ),
-                      Text(
-                        'HUMAN STORIES',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.cinzel(
-                          color: kgoldColor,
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            goldTextGradient.createShader(bounds),
+                        child: Text(
+                          'HUMAN STORIES',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.bebasNeue(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0,
+                          ),
                         ),
                       ),
                       Text(
                         'IS ABOUT TO BEGIN.',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.cinzel(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
                           letterSpacing: 1.5,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Text(
-                        'Join early. Be part of what’s coming next.',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 15,
+                      const SizedBox(height: 15),
+                      ShaderMask(
+                        shaderCallback: (bounds) =>
+                            goldTextGradient.createShader(bounds),
+                        child: Text(
+                          'Join early. Be part of what\'s coming next.',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -108,25 +113,37 @@ class OnBoardingscreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.groups, color: kgoldColor),
+                            Icon(
+                              Icons.group_outlined,
+                              size: 30,
+                              color: Color(0xffc18e3b),
+                            ),
                             const SizedBox(width: 10),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'EARLY ACCESS IS LIMITED.',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                ShaderMask(
+                                  shaderCallback: (bounds) =>
+                                      goldTextGradient.createShader(bounds),
+                                  child: Text(
+                                    'EARLY ACCESS IS LIMITED.',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  'THOUSANDS ARE ALREADY JOINING.',
-                                  style: GoogleFonts.poppins(
-                                    color: kgoldColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                ShaderMask(
+                                  shaderCallback: (bounds) =>
+                                      goldTextGradient.createShader(bounds),
+                                  child: Text(
+                                    'THOUSANDS ARE ALREADY JOINING.',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -167,8 +184,12 @@ class OnBoardingscreen extends StatelessWidget {
                                   letterSpacing: 1.2,
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Icon(Icons.arrow_forward, color: Colors.black),
+                              const SizedBox(width: 20),
+                              Icon(
+                                Icons.chevron_right,
+                                size: 25,
+                                color: Colors.black,
+                              ),
                             ],
                           ),
                         ),
@@ -180,7 +201,7 @@ class OnBoardingscreen extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.shield_outlined,
-                            color: Colors.white,
+                            color: Color(0xffc18e3b),
                             size: 18,
                           ),
                           const SizedBox(width: 6),

@@ -75,7 +75,7 @@ class StarRequestSubmittedScreen extends StatelessWidget {
                     'Your Journey\nHas Begun.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.cinzel(
-                      color: kgoldColor,
+                      color: Color(0xffc18e3b),
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
